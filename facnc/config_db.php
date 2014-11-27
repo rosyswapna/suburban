@@ -24,27 +24,27 @@ $db_connections = array (
   array (
     'name' => 'mastercompany',
     'host' => 'localhost',
-    'dbuser' => 'acube123_taxi',
-    'dbpassword' => 'taxi!@#',
-    'dbname' => 'acube123_taxi',
+    'dbuser' => 'root',
+    'dbpassword' => '',
+    'dbname' => 'taxi_local',
     'tbpref' => '0_',
   ),
   2 => 
   array (
     'name' => 'CONNECTNCABS',
     'host' => 'localhost',
-    'dbuser' => 'acube123_taxi',
-    'dbpassword' => 'taxi!@#',
-    'dbname' => 'acube123_taxi',
+    'dbuser' => 'root',
+    'dbpassword' => '',
+    'dbname' => 'taxi_local',
     'tbpref' => '2_',
   ),
   4 => 
   array (
     'name' => 'Galaxy',
     'host' => 'localhost',
-    'dbuser' => 'acube123_taxi',
-    'dbpassword' => 'taxi!@#',
-    'dbname' => 'acube123_taxi',
+    'dbuser' => 'root',
+    'dbpassword' => '',
+    'dbname' => 'taxi_local',
     'tbpref' => '4_',
   ),
 );

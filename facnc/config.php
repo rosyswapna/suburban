@@ -61,7 +61,7 @@ if (!isset($path_to_root) || isset($_GET['path_to_root']) || isset($_POST['path_
 	// Main Title
 	$app_title = "FrontAccounting";
 
-	$cnc_url = "http://taxi.acubedemo.com/";
+	$cnc_url = "http://taxi.local/";
 
 	// Build for development purposes
 	$build_version 	= date("d.m.Y", filemtime("$path_to_root/CHANGELOG.txt"));

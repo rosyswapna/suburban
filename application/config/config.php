@@ -7,7 +7,7 @@ if(PROJECT_MODE==PRODUCTION_MODE){
 
 	error_reporting(1);
 }
-/*
+/* sample_test divya
 |--------------------------------------------------------------------------
 | Base Site URL
 |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ if(PROJECT_MODE==PRODUCTION_MODE){
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://taxi.acubedemo.com/';
+$config['base_url']	= 'http://taxi.local/';
 
 /*
 |--------------------------------------------------------------------------

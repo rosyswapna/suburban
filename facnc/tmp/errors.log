@@ -4930,3 +4930,6 @@
 [19-Nov-2014 06:51:43 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
 [19-Nov-2014 08:03:43 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
 [26-Nov-2014 11:05:36 UTC] Rounding error -64 encountered for trans_type:10,trans_no:1
+[27-Nov-2014 12:07:34 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[27-Nov-2014 12:07:34 Europe/Paris] 4::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[27-Nov-2014 12:07:34 Europe/Paris] 4:demouser:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead

@@ -1,0 +1,9 @@
+/application/config/config.php
+/application/config/database.php
+/facnc/company
+/facnc/config_db.php
+/facnc/config.php
+/issue_track
+*.php~
+.gitignore~
+
