@@ -20,7 +20,7 @@
     <body class="bg-black">
 
         <div class="form-box" id="login-box">
-            <div class="header"><?php echo PRODUCT_NAME; ?></div>
+            <div class="header"><?php  echo PRODUCT_NAME; ?></div>
             
                 <div class="body bg-gray bg-light-black" >
 				
