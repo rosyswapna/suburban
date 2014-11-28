@@ -61,15 +61,20 @@ class admin_model extends CI_Model {
 	return true;
 	  }
     }
+	 // select al organisation details
     function getOrg(){
 	$query=$this->db->get('organisations');
 	return $query->result_array();
     }
+	
+	//to get profile details of a person logged  in
 	function getProfile(){
 	$this->db->from('users');
 	$this->db->where('id',$this->session->userdata('id'));
 	return $this->db->get()->result();
     }
+	
+	//to update profile details by the person who logged  in
 	function updateProfile($data){
 		$this->db->where('id',$this->session->userdata('id') );
 		$succes=$this->db->update('users',$data);
@@ -77,6 +82,8 @@ class admin_model extends CI_Model {
 		$this->session->set_userdata(array('dbSuccess'=>'Profile Updated Successfully'));
 		}
     }
+	
+	//to change password details by the person  who logged  in
    	function changePassword($data) {
 		$this->db->from('users');
         $this->db->where('id',$this->session->userdata('id'));
@@ -98,12 +105,14 @@ class admin_model extends CI_Model {
 
    	}
 
+	// fetch organisation details by name ,then by that id  fetch organisation admin details
 	function checkOrg($name){
 		$query=$this->db->get_where('organisations',array('name'=>$name));
 		if($query->num_rows()>0){
 		$org_res=$query->row_array(); 
 		$id=$org_res['id'];
-		$qry=$this->db->get_where('users',array('organisation_id'=>$id));
+		
+		$qry=$this->db->get_where('users',array('organisation_id'=>$id,'user_type_id'=>ORGANISATION_ADMINISTRATOR)); //echo $this->db->last_query();exit;
 		$user_res=$qry->row_array();
 		$data=array('org_res'=>$org_res,'user_res'=>$user_res);
 		return $data;
@@ -111,6 +120,8 @@ class admin_model extends CI_Model {
 		else 
 		return false;
 		}
+		
+		// to get status array
 	function getStatus(){
 		$qry=$this->db->get('statuses');
 		$count=$qry->num_rows();
@@ -123,7 +134,7 @@ class admin_model extends CI_Model {
 			return $status;
 	}
 		
-	
+	//to get user status
 	function getuserStatus(){
 		$qry=$this->db->get('user_statuses');
 		$count=$qry->num_rows();
@@ -138,7 +149,7 @@ class admin_model extends CI_Model {
 		
 	}
 	
-	
+	//to change password of user by user id
 	function resetOrganizationPasswordAdmin($data) {
 			$dbdata = array('password'=>$data['password']);
 			$this->db->where('id',$data['id'] );
@@ -151,7 +162,7 @@ class admin_model extends CI_Model {
 
 	}
 
-	//newly added
+	//to change status of organisation admin and organisation
 
 	function orgEnableDisable($data) {
 		$dbdata = array('user_status_id'=>$data['status_id']);
