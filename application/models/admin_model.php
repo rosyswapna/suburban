@@ -188,9 +188,7 @@ class admin_model extends CI_Model {
 		$succesuser=$this->db->update('users',$dbdata);
 		return true;
 		}
-		
-
-	}
+		}
 
 	function updateOrganization($data){
 		$orgdbdata = array('name'=>$data['name'],'address'=>$data['addr']);
