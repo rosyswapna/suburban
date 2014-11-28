@@ -144,6 +144,18 @@ class Account extends CI_Controller {
 			return false;
 		}
 	} 
+	public function getTotalTax()
+		{
+		$tax_group = $_REQUEST['id'];
+		$amount = $_REQUEST['amt'];
+		$this->load->model('account_model');
+		$res = $this->account_model->get_tax_group_rates($tax_group);
+		$tax = 0;
+		foreach($res as $row){
+		$tax += ($amount*$row['rate']/100);
+		}
+		echo $tax;
+		}
 
 }
 ?>

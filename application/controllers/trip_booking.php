@@ -510,7 +510,12 @@ class Trip_booking extends CI_Controller {
 			$data['adt_tarif']			= $_REQUEST['adttarif'];
 			$data['adt_tarif_rate']			= $_REQUEST['adttarifrate'];
 			$data['vehicle_tarif']			= $_REQUEST['vehicletarif'];
-		
+				
+				if($_REQUEST['tax_group']){
+					$this->mysession->set('tax_group',$_REQUEST['tax_group']);
+					}else{
+					$this->mysession->delete('tax_group');
+					}
 			
 			$voucher=$this->getVouchers($data['trip_id'],$ajax='NO');
 			$ret = array();

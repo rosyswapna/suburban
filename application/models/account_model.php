@@ -363,39 +363,57 @@ class account_model extends CI_Model {
 		}
 	}
 
-	function getTaxArray($condion = '')
-	{
+	//get tax groups
+function getTaxArray($condion = '')
+		{
 
-		$fa_tax_table = $this->session->userdata('organisation_id')."_tax_types";
-		
+		$fa_tax_table = $this->session->userdata('organisation_id')."_tax_groups";
+
 		if($this->check_fa_table_exists($fa_tax_table)){
-			$this->db->select("rate, CONCAT(name, ' (',rate,'%)') as name");
+			$this->db->select("id,name");
 			$this->db->from($fa_tax_table);
-			if($condion!=''){
-			    $this->db->where($condion);
-			}
-			$results = $this->db->get()->result();
+		if($condion!=''){
+			$this->db->where($condion);
+		}
+		$results = $this->db->get()->result();
 
-			for($i=0;$i<count($results);$i++){
-				$values[$results[$i]->rate]=$results[$i]->name;
-			}
+		for($i=0;$i<count($results);$i++){
+			$values[$results[$i]->id]=$results[$i]->name;
+		}
 
-			if(!empty($values)){
-				return $values;
-			}
-			else{
-				return false;
-			}
+		if(!empty($values)){
+			return $values;
+		}
+		else{
+			return false;
+		}
 		}else{
 			return false;
 		}
-		
-		
-	    
-	
 
-			
-			
+
+
+		}
+
+
+
+
+//get tax types array for a tax group
+function get_tax_group_rates($group_id=null)
+	{
+	$tbl_pref = $this->session->userdata('organisation_id')."_";
+
+	$sql = "SELECT tg.* FROM ".$tbl_pref."tax_group_items tg,".$tbl_pref."tax_groups g,".$tbl_pref."tax_types t
+	WHERE tg.tax_group_id=".$group_id."
+	AND tg.tax_group_id = g.id
+	AND tg.tax_type_id = t.id
+	AND !t.inactive
+	AND tax_shipping=1";
+
+
+
+	return $this->db->query($sql)->result_array();
+
 
 	}
 

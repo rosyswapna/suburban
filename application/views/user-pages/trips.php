@@ -455,17 +455,14 @@ echo anchor_popup_default(base_url().'organization/front-desk/trip-booking/'.$tr
 					
 						</div>
 						<div class="form-group">
-							<?php echo form_label('Total Tax','totaltax'); ?>
-							<?php 
-//echo form_input(array('name'=>'totaltax','class'=>'form-control totaltax','placeholder'=>'Total Tax')); 
-							
-							//echo $this->form_functions->populate_dropdown('totaltax',$taxes,true,$class,$id);				
-					$class="form-control tax";
-					$tbl="taxes";
-			echo $this->form_functions->populate_editable_dropdown('tax',$taxes,$class,$tbl);
-			echo form_input(array('name'=>'select_text','id'=>'totaltax','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>		
-					
-						</div>	
+						<?php echo form_label('Total Tax','totaltax'); ?>
+						<?php 
+						$class="form-control taxgroup";
+						$tbl="taxes";
+						echo $this->form_functions->populate_editable_dropdown('taxgroup',$taxes,$class,$tbl);
+						echo form_input(array('name'=>'select_text','id'=>'totaltax','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>	
+
+							</div>
 						
 					</div>
 					

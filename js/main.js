@@ -1845,8 +1845,8 @@ function timeDifference(fromdate,fromtime,todate,totime){
 
 
 $('.modal-close').on('click',function(){
-
 	clearErrorLabels();
+	resetTax();
 
 });
 
@@ -2322,16 +2322,31 @@ function setTotalAmount()
 	
 	var total = Number(total_tarif)+Number(statetax)+Number(driverbata)+Number(tollfee)+Number(nighthalt)+Number(parkingfee);
 	$('.totalamount').val(total);
-	setTax(total);
-}
-
-//calculate tax amount
-function setTax(amount = 0)
-{
-	var taxable_amount = amount*0.4;
-	var tax = taxable_amount*0.12;
-	$('.totaltax').val(tax);
 	
+}
+//calculating tax amount on changing tax group from voucher
+$(".taxgroup").change(function(){
+var amount = $('.totalamount').val();
+$obj=$(this);
+$id = $obj.val();
+var amt = $('.totalamount').val();
+$.post(base_url+"/account/getTotalTax",{id:$id, amt:amount},
+function(data){
+
+$obj.parent().find('#totaltax').val(data);
+$obj.hide();
+$obj.parent().find('#totaltax').show();
+});
+
+
+
+});
+function resetTax()
+{
+$('#totaltax').val('');
+$(".taxgroup").val('');
+$('#totaltax').hide();
+$(".taxgroup").show();
 }
 
 
@@ -2391,7 +2406,7 @@ function getTariff(minimum_kilometers,rate,additional_kilometer_rate)
 }
 
 $('.trip-voucher-save').on('click',function(){
-   
+	var tax_group = $('.taxgroup').val();//tax calculating factor
     var error = false;
    
     var trip_id=$(this).attr('trip_id');
@@ -2475,7 +2490,8 @@ $('.trip-voucher-save').on('click',function(){
                 driverbata:driverbata,
                 vehicletarif:vehicletarif,
                 driver_id:driver_id,
-                totalamount:totalamount
+                totalamount:totalamount,
+				tax_group:tax_group
                
             },function(data){
               if(data!='false'){
