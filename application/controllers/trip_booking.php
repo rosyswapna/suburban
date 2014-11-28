@@ -521,11 +521,17 @@ class Trip_booking extends CI_Controller {
 			$ret = array();
 			if($voucher==false){
 				$res=$this->trip_booking_model->generateTripVoucher($data,-1,$trip_data);
-				$ret['NewDelivery'] = $res;
-			}else{
+
+				}else{
 				$res=$this->trip_booking_model->updateTripVoucher($data,$voucher[0]->id,-1,$trip_data);
-				$ret['ModifyDelivery'] = $res;
-			}
+
+				}
+				$voucher = $this->trip_booking_model->getVoucher($res);
+				if($voucher['delivery_no'] > 0){
+				$ret['ModifyDelivery'] = $voucher['id'];
+				}else{
+				$ret['NewDelivery'] = $voucher['id'];
+				}
 			if($res==false){
 				echo 'false';
 			}else{

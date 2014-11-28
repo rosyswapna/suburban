@@ -312,6 +312,13 @@ $qry='SELECT T.id,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.pick_u
 	}
  }*/
 
+	function getVoucher($id){
+
+		$qry = $this->db->get_where('trip_vouchers',array('id'=>$id));
+
+		return $qry->row_array();
+
+}
 
 }
 ?>
