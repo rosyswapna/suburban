@@ -13,6 +13,22 @@ class Account extends CI_Controller {
 	{
 		
 	}
+
+
+	public function getTotalTax()
+	{
+		$tax_group = $_REQUEST['id'];
+		$amount = $_REQUEST['amt'];
+		$this->load->model('account_model');
+		$res = $this->account_model->get_tax_group_rates($tax_group);
+		$tax = 0;
+		foreach($res as $row){
+			$tax += ($amount*$row['rate']/100);
+		}
+		echo $tax;
+		
+		
+	}
 	
 	//cnc organization create company in fa
 	public function add_accounts($org_id = -1)
@@ -66,6 +82,10 @@ class Account extends CI_Controller {
 				$data['url'] = "facnc/sync_cnc.php?".$action."=".$value."&cnc_token=".$this->session->userdata('session_id');
 			else
 				$data['url'] = "facnc/sync_cnc.php?".$action."=Yes&cnc_token=".$this->session->userdata('session_id');
+
+			if(!is_null($this->mysession->get('tax_group'))){
+				$data['url'] .= "&TaxGroup=".$this->mysession->get('tax_group');
+			}
 			$page='fa-modules/module';
 			
 			if($tab)
@@ -144,18 +164,6 @@ class Account extends CI_Controller {
 			return false;
 		}
 	} 
-	public function getTotalTax()
-		{
-		$tax_group = $_REQUEST['id'];
-		$amount = $_REQUEST['amt'];
-		$this->load->model('account_model');
-		$res = $this->account_model->get_tax_group_rates($tax_group);
-		$tax = 0;
-		foreach($res as $row){
-		$tax += ($amount*$row['rate']/100);
-		}
-		echo $tax;
-		}
 
 }
 ?>

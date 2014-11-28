@@ -22,9 +22,10 @@ class account_model extends CI_Model {
 			return false;
 		}
 	}
-	    //----check organisation user account exists in fa
+	
+	//check organisation user account exists in fa
 	public function check_fa_user_exists($userid)	
-	{ 
+	{
 		$fa_user_table = $this->session->userdata('organisation_id')."_users";
 		
 		if($this->check_fa_table_exists($fa_user_table))
@@ -57,7 +58,7 @@ class account_model extends CI_Model {
 		
 	}
 
-		//check fa table exists for session organisation
+	//check fa table exists for session organisation
 	function check_fa_table_exists($table='')
 	{
 		if($this->db->query("SHOW TABLES LIKE ".$this->db->escape($table))->num_rows() == 1){
@@ -67,7 +68,9 @@ class account_model extends CI_Model {
 		}	    
 		
 	}
-		//get fa customer with cnc customer or customer group
+
+	
+	//get fa customer with cnc customer or customer group
 	function get_cnc_cust_or_group($id,$type='')
 	{
 		if($type == "CG"){
@@ -79,7 +82,9 @@ class account_model extends CI_Model {
 		$this->db->where('organisation_id',$this->session->userdata('organisation_id'));	
 		return $this->db->get()->row_array();
 	}
-			//add fa customer with cnc id and type(customer or group)
+
+
+	//add fa customer with cnc id and type(customer or group)
 	function add_fa_customer($id,$type='')
 	{
 		$fa_customer_table = $this->session->userdata('organisation_id')."_debtors_master";
@@ -131,7 +136,7 @@ class account_model extends CI_Model {
 		}
 	}
 	
-		//edit fa customer with cnc id and type(customer or group) ,if not redirect to add customer
+	//edit fa customer with cnc id and type(customer or group) ,if not redirect to add customer
 	function edit_fa_customer($id,$type='')
 	{
 		$fa_customer_table = $this->session->userdata('organisation_id')."_debtors_master";
@@ -169,7 +174,7 @@ class account_model extends CI_Model {
 		}
 	}
 	
-			//delete fa customer with cnc customer id and prepend C or CG as parameter ,Eg.C1,CG2,C3
+	//delete fa customer with cnc customer id and prepend C or CG as parameter ,Eg.C1,CG2,C3 
 	function delete_fa_customer($ref='')
 	{
 		$fa_customer_table = $this->session->userdata('organisation_id')."_debtors_master";
@@ -318,7 +323,9 @@ class account_model extends CI_Model {
 		}
 		
 	}
-				//get organisation value from fa
+
+
+	//get organisation value from fa
 	function get_company_prefs($name = false)
 	{
 		$fa_pref_table = $this->session->userdata('organisation_id')."_sys_prefs";
@@ -342,8 +349,7 @@ class account_model extends CI_Model {
 		}
 	}
 
-			//edit organisation admin or user for fa
-	
+	//edit organisation admin or user for fa
  	function edit_user($data=array())
 	{
 		$fa_user_table = $this->session->userdata('organisation_id')."_users";
@@ -364,58 +370,59 @@ class account_model extends CI_Model {
 	}
 
 	//get tax groups
-function getTaxArray($condion = '')
-		{
+	function getTaxArray($condion = '')
+	{
 
 		$fa_tax_table = $this->session->userdata('organisation_id')."_tax_groups";
-
+		
 		if($this->check_fa_table_exists($fa_tax_table)){
 			$this->db->select("id,name");
 			$this->db->from($fa_tax_table);
-		if($condion!=''){
-			$this->db->where($condion);
-		}
-		$results = $this->db->get()->result();
+			if($condion!=''){
+			    $this->db->where($condion);
+			}
+			$results = $this->db->get()->result();
 
-		for($i=0;$i<count($results);$i++){
-			$values[$results[$i]->id]=$results[$i]->name;
-		}
+			for($i=0;$i<count($results);$i++){
+				$values[$results[$i]->id]=$results[$i]->name;
+			}
 
-		if(!empty($values)){
-			return $values;
-		}
-		else{
-			return false;
-		}
+			if(!empty($values)){
+				return $values;
+			}
+			else{
+				return false;
+			}
 		}else{
 			return false;
 		}
-
-
-
-		}
-
-
-
-
-//get tax types array for a tax group
-function get_tax_group_rates($group_id=null)
-	{
-	$tbl_pref = $this->session->userdata('organisation_id')."_";
-
-	$sql = "SELECT tg.* FROM ".$tbl_pref."tax_group_items tg,".$tbl_pref."tax_groups g,".$tbl_pref."tax_types t
-	WHERE tg.tax_group_id=".$group_id."
-	AND tg.tax_group_id = g.id
-	AND tg.tax_type_id = t.id
-	AND !t.inactive
-	AND tax_shipping=1";
-
-
-
-	return $this->db->query($sql)->result_array();
-
+		
+			
 
 	}
+
+	
+
+	
+	//get tax types array for a tax group
+	function get_tax_group_rates($group_id=null)
+	{
+		$tbl_pref = $this->session->userdata('organisation_id')."_";
+
+		$sql = "SELECT tg.* FROM ".$tbl_pref."tax_group_items tg,".$tbl_pref."tax_groups g,".$tbl_pref."tax_types t
+			WHERE tg.tax_group_id=".$group_id."
+			AND tg.tax_group_id = g.id
+			AND tg.tax_type_id = t.id
+			AND  !t.inactive
+			AND tax_shipping=1";
+		
+		
+
+		return $this->db->query($sql)->result_array();
+
+		
+	}
+
 
 
 }
