@@ -162,9 +162,7 @@ class admin_model extends CI_Model {
 
 	}
 
-	//to change status of organisation admin and organisation
-
-	function orgEnableDisable($data) {
+	/*function orgEnableDisable($data) {
 		$dbdata = array('user_status_id'=>$data['status_id']);
 		$this->db->where('id',$data['user_id'] );
 		$succesuser=$this->db->update('users',$dbdata);
@@ -176,6 +174,21 @@ class admin_model extends CI_Model {
 		return true;
 		}
 		}
+
+	}*/
+	
+	//to change status of organisation ,its admin and users under this organisation
+	function orgEnableDisable($data) {
+		$dbdata = array('status_id'=>$data['status_id']);
+		$this->db->where('id',$data['org_id'] );
+		$succes=$this->db->update('organisations',$dbdata);
+		if($succes>0){
+		$dbdata = array('user_status_id'=>$data['user_status_id']);
+		$this->db->where('organisation_id',$data['org_id'] );
+		$succesuser=$this->db->update('users',$dbdata);
+		return true;
+		}
+		
 
 	}
 

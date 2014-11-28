@@ -233,8 +233,10 @@ class Admin extends CI_Controller {
 		} else if(isset($_REQUEST['admin-org-profile-status-change'])){
 		if($this->input->post('status') == STATUS_ACTIVE){
 		$dbdata['status_id'] = STATUS_INACTIVE;
+		$dbdata['user_status_id'] = USER_STATUS_DISABLED;
 		}else if($this->input->post('status')==STATUS_INACTIVE){
 		$dbdata['status_id'] = STATUS_ACTIVE;
+		$dbdata['user_status_id'] = USER_STATUS_ACTIVE;
 		} 
 		$dbdata['user_id'] = $this->input->post('user_id');
 		$dbdata['org_id']  =  $this->input->post('org_id');
@@ -259,7 +261,7 @@ class Admin extends CI_Controller {
 		$data['hmail']  = $user_res['email'];
 		$data['phn']=$user_res['phone'];
 		$data['hphone']=$user_res['phone'];
-		$data['status']=$user_res['user_status_id'];
+		$data['status']=$org_res['status_id'];
 		$this->showAddOrg($data);
 		}
 		
