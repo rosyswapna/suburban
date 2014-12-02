@@ -1048,7 +1048,7 @@ public function profile() {
 		}
 	}
 	
-	public function ShowDriverList($param1,$param2) {
+	public function ShowDriverList($param1,$param2) { 
 	if($this->session_check()==true) { 
 	/*if($this->mysession->get('condition')!=null){
 	$condition=$this->mysession->get('condition');
@@ -1151,6 +1151,7 @@ if(isset($where_arry) || isset($like_arry)){
 				
 			}
 			}
+			
 	/*if(is_null($this->mysession->get('condition'))){
 	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	}*/
@@ -1188,7 +1189,7 @@ if(isset($where_arry) || isset($like_arry)){
 	
 	$drivers=$this->vehicle_model->getDriversInfo();
 	if($drivers!=false){
-	$data['drivers']=$drivers;
+	$data['drivers']=$drivers;//print_r($data['drivers']);exit;
 	}else{
 	$data['drivers']='';
 	}
@@ -1207,7 +1208,7 @@ if(isset($where_arry) || isset($like_arry)){
 	}else{
 	$data['vehicles']='';
 	}
-	
+
 	$data['page_links']=$p_res['page_links']; 
 	$data['title']='List Driver| '.PRODUCT_NAME;
 	$page='user-pages/driverList';
@@ -1246,7 +1247,7 @@ if(isset($where_arry) || isset($like_arry)){
 			$data['trip_tab']='active';
 			
 			}
-			$data['trips']=$this->trip_booking_model->getDriverVouchers($param2,$fdate,$todate);
+			$data['trips']=$this->trip_booking_model->getDriverVouchers($param2,$fdate,$todate); 
 			//$this->mysession->set('trips',$data['trips']);
 			}
 			$data['driver_tab']='active';

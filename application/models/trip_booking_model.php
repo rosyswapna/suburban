@@ -54,7 +54,10 @@ class Trip_booking_model extends CI_Model {
 
 	$this->db->from('trip_vouchers');
     $this->db->where('trip_id',$trip_id);
-	
+	//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
     $results = $this->db->get()->result();
 	if(count($results)>0){//print_r($results);
 	return $results;
@@ -101,6 +104,10 @@ class Trip_booking_model extends CI_Model {
 	function  updateTripVoucher($data,$id,$tariff_id=-1,$trip_data=array()) {
 		
 		$this->db->where('id',$id );
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
 		$this->db->set('updated', 'NOW()', FALSE);
 		$this->db->update("trip_vouchers",$data);
 		$trip_id=$data['trip_id'];
@@ -116,6 +123,10 @@ class Trip_booking_model extends CI_Model {
 
 	function  updateTrip($data,$id) {
 	$this->db->where('id',$id );
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
 	$this->db->set('updated', 'NOW()', FALSE);
 	$this->db->update("trips",$data);
 	return true;
@@ -163,7 +174,7 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 				}
 		if($fpdate==null && $tpdate!=null){
 		$qry.=' AND T.drop_date= "'.$tpdate.'"';
-				}
+				} //echo $qry;exit;
 	$result=$this->db->query($qry);
 	$result=$result->result_array();
 	if(count($result)>0){

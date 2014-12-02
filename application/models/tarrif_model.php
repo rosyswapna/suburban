@@ -11,6 +11,10 @@ class Tarrif_model extends CI_Model {
 	$tbl="tariff_masters";
 	
 	$this->db->where('id',$id );
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
 	$this->db->set('updated', 'NOW()', FALSE);
 	$this->db->update($tbl,$data);
 	return true;
@@ -18,6 +22,10 @@ class Tarrif_model extends CI_Model {
 	public function deleteValues($id){
 	$tbl="tariff_masters";
 	$this->db->where('id',$id );
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
 	$this->db->delete($tbl);
 	return true;
 	}
@@ -60,6 +68,10 @@ class Tarrif_model extends CI_Model {
 	public function edit_tarrifValues($data,$id){
 	$tbl="tariffs";
 	$this->db->where('id',$id );
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
 	$this->db->set('updated', 'NOW()', FALSE);
 	$this->db->update($tbl,$data);
 	return true;
@@ -67,6 +79,10 @@ class Tarrif_model extends CI_Model {
 	public function delete_tarrifValues($id){
 	$tbl="tariffs";
 	$this->db->where('id',$id );
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
 	$this->db->delete($tbl);
 	return true;
 	}

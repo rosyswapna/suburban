@@ -6,8 +6,12 @@ class Organization_model extends CI_Model {
 		//$user_type_condition='user_type_id = '.ORGANISATION_ADMINISTRATOR.' OR user_type_id = '.FRONT_DESK.' AND user_status_id='.USER_STATUS_ACTIVE;
 		//$this->db->where($user_type_condition);
         $this->db->where( 'password', md5($password) );
+		//newly added-to be organisation based
+		//$org_id=$this->session->userdata('organisation_id');
+		//$this->db->where( 'organisation_id', $org_id );
+		//---
         $login = $this->db->get()->result();
-
+		
        
         if ( is_array($login) && count($login) == 1 ) {
 			
@@ -46,6 +50,10 @@ class Organization_model extends CI_Model {
 		$this->db->from('users');
         $this->db->where('id',$this->session->userdata('id'));
         $this->db->where( 'password', $data['old_password']);
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
         $changepassword = $this->db->get()->result();
 		if ( is_array($changepassword) && count($changepassword) == 1 ) {
 			$dbdata=array('password'=>$data['password']);
@@ -65,6 +73,10 @@ class Organization_model extends CI_Model {
 	function LoginAttemptsChecks($username) {
 		$this->db->from('users');
         $this->db->where('username',$username );
+		//newly added-to be organisation based
+		//$org_id=$this->session->userdata('organisation_id');
+		//$this->db->where( 'organisation_id', $org_id );
+		//---
 		$login = $this->db->get()->result();
 		$this->db->from('user_login_attempts');
 		if(count($login) > 0){
@@ -101,6 +113,10 @@ class Organization_model extends CI_Model {
 	function recordLoginAttempts($username,$ip_address) {
 		$this->db->from('users');
         $this->db->where('username',$username );
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
 		$login = $this->db->get()->result();
 		$this->db->from('user_login_attempts');
 		if(count($login) > 0){
@@ -114,6 +130,10 @@ class Organization_model extends CI_Model {
 		$orgdbdata = array('name'=>$data['name'],'address'=>$data['addr'],'updated'=>NOW());
 		$userdbdata = array('first_name'=>$data['fname'],'last_name'=>$data['lname'],'address'=>$data['addr'],'email'=>$data['mail'],'phone'=>$data['phn']);
 		$this->db->where('id',$data['user_id'] );
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
 		$succesuser=$this->db->update('users',$userdbdata);
 		if($succesuser>0){
 		$this->db->where('id',$data['org_id'] );
@@ -146,6 +166,10 @@ class Organization_model extends CI_Model {
 
 
 	function getUserStatus(){
+		//newly added-to be organisation based
+		//$org_id=$this->session->userdata('organisation_id');
+		//$qry=$this->db->where( 'organisation_id', $org_id );
+		//---
 		$qry=$this->db->get('user_statuses');
 		$count=$qry->num_rows();
 			$s= $qry->result_array();

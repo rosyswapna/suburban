@@ -12,6 +12,10 @@ public function all_details($qry){
 public function getModels(){
 	$qry=$this->db->select('id,name');
 	$qry=$this->db->from('vehicle_models');
+	//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+	$qry=$this->db->where( 'organisation_id', $org_id );
+		//---
 	$qry=$this->db->get();
 	$result=$qry->result_array();
 	return $result;

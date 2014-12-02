@@ -104,6 +104,10 @@ $qry=$this->db->insert('vehicles_insurance',$data);
 $in_id=mysql_insert_id();
 $map_qry=$this->db->set('vehicles_insurance_id', $in_id);
 $map_qry=$this->db->where('id',$v_id);
+//newly added-to be organisation based
+	$org_id=$this->session->userdata('organisation_id');
+	$map_qry=$this->db->where('organisation_id', $org_id );
+	//---
 $map_qry=$this->db->update('vehicles');
 return true;
 
@@ -116,6 +120,10 @@ $qry=$this->db->insert('vehicle_loans',$data);
 $l_id=mysql_insert_id();
 $map_qry=$this->db->set('vehicle_loan_id', $l_id);
 $map_qry=$this->db->where('id',$v_id);
+//newly added-to be organisation based
+	$org_id=$this->session->userdata('organisation_id');
+	$map_qry=$this->db->where('organisation_id', $org_id );
+	//---
 $map_qry=$this->db->update('vehicles');
 return true;
 
@@ -130,6 +138,10 @@ public function insertOwner($data){
 		$map_qry=$this->db->set('vehicle_owner_id', $o_id);
 		$v_id=$this->mysession->get('vehicle_id');
 		$map_qry=$this->db->where('id',$v_id);
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$map_qry=$this->db->where('organisation_id', $org_id );
+		//---
 		$map_qry=$this->db->update('vehicles');
 		return $o_id;
 	}else{
@@ -141,6 +153,10 @@ public function insertOwner($data){
 public function  UpdateVehicledetails($data,$v_id){
 	
 	$this->db->where('id',$v_id );
+	//newly added-to be organisation based
+	$org_id=$this->session->userdata('organisation_id');
+	$this->db->where('organisation_id', $org_id );
+	//---
 	$this->db->set('updated', 'NOW()', FALSE);
 	$this->db->update('vehicles',$data); 
 	return true;
@@ -187,7 +203,7 @@ public function map_drivers($driver_id,$from_date,$updated_date) {
 	}
 
 
-public function sample_call($data,$driver_data,$v_id){
+/*public function sample_call($data,$driver_data,$v_id){
 	$to_date='9999-12-30';
 	$tbl="vehicle_drivers";
 	$qry=$this->db->where(array('vehicle_id'=>$v_id,'organisation_id'=>$data['organisation_id'],'to_date'=>$to_date));
@@ -205,7 +221,8 @@ public function sample_call($data,$driver_data,$v_id){
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert($tbl,$arry);
 	$this->mysession->set('vehicle_id',$v_id);
-}
+}*/
+
 public function UpdateInsurancedetails($data,$id){
 
 $this->db->where('id',$id);
@@ -216,12 +233,20 @@ return true;
 public function UpdateLoandetails($data,$id){
 $this->db->set('updated', 'NOW()', FALSE);
 $this->db->where('id',$id);
+//newly added-to be organisation based
+	$org_id=$this->session->userdata('organisation_id');
+	$this->db->where('organisation_id', $org_id );
+	//---
 $this->db->update('vehicle_loans',$data); 
 return true;
 
 }
 public function UpdateOwnerdetails($data,$id){
 $this->db->set('updated', 'NOW()', FALSE);
+//newly added-to be organisation based
+	$org_id=$this->session->userdata('organisation_id');
+	$this->db->where('organisation_id', $org_id );
+	//---
 $this->db->where('id',$id);
 $this->db->update('vehicle_owners',$data);  
 return true;

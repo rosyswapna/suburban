@@ -189,7 +189,8 @@ class admin_model extends CI_Model {
 		return true;
 		}
 		}
-
+		
+	// to update organisation details of organisation and user table
 	function updateOrganization($data){
 		$orgdbdata = array('name'=>$data['name'],'address'=>$data['addr']);
 		$userdbdata = array('first_name'=>$data['fname'],'last_name'=>$data['lname'],'address'=>$data['addr'],'email'=>$data['mail'],'phone'=>$data['phn']);
@@ -205,6 +206,8 @@ class admin_model extends CI_Model {
 		}
 		}
 	}
+	
+	
 	function LoginAttemptsChecks($username) {
 		$this->db->from('users');
         $this->db->where('username',$username );

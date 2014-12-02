@@ -1,6 +1,7 @@
 <?php
 class Driver_model extends CI_Model {
-public function addDriverdetails($data){
+
+	public function addDriverdetails($data){
 
 	$this->db->set('salary', '2500');
 	$this->db->set('minimum_working_days', '25');
@@ -9,7 +10,7 @@ public function addDriverdetails($data){
 	return $this->db->insert_id();
 }
 
-public function getDriverDetails($data){ 
+	public function getDriverDetails($data){ 
 		
 	$this->db->from('customers');
 	$this->db->where($data);
@@ -47,6 +48,7 @@ public function getDriverDetails($data){
 
 	function getDriversArray($condion=''){
 	$this->db->from('drivers');
+	$this->db->where('organisation_id',$this->session->userdata('organisation_id'));
 	if($condion!=''){
     $this->db->where($condion);
 	}

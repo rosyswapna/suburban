@@ -718,7 +718,7 @@ $customer_type='';
 
 				<div class="form-submit-reset-buttons-group">
 						<?php if(isset($trip_id) && $trip_id>0){
-							$book_or_update_trip="UPADATE TRIP";
+							$book_or_update_trip="UPDATE TRIP";
 							}else{
 
 								$book_or_update_trip="BOOK TRIP";

@@ -13,15 +13,15 @@ class Device_model extends CI_Model {
 	return true;
 	}
 
-	public function getDeviceDetails($data){ 
+	/*public function getDeviceDetails($data){ 
 		
 	$this->db->from('deivices');
 	$this->db->where($data);
 	return $this->db->get()->result_array();
 	
-	}
+	}*/
 
-	function getDeviceArray($condion=''){
+	/*function getDeviceArray($condion=''){
 	$this->db->from('devices');
 	if($condion!=''){
     $this->db->where($condion);
@@ -39,7 +39,8 @@ class Device_model extends CI_Model {
 		return false;
 		}
 
-	}
+	} */
+	
 	function getReg_Num(){
 	$qry='SELECT V.registration_number,V.id As vehicle_id,VD.device_id ,VD.vehicle_id FROM vehicles AS V LEFT JOIN vehicle_devices AS VD ON VD.vehicle_id =V.id AND V.organisation_id = '.$this->session->userdata('organisation_id').' WHERE VD.organisation_id = '.$this->session->userdata('organisation_id').' AND VD.to_date="9999-12-30"';
 	$results=$this->db->query($qry);

@@ -19,8 +19,8 @@ class Admin extends CI_Controller {
 	}    
 	public function index(){
 	
-        if($this->session_check()==true) {//newly added nijo
-		$data['title']="Home | CC Phase1";   
+        if($this->session_check()==true) {
+		$data['title']="Home | ".PRODUCT_NAME;   
         $page='admin-pages/home';
      
 		$this->load_templates($page,$data);
@@ -150,7 +150,7 @@ class Admin extends CI_Controller {
 	if($secondaction != '' && $secondaction =='password-reset'){
 		//if organization name  and password-reset comes what to do?
 		$this->load->model('admin_model');
-	   	$data['title']		  =		"Reset Password | CC Phase 1"; 
+	   	$data['title']		  =		"Reset Password | ".PRODUCT_NAME; 
 		$data['password']	  = 	'';
 		$data['cpassword'] 	  = 	'';
 		$data['orgname']	  =		$action;
@@ -328,7 +328,7 @@ class Admin extends CI_Controller {
 			}else{
 			$data['postvalues']=$data;
 			}
-			$data['title']="Profile | CC Phase 1";  
+			$data['title']="Profile |".PRODUCT_NAME;  
 		    $page='admin-pages/profile';
 			$this->load_templates($page,$data);
 		    }
@@ -339,7 +339,7 @@ class Admin extends CI_Controller {
 	public function changePassword() {
 	if($this->session_check()==true) {
 	   $this->load->model('admin_model');
-	   	$data['title']		  =		"Change Password | CC Phase 1"; 
+	   	$data['title']		  =		"Change Password | ".PRODUCT_NAME; 
 		$data['old_password'] = 	'';
 		$data['password']	  = 	'';
 		$data['cpassword'] 	  = 	'';

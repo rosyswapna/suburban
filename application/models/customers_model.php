@@ -1,10 +1,23 @@
 <?php 
 class Customers_model extends CI_Model {
+	//newly added- to be organisation based---
+	var $organisation_id;
+	public function __construct()
+		{ 
+		parent::__construct();
+		$this->organisation_id=$this->session->userdata('organisation_id');
+		
+
+		}
+	//------
 	
-	
+	// to get customer details corresponding to the values provided 
 	public function getCustomerDetails($data){ 
-	//$this->db->select('id,name,email,mobile');
+	//newly added- to be organisation based---
+	$data['organisation_id']=$this->organisation_id;
+	//----
 	$this->db->from('customers');
+	
 	if($data!=''){
 		$this->db->where($data);
 	}
@@ -12,14 +25,17 @@ class Customers_model extends CI_Model {
 	
 	}
 
-	public function addCustomer($data){
+	//to add customer details with unique mobile number
+	public function addCustomer($data){ 
 		$data['organisation_id']=$this->session->userdata('organisation_id');
 		$data['user_id']=$this->session->userdata('id');
 		
  		if($data['mobile']!=''){
 		$condition['mobile']=$data['mobile'];
-		$condition['organisation_id']=$this->session->userdata('organisation_id');
-		$res=$this->getCustomerDetails($condition);
+		//newly added- to be organisation based---
+		//$condition['organisation_id']=$this->session->userdata('organisation_id');
+		//----
+		$res=$this->getCustomerDetails($condition); 
 		if(count($res)==0){
 			$this->db->set('created', 'NOW()', FALSE);
 			$this->db->insert('customers',$data);
@@ -47,10 +63,11 @@ class Customers_model extends CI_Model {
 
 	}
 	}
+	
 	public function getCurrentStatuses($id){ 
 	$qry='SELECT * FROM trips WHERE CONCAT(pick_up_date," ",pick_up_time) <= "'.date("Y-m-d H:i").'" AND CONCAT(drop_date," ",drop_time) >= "'.date("Y-m-d H:i").'" AND customer_id="'.$id.'" AND organisation_id = '.$this->session->userdata('organisation_id').' AND trip_status_id='.TRIP_STATUS_CONFIRMED;
 	$results=$this->db->query($qry);
-	$results=$results->result_array();//echo $this->db->last_query();
+	$results=$results->result_array();
 	if(count($results)>0){
 	
 		return $results;
@@ -67,6 +84,9 @@ class Customers_model extends CI_Model {
 	}
 	
 	public function getArray(){
+		//newly added- to be organisation based----
+		$qry=$this->db->where('organisation_id',$this->organisation_id);
+		//---
 		$qry=$this->db->get('customers');
 		$count=$qry->num_rows();
 		$l= $qry->result_array();
@@ -85,6 +105,9 @@ class Customers_model extends CI_Model {
 
 	$qry=$this->db->select('id');
 	$this->db->from('customers');
+	//newly added- to be organisation based----
+	$this->db->where('organisation_id',$this->organisation_id);
+	//---
 	$qry=$this->db->get();
 	$count=$qry->num_rows();
 	$result= $qry->result_array();

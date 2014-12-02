@@ -5,10 +5,18 @@ class user_model extends CI_Model {
 	function getProfile(){
 	$this->db->from('users');
 	$this->db->where('id',$this->session->userdata('id'));
+	//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
 	return $this->db->get()->result();
     }
 	function updateProfile($data){
 		$this->db->where('id',$this->session->userdata('id') );
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
 		$succes=$this->db->update('users',$data);
 		if($succes > 0) {
 		$this->session->set_userdata(array('dbSuccess'=>'Profile Updated Successfully'));
@@ -19,6 +27,10 @@ class user_model extends CI_Model {
 		$this->db->from('users');
         $this->db->where('id',$this->session->userdata('id'));
         $this->db->where( 'password', $data['old_password']);
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
         $changepassword = $this->db->get()->result();
 		if ( is_array($changepassword) && count($changepassword) == 1 ) {
 			$dbdata=array('password'=>$data['password']);
@@ -85,6 +97,10 @@ class user_model extends CI_Model {
    
 	
 	public function getAll_tarrifDetails(){
+	//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+		//---
 	$qry=$this->db->get('tariffs');
 	$count=$qry->num_rows();
 	$result=$qry->result_array();
@@ -135,14 +151,21 @@ class user_model extends CI_Model {
    public function getRecordsById($tbl,$id){ 
    if($tbl=='vehicles'){
    $to_date='9999-12-30';
-   $qry=$this->db->where(array('vehicle_id'=>$id,'to_date'=>$to_date));
+   //newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		//$this->db->where( 'organisation_id', $org_id );
+		//---
+   $qry=$this->db->where(array('vehicle_id'=>$id,'to_date'=>$to_date,'organisation_id'=>$org_id));
    $qry=$this->db->get('vehicle_drivers'); 
    $result['driver']= $qry->row_array();
-   $dev_qry=$this->db->where(array('vehicle_id'=>$id,'to_date'=>$to_date));
+   $dev_qry=$this->db->where(array('vehicle_id'=>$id,'to_date'=>$to_date,'organisation_id'=>$org_id));
    $dev_qry=$this->db->get('vehicle_devices'); 
    $result['device']= $dev_qry->row_array();
    }
 	$v_qry=$this->db->where('id',$id);
+	//newly added-to be organisation based
+	$v_qry=$this->db->where( 'organisation_id', $org_id );
+	//---
 	$v_qry=$this->db->get($tbl);
 	$result['vehicle']= $v_qry->row_array();
 	return $result;
@@ -151,6 +174,10 @@ class user_model extends CI_Model {
 	
 	$qry=$this->db->select('name');
 	$qry=$this->db->where('id',$param2);
+	//newly added-to be organisation based
+	$org_id=$this->session->userdata('organisation_id');
+	$qry=$this->db->where( 'organisation_id', $org_id );
+	//---
 	$qry=$this->db->get('drivers');
 	if($qry->num_rows()){
 	return $qry->row_array();
@@ -158,6 +185,10 @@ class user_model extends CI_Model {
 	}
 	public function getDeviceImeiById($param2){
 	$qry=$this->db->select('imei');
+	//newly added-to be organisation based
+	$org_id=$this->session->userdata('organisation_id');
+	$qry=$this->db->where( 'organisation_id', $org_id );
+	//---
 	$qry=$this->db->where('id',$param2);
 	$qry=$this->db->get('devices');
 	if($qry->num_rows()){
@@ -171,12 +202,20 @@ class user_model extends CI_Model {
 	
 	}
 	public function getLoan($id){
+	//newly added-to be organisation based
+	$org_id=$this->session->userdata('organisation_id');
+	$qry=$this->db->where('organisation_id', $org_id );
+	//---
 	$qry=$this->db->where('id',$id);
 	$qry=$this->db->get('vehicle_loans');
 	return $qry->row_array();
 	
 	}
 	public function getOwner($id){
+	//newly added-to be organisation based
+	$org_id=$this->session->userdata('organisation_id');
+	$qry=$this->db->where('organisation_id', $org_id );
+	//---
 	$qry=$this->db->where('id',$id);
 	$qry=$this->db->get('vehicle_owners');
 	return $qry->row_array();
@@ -191,6 +230,10 @@ class user_model extends CI_Model {
 	}
 	public function getOwnerDetails($id){
 	$qry=$this->db->select('mobile,address');
+	//newly added-to be organisation based
+	$org_id=$this->session->userdata('organisation_id');
+	$qry=$this->db->where('organisation_id', $org_id );
+	//---
 	$qry=$this->db->where('id',$id);
 	$qry=$this->db->get('vehicle_owners');
 	return $qry->row_array();
