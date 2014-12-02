@@ -80,7 +80,7 @@ echo form_close();?></td>
 <div class="form-group">
 <?php echo form_open(base_url()."tarrif/tarrif_manage");
 		$class="form-control";
-		$msg="Select Tariff Master";
+		$msg="Tariff Master";
 		$name="select_tariff";
 		$selected='';
 echo $this->form_functions->populate_dropdown($name,$masters,$tariff_master_id,$class,$id='',$msg); 
@@ -89,7 +89,7 @@ echo $this->form_functions->populate_dropdown($name,$masters,$tariff_master_id,$
 <div class="form-group">
 <?php 
 		$class="form-control";
-		$msg="Select vehicle Model";
+		$msg="Vehicle Model";
 		$name="vehicle_model";
 		$selected='';
 echo $this->form_functions->populate_dropdown($name,$vehicle_models,$vehicle_model_id,$class,$id='',$msg); 

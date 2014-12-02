@@ -45,12 +45,12 @@ $this->session->set_userdata('post','');
 echo form_input(array('name'=>'search_title','class'=>'form-control','id'=>'title1','placeholder'=>'Title','value'=>$title1)); ?>
 </td>
 <td><?php $class="form-control";
-		$msg="Select Trip Model";
+		$msg="Trip Model";
 		$name="search_trip_model";
 		echo $this->form_functions->populate_dropdown($name,$trip_models,$trip_model_id,$class,$id='model',$msg)?></td>
 
 <td><?php  	$class="form-control";
-		$msg="Select AC Type";
+		$msg=" AC Type";
 		$name="search_ac_type";
 		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$vehicle_ac_type_id,$class,$id='ac_type',$msg)?></td>
 <td><?php echo form_submit("search","Search","class='btn btn-primary'");?></td>
@@ -77,25 +77,25 @@ echo form_close();?></td>
 		echo form_input(array('name'=>'title','class'=>'form-control','id'=>'title1','placeholder'=>'Title','value'=>$title1)); ?>
 		</td>
 		<td><?php  	$class="form-control";
-		$msg="Select Trip Model";
+		$msg="Trip Model";
 		$name="select_trip_model";
 		echo $this->form_functions->populate_dropdown($name,$trip_models,$trip_model_id,$class,$id='',$msg)?>
 			
 		</td>
 		<td><?php $class="form-control";
-		$msg="Select Vehicle Type";
+		$msg="Vehicle Type";
 		$name="search_vehicle_type";
 		echo $this->form_functions->populate_dropdown($name,$vehicle_types,$vehicle_type_id,$class,$id='',$msg)?>
 			
 		</td>
 		<td><?php  	$class="form-control";
-		$msg="Select Vehicle Make";
+		$msg="Vehicle Make";
 		$name="select_vehicle_makes";
 		echo $this->form_functions->populate_dropdown($name,$vehicle_makes,$vehicle_make_id,$class,$id='',$msg)?>
 			
 		</td>
 		<td><?php  	$class="form-control";
-		$msg="Select AC Type";
+		$msg="AC Type";
 		$name="select_ac_type";
 		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$vehicle_ac_type_id,$class,$id='',$msg)?>
 		   

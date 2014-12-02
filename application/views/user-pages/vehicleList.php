@@ -32,7 +32,7 @@
 							  else{
 							   $owner='';
 							  }
-						echo $this->form_functions->populate_dropdown('owner',$vehicle_owners,$owner,$class,$id,$msg='Select Vehicle Owner')?> </td>
+						echo $this->form_functions->populate_dropdown('owner',$vehicle_owners,$owner,$class,$id,$msg='Vehicle Owner')?> </td>
 						<!--<td><?php// $class="form-control";
 						//echo $this->form_functions->populate_dropdown('v_type',$vehicle_types,$selected='',$class,$id='',$msg='Select Vehicle Type')?></td>-->
 						<td><?php $class="form-control";
@@ -43,7 +43,7 @@
 							  else{
 							   $v_model='';
 							  }
-						echo $this->form_functions->populate_dropdown('v_model',$vehicle_models,$v_model,$class,$id,$msg='Select Vehicle Model')?></td>
+						echo $this->form_functions->populate_dropdown('v_model',$vehicle_models,$v_model,$class,$id,$msg='Vehicle Model')?></td>
 						 <td><?php $class="form-control";
 						  $id="vehicle-ownership";
 						   if(isset($ownership)){
@@ -52,7 +52,7 @@
 							  else{
 							   $ownership='';
 							  }
-						echo $this->form_functions->populate_dropdown('ownership',$vehicle_ownership_types,$ownership,$class,$id,$msg='Select Vehicle Ownership')?> </td>
+						echo $this->form_functions->populate_dropdown('ownership',$vehicle_ownership_types,$ownership,$class,$id,$msg='Vehicle Ownership')?> </td>
 					    <td><?php $class="form-control";
 							  $id='status';
 							  $status[0]='Available';
@@ -63,7 +63,7 @@
 							  else{
 							   $status_id='';
 							  }
-						echo $this->form_functions->populate_dropdown('status',$status,$status_id,$class,$id,$msg="Select Status");?> </td>
+						echo $this->form_functions->populate_dropdown('status',$status,$status_id,$class,$id,$msg="Status");?> </td>
 						<td><?php echo form_submit("search","Search","class='btn btn-primary'");?></td>
 					    <?php echo form_close();?>
 						<td><?php echo nbs(55); ?></td>

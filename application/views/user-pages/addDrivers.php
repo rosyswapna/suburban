@@ -246,7 +246,7 @@ $this->mysession->delete('post');
 		<?php echo form_label(' Marital Status','usernamelabel'); ?>
 	<?php
 		$class="form-control";
-		$msg="Select Marital Status";
+		$msg="Marital Status";
 		$name="marital_status_id";
 		$id='marital_id';
 	echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id,$class,$id,$msg);
@@ -384,7 +384,7 @@ $this->mysession->delete('post');
 	<?php echo form_label('Bank Account','usernamelabel'); ?>
 	<?php
 		$class="form-control";
-		$msg="Select Bank Account";
+		$msg="Bank Account";
 		$name="bank_account_type_id";
 
 	echo $this->form_functions->populate_dropdown($name,$select['bank_account_types'],$bank_account_type_id,$class,$id='',$msg); 
@@ -406,7 +406,7 @@ $this->mysession->delete('post');
 	<?php echo form_label('ID Proof Type','usernamelabel'); ?>
 	<?php
 		$class="form-control";
-		$msg="Select ID Proof Type";
+		$msg="ID Proof Type";
 		$name="id_proof_type_id";
 
 	echo $this->form_functions->populate_dropdown($name,$select['id_proof_types'],$id_proof_type_id,$class,$id='',$msg); 

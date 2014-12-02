@@ -202,7 +202,7 @@
 	<?php echo form_label('Vehicle Ownership Type','usernamelabel'); ?>
      <?php
 	 $class="form-control";
-		$msg="Select Ownership Type";
+		$msg="Ownership Type";
 		$name="ownership";
 		if($ownership!=null){
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_ownership_types'],$ownership,$class,$id='',$msg);
@@ -221,7 +221,7 @@
 	<div class="form-group">
 	<?php echo form_label('Vehicle Type','usernamelabel'); ?>
            <?php $class="form-control";
-		$msg="Select Vehicle type";
+		$msg="Vehicle type";
 		$name="vehicle_type";
 	if($vehicle_type!=null){
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_types'],$vehicle_type,$class,$id='',$msg);
@@ -239,7 +239,7 @@
 	<div class="form-group">
 	<?php echo form_label('Vehicle Make','usernamelabel'); 
 	 $class="form-control";
-		$msg="Select Vehicle Make";
+		$msg="Vehicle Make";
 		$name="make";
 		if($make!=null){
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_makes'],$make,$class,$id='',$msg);
@@ -257,7 +257,7 @@
 		<div class="form-group">
 	<?php echo form_label('Vehicle Model','usernamelabel'); 
 	 $class="form-control";
-		$msg="Select Vehicle Model";
+		$msg="Vehicle Model";
 		$name="model";
 		if($model!=null){
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_models'],$model,$class,$id='',$msg);
@@ -279,7 +279,7 @@
 	<div class="form-group">
 	<?php echo form_label('Ac Type','usernamelabel'); ?>
            <?php $class="form-control";
-		$msg="Select AC Type";
+		$msg="AC Type";
 		$name="ac";
 		if($ac!=null){
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_ac_types'],$ac,$class,$id='',$msg); 
@@ -296,7 +296,7 @@
 	<div class="form-group">
 	<?php echo form_label(' Fuel Type','usernamelabel'); ?>
            <?php $class="form-control";
-		$msg="Select Fuel Type";
+		$msg="Fuel Type";
 		$name="fuel";
 		if($fuel!=null){
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_fuel_types'],$fuel,$class,$id='',$msg); 
@@ -313,7 +313,7 @@
 	<div class="form-group">
 	<?php echo form_label(' Seating Capacity','usernamelabel'); ?>
            <?php $class="form-control";
-		$msg="Select Seating Capacity";
+		$msg="Seating Capacity";
 		$name="seat";
 		if($seat!=null){
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_capacity'],$seat,$class,$id='',$msg); 
@@ -340,7 +340,7 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
 			<div class="form-group">
 	<?php echo form_label('Permit Type','usernamelabel'); ?>
            <?php $class="form-control";
-		$msg="Select Permit Type";
+		$msg="Permit Type";
 		$name="permit";
 		if($permit!=null){
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_permit_types'],$permit,$class,$id='',$msg); }
@@ -383,7 +383,7 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
 	<div class="form-group">
 		<?php echo form_label('Select Driver','usernamelabel'); ?>
            <?php $class="form-control";
-		$msg="Select Driver";
+		$msg="Driver";
 		$name="driver";
 		if($driver_id!=null){
 	echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id,$class,$id='addDriver',$msg); 
@@ -419,7 +419,7 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 		<div class="form-group">
 		<?php echo form_label('Select Device','usernamelabel'); ?>
            <?php $class="form-control";
-		$msg="Select Device";
+		$msg="Device";
 		$name="device";
 		if($device_id!=null){
 	echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_id,$class,$id='addDevice',$msg); 

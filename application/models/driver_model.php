@@ -52,6 +52,7 @@ class Driver_model extends CI_Model {
 	if($condion!=''){
     $this->db->where($condion);
 	}
+	$qry=$this->db->order_by("name", "Asc"); 
     $results = $this->db->get()->result();
 	
 

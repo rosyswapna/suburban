@@ -25,7 +25,7 @@
 					<tr>
 					    <td><?php echo form_input(array('name'=>'driver_name','class'=>'form-control','id'=>'driver_name','placeholder'=>'By Name','size'=>30,'value'=>$driver_name));?> </td>
 						<td><?php echo form_input(array('name'=>'driver_city','class'=>'form-control','id'=>'driver_city','placeholder'=>'By City','size'=>30,'value'=>$driver_city));?> </td>
-						<td><?php $class="form-control";
+						<td><?php $class="form-control ";
 							  $id='status';
 							  $status[0]='Available';
 							  $status[1]='On-Trip';
@@ -35,7 +35,7 @@
 							  else{
 							   $status_id='';
 							  }
-						echo $this->form_functions->populate_dropdown('status',$status,$status_id,$class,$id,$msg="Select Status");?> </td>
+						echo $this->form_functions->populate_dropdown('status',$status,$status_id,$class,$id,$msg="Status");?> </td>
 						<!--<td><?php// $class="form-control";
 						//echo $this->form_functions->populate_dropdown('model',$v_models,$selected='',$class,$id='',$msg='Select Vehicle Model')?> </td>-->
 					    

@@ -156,13 +156,13 @@
 				<div class="form-group">
 					<?php echo form_label('Customer Type','ctypelabel'); 
 				   $class="form-control customer-type";
-					echo $this->form_functions->populate_dropdown('customer_type_id',$customer_types,$customer_type_id,$class,$id='',$msg="Select Customer type");?> 
+					echo $this->form_functions->populate_dropdown('customer_type_id',$customer_types,$customer_type_id,$class,$id='',$msg="Customer type");?> 
 				</div>
 			</div>
 			<div class="div-with-50-percent-width-with-margin-10">
 				<div class="form-group">
 					<?php echo form_label('Customer Group','cgrouplabel'); ?>
-				   <?php echo $this->form_functions->populate_dropdown('customer_group_id',$customer_groups,$customer_group_id,$class ='form-control',$id='',$msg="Select Groups"); ?>
+				   <?php echo $this->form_functions->populate_dropdown('customer_group_id',$customer_groups,$customer_group_id,$class ='form-control',$id='',$msg="Groups"); ?>
 					
 				</div>
 				<div class="form-group">
