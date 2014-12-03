@@ -9,6 +9,105 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
     See the License here <http://www.gnu.org/licenses/gpl-3.0.html>.
 ***********************************************************************/
+
+
+function update_delivery_with_cnc_voucher($delivery)
+{
+
+	//echo "<pre>";
+	//print_r($delivery);
+	//echo "<pre>";exit;
+	$trans_no = key($delivery->trans_no);
+	$type =  $delivery->trans_type;
+	
+	$total = 0;
+	$tax = 0;
+	$total_taxable_amount =0;
+	$comments = '';
+
+
+	
+	$taxes = $delivery->get_taxes(); // all taxes with freight_tax
+
+	foreach ($taxes as $taxitem) {
+		$taxitem['Value'] =  round2($taxitem['Value'], user_price_dec());
+		$tax +=  $taxitem['Value'];
+	}
+
+	//echo "<pre>";print_r($taxes);echo "</pre>";exit;
+
+
+	foreach($delivery->line_items as $line_items){
+		
+
+		$line_tax = get_full_price_for_item($line_items->stock_id, $line_items->price,
+			0, $delivery->tax_included, $delivery->tax_group_array) - $line_items->unit_taxable_amount;
+
+		$sql= "UPDATE ".TB_PREF. "debtor_trans_details SET 
+			unit_price = ".db_escape($line_items->price).",
+			unit_taxable_amount = ".db_escape($line_items->unit_taxable_amount).",
+			unit_tax = ".db_escape($line_tax)."
+			"
+			."WHERE id =".db_escape($line_items->id);
+
+		$total += $line_items->price;
+		$tax += $line_tax;
+		$total_taxable_amount +=$line_items->unit_taxable_amount;
+
+		db_query($sql, 'failed to update line details');
+
+
+		$sql= "UPDATE ".TB_PREF. "sales_order_details SET 
+			unit_price = ".db_escape($line_items->price)." WHERE order_no =".db_escape($delivery->order_no);
+
+		
+		db_query($sql, 'failed to update line details');
+
+		
+		$comments .= $line_items->particulars;
+
+	}
+
+	$sql = "UPDATE ".TB_PREF. "comments SET  `memo_` = ".db_escape($comments)." 
+		WHERE type = ".db_escape($type)." AND id = ".db_escape($trans_no);
+
+	
+	db_query($sql, 'failed to update comments');
+
+	
+	$sql= "UPDATE ".TB_PREF. "debtor_trans SET ov_amount = ".db_escape($total).",ov_gst = ".db_escape($tax).
+			" WHERE trans_no=".db_escape($trans_no)." AND type=".db_escape($type);
+	db_query($sql, 'failed to update debtor trans');
+
+
+	$sql= "UPDATE ".TB_PREF. "sales_orders SET total = ".db_escape($total).
+			" WHERE order_no=".db_escape($delivery->order_no);
+	db_query($sql, 'failed to update sale order');
+
+	//clear tax transactions and reinsert if required
+	clear_trans_tax_details($type, $trans_no);
+	foreach ($taxes as $taxitem) {
+		if ($taxitem['Net'] != 0) {
+				$ex_rate = get_exchange_rate_from_home_currency(get_customer_currency($delivery->customer_id), $delivery->document_date);
+    		    add_trans_tax_details($type, $trans_no, $taxitem['tax_type_id'],
+				$taxitem['rate'], $delivery->tax_included, $taxitem['Value'],
+				$taxitem['Net'], $ex_rate, $delivery->document_date, $delivery->reference );
+		}
+	}
+	
+
+	//$sql= "UPDATE ".TB_PREF. "trans_tax_details SET net_amount = ".db_escape($total_taxable_amount).",amount = ".db_escape($tax)." WHERE trans_no=".db_escape($trans_no)." AND trans_type=".db_escape($type);
+
+	//db_query($sql, 'failed to update tax trans');
+
+	$sql= "UPDATE ".TB_PREF. "stock_moves SET price = ".db_escape($total).
+			" WHERE trans_no=".db_escape($trans_no)." AND type=".db_escape($type);
+	db_query($sql, 'failed to update stock movement');
+
+	return true;
+
+	//return  db_query($sql, 'Concurrent editing conflict');
+}
 //-----------------------------------------------------------------------------
 // insert/update sales delivery
 //
@@ -16,6 +115,7 @@ function write_sales_delivery(&$delivery,$bo_policy)
 {
 	global $Refs;
 	
+
 
 	$trans_no = $delivery->trans_no;
 	if (is_array($trans_no)) $trans_no = key($trans_no);
@@ -50,7 +150,12 @@ function write_sales_delivery(&$delivery,$bo_policy)
 		$delivery->tax_included ? 0 : $freight_tax,
 		$delivery->sales_type, $delivery->order_no,
 		$delivery->ship_via, $delivery->due_date, 0, 0, $delivery->dimension_id, 
-		$delivery->dimension2_id, $delivery->payment);
+		$delivery->dimension2_id, $delivery->payment, $delivery->tax_group_from_cnc);
+
+	//update trip voucher with delivery no
+	if($delivery_no){
+		update_cnc_voucher_with_transno($delivery->trip_voucher, ST_CUSTDELIVERY, $delivery_no);
+	}
 
 	if ($trans_no == 0) {
 		$delivery->trans_no = array($delivery_no=>0);

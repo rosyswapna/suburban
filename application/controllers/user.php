@@ -175,9 +175,26 @@ class User extends CI_Controller {
 	}
 	    
 		$tbl="tariff_masters";
-		if(is_null($this->mysession->get('condition'))){//print_r($where_arry);exit;
+		//to avoid session problem while session value sets from another page--starts--
+		if(!is_null($this->mysession->get('condition'))){//print_r($where_arry);exit;
+		$condition=$this->mysession->get('condition');
+		if(isset($condition['where']['trip_model_id']) || isset($condition['where']['vehicle_ac_type_id'])||isset($condition['like']['title'])){ 
+		if($condition['where']['trip_model_id']!=null){
+		$where_arry['trip_model_id']=$condition['where']['trip_model_id'];
+		}
+		if($condition['where']['vehicle_ac_type_id']!=null){
+		$where_arry['vehicle_ac_type_id']=$condition['where']['vehicle_ac_type_id'];
+		}
+		if($condition['like']['title']!=null){
+		$like_arry['title']=$condition['like']['title'];
+		}
+		$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
+		
+		}else{ 
 		$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 		}
+		}
+		//--ends--
 		$baseurl=base_url().'organization/front-desk/tarrif-masters/';
 		$uriseg ='4';
 		
@@ -271,7 +288,19 @@ class User extends CI_Controller {
 	}
 	}
 	}
-	    
+	    	//to avoid session problem while session value sets from another page--starts--
+		if(!is_null($this->mysession->get('condition'))){ //print_r($where_arry);exit;
+		$condition=$this->mysession->get('condition');
+		if(isset($condition['where']['organisation_id'])){ 
+		if($condition['where']['organisation_id']!=null){
+		$where_arry['organisation_id']=$condition['where']['organisation_id'];
+		}
+		$this->mysession->set('condition',array("where"=>$where_arry));
+		}else{ 
+		$this->mysession->set('condition',array("where"=>$where_arry));
+		}
+		}
+		//--ends--
 		$tbl="tariffs";
 		if(is_null($this->mysession->get('condition'))){ 
 		$this->mysession->set('condition',array("where"=>$where_arry));

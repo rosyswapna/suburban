@@ -54,26 +54,31 @@ if (isset($_POST['BatchInvoice']))
     foreach($_POST['Sel_'] as $delivery => $branch) {
 	  	$checkbox = 'Sel_'.$delivery;
 	  	if (check_value($checkbox))	{
-	    	if (!$del_count) {
+	    		if (!$del_count) {
 				$del_branch = $branch;
-	    	}
-	    	else {
+	    		}
+	    		else {
 				if ($del_branch != $branch)	{
 		    		$del_count=0;
 		    		break;
 				}
-	    	}
-	    	$selected[] = $delivery;
-	    	$del_count++;
+	    		}
+	    		$selected[] = $delivery;
+			$trip_voucher[] = get_trip_voucher_id_with_delivery_no($delivery);
+	    		$del_count++;
 	  	}
+
+		//get voucher numbers for selected deliveries
+		
     }
 
     if (!$del_count) {
 		display_error(_('For batch invoicing you should
 		    select at least one delivery. All items must be dispatched to
-		    the same customer branch.'));
+		    the same company and tax group.'));
     } else {
 		$_SESSION['DeliveryBatch'] = $selected;
+		$_SESSION['TripVoucherBatch'] = $trip_voucher;
 		meta_forward($path_to_root . '/sales/customer_invoice.php','BatchInvoice=Yes');
     }
 }
@@ -177,7 +182,7 @@ function batch_checkbox($row)
 		"<input type='checkbox' name='$name' value='1' >"
 // add also trans_no => branch code for checking after 'Batch' submit
 	 ."<input name='Sel_[".$row['trans_no']."]' type='hidden' value='"
-	 .$row['branch_code']."'>\n";
+	 .$row['branch_code']."_".$row['tax_group_id']."'>\n";
 }
 
 function edit_link($row)

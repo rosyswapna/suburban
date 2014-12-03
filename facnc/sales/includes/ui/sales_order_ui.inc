@@ -108,10 +108,18 @@ function get_customer_details_to_order(&$order, $customer_id, $branch_id)
 	}*/
 
 	$myrow = db_fetch($result);
+	if($order->tax_group_from_cnc){
+		$tax_group_id = $order->tax_group_from_cnc;
+	}else{
+		$tax_group_id = $myrow["tax_group_id"];
+	}
 
 	// FIX - implement editable contact selector in sales order 
 	$contact = get_branch_contacts($branch_id, 'order', $customer_id);
-	$order->set_branch($branch_id, $myrow["tax_group_id"],
+	//$order->set_branch($branch_id, $myrow["tax_group_id"],
+	//$myrow["tax_group_name"], @$contact["phone"], @$contact["email"]);
+
+	$order->set_branch($branch_id, $tax_group_id,
 	$myrow["tax_group_name"], @$contact["phone"], @$contact["email"]);
 
 	$address = trim($myrow["br_post_address"]) != '' ? $myrow["br_post_address"]

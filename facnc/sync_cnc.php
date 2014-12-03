@@ -1,4 +1,6 @@
 <?php
+
+
 	
 	$path_to_root=".";
 
@@ -38,8 +40,16 @@
 		meta_forward('admin/forms_setup.php');
 		
 	}
-	elseif(isset($_GET['Taxes'])){
+	elseif(isset($_GET['GlAccount'])){
+		meta_forward('gl/manage/gl_accounts.php');
+		
+	}
+	elseif(isset($_GET['TaxType'])){
 		meta_forward('taxes/tax_types.php');
+		
+	}
+	elseif(isset($_GET['TaxGroups'])){
+		meta_forward('taxes/tax_groups.php');
 		
 	}
 	elseif(isset($_GET['PaymentTerms'])){
@@ -63,7 +73,19 @@
 		
 	}
 	elseif(isset($_GET['NewDelivery'])){
-		meta_forward('sales/sales_order_entry.php','NewDelivery='.$_GET['NewDelivery']);
+		$param = 'NewDelivery='.$_GET['NewDelivery'];
+		if(isset($_GET['TaxGroup'])){
+			$param.= "&TaxGroup=".$_GET['TaxGroup'];
+		}
+		meta_forward('sales/sales_order_entry.php',$param);
+		
+	}elseif(isset($_GET['ModifyDelivery'])){
+
+		$param = 'ModifyDelivery='.$_GET['ModifyDelivery'];
+		if(isset($_GET['TaxGroup'])){
+			$param.= "&TaxGroup=".$_GET['TaxGroup'];
+		}
+		meta_forward('sales/customer_delivery.php',$param);
 		
 	}
 	elseif(isset($_GET['SalesDeliveries'])){

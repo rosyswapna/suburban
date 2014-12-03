@@ -26,6 +26,8 @@ include_once($path_to_root . "/sales/includes/db/payment_db.inc");
 include_once($path_to_root . "/sales/includes/db/branches_db.inc");
 include_once($path_to_root . "/sales/includes/db/customers_db.inc");
 
+include_once($path_to_root . "/includes/db/cnc_session_db.inc");
+
 //----------------------------------------------------------------------------------------
 // $price in customer's currency
 // $quantity is used as is (if it's neg it's neg, if it's pos it's pos)
@@ -259,6 +261,9 @@ function read_sales_trans($doc_type, $trans_no, &$cart)
 	} else {
 		// read header data from first document
 		$myrow = get_customer_trans($trans_no[0],$doc_type);
+
+		$cart->tax_group_from_cnc = $myrow['tax_group_id'];
+		
 		if (count($trans_no)>1)
 			$cart->trans_no = get_customer_trans_version($doc_type, $trans_no);
 		else
@@ -269,8 +274,10 @@ function read_sales_trans($doc_type, $trans_no, &$cart)
 		$cart->set_customer($myrow["debtor_no"], $myrow["DebtorName"],
 			$myrow["curr_code"], $myrow["discount"], $myrow["payment_terms"]);
 
+
 		$cart->set_branch($myrow["branch_code"], $myrow["tax_group_id"],
 			$myrow["tax_group_name"]);
+
 
 		$cart->reference = $myrow["reference"];
 		$cart->order_no = $myrow["order_"];
@@ -279,9 +286,13 @@ function read_sales_trans($doc_type, $trans_no, &$cart)
 		$cart->dimension_id = $myrow['dimension_id']; // added 2.1 Joe Hunt 2008-11-12
 		$cart->dimension2_id = $myrow['dimension2_id'];
 		$cart->Comments = '';
+		$particulars = array();
 		foreach ( $trans_no as $trans ) {
 			$cart->Comments .= get_comments_string($doc_type,$trans);
+			$particulars[$trans] = get_comments_string($doc_type,$trans);
 		}
+
+		
 
 		// FIX this should be calculated sum() for multiply parents
 
@@ -298,13 +309,14 @@ function read_sales_trans($doc_type, $trans_no, &$cart)
 		$result = get_customer_trans_details($doc_type,$trans_no);
 		if (db_num_rows($result) > 0) {
 			for($line_no=0; $myrow = db_fetch($result); $line_no++)	{
+				$trans_no = $myrow["debtor_trans_no"];
 				//echo "<pre>";print_r($myrow);echo "</pre>";exit;
 				$cart->line_items[$line_no] = new line_details(
 					$myrow["stock_id"],$myrow["quantity"],
 					$myrow["unit_price"], $myrow["discount_percent"],
 					$myrow["qty_done"], $myrow["standard_cost"],
 					$myrow["StockDescription"],$myrow["id"], $myrow["debtor_trans_no"],
-					@$myrow["src_id"],$myrow["trip_voucher"]);
+					@$myrow["src_id"],$myrow["trip_voucher"],@$particulars[$trans_no]);
 			}
 
 		
@@ -407,6 +419,31 @@ function get_sales_child_documents($trans_type, $trans_no)
 
 	return db_query($sql,"The related credit notes could not be retreived");
 }
+
+//----------------------------------------------------------------------------------------
+function update_cnc_voucher_with_transno($voucher, $trans_type, $trans_no){
+	
+	$sql = '';
+	if (!is_array($voucher)) $voucher = array($voucher);
+
+	foreach($voucher as $voucher_no){
+
+		switch($trans_type){
+			case ST_CUSTDELIVERY :$sql = "UPDATE trip_vouchers SET delivery_no = ".db_escape($trans_no)." WHERE id = ".db_escape($voucher_no);break;
+			case ST_SALESINVOICE :$sql = "UPDATE trip_vouchers SET invoice_no = ".db_escape($trans_no)." WHERE id = ".db_escape($voucher_no);break;
+		}
+
+		db_query($sql,"Trip voucher updation failed");
+	}
+	return true;
+
+}
+
+
+//----------------------------------------------------------------------------------------
+
+
+
 
 
 ?>

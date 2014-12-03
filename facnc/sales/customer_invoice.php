@@ -54,14 +54,14 @@ if (isset($_GET['AddedID'])) {
 
 	display_notification(_("Selected deliveries has been processed"), true);
 
-	display_note(get_customer_trans_view_str($trans_type, $invoice_no, _("&View This Invoice")), 0, 1);
+	//display_note(get_customer_trans_view_str($trans_type, $invoice_no, _("&View This Invoice")), 0, 1);
 
 	display_note(print_document_link($invoice_no."-".$trans_type, _("&Print This Invoice"), true, ST_SALESINVOICE));
-	display_note(print_document_link($invoice_no."-".$trans_type, _("&Email This Invoice"), true, ST_SALESINVOICE, false, "printlink", "", 1),1);
+	//display_note(print_document_link($invoice_no."-".$trans_type, _("&Email This Invoice"), true, ST_SALESINVOICE, false, "printlink", "", 1),1);
 
-	display_note(get_gl_view_str($trans_type, $invoice_no, _("View the GL &Journal Entries for this Invoice")),1);
+	//display_note(get_gl_view_str($trans_type, $invoice_no, _("View the GL &Journal Entries for this Invoice")),1);
 
-	hyperlink_params("$path_to_root/sales/inquiry/sales_deliveries_view.php", _("Select Another &Delivery For Invoicing"), "OutstandingOnly=1");
+	//hyperlink_params("$path_to_root/sales/inquiry/sales_deliveries_view.php", _("Select Another &Delivery For Invoicing"), "OutstandingOnly=1");
 
 	$sql = "SELECT trans_type_from, trans_no_from FROM ".TB_PREF."cust_allocations
 			WHERE trans_type_to=".ST_SALESINVOICE." AND trans_no_to=".db_escape($invoice_no);
@@ -72,7 +72,7 @@ if (isset($_GET['AddedID'])) {
 		hyperlink_params("$path_to_root/sales/customer_payments.php", _("Entry &customer payment for this invoice"),
 		"SInvoice=".$invoice_no);
 
-	hyperlink_params("$path_to_root/admin/attachments.php", _("Add an Attachment"), "filterType=$trans_type&trans_no=$invoice_no");
+	//hyperlink_params("$path_to_root/admin/attachments.php", _("Add an Attachment"), "filterType=$trans_type&trans_no=$invoice_no");
 
 	display_footer_exit();
 
@@ -115,15 +115,20 @@ if ( (isset($_GET['DeliveryNumber']) && ($_GET['DeliveryNumber'] > 0) )
 
 	processing_start();
 
+
 	if (isset($_GET['BatchInvoice'])) {
 		$src = $_SESSION['DeliveryBatch'];
+		$trip_voucher = $_SESSION['TripVoucherBatch'];
 		unset($_SESSION['DeliveryBatch']);
+		unset($_SESSION['TripVoucherBatch']);
 	} else {
 		$src = array($_GET['DeliveryNumber']);
+		$trip_voucher = get_trip_voucher_id_with_delivery_no($_GET['DeliveryNumber']);
+		
 	}
 
 	/*read in all the selected deliveries into the Items cart  */
-	$dn = new Cart(ST_CUSTDELIVERY, $src, true);
+	$dn = new Cart(ST_CUSTDELIVERY, $src, true,$trip_voucher);
 
 	if ($dn->count_items() == 0) {
 		hyperlink_params($path_to_root . "/sales/inquiry/sales_deliveries_view.php",
@@ -372,6 +377,10 @@ for ($line_no = 0; $line_no < count($_SESSION['Items']->line_items); $line_no++)
 $dspans[] = $spanlen;
 
 //-----------------------------------------------------------------------------
+//echo "<pre>";
+//print_r($_SESSION['Items']);
+//echo "</pre>";
+//exit;
 
 $is_batch_invoice = count($_SESSION['Items']->src_docs) > 1;
 
@@ -382,86 +391,97 @@ hidden('cart_id');
 start_table(TABLESTYLE2, "width=100%", 5);
 
 start_row();
-$colspan = 1;
-$dim = get_company_pref('use_dimension');
-if ($dim > 0) 
-	$colspan = 3;
-label_cells(_("Customer"), $_SESSION['Items']->customer_name, "class='tableheader2'");
-label_cells(_("Branch"), get_branch_name($_SESSION['Items']->Branch), "class='tableheader2'");
-if ($_SESSION['Items']->pos['credit_sale'] || $_SESSION['Items']->pos['cash_sale']) {
-	$paymcat = !$_SESSION['Items']->pos['cash_sale'] ? PM_CREDIT :
-		(!$_SESSION['Items']->pos['credit_sale'] ? PM_CASH : PM_ANY);
-	label_cells(_("Payment terms:"), sale_payment_list('payment', $paymcat),
-		"class='tableheader2'", "colspan=$colspan");
-} else
-	label_cells(_('Payment:'), $_SESSION['Items']->payment_terms['terms'], "class='tableheader2'", "colspan=$colspan");
+	$colspan = 1;
+	$dim = get_company_pref('use_dimension');
+	if ($dim > 0) 
+		$colspan = 3;
+	label_cells(_("Customer"), $_SESSION['Items']->customer_name, "class='tableheader2'");
+	//label_cells(_("Branch"), get_branch_name($_SESSION['Items']->Branch), "class='tableheader2'");
+	if ($_SESSION['Items']->pos['credit_sale'] || $_SESSION['Items']->pos['cash_sale']) {
+		$paymcat = !$_SESSION['Items']->pos['cash_sale'] ? PM_CREDIT :
+			(!$_SESSION['Items']->pos['credit_sale'] ? PM_CASH : PM_ANY);
+		label_cells(_("Payment terms:"), sale_payment_list('payment', $paymcat),
+			"class='tableheader2'", "colspan=$colspan");
+	} else
+		label_cells(_('Payment:'), $_SESSION['Items']->payment_terms['terms'], "class='tableheader2'", "colspan=$colspan");
 
 end_row();
 start_row();
 
-if ($_SESSION['Items']->trans_no == 0) {
-	ref_cells(_("Reference"), 'ref', '', null, "class='tableheader2'");
-} else {
-	label_cells(_("Reference"), $_SESSION['Items']->reference, "class='tableheader2'");
-}
+	if ($_SESSION['Items']->trans_no == 0) {
+		ref_cells(_("Reference"), 'ref', '', null, "class='tableheader2'");
+	} else {
+		label_cells(_("Reference"), $_SESSION['Items']->reference, "class='tableheader2'");
+	}
+
+	if (!isset($_POST['due_date']) || !is_date($_POST['due_date'])) {
+		$_POST['due_date'] = get_invoice_duedate($_SESSION['Items']->payment, $_POST['InvoiceDate']);
+	}
+
+	date_cells(_("Due Date"), 'due_date', '', null, 0, 0, 0, "class='tableheader2'");
+
+
 
 //label_cells(_("Delivery Notes:"),
 //get_customer_trans_view_str(ST_CUSTDELIVERY, array_keys($_SESSION['Items']->src_docs)), "class='tableheader2'");
 
-label_cells(_("Sales Type"), $_SESSION['Items']->sales_type_name, "class='tableheader2'");
+//label_cells(_("Sales Type"), $_SESSION['Items']->sales_type_name, "class='tableheader2'");
 
-label_cells(_("Currency"), $_SESSION['Items']->customer_currency, "class='tableheader2'");
+//label_cells(_("Currency"), $_SESSION['Items']->customer_currency, "class='tableheader2'");
 // 2010-09-03 Joe Hunt
 //if ($dim > 0) 
 //	label_cells(_("Dimension"), get_dimension_string($_SESSION['Items']->dimension_id), "class='tableheader2'");
-if ($dim > 0) {
-	label_cell(_("Dimension").":", "class='tableheader2'");
-	$_POST['dimension_id'] = $_SESSION['Items']->dimension_id;
-	dimensions_list_cells(null, 'dimension_id', null, true, ' ', false, 1, false);
-}		
+if ($dim > 0) 
+	$_POST['dimension_id'] = $_SESSION['Items']->dimension_id;		
 else
-	hidden('dimension_id', 0);
+	$_POST['dimension_id'] = 0;
+	
+
+	hidden('dimension_id');
 
 end_row();
+
 start_row();
 
-if (!isset($_POST['ship_via'])) {
-	$_POST['ship_via'] = $_SESSION['Items']->ship_via;
-}
-label_cell(_("Shipping Company"), "class='tableheader2'");
-shippers_list_cells(null, 'ship_via', $_POST['ship_via']);
-
-if (!isset($_POST['InvoiceDate']) || !is_date($_POST['InvoiceDate'])) {
-	$_POST['InvoiceDate'] = new_doc_date();
-	if (!is_date_in_fiscalyear($_POST['InvoiceDate'])) {
-		$_POST['InvoiceDate'] = end_fiscalyear();
+	if (!isset($_POST['InvoiceDate']) || !is_date($_POST['InvoiceDate'])) {
+		$_POST['InvoiceDate'] = new_doc_date();
+		if (!is_date_in_fiscalyear($_POST['InvoiceDate'])) {
+			$_POST['InvoiceDate'] = end_fiscalyear();
+		}
 	}
-}
 
-date_cells(_("Date"), 'InvoiceDate', '', $_SESSION['Items']->trans_no == 0, 
-	0, 0, 0, "class='tableheader2'", true);
+	date_cells(_("Date"), 'InvoiceDate', '', $_SESSION['Items']->trans_no == 0, 
+		0, 0, 0, "class='tableheader2'", true);
 
-if (!isset($_POST['due_date']) || !is_date($_POST['due_date'])) {
-	$_POST['due_date'] = get_invoice_duedate($_SESSION['Items']->payment, $_POST['InvoiceDate']);
-}
+	if (!isset($_POST['ship_via'])) {
+		$_POST['ship_via'] = $_SESSION['Items']->ship_via;
+	}
+	hidden('ship_via');
+	
 
-date_cells(_("Due Date"), 'due_date', '', null, 0, 0, 0, "class='tableheader2'");
-/*
-if ($dim > 1) 
-	label_cells(_("Dimension"). " 2", get_dimension_string($_SESSION['Items']->dimension2_id), "class='tableheader2'");
-else if ($dim > 0)
-	label_cell("&nbsp;", "colspan=2");
-*/
-if ($dim > 1) {
-	label_cell(_("Dimension")." 2:", "class='tableheader2'");
-	$_POST['dimension2_id'] = $_SESSION['Items']->dimension2_id;
-	dimensions_list_cells(null, 'dimension2_id', null, true, ' ', false, 2, false);
-}		
-else
-	hidden('dimension2_id', 0);
+	
+
+
+
+	
+	/*
+	if ($dim > 1) 
+		label_cells(_("Dimension"). " 2", get_dimension_string($_SESSION['Items']->dimension2_id), "class='tableheader2'");
+	else if ($dim > 0)
+		label_cell("&nbsp;", "colspan=2");
+	*/
+	if ($dim > 1) {
+		label_cell(_("Dimension")." 2:", "class='tableheader2'");
+		$_POST['dimension2_id'] = $_SESSION['Items']->dimension2_id;
+		hidden('dimension2_id');
+	}		
+	else
+		hidden('dimension2_id', 0);
 end_row();
 end_table();
 
+
+//trip data table
 $row = get_customer_to_order($_SESSION['Items']->customer_id);
 if ($row['dissallow_invoices'] == 1)
 {
@@ -471,21 +491,24 @@ if ($row['dissallow_invoices'] == 1)
 	exit();
 }	
 
-display_heading(_("Invoice Items"));
+display_heading(_("Invoice Trips"));
 
 div_start('Items');
 start_table(TABLESTYLE, "width=100%");
-$th = array(_("Item Code"), _("Item Description"), _("Delivered"), _("Units"), _("Invoiced"),
-	_("This Invoice"), _("Price"), _("Tax Type"), _("Discount"), _("Total"));
+//$th = array(_("Item Code"), _("Item Description"), _("Delivered"), _("Units"), _("Invoiced"),
+	//_("This Invoice"), _("Price"), _("Tax Type"), _("Discount"), _("Total"));
+$th = array(_("SlNo"), _("Voucher No"), _("Date"), _("Vehicle"), _("UserName"),
+	_("Particulars"), _("Amount"));
 
 if ($is_batch_invoice) {
-    $th[] = _("DN");
     $th[] = "";
 }
 
+/*
 if ($is_edition) {
     $th[4] = _("Credited");
 }
+*/
 
 table_header($th);
 $k = 0;
@@ -495,26 +518,39 @@ $show_qoh = true;
 $dn_line_cnt = 0;
 	
 
+$slno = 1;
 foreach ($_SESSION['Items']->line_items as $line=>$ln_itm) {
+	
+	
 	if ($ln_itm->quantity == $ln_itm->qty_done) {
 		continue; // this line was fully invoiced
 	}
 	alt_table_row_color($k);
-	view_stock_status_cell($ln_itm->stock_id);
+	label_cell($slno);
+	label_cell($ln_itm->voucher_no);
+	label_cell($ln_itm->pickup_date);
+	echo "<td>";
+		echo $ln_itm->vehicle_model;
+		br();
+		echo $ln_itm->vehicle_no;
+	echo "</td>";
+	label_cell($ln_itm->username);
+	label_cell($ln_itm->particulars);
+	
 
-	text_cells(null, 'Line'.$line.'Desc', $ln_itm->item_description, 30, 50);
+	//text_cells(null, 'Line'.$line.'Desc', $ln_itm->item_description, 30, 50);
 	$dec = get_qty_dec($ln_itm->stock_id);
-	qty_cell($ln_itm->quantity, false, $dec);
-	label_cell($ln_itm->units);
-	qty_cell($ln_itm->qty_done, false, $dec);
+	//qty_cell($ln_itm->quantity, false, $dec);
+	//label_cell($ln_itm->units);
+	//qty_cell($ln_itm->qty_done, false, $dec);
 
 	if ($is_batch_invoice) {
-		// for batch invoices we can only remove whole deliveries
-		echo '<td nowrap align=right>';
+		
 		hidden('Line' . $line, $ln_itm->qty_dispatched );
-		echo number_format2($ln_itm->qty_dispatched, $dec).'</td>';
+		
 	} else {
-		small_qty_cells(null, 'Line'.$line, qty_format($ln_itm->qty_dispatched, $ln_itm->stock_id, $dec), null, null, $dec);
+		//small_qty_cells(null, 'Line'.$line, qty_format($ln_itm->qty_dispatched, $ln_itm->stock_id, $dec), null, null, $dec);
+		hidden('Line' . $line, $ln_itm->qty_dispatched );
 	}
 	$display_discount_percent = percent_format($ln_itm->discount_percent*100) . " %";
 
@@ -522,22 +558,24 @@ foreach ($_SESSION['Items']->line_items as $line=>$ln_itm) {
 
 	
 
-	amount_cell($ln_itm->price);
-	label_cell($ln_itm->tax_type_name);
-	label_cell($display_discount_percent, "nowrap align=right");
+	//amount_cell($ln_itm->price);
+	//label_cell($ln_itm->tax_type_name);
+	//label_cell($display_discount_percent, "nowrap align=right");
 	amount_cell($line_total);
 
 	if ($is_batch_invoice) {
 		if ($dn_line_cnt == 0) {
 			$dn_line_cnt = $dspans[0];
 			$dspans = array_slice($dspans, 1);
-			label_cell($ln_itm->src_no, "rowspan=$dn_line_cnt class=oddrow");
+			//label_cell($ln_itm->src_no, "rowspan=$dn_line_cnt class=oddrow");
 			label_cell("<a href='" . $_SERVER['PHP_SELF'] . "?RemoveDN=".
 				$ln_itm->src_no."'>" . _("Remove") . "</a>", "rowspan=$dn_line_cnt class=oddrow");
 		}
 		$dn_line_cnt--;
 	}
 	end_row();
+
+	$slno++;
 }
 
 /*Don't re-calculate freight if some of the order has already been delivered -
@@ -561,36 +599,37 @@ $accumulate_shipping = get_company_pref('accumulate_shipping');
 if ($is_batch_invoice && $accumulate_shipping)
 	set_delivery_shipping_sum(array_keys($_SESSION['Items']->src_docs));
 
-$colspan = 9;
-start_row();
-label_cell(_("Shipping Cost"), "colspan=$colspan align=right");
-small_amount_cells(null, 'ChargeFreightCost', null);
-if ($is_batch_invoice) {
-label_cell('', 'colspan=2');
-}
+$colspan = 6;
 
-end_row();
+hidden('ChargeFreightCost',null);
+	
 $inv_items_total = $_SESSION['Items']->get_items_total_dispatch();
 
 $display_sub_total = price_format($inv_items_total + input_num('ChargeFreightCost'));
 
-label_row(_("Sub-total"), $display_sub_total, "colspan=$colspan align=right","align=right", $is_batch_invoice ? 2 : 0);
+$right_colspan = $is_batch_invoice ? 2:0;
+
+
+
+label_row(_("Sub-total"), $display_sub_total, "colspan=$colspan align=right","colspan=$right_colspan align=left");
 
 $taxes = $_SESSION['Items']->get_taxes(input_num('ChargeFreightCost'));
-$tax_total = display_edit_tax_items($taxes, $colspan, $_SESSION['Items']->tax_included, $is_batch_invoice ? 2:0);
+$tax_total = display_edit_tax_items($taxes, $colspan, $_SESSION['Items']->tax_included,0,false,"colspan=$right_colspan align=left");
 
 
 $display_total = price_format(($inv_items_total + input_num('ChargeFreightCost') + $tax_total));
 
 
 
-label_row(_("Invoice Total"), $display_total, "colspan=$colspan align=right","align=right", $is_batch_invoice ? 2 : 0);
+label_row(_("Invoice Total"), $display_total, "colspan=$colspan align=right","colspan=$right_colspan align=left");
 
 end_table(1);
 div_end();
 
-start_table(TABLESTYLE2);
-textarea_row(_("Memo"), 'Comments', null, 50, 4);
+
+
+start_table(TABLESTYLE2,"width=100%");
+textarea_row(_("Remarks/Memo"), 'Comments', null, 100, 4);
 
 end_table(1);
 

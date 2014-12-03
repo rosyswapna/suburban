@@ -129,6 +129,48 @@ if(get_post('RefreshInquiry'))
 	$Ajax->activate('totals_tbl');
 }
 //------------------------------------------------------------------------------------------------
+function trip_ids($row){
+	$result = get_cnc_trans_details($row['trans_no'],$row['type']);
+
+	if(db_num_rows($result) > 0){
+		
+		while($voucher = db_fetch_assoc($result)){
+			$trip_ids[] = $voucher['trip_id'];
+		}
+		return implode(",",$trip_ids);
+	}else{
+		return "";
+	}
+}
+function vouchers($row){
+	$result = get_cnc_trans_details($row['trans_no'],$row['type']);
+
+	if(db_num_rows($result) > 0){
+		while($voucher = db_fetch_assoc($result)){
+			$voucher_ids[] = $voucher['trip_voucher'];
+		}
+		return implode(",",$voucher_ids);
+	}else{
+		return "";
+	}
+}
+function trip_date($row){
+	$result = get_cnc_trans_details($row['trans_no'],$row['type']);
+
+	if(db_num_rows($result) > 0){
+		while($voucher = db_fetch_assoc($result)){
+			$trip_date[] = sql2date($voucher['trip_date']);
+		}
+		$num = count($trip_date);
+		if($num == 1){
+			return implode(",",$trip_date);
+		}else{
+			return $trip_date[0]." - ".$trip_date[$num-1];
+		}
+	}else{
+		return "";
+	}
+}
 
 function systype_name($dummy, $type)
 {
@@ -228,12 +270,29 @@ function check_overdue($row)
 		&& floatcmp($row["TotalAmount"], $row["Allocated"]) != 0;
 }
 //------------------------------------------------------------------------------------------------
-$sql = get_sql_for_customer_inquiry();
+
 
 //------------------------------------------------------------------------------------------------
 db_query("set @bal:=0");
 
-$cols = array(
+
+if($_POST['filterType'] == 1){
+	$sql = get_sql_for_trip_invoices();
+	$cols = array(
+	_("Invoice ID"),
+	_("Company"),
+	_("Trip(s)") => array('fun'=>'trip_ids', 'ord'=>''),
+	_("Voucher(s)") => array('fun'=>'vouchers', 'ord'=>''), 
+	_("Trip Date") => array('fun'=>'trip_date','ord'=>''),
+	_("Invoice Date") => array('type'=>'date', 'ord'=>''),
+	_("Amount") => array('type'=>'amount', 'ord'=>''),
+		array('insert'=>true, 'fun'=>'credit_link'),	
+		array('insert'=>true, 'fun'=>'prt_link')
+	);
+}else{
+	$sql = get_sql_for_customer_inquiry();
+
+	$cols = array(
 	_("Type") => array('fun'=>'systype_name', 'ord'=>''),
 	_("#") => array('fun'=>'trans_view', 'ord'=>''),
 	_("Order") => array('fun'=>'order_view'), 
@@ -253,12 +312,15 @@ $cols = array(
 	);
 
 
-if ($_POST['customer_id'] != ALL_TEXT) {
-	$cols[_("Customer")] = 'skip';
-	$cols[_("Currency")] = 'skip';
+	if ($_POST['customer_id'] != ALL_TEXT) {
+		$cols[_("Customer")] = 'skip';
+		$cols[_("Currency")] = 'skip';
+	}
+	if ($_POST['filterType'] == ALL_TEXT)
+		$cols[_("RB")] = 'skip';
 }
-if ($_POST['filterType'] == ALL_TEXT)
-	$cols[_("RB")] = 'skip';
+
+
 
 $table =& new_db_pager('trans_tbl', $sql, $cols);
 $table->set_marker('check_overdue', _("Marked items are overdue."));

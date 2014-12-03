@@ -73,7 +73,12 @@ class cart
 	var $credit;
 	var $ex_rate;
 
+	//cnc
 	var $trip_ref;
+	var $trip_voucher;
+
+	var $tax_group_from_cnc;
+	
 
 
 
@@ -87,7 +92,9 @@ class cart
 	//  $trans_no!=0 && $prep_child==false => update with parent constarints for reedition
 	//  $trans_no!=0 && $prep_child==true => prepare for child doc entry
 	//
-	function Cart($type, $trans_no=0, $prep_child=false) {
+	function Cart($type, $trans_no=0, $prep_child=false, $trip_voucher = 0) {
+
+		$this->trip_voucher = $trip_voucher;
 		/*Constructor function initialises a new shopping cart */
 		$this->line_items = array();
 		$this->sales_type = "";
@@ -351,6 +358,13 @@ class cart
 		$this->email = $email;
 		$this->tax_group_id = $tax_group_id;
 		$this->tax_group_array = get_tax_group_items_as_array($tax_group_id);
+	}
+
+	function set_tax_group($tax_group_id)
+	{
+		$this->tax_group_id = $tax_group_id;
+		$this->tax_group_array = get_tax_group_items_as_array($tax_group_id);
+		
 	}
 
 	function set_sales_type($sales_type, $sales_name, $tax_included=0, $factor=0)
@@ -618,10 +632,36 @@ class line_details
 	var $unit_taxable_amount;
 
 
+	var $trip_id;
+	var $voucher_no;
+	var $vehicle_model;
+	var $vehicle_no;
+	var $username;
+	var $particulars;
+	var $pickup_date;
+	var $cnc_line_amount;
+	
+
+
 	function line_details ($stock_id, $qty, $prc, $disc_percent,
-		$qty_done, $standard_cost, $description, $id=0, $src_no=0, $src_id=0,$trip_voucher=0)
+		$qty_done, $standard_cost, $description, $id=0, $src_no=0, $src_id=0,$trip_voucher=0,$comments='')
 	{
 	/* Constructor function to add a new LineDetail object with passed params */
+		$cnc_voucher = get_cnc_voucher($trip_voucher);
+		
+
+		if($cnc_voucher){
+			$this->trip_id 		= $cnc_voucher['trip_id'];
+			$this->voucher_no	= $cnc_voucher['voucher_str'];
+			$this->vehicle_model	= $cnc_voucher['vehicle_model'];
+			$this->vehicle_no	= $cnc_voucher['vehicle_no'];
+			$this->username		= $cnc_voucher['customer_name'];
+			$this->particulars      = $this->generate_particulars($cnc_voucher);
+			$this->pickup_date	= $cnc_voucher['pick_up_date'];
+			$this->cnc_line_amount 	= $cnc_voucher['amount'];
+			$this->price 		= $cnc_voucher['amount'];
+
+		}
 
 		$this->id = $id;
 		$this->src_no = $src_no;
@@ -644,19 +684,52 @@ class line_details
 		$this->stock_id = $stock_id;
 		$this->quantity = $qty;
 		$this->qty_dispatched = $qty;
-		$this->price = $prc;
+		//$this->price = $prc;
 		$this->discount_percent = $disc_percent;
 		$this->qty_done = $qty_done;
 		$this->standard_cost = $standard_cost;
 		$this->valid = true;
 		$this->trip_voucher = $trip_voucher;
-		$this->unit_taxable_amount = $prc * 0.4;
+		$this->unit_taxable_amount = $this->price * 0.4;
 	}
 
 	// get unit price as stated on document
 	function line_price()
 	{
 		return $this->price;
+	}
+
+	function generate_particulars($cnc_data){
+
+		if($cnc_data['km_hr'] == 2){//hrs tarif
+			$tarif .= "HR";
+		}else if($cnc_data['km_hr'] == 1 && $cnc_data['no_of_days'] > 2){
+			$tarif .= "Per Day";
+		}else{
+			$tarif .= "KM";
+		}
+
+		$particulars = "Minimum ".$cnc_data['base_tarif']." ".$tarif."@ Rs ".$cnc_data['base_amount'];
+		if($cnc_data['base_amount'] != ''){
+			$particulars .= " + Additional  ".$cnc_data['adt_tarif']." ".$tarif."@".$cnc_data['adt_tarif_rate']."/".$tarif;
+		}
+		if($cnc_data['parking_fees'] >0){
+			$particulars .= " + Parking fees Rs. "	.$cnc_data['parking_fees'];
+		}
+		if($cnc_data['toll_fees'] >0){
+			$particulars .= " + Toll Rs. "	.$cnc_data['toll_fees'];
+		}
+		if($cnc_data['night_halt_charges'] >0){
+			$particulars .= " + Night halt charges Rs.".$cnc_data['night_halt_charges'];
+		}
+		if($cnc_data['driver_bata'] >0){
+			$particulars .= " + Driver Batta ".$cnc_data['driver_bata'];
+		}
+		if($cnc_data['state_tax'] >0){
+			$particulars .= " + State Tax Rs. "	.$cnc_data['state_tax'];
+		}
+		
+		return $particulars;
 	}
 }
 

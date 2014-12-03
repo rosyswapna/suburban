@@ -488,9 +488,10 @@ function display_supp_trans_tax_details($tax_items, $columns)
 
 //--------------------------------------------------------------------------------------
 
-function display_edit_tax_items($taxes, $columns, $tax_included, $rightspan=0, $editable=false)
+function display_edit_tax_items($taxes, $columns, $tax_included, $rightspan=0, $editable=false,$param2 = "align=right",$cnc_voucher= false)
 {
 	$total = 0;
+
 
     foreach ($taxes as $taxitem)
 	{
@@ -516,7 +517,15 @@ function display_edit_tax_items($taxes, $columns, $tax_included, $rightspan=0, $
 					label_cell('', "colspan ='$rightspan'");
 				end_row();
 			} else {
-				$value = number_format2($taxitem['Value'],user_price_dec());
+
+				if($cnc_voucher){
+					$value = ($cnc_voucher['amount']*0.4)*$taxitem['rate']/100;
+					//$value = number_format2($taxitem['Value'],user_price_dec());
+					$value = number_format2($value,user_price_dec());
+				}else{
+					$value = number_format2($taxitem['Value'],user_price_dec());
+				}
+				
 				if ($tax_included)
 				{
 					label_row(_("Included") . " " . $taxitem['tax_type_name']
@@ -525,7 +534,7 @@ function display_edit_tax_items($taxes, $columns, $tax_included, $rightspan=0, $
 				else
 				{
 					label_row($taxitem['tax_type_name'],
-						$value, "colspan=$columns align=right", "align=right", $rightspan);
+						$value, "colspan=$columns align=right", $param2, $rightspan);
 					$total +=  round2($taxitem['Value'], user_price_dec());
 				}
 			}

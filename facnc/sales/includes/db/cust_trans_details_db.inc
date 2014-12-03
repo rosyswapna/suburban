@@ -11,6 +11,21 @@
 ***********************************************************************/
 //----------------------------------------------------------------------------------------
 
+function get_cnc_trans_details($transno,$type) {
+
+	$sql = "SELECT dtd.trip_voucher,voucher.trip_id,trip.pick_up_date AS trip_date
+		FROM ".TB_PREF."debtor_trans_details dtd,trip_vouchers voucher,trips trip
+		WHERE dtd.trip_voucher = voucher.id AND voucher.trip_id=trip.id AND dtd.debtor_trans_no=".db_escape($transno)."
+		AND dtd.debtor_trans_type=".db_escape($type)." ORDER BY trip.pick_up_date ASC";
+
+	return db_query($sql, "The debtor transaction detail could not be queried");
+
+	
+}
+
+
+
+
 function get_customer_trans_details($debtor_trans_type, $debtor_trans_no)
 {
 if (!is_array($debtor_trans_no))

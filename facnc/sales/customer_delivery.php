@@ -33,8 +33,9 @@ if ($use_date_picker) {
 	$js .= get_js_date_picker();
 }
 
+
 if (isset($_GET['ModifyDelivery'])) {
-	$_SESSION['page_title'] = sprintf(_("Modifying Delivery Note # %d."), $_GET['ModifyDelivery']);
+	$_SESSION['page_title'] = sprintf(_("Modifying Delivery Note For Voucher # %d."), $_GET['ModifyDelivery']);
 	$help_context = "Modifying Delivery Note";
 	processing_start();
 } elseif (isset($_GET['OrderNumber'])) {
@@ -84,7 +85,7 @@ if (isset($_GET['AddedID'])) {
 	display_footer_exit();
 }
 //-----------------------------------------------------------------------------
-
+$cnc_voucher = false;
 if (isset($_GET['OrderNumber']) && $_GET['OrderNumber'] > 0) {
 
 	$ord = new Cart(ST_SALESORDER, $_GET['OrderNumber'], true);
@@ -103,7 +104,28 @@ if (isset($_GET['OrderNumber']) && $_GET['OrderNumber'] > 0) {
 
 } elseif (isset($_GET['ModifyDelivery']) && $_GET['ModifyDelivery'] > 0) {
 
-	$_SESSION['Items'] = new Cart(ST_CUSTDELIVERY, $_GET['ModifyDelivery']);
+	$cnc_voucher = get_cnc_voucher($_GET['ModifyDelivery']);
+	$dn = check_cnc_delivered($_GET['ModifyDelivery']);
+
+	
+	
+	//$_SESSION['Items'] = new Cart(ST_CUSTDELIVERY, $_GET['ModifyDelivery']);
+	$_SESSION['Items'] = new Cart(ST_CUSTDELIVERY, $dn);
+	if(isset($_GET['TaxGroup'])){
+		$_SESSION['Items']->tax_group_from_cnc = $_GET['TaxGroup'];
+		$_SESSION['Items']->set_tax_group($_GET['TaxGroup']);
+	}
+
+	$_SESSION['Items']->trip_voucher = $_GET['ModifyDelivery'];
+	
+	
+	
+	
+
+	//echo "<pre>";
+	//print_r($_SESSION['Items']);
+	//echo "</pre>";
+	//exit;
 
 	if ($_SESSION['Items']->count_items() == 0) {
 		hyperlink_params($path_to_root . "/sales/inquiry/customer_inquiry.php",
@@ -322,10 +344,19 @@ if (isset($_POST['process_delivery']) && check_data() && check_qoh()) {
 		}
 	}	
 }
-
+/*
 if (isset($_POST['Update']) || isset($_POST['_Location_update']) || isset($_POST['qty'])) {
 	$Ajax->activate('Items');
 }
+*/
+if (isset($_POST['Update'])) {
+	$update = update_delivery_with_cnc_voucher($_SESSION['Items']);
+	if($update)
+		display_notification_centered(sprintf(_('Delivery Note has been updated.')));
+	else
+		display_error(_("Failed to update Delivery Note"));
+}
+
 //------------------------------------------------------------------------------
 start_form();
 hidden('cart_id');
@@ -334,82 +365,124 @@ start_table(TABLESTYLE2, "width=100%", 5);
 echo "<tr><td>"; // outer table
 
 start_table(TABLESTYLE, "width=100%");
-start_row();
-label_cells(_("Customer"), $_SESSION['Items']->customer_name, "class='tableheader2'");
-label_cells(_("Branch"), get_branch_name($_SESSION['Items']->Branch), "class='tableheader2'");
-label_cells(_("Currency"), $_SESSION['Items']->customer_currency, "class='tableheader2'");
-end_row();
-start_row();
+	start_row();
+		label_cells(_("Customer"), $_SESSION['Items']->customer_name, "class='tableheader2'");
+		if (!isset($_POST['DispatchDate']) || !is_date($_POST['DispatchDate'])) {
+			$_POST['DispatchDate'] = new_doc_date();
+			if (!is_date_in_fiscalyear($_POST['DispatchDate'])) {
+				$_POST['DispatchDate'] = end_fiscalyear();
+			}
+		}
+		date_cells(_("Date"), 'DispatchDate', '', $_SESSION['Items']->trans_no==0, 0, 0, 0, "class='tableheader2'");
+	
+		//hidden
+		if (!isset($_POST['Location'])) {
+			$_POST['Location'] = $_SESSION['Items']->Location;
+		}
+		hidden('Location');
 
-//if (!isset($_POST['ref']))
-//	$_POST['ref'] = $Refs->get_next(ST_CUSTDELIVERY);
+		if (!isset($_POST['ship_via'])) {
+			$_POST['ship_via'] = $_SESSION['Items']->ship_via;
+		}
+		hidden('ship_via');
 
-if ($_SESSION['Items']->trans_no==0) {
-	ref_cells(_("Reference"), 'ref', '', null, "class='tableheader2'");
-} else {
-	label_cells(_("Reference"), $_SESSION['Items']->reference, "class='tableheader2'");
-}
 
-label_cells(_("For Sales Order"), get_customer_trans_view_str(ST_SALESORDER, $_SESSION['Items']->order_no), "class='tableheader2'");
+		if (!isset($_POST['due_date']) || !is_date($_POST['due_date'])) {
+			$_POST['due_date'] = get_invoice_duedate($_SESSION['Items']->payment, $_POST['DispatchDate']);
+		}
+		hidden('due_date');
 
-label_cells(_("Sales Type"), $_SESSION['Items']->sales_type_name, "class='tableheader2'");
-end_row();
-start_row();
+		
+		hidden('dimension_id',0);
+		hidden('dimension2_id', 0);
+		//---------
+		
+		
+	
+	end_row();
 
-if (!isset($_POST['Location'])) {
-	$_POST['Location'] = $_SESSION['Items']->Location;
-}
-label_cell(_("Delivery From"), "class='tableheader2'");
-locations_list_cells(null, 'Location', null, false, true);
 
-if (!isset($_POST['ship_via'])) {
-	$_POST['ship_via'] = $_SESSION['Items']->ship_via;
-}
-label_cell(_("Shipping Company"), "class='tableheader2'");
-shippers_list_cells(null, 'ship_via', $_POST['ship_via']);
+/*
+	start_row();
+		label_cells(_("Customer"), $_SESSION['Items']->customer_name, "class='tableheader2'");
+		label_cells(_("Branch"), get_branch_name($_SESSION['Items']->Branch), "class='tableheader2'");
+		label_cells(_("Currency"), $_SESSION['Items']->customer_currency, "class='tableheader2'");
+	end_row();
 
-// set this up here cuz it's used to calc qoh
-if (!isset($_POST['DispatchDate']) || !is_date($_POST['DispatchDate'])) {
-	$_POST['DispatchDate'] = new_doc_date();
-	if (!is_date_in_fiscalyear($_POST['DispatchDate'])) {
-		$_POST['DispatchDate'] = end_fiscalyear();
+	start_row();
+
+		//if (!isset($_POST['ref']))
+		//	$_POST['ref'] = $Refs->get_next(ST_CUSTDELIVERY);
+
+		if ($_SESSION['Items']->trans_no==0) {
+			ref_cells(_("Reference"), 'ref', '', null, "class='tableheader2'");
+		} else {
+			label_cells(_("Reference"), $_SESSION['Items']->reference, "class='tableheader2'");
+		}
+
+		label_cells(_("For Sales Order"), get_customer_trans_view_str(ST_SALESORDER, $_SESSION['Items']->order_no), "class='tableheader2'");
+
+		label_cells(_("Sales Type"), $_SESSION['Items']->sales_type_name, "class='tableheader2'");
+	end_row();
+
+	start_row();
+
+		if (!isset($_POST['Location'])) {
+			$_POST['Location'] = $_SESSION['Items']->Location;
+		}
+		label_cell(_("Delivery From"), "class='tableheader2'");
+		locations_list_cells(null, 'Location', null, false, true);
+
+		if (!isset($_POST['ship_via'])) {
+			$_POST['ship_via'] = $_SESSION['Items']->ship_via;
+		}
+		label_cell(_("Shipping Company"), "class='tableheader2'");
+		shippers_list_cells(null, 'ship_via', $_POST['ship_via']);
+
+		// set this up here cuz it's used to calc qoh
+		if (!isset($_POST['DispatchDate']) || !is_date($_POST['DispatchDate'])) {
+			$_POST['DispatchDate'] = new_doc_date();
+			if (!is_date_in_fiscalyear($_POST['DispatchDate'])) {
+				$_POST['DispatchDate'] = end_fiscalyear();
+			}
+		}
+		date_cells(_("Date"), 'DispatchDate', '', $_SESSION['Items']->trans_no==0, 0, 0, 0, "class='tableheader2'");
+	end_row();
+
+	end_table();
+
+	echo "</td><td>";// outer table
+
+	start_table(TABLESTYLE, "width=100%");
+
+	if (!isset($_POST['due_date']) || !is_date($_POST['due_date'])) {
+		$_POST['due_date'] = get_invoice_duedate($_SESSION['Items']->payment, $_POST['DispatchDate']);
 	}
-}
-date_cells(_("Date"), 'DispatchDate', '', $_SESSION['Items']->trans_no==0, 0, 0, 0, "class='tableheader2'");
-end_row();
-
-end_table();
-
-echo "</td><td>";// outer table
-
-start_table(TABLESTYLE, "width=100%");
-
-if (!isset($_POST['due_date']) || !is_date($_POST['due_date'])) {
-	$_POST['due_date'] = get_invoice_duedate($_SESSION['Items']->payment, $_POST['DispatchDate']);
-}
-customer_credit_row($_SESSION['Items']->customer_id, $_SESSION['Items']->credit, "class='tableheader2'");
-// 2010-09-03 Joe Hunt
-$dim = get_company_pref('use_dimension');
-if ($dim > 0) {
+	customer_credit_row($_SESSION['Items']->customer_id, $_SESSION['Items']->credit, "class='tableheader2'");
+	// 2010-09-03 Joe Hunt
+	$dim = get_company_pref('use_dimension');
+	if ($dim > 0) {
+		start_row();
+		label_cell(_("Dimension").":", "class='tableheader2'");
+		dimensions_list_cells(null, 'dimension_id', null, true, ' ', false, 1, false);
+		end_row();
+	}		
+	else
+		hidden('dimension_id', 0);
+	if ($dim > 1) {
+		start_row();
+		label_cell(_("Dimension")." 2:", "class='tableheader2'");
+		dimensions_list_cells(null, 'dimension2_id', null, true, ' ', false, 2, false);
+		end_row();
+	}		
+	else
+		hidden('dimension2_id', 0);
+	//---------
 	start_row();
-	label_cell(_("Dimension").":", "class='tableheader2'");
-	dimensions_list_cells(null, 'dimension_id', null, true, ' ', false, 1, false);
+	date_cells(_("Invoice Dead-line"), 'due_date', '', null, 0, 0, 0, "class='tableheader2'");
 	end_row();
-}		
-else
-	hidden('dimension_id', 0);
-if ($dim > 1) {
-	start_row();
-	label_cell(_("Dimension")." 2:", "class='tableheader2'");
-	dimensions_list_cells(null, 'dimension2_id', null, true, ' ', false, 2, false);
-	end_row();
-}		
-else
-	hidden('dimension2_id', 0);
-//---------
-start_row();
-date_cells(_("Invoice Dead-line"), 'due_date', '', null, 0, 0, 0, "class='tableheader2'");
-end_row();
+	*/
+
 end_table();
 
 echo "</td></tr>";
@@ -423,14 +496,86 @@ if ($row['dissallow_invoices'] == 1)
 	end_page();
 	exit();
 }	
-display_heading(_("Delivery Items"));
+display_heading(_("Trip Details"));
+
+
+
+
 div_start('Items');
+
+	start_table(TABLESTYLE, "width=100%");
+	$th = array(_("Vehicle"),_("No Of Days"),_("Particulars"),_("Amount"));
+	table_header($th);
+	$k = 0;
+	$has_marked = false;
+	$total =0;
+	
+
+	foreach ($_SESSION['Items']->line_items as $line=>$ln_itm) {
+		$line_total = $ln_itm->cnc_line_amount;
+		$total += $line_total;
+		if ($ln_itm->quantity==$ln_itm->qty_done) {
+			continue; //this line is fully delivered
+		}
+		
+		// if it's a non-stock item (eg. service) don't show qoh
+		$row_classes = null;
+		
+
+		alt_table_row_color($k, $row_classes);
+		
+		echo "<td width='15%'>";
+				echo $ln_itm->vehicle_model;
+				br();
+				echo $ln_itm->vehicle_no;
+				
+		echo "</td>";
+		label_cell(@$cnc_voucher['no_of_days'],'width=10%');
+		label_cell($ln_itm->particulars);
+
+		amount_cell($line_total);
+		end_row();
+	}
+
+
+
+	//totals
+	$_POST['ChargeFreightCost'] =  get_post('ChargeFreightCost', 
+	price_format($_SESSION['Items']->freight_cost));
+	
+	hidden('ChargeFreightCost', $_SESSION['Items']->freight_cost);
+	$colspan = 3;
+
+	
+	$inv_items_total = $total;
+
+	$display_sub_total = price_format($inv_items_total + input_num('ChargeFreightCost'));
+	
+	label_row(_("Sub-total"), $display_sub_total, "colspan=$colspan align=right","align=right");
+	
+
+	$taxes = $_SESSION['Items']->get_taxes(input_num('ChargeFreightCost'));
+	
+
+	$tax_total = display_edit_tax_items($taxes, $colspan, $_SESSION['Items']->tax_included,$rightspan=0, $editable=false,$param2 = "align=right",$cnc_voucher);
+	
+
+	$display_total = price_format(($inv_items_total + input_num('ChargeFreightCost') + $tax_total));
+
+	label_row(_("Amount Total"), $display_total, "colspan=$colspan align=right","align=right");
+		
+	
+	end_table(1);
+	
+
+/*
 start_table(TABLESTYLE, "width=100%");
 
 $new = $_SESSION['Items']->trans_no==0;
 $th = array(_("Item Code"), _("Item Description"), 
 	$new ? _("Ordered") : _("Max. delivery"), _("Units"), $new ? _("Delivered") : _("Invoiced"),
 	_("This Delivery"), _("Price"), _("Tax Type"), _("Discount"), _("Total"));
+
 
 table_header($th);
 $k = 0;
@@ -530,9 +675,14 @@ policy_list_row(_("Action For Balance"), "bo_policy", null);
 textarea_row(_("Memo"), 'Comments', null, 50, 4);
 
 end_table(1);
+
+*/
 div_end();
-submit_center_first('Update', _("Update"),
+/*submit_center_first('Update', _("Update"),
 	_('Refresh document page'), true);
+
+
+
 if(isset($_POST['clear_quantity'])) {
 	submit('reset_quantity', _('Reset quantity'), true, _('Refresh document page'));
 }
@@ -541,6 +691,9 @@ else  {
 }
 submit_center_last('process_delivery', _("Process Dispatch"),
 	_('Check entered data and save document'), 'default');
+*/
+submit_center_first('Update', _("Update"),
+	_('Refresh document page'));
 
 end_form();
 

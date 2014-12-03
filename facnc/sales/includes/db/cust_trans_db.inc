@@ -56,7 +56,7 @@ function get_customer_trans_version($type, $trans_no) {
 function write_customer_trans($trans_type, $trans_no, $debtor_no, $BranchNo,
 	$date_, $reference, $Total, $discount=0, $Tax=0, $Freight=0, $FreightTax=0,
 	$sales_type=0, $order_no=0, $ship_via=0, $due_date="",
-	$AllocAmt=0, $rate=0, $dimension_id=0, $dimension2_id=0, $payment_terms=null)
+	$AllocAmt=0, $rate=0, $dimension_id=0, $dimension2_id=0, $payment_terms=null,$tax_group_id=0)
 {
 	$new = $trans_no==0;
 	$curr = get_customer_currency($debtor_no);
@@ -85,7 +85,7 @@ function write_customer_trans($trans_type, $trans_no, $debtor_no, $BranchNo,
 		order_, ov_amount, ov_discount,
 		ov_gst, ov_freight, ov_freight_tax,
 		rate, ship_via, alloc,
-		dimension_id, dimension2_id, payment_terms
+		dimension_id, dimension2_id, payment_terms,tax_group_id
 		) VALUES (".db_escape($trans_no).", ".db_escape($trans_type).",
 		".db_escape($debtor_no).", ".db_escape($BranchNo).",
 		'$SQLDate', '$SQLDueDate', ".db_escape($reference).",
@@ -93,7 +93,7 @@ function write_customer_trans($trans_type, $trans_no, $debtor_no, $BranchNo,
 		".db_escape($Freight).",
 		$FreightTax, $rate, ".db_escape($ship_via).", $AllocAmt,
 		".db_escape($dimension_id).", ".db_escape($dimension2_id).", "
-		.db_escape($payment_terms, true).")";
+		.db_escape($payment_terms, true).",".db_escape($tax_group_id).")";
 	} else {	// may be optional argument should stay unchanged ?
 	$sql = "UPDATE ".TB_PREF."debtor_trans SET
 		debtor_no=".db_escape($debtor_no)." , branch_code=".db_escape($BranchNo).",
@@ -177,7 +177,8 @@ function get_customer_trans($trans_id, $trans_type)
 		// it's an invoice so also get the shipper
 		$sql .= " AND ".TB_PREF."sales_types.id = trans.tpe
 			AND branch.branch_code = trans.branch_code
-			AND branch.tax_group_id = ".TB_PREF."tax_groups.id ";
+			AND trans.tax_group_id = ".TB_PREF."tax_groups.id ";
+			//AND branch.tax_group_id = ".TB_PREF."tax_groups.id ";
 	}
 
 	$result = db_query($sql, "Cannot retreive a debtor transaction");
@@ -539,7 +540,8 @@ function get_sql_for_sales_deliveries_view($selected_customer, $selected_stock_i
 			(ov_amount+ov_gst+ov_freight+ov_freight_tax) AS DeliveryValue,
 			debtor.curr_code,
 			Sum(line.quantity-line.qty_done) AS Outstanding,
-			Sum(line.qty_done) AS Done			
+			Sum(line.qty_done) AS Done,
+			trans.tax_group_id			
 		FROM "
 		 .TB_PREF."sales_orders as sorder, "
 		 .TB_PREF."debtor_trans as trans, "
