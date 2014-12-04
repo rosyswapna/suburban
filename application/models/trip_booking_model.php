@@ -180,7 +180,15 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 	if(count($result)>0){
 	return $result; 
 	}else{
+	$qry2='SELECT TV.trip_id,TV.driver_bata,TV.vehicle_tarif,TV.voucher_no,V.registration_number,VT.name as v_type,TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON  TV.trip_id =T.id LEFT JOIN vehicles As V on T.vehicle_id=V.id LEFT JOIN vehicle_types As VT on T.vehicle_type_id=VT.id WHERE TV.organisation_id = '.$this->session->userdata('organisation_id').' AND T.driver_id='.$driver_id;
+	$result2=$this->db->query($qry2);
+	$result2=$result2->result_array();
+	if(count($result2)>0){
+	return $result2; 
+	}
+	else{
 	return false;
+	}
 	}
 
 	}
@@ -202,12 +210,20 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 	if(count($result)>0){
 	return $result;
 	}else{
+	$qry2='SELECT C.name as customer,CG.name as company, TV.trip_starting_time,TV.trip_ending_time,TV.vehicle_tarif,TV.voucher_no,TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON TV.trip_id =T.id LEFT JOIN customers AS C ON T.customer_id=C.id LEFT JOIN customer_groups AS CG ON T.customer_group_id=CG.id WHERE TV.organisation_id = '.$this->session->userdata('organisation_id').' AND T.vehicle_id='.$vehicle_id;
+	$result2=$this->db->query($qry2);
+	$result2=$result2->result_array();
+	if(count($result2)>0){
+	return $result2; 
+	}
+	else{
 	return false;
+	}
 	}
 
 	}
 	function getCustomerVouchers($customer_id,$fpdate='',$tpdate=''){
-$qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON  TV.trip_id =T.id AND TV.organisation_id = '.$this->session->userdata('organisation_id').' WHERE T.organisation_id = '.$this->session->userdata('organisation_id').' AND T.customer_id='.$customer_id;
+	$qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON  TV.trip_id =T.id AND TV.organisation_id = '.$this->session->userdata('organisation_id').' WHERE T.organisation_id = '.$this->session->userdata('organisation_id').' AND T.customer_id='.$customer_id;
 	if($fpdate!=null && $tpdate!=null){ 
 		$qry.=' AND T.pick_up_date BETWEEN "'.$fpdate.'" AND "'.$tpdate .'"';
 				}
@@ -222,7 +238,15 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 	if(count($result)>0){
 	return $result;
 	}else{
+	$qry2='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON  TV.trip_id =T.id AND TV.organisation_id = '.$this->session->userdata('organisation_id').' WHERE T.organisation_id = '.$this->session->userdata('organisation_id').' AND T.customer_id='.$customer_id;
+	$result2=$this->db->query($qry2);
+	$result2=$result2->result_array();
+	if(count($result2)>0){
+	return $result2; 
+	}
+	else{
 	return false;
+	}
 	}
 
 	}
