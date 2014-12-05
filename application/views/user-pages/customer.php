@@ -238,7 +238,7 @@
 							<td><?php echo number_format($tot_km,2); ?></td>
 							<td><?php echo $no_of_days; ?></td>
 							<!--<td><?php //echo $trips[$trip_index]['releasing_place'];?></td>-->
-							<td><?php echo $trips[$trip_index]['total_trip_amount']; ?></td>
+							<td><?php echo number_format($trips[$trip_index]['total_trip_amount'],2); ?></td>
 						
 						</tr>
 						<?php } 

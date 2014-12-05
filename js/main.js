@@ -4,9 +4,9 @@ var total_tarif = 0;// global total tariff
 var km_flag = 1;
 var hr_flag = 2;
 
-$('.settings-add').click(function(){
+$('.settings-add').click(function(){ 
 var trigger = $(this).parent().prev().prev().find('#editbox').attr('trigger');
-if(trigger=='true'){
+if(trigger=='true'){ 
 $(this).siblings().find(':submit').trigger('click');
 }
 });

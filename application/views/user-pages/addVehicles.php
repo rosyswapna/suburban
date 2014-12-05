@@ -1009,11 +1009,11 @@ if($this->mysession->get('owner_post_all')!=null ){
 							}
 							//echo $trips[$trip_index]['pick_up_date'].' '.$trips[$trip_index]['pick_up_time'].br().$trips[$trip_index]['drop_date'].' '.$trips[$trip_index]['drop_time'].br().$diff->d.",".$diff->h.":".$diff->i; ?></td>
 							<td><?php 
-							echo $trips[$trip_index]['vehicle_tarif'];
+							echo number_format($trips[$trip_index]['vehicle_tarif'],2);
 							?></td>
 						<td> <?php 
 						
-						echo $extra;
+						echo number_format($extra,2);
 						?></td>
 						</tr>
 						<?php } 
@@ -1026,8 +1026,8 @@ if($this->mysession->get('owner_post_all')!=null ){
 					<td></td>
 					<td><?php echo $full_tot_km;?></td>
 					<td></td>
-					<td><?php echo $tariff_amt;?></td>
-					<td><?php echo $tot_extra;?></td>
+					<td><?php echo number_format($tariff_amt,2);?></td>
+					<td><?php echo number_format($tot_extra,2);?></td>
 					</tr>
 					<?php //endforeach;
 					//}
@@ -1045,16 +1045,16 @@ if($this->mysession->get('owner_post_all')!=null ){
 						
 					    
 					</tr>
-					<tr><td>Vehicle Tariff Total</td><td><?php echo $tariff_amt;?></td><td><?php echo $tariff_amt;?></td></tr>
-					<tr><td>Commision</td><td><?php  $commision=$tariff_amt*(8/100); echo $commision;?></td><td><?php   echo $commision;?></td></tr>
-					<tr><td>Less Cash Trip</td><td><?php echo $tot_cash; ?></td><td><?php echo $tot_cash; ?></td></tr>
-					<tr><td>Less Parking</td><td><?php echo $parking=100; ?></td><td><?php echo $parking=100; ?></td></tr>
-					<tr><td>Less Accommodation</td><td><?php echo $acc=1500; ?></td><td><?php echo $acc=1500; ?></td></tr>
-					<tr><td>Add extras</td><td><?php echo $tot_extra;?></td><td><?php echo $tot_extra;?></td></tr>
-					<tr><td>Less Advance</td><td><?php $adv=0;echo $adv; ?></td><td><?php echo $adv; ?></td></tr>
-					<tr><td>Balance Due</td><td><?php $bal=$tariff_amt+$tot_extra-($commision+$tot_cash+$acc+$parking+$adv); echo $bal;?></td><td><?php  echo $bal;?></td></tr>
+					<tr><td>Vehicle Tariff Total</td><td><?php echo number_format($tariff_amt,2);?></td><td><?php echo number_format($tariff_amt,2);?></td></tr>
+					<tr><td>Commision</td><td><?php  $commision=$tariff_amt*(8/100); echo number_format($commision,2);?></td><td><?php   echo number_format($commision,2);?></td></tr>
+					<tr><td>Less Cash Trip</td><td><?php echo number_format($tot_cash,2); ?></td><td><?php echo number_format($tot_cash,2); ?></td></tr>
+					<tr><td>Less Parking</td><td><?php echo number_format($parking=100,2); ?></td><td><?php echo number_format($parking=100,2); ?></td></tr>
+					<tr><td>Less Accommodation</td><td><?php echo number_format($acc=1500,2); ?></td><td><?php echo number_format($acc=1500,2); ?></td></tr>
+					<tr><td>Add extras</td><td><?php echo number_format($tot_extra,2);?></td><td><?php echo number_format($tot_extra,2);?></td></tr>
+					<tr><td>Less Advance</td><td><?php $adv=0;echo number_format($adv,2); ?></td><td><?php echo number_format($adv,2); ?></td></tr>
+					<tr><td>Balance Due</td><td><?php $bal=$tariff_amt+$tot_extra-($commision+$tot_cash+$acc+$parking+$adv); echo number_format($bal,2);?></td><td><?php  echo number_format($bal,2);?></td></tr>
 					<tr><td>TDS 1 %</td><td><?php $tds=$bal*(1/100); echo $tds;?></td><td><?php  echo $tds;?></td></tr>
-					<tr><td>NET Transfer</td><td><?php echo form_input(array('name'=>'transfer_date','class'=>'form-control','id'=>'transfer_date','size'=>'3')); ?></td><td><?php echo $net=$bal-$tds;?></td></tr>
+					<tr><td>NET Transfer</td><td><?php echo form_input(array('name'=>'transfer_date','class'=>'form-control','id'=>'transfer_date','size'=>'3')); ?></td><td><?php echo number_format($net=$bal-$tds,2);?></td></tr>
 				</tbody>
 			</table>
 			<?php  }?>
