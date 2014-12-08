@@ -209,7 +209,7 @@ class User extends CI_Controller {
 	$data['result']="No Results Found !";
 	}
 	$data['page_links']=$p_res['page_links'];
-	$data['title']="Tarrif Masters | ".PRODUCT_NAME;  
+	$data['title']="Tariff Masters | ".PRODUCT_NAME;  
 	$page='user-pages/tarrif_master';
 	$this->load_templates($page,$data);
 	
@@ -321,7 +321,7 @@ class User extends CI_Controller {
 	$data['page_links']=$p_res['page_links'];
 	//end
 	//$data['allDetails']=$this->user_model->getAll_tarrifDetails();
-	$data['title']="Tarrif| ".PRODUCT_NAME; 
+	$data['title']="Tariff| ".PRODUCT_NAME; 
 	$page='user-pages/tarrif';
 	$this->load_templates($page,$data);
 	
