@@ -266,8 +266,8 @@
                                 </li>
                               <?php 
 				 if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==SYSTEM_ADMINISTRATOR){
-						$profile_url='admin/profile';
-						$change_password_url='admin/changepassword';
+						$profile_url=base_url().'admin/profile';
+						$change_password_url=base_url().'admin/changepassword';
 	 			 }else if($this->session->userdata('isLoggedIn')==true && ($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR )){
 					$profile_url=base_url().'organization/admin/profile';
 					$change_password_url=base_url().'organization/admin/changepassword';
