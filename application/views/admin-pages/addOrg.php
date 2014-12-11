@@ -30,8 +30,14 @@
         </div>
         <div class="form-group">
 			<?php echo form_label('Address','addresslabel'); ?>
-            <?php echo form_textarea(array('name'=>'addr','class'=>'form-control','placeholder'=>'Enter Address','rows' => '4','value'=>$addr)); ?>
+            <?php echo form_textarea(array('name'=>'addr','class'=>'form-control','placeholder'=>'Enter Address','rows' => '3','value'=>$addr)); ?>
 	    <?php echo form_error('addr', '<p class="text-red">', '</p>'); ?>
+        </div>
+		<div class="form-group">
+			<?php echo form_label('SMS Gateway'); ?>
+            <?php echo form_input(array('name'=>'sms','class'=>'form-control','id'=>'sms','placeholder'=>'Enter SMS Gateway','value'=>$sms)); ?>
+			 <?php if(isset($org_id) && isset($user_id)) {  echo form_hidden('hsms',$hsms); } ?>
+		<?php echo form_error('sms', '<p class="text-red">', '</p>'); ?>
         </div>
 		</div>
 		<div class="div-with-50-percent-width-with-margin-10">

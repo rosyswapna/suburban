@@ -49,8 +49,8 @@ class admin_model extends CI_Model {
     }
 
         
-    function  insertOrg($name,$fname,$lname,$addr,$uname,$pwd,$mail,$phn ) {
-	$data=array('name'=>$name,'address'=>$addr,'status_id'=>'1');
+    function  insertOrg($name,$fname,$lname,$addr,$uname,$pwd,$mail,$phn,$sms ) {
+	$data=array('name'=>$name,'address'=>$addr,'status_id'=>'1','sms_gateway_url'=>$sms);
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert('organisations',$data);
 	$insert_id=$this->db->insert_id();
@@ -192,7 +192,7 @@ class admin_model extends CI_Model {
 		
 	// to update organisation details of organisation and user table
 	function updateOrganization($data){
-		$orgdbdata = array('name'=>$data['name'],'address'=>$data['addr']);
+		$orgdbdata = array('name'=>$data['name'],'address'=>$data['addr'],'sms_gateway_url'=>$data['sms']);
 		$userdbdata = array('first_name'=>$data['fname'],'last_name'=>$data['lname'],'address'=>$data['addr'],'email'=>$data['mail'],'phone'=>$data['phn']);
 		$this->db->where('id',$data['user_id'] );
 		$succesuser=$this->db->update('users',$userdbdata);
