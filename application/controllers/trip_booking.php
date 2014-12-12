@@ -620,7 +620,7 @@ class Trip_booking extends CI_Controller {
 		$driver=$this->trip_booking_model->getDriverDetails($data['driver_id']);
 		$name=$driver[0]->name;
 		$contact=$driver[0]->mobile; 
-		//echo $name." driver".$customer['name'];exit;
+		//print_r( $customer);exit;
 		$message='Hi Customer, Your Trip Id: '.$id.' has been confirmed on '.$data['pick_up_date'].'.Pickup time: '.$data['pick_up_time'].'.Location : '.$data['pick_up_city'].'-'.$data['drop_city'].'. Driver: '.$name.', '.$contact.'.';
 		$dr_message='Hi, Your trip id: '.$id.' had been allocated on '.$data['pick_up_date'].'. Guest details: '.$customer['name'].', '.$customer['mob'].'.Pickup: '.$data['pick_up_city'].', '.$data['pick_up_time'];
 		$tbl_arry=array('vehicle_types','vehicle_ac_types','vehicle_makes','vehicle_models');
@@ -639,16 +639,16 @@ class Trip_booking extends CI_Controller {
 		$date = date('Y-m-d H:i:s');
 
 		if(($data['pick_up_date'].' '.$data['pick_up_time'])>=$date){
-	 //echo $customer['mob'];exit;
-			if($customer['mob'] != ""){ 
-				$this->sms->sendSms($customer['mob'],$message);
+	
+			if($customer['mob'] != ""){
+				//$this->sms->sendSms($customer['mob'],$message);
 			}
 			
 			if($contact != ""){
-				$this->sms->sendSms($contact,$dr_message);
+				//$this->sms->sendSms($contact,$dr_message);
 			}
 			
-		
+		//exit;
 	
 			$booking_date=$this->trip_booking_model->getTripBokkingDate($id);
 			if($data['vehicle_model_id']==gINVALID){
@@ -672,7 +672,7 @@ class Trip_booking extends CI_Controller {
 
 			if($customer['email']!=''){
 				$subject="Connect N Cabs";
-				$this->send_email->emailMe($customer['email'],$subject,$email_content);
+				//$this->send_email->emailMe($customer['email'],$subject,$email_content);
 			}
 		}
 
@@ -681,10 +681,10 @@ class Trip_booking extends CI_Controller {
 	public function SendTripCancellation($id,$customer){
 		$message='Hi Customer,Trip ID:'.$id.' had been cancelled.Thank You for choosing Connect N cabs.Good Day..!!';
 
-	$this->sms->sendSms($customer['mob'],$message);
+	//$this->sms->sendSms($customer['mob'],$message);
 	if($customer['email']!=''){
 	$subject="Connect N Cabs";
-	$this->send_email->emailMe($customer['email'],$subject,$message);
+	//$this->send_email->emailMe($customer['email'],$subject,$message);
 	}
 	}
 

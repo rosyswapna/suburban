@@ -13,12 +13,17 @@ function sendSms($phone,$message){
 		$org_id=$CI->session->userdata('organisation_id'); 
 		$url_arry=$CI->trip_booking_model->get_URL($org_id); 
 		$url=$url_arry[0]->sms_gateway_url;
-		//print_r($url);
+		if($phone!='' && $message!=''){
+		$old_val=array('".$phone."','".$message."');
+		$message=urlencode($message);
+		$new_val=array($phone,$message);
+		$url=str_replace($old_val,$new_val,$url);
+		}
 		if($url==false){
 		$url='';
 		}
 
-		$ch=curl_init();
+		$ch=curl_init(); 
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$output=curl_exec($ch);
