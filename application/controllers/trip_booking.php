@@ -455,12 +455,13 @@ class Trip_booking extends CI_Controller {
 				$driver_id			=$this->session->userdata('driver_id');	
 				$condition=array('id'=>$driver_id);
 				$driver				=$this->driver_model->getDriverDetails($condition);
+				$driver_det			=$this->trip_booking_model->getDriverDetails($driver_id);
 				$data['trip_status_id']=TRIP_STATUS_CANCELLED;
 				$res = $this->trip_booking_model->updateTrip($data,$trip_id);
 				if($res==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Cancelled Succesfully..!!'));
 					$this->session->set_userdata(array('dbError'=>''));
-					$this->SendTripCancellation($trip_id,$customer);
+					$this->SendTripCancellation($trip_id,$customer,$driver_det);
 				}else{
 					$this->session->set_userdata(array('dbError'=>'Trip Cancelled unsuccesfully..!!'));
 					$this->session->set_userdata(array('dbSuccess'=>''));
@@ -614,7 +615,11 @@ class Trip_booking extends CI_Controller {
 		return false;
 		}
 	} 
-	public function SendTripConfirmation($data,$id,$customer){ 
+	public function SendTripConfirmation($data,$id,$customer,$flag){
+	 if($flag=='1'){
+	$data=unserialize(urldecode($data));
+	$customer=unserialize(urldecode($customer));
+	}
 	
 		//$message='Hi Customer, Your Trip Id: '.$id.'has been confirmed on '.$data['pick_up_date'].' '.$data['pick_up_time'].' Location :'.$data['pick_up_city'].'-'.$data['drop_city'].' Enjoy your trip.';
 		$driver=$this->trip_booking_model->getDriverDetails($data['driver_id']);
@@ -637,18 +642,23 @@ class Trip_booking extends CI_Controller {
 	
 		$vehicle=$this->trip_booking_model->getVehicle($data['vehicle_id']);
 		$date = date('Y-m-d H:i:s');
-
+		
 		if(($data['pick_up_date'].' '.$data['pick_up_time'])>=$date){
 	
-			if($customer['mob'] != ""){
+			if($customer['mob'] != ""){ 
 				//$this->sms->sendSms($customer['mob'],$message);
+				
 			}
 			
 			if($contact != ""){
 				//$this->sms->sendSms($contact,$dr_message);
 			}
 			
-		//exit;
+		 if($flag=='1'){
+				 $this->session->set_userdata(array('dbSuccess'=>'Message Sent Succesfully..!'));
+				    $this->session->set_userdata(array('dbError'=>''));
+				     redirect(base_url().'organization/front-desk/trips');
+				 }
 	
 			$booking_date=$this->trip_booking_model->getTripBokkingDate($id);
 			if($data['vehicle_model_id']==gINVALID){
@@ -672,19 +682,21 @@ class Trip_booking extends CI_Controller {
 
 			if($customer['email']!=''){
 				$subject="Connect N Cabs";
-				//$this->send_email->emailMe($customer['email'],$subject,$email_content);
+				$this->send_email->emailMe($customer['email'],$subject,$email_content);
 			}
 		}
 
 	}
 
-	public function SendTripCancellation($id,$customer){
+	public function SendTripCancellation($id,$customer,$driver){
+		$driver_mob=$driver[0]->mobile;
 		$message='Hi Customer,Trip ID:'.$id.' had been cancelled.Thank You for choosing Connect N cabs.Good Day..!!';
-
+		$dr_message='Hi,Trip ID:'.$id.' had been cancelled.Thank You for choosing Connect N cabs.Good Day..!!';
 	//$this->sms->sendSms($customer['mob'],$message);
+	//$this->sms->sendSms($driver_mob,$dr_message);
 	if($customer['email']!=''){
 	$subject="Connect N Cabs";
-	//$this->send_email->emailMe($customer['email'],$subject,$message);
+	$this->send_email->emailMe($customer['email'],$subject,$message);
 	}
 	}
 
