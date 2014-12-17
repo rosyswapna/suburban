@@ -17,5 +17,9 @@ ADD INDEX ( `delivery_no` , `invoice_no` ) ;
 
 /*26-nov-2014*/
 ALTER TABLE `2_debtor_trans` ADD `tax_group_id` INT(11) NOT NULL
-/*need to b updated*/ 09/12/2014
+/* 09/12/2014 */
 ALTER TABLE `organisations` ADD `sms_gateway_url` TEXT NOT NULL AFTER `fa_account`;
+
+ /* 17/12/2014 */
+ALTER TABLE `organisations` ADD `system_email` TEXT NOT NULL AFTER `sms_gateway_url`;
+/*need to b updated*/ 

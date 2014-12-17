@@ -354,11 +354,24 @@ $qry='SELECT T.id,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.pick_u
 		return $qry->row_array();
 
 }
-	//get sms gateway url
+	//get sms gateway url organisation base
 	function get_URL($org_id){
 		$qry=$this->db->select('sms_gateway_url');
 		$qry=$this->db->where('id',$org_id);
 		$qry=$this->db->from('organisations');
+		$results = $this->db->get()->result();
+		if(count($results)>0){
+		return $results;
+		}else{
+		return false;
+		}
+	}
+	
+		//get system email organisation base
+	function get_System_mail($org_id){
+		$qry=$this->db->select('system_email');
+		$qry=$this->db->where('id',$org_id);
+		$qry=$this->db->from('organisations'); 
 		$results = $this->db->get()->result();
 		if(count($results)>0){
 		return $results;

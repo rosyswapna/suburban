@@ -680,8 +680,8 @@ class Trip_booking extends CI_Controller {
 	
 
 
-			if($customer['email']!=''){
-				$subject="Connect N Cabs";
+			if($customer['email']!=''){ 
+				$subject=PRODUCT_NAME;
 				$this->send_email->emailMe($customer['email'],$subject,$email_content);
 			}
 		}

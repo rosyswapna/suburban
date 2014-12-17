@@ -45,6 +45,7 @@ class Admin extends CI_Controller {
 		    $mail  = $this->input->post('mail');
 		    $phn = $this->input->post('phn');
 			$sms = $this->input->post('sms');
+			$sys_mail = $this->input->post('sys_mail');
 	        $this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean|is_unique[organisations.name]|alpha_numeric');
 		$this->form_validation->set_rules('fname','First Name','trim|required|min_length[2]|xss_clean');
 		$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[2]|xss_clean');
@@ -54,16 +55,17 @@ class Admin extends CI_Controller {
 		$this->form_validation->set_rules('cpwd','Confirmation','trim|required|min_length[5]|max_length[12]|xss_clean');
 		$this->form_validation->set_rules('mail','Mail','trim|required|valid_email|is_unique[users.email]');
 		$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean|is_unique[users.phone]');
-		$this->form_validation->set_rules('sms','Sms Gateway','trim|required|min_length[10]|xss_clean|');
+		$this->form_validation->set_rules('sms','Sms Gateway','trim|required|min_length[10]|xss_clean');
+		$this->form_validation->set_rules('sys_mail','System Mail','trim|required|valid_email|is_unique[organisations.system_email]');
       if($this->form_validation->run()==False){
-        $data=array('title'=>'Add New Organization | '.PRODUCT_NAME,'name'=>$name,'fname'=>$fname,'lname'=>$lname,'uname'=>$uname,'pwd'=>$pwd,'addr'=>$addr,'mail'=>$mail,'phn'=>$phn,'sms'=>$sms,'cpwd'=>'');
+        $data=array('title'=>'Add New Organization | '.PRODUCT_NAME,'name'=>$name,'fname'=>$fname,'lname'=>$lname,'uname'=>$uname,'pwd'=>$pwd,'addr'=>$addr,'mail'=>$mail,'phn'=>$phn,'sms'=>$sms,'sys_mail'=>$sys_mail,'cpwd'=>'');
 	$this->showAddOrg($data);
 	}
       else {
 	$this->load->model('admin_model');
 		   
 		   //inserting values to db
-		    $res=$this->admin_model->insertOrg($name,$fname,$lname,$addr,$uname,$pwd,$mail,$phn,$sms);
+		    $res=$this->admin_model->insertOrg($name,$fname,$lname,$addr,$uname,$pwd,$mail,$phn,$sms,$sys_mail);
 		       if($res==true){ 
 			    //sending email to admin
 				// $data=array('name'=>$name,'fname'=>$fname,'lname'=>$lname,'uname'=>$uname,'pwd'=>$pwd,'addr'=>$addr,'mail'=>$mail,'phn'=>$phn);
@@ -78,7 +80,7 @@ class Admin extends CI_Controller {
 	}
 		}
 			else if(($this->session->userdata('isLoggedIn')==true )&&($this->session->userdata('type')==SYSTEM_ADMINISTRATOR)){
-			$data=array('title'=>'Add New Organization |'.PRODUCT_NAME,'name'=>'','fname'=>'','lname'=>'','uname'=>'','pwd'=>'','addr'=>'','mail'=>'','phn'=>'','sms'=>'','cpwd'=>'');
+			$data=array('title'=>'Add New Organization |'.PRODUCT_NAME,'name'=>'','fname'=>'','lname'=>'','uname'=>'','pwd'=>'','addr'=>'','mail'=>'','phn'=>'','sms'=>'','sys_mail'=>'','cpwd'=>'');
 				$this->showAddOrg($data);
 		} 
 		
@@ -143,7 +145,7 @@ class Admin extends CI_Controller {
 	echo "page not found";
 
 	}
-	else{
+	else{ 
 	$org_res=$result['org_res'];
 	$user_res=$result['user_res'];
 	
@@ -197,6 +199,8 @@ class Admin extends CI_Controller {
 			$data['hmail']  = trim($this->input->post('hmail'));
 		    $data['phn'] = $this->input->post('phn');
 			$data['sms'] = $this->input->post('sms');
+			$data['sys_mail'] = $this->input->post('sys_mail'); 
+			$data['hsys_mail'] = $this->input->post('hsys_mail'); 
 			$data['hphone']  = trim($this->input->post('hphone'));
 			$data['user_id'] = $this->input->post('user_id');
 			$data['org_id'] = $this->input->post('org_id');
@@ -214,6 +218,11 @@ class Admin extends CI_Controller {
 			$this->form_validation->set_rules('mail','Mail','trim|required|valid_email');
 		}else{
 			$this->form_validation->set_rules('mail','Mail','trim|required|valid_email|is_unique[users.email]');
+		}
+		if($data['sys_mail'] == $data['hsys_mail']){ 
+			$this->form_validation->set_rules('sys_mail','System Mail','trim|required|valid_email');
+		}else{ 
+			$this->form_validation->set_rules('sys_mail','System Mail','trim|required|valid_email|is_unique[organisations.system_email]');
 		}
 		if($data['phn'] == $data['hphone']){
 			$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
@@ -264,7 +273,9 @@ class Admin extends CI_Controller {
 		$data['mail']=$user_res['email'];
 		$data['hmail']  = $user_res['email'];
 		$data['phn']=$user_res['phone'];
-		$data['sms']=$org_res['sms_gateway_url'];
+		$data['sms']=$org_res['sms_gateway_url']; 
+		$data['sys_mail']=$org_res['system_email'];
+		$data['hsys_mail']=$org_res['system_email'];
 		$data['hphone']=$user_res['phone'];
 		$data['status']=$org_res['status_id'];
 		$this->showAddOrg($data);
