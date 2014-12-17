@@ -682,7 +682,7 @@ class Trip_booking extends CI_Controller {
 
 			if($customer['email']!=''){ 
 				$subject=PRODUCT_NAME;
-				$this->send_email->emailMe($customer['email'],$subject,$email_content);
+				//$this->send_email->emailMe($customer['email'],$subject,$email_content);
 			}
 		}
 
@@ -695,8 +695,8 @@ class Trip_booking extends CI_Controller {
 	//$this->sms->sendSms($customer['mob'],$message);
 	//$this->sms->sendSms($driver_mob,$dr_message);
 	if($customer['email']!=''){
-	$subject="Connect N Cabs";
-	$this->send_email->emailMe($customer['email'],$subject,$message);
+	$subject=PRODUCT_NAME;
+	//$this->send_email->emailMe($customer['email'],$subject,$message);
 	}
 	}
 
