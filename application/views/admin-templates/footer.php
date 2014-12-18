@@ -36,6 +36,8 @@
         <script src="<?php echo base_url();?>js/main.js" type="text/javascript"></script>
 		<!--editable_dropdown.js -->
         <script src="<?php echo base_url();?>js/editable_dropdown.js" type="text/javascript"></script>
+		<!--googlemaps -->
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places&language=en-AU"></script>
 		<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
        'version':'1','packages':['timeline']}]}"></script>
     </body>
