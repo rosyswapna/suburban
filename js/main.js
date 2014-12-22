@@ -831,7 +831,7 @@ getDistance();
 			var cityLng = place.geometry.location.lng();
 			$('#pickupcitylat').attr('value',cityLat);
 			$('#pickupcitylng').attr('value',cityLng);
-			$("#pickupcity").attr('value',place.name+','+place.address_components[0].short_name);
+			$("#pickupcity").attr('value',place.formatted_address);
 			getDistance();
 		}); 
 		google.maps.event.addListener(autocompletedrop, 'place_changed', function() {
@@ -840,7 +840,7 @@ getDistance();
 			var cityLng = place.geometry.location.lng();
 			$('#dropdownlocationlat').attr('value',cityLat);
 			$('#dropdownlocationlng').attr('value',cityLng);
-			$("#dropdownlocation").attr('value',place.name+','+place.address_components[0].short_name);
+			$("#dropdownlocation").attr('value',place.formatted_address);
 			getDistance();
 		}); 
 		google.maps.event.addListener(autocompletevia, 'place_changed', function() {
@@ -849,7 +849,7 @@ getDistance();
 			var cityLng = place.geometry.location.lng();
 			$('#viacitylat').attr('value',cityLat);
 			$('#viacitylng').attr('value',cityLng);
-			$("#viacity").attr('value',place.name+','+place.address_components[0].short_name);
+			$("#viacity").attr('value',place.formatted_address);
 			getDistance();
 		}); 
 		 
@@ -922,7 +922,7 @@ if(data.via=='NO'){
 var tot_distance = data.distance.replace(/\km\b/g, '');
 $('.estimated-distance-of-journey').html(data.distance);
 $('.estimated-distance-of-journey').attr('estimated-distance-of-journey',tot_distance);
-
+$('#time_journey').val(tot_distance);
 $('.estimated-time-of-journey').html(data.duration);
 }else if(data.via=='YES'){
 first_duration=data.first_duration.replace(/\hour\b/g, 'h');
@@ -938,8 +938,11 @@ var tot_distance=Number(first_distance)+Number(second_distance);
 
 var distance_estimation='<div class="via-distance-estimation">Pick up to Via Loc : '+data.first_distance+'<br/> Via to Drop Loc : '+data.second_distance+'</div>';
 var duration_estimation='<div class="via-duration-estimation">Pick up to Via Loc : '+first_duration+'<br/>  Via to Drop Loc : '+second_duration+'</div>';
-
+var est_distance='Pick up to Via Loc : '+data.first_distance+',Via to Drop Loc : '+data.second_distance;
+var time_journey='Pick up to Via Loc : '+first_duration+',Via to Drop Loc : '+second_duration;
 $('.estimated-distance-of-journey').html(distance_estimation);
+$('#time_journey').val(time_journey);
+$('#est_distance').val(est_distance);
 $('.estimated-distance-of-journey').attr('estimated-distance-of-journey',tot_distance);
 
 $('.estimated-time-of-journey').html(duration_estimation);
@@ -1147,17 +1150,25 @@ total=Math.round(Number(minimum_kilometers)*Number(rate)).toFixed(2);
 }
 
 $('.additional-charge-per-km').html('RS . '+additional_kilometer_rate);
+$('#additional-charge').val('Rs . '+additional_kilometer_rate);
 $('.mini-km').html(minimum_kilometers+' Km');
+$('#min_kilo').val(minimum_kilometers+' Km');
 $('.charge-per-km').html('RS . '+rate);
+$('#charge').val('RS . '+rate);
 $('.estimated-total-amount').html('RS . '+total);
+$('#tot_amt').val('RS . '+total);
 $('.no-of-days').html(no_of_days+' '+days+' Trip');
 
 }else{
 
 $('.additional-charge-per-km').html('RS . 0');
+$('#additional-charge').val('RS . 0');
 $('.mini-km').html('0 Km');
+$('#min_kilo').val('0 Km');
 $('.charge-per-km').html('RS . 0');
+$('#charge').val('RS . 0');
 $('.estimated-total-amount').html('RS . 0');
+$('#tot_amt').val('RS . 0');
 $('.no-of-days').html(no_of_days+' '+days+' Trip');
 
 }
@@ -1669,6 +1680,21 @@ var r = confirm("Please Select Vehicle Model To Complete The Trip..Click OK to C
 }
 });
 
+//--to expand and collapse table rows for trips	
+
+	$('.common').click(function(){
+		$(this).hide();
+	if($(this).attr('limited')=='true'){
+		
+		$(this).next().show();
+	}else if($(this).attr('limited')=='false'){
+		$(this).prev().show();
+	}
+
+	
+	});
+	
+			//ends function		
 
 $('.voucher').on('click',function(){ 
 	var new_voucher = $(this).attr('new_voucher');

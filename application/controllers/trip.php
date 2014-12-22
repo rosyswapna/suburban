@@ -23,7 +23,12 @@ class Trip extends CI_Controller {
 		
 			$this->tripView($param2);
 			
-			}else if($param1=='complete') {
+			}else if($param1=='proposal') {
+		
+			$this->tripProposal($param2);
+			
+			}
+			else if($param1=='complete') {
 		
 			$this->tripComplete($param2,$param3);
 			
@@ -145,8 +150,6 @@ class Trip extends CI_Controller {
 	public function tripView($param2){
 	if($this->session_check()==true) {
 	$trip_id=$param2;
-	
-	
 	$tbl_arry=array('customer_types','booking_sources','trip_models','vehicle_types','vehicle_ac_types','vehicle_beacon_light_options','vehicle_seating_capacity');
 	for ($i=0;$i<count($tbl_arry);$i++){
 			$result=$this->user_model->getArray($tbl_arry[$i]);
@@ -291,5 +294,102 @@ class Trip extends CI_Controller {
 	$this->load->view($page,$data);
 	$this->load->view('admin-templates/footer');
 	
+	}
+	
+	public function tripProposal($param2){
+	if($this->session_check()==true) {
+	$trip_id=$param2;
+	
+	$tbl_arry=array('customer_types','booking_sources','trip_models','vehicle_types','vehicle_ac_types','vehicle_beacon_light_options','vehicle_seating_capacity');
+	for ($i=0;$i<count($tbl_arry);$i++){
+			$result=$this->user_model->getArray($tbl_arry[$i]);
+			if($result!=false){
+			$data[$tbl_arry[$i]]=$result;
+			}
+			else{
+			$data[$tbl_arry[$i]]='';
+			}
+	}
+	
+	$trip_models=$data['trip_models'];
+	$booking_sources=$data['booking_sources'];
+	$vehicle_types=$data['vehicle_types'];
+	$vehicle_beacon_light_options=$data['vehicle_beacon_light_options'];
+	$vehicle_seating_capacity=$data['vehicle_seating_capacity'];
+	$vehicle_ac_types=$data['vehicle_ac_types'];
+	$vehicles=$this->trip_booking_model->getVehiclesArray($condition='');
+	$drivers=$this->driver_model->getDriversArray($condition='');
+	
+	
+	
+	$conditon = array('id'=>$trip_id);
+	$result=$this->trip_booking_model->getDetails($conditon); 
+	$result=$result[0]; 
+	$cust_arry['group_id']=$result->customer_group_id;
+	$cust_arry['cust_id']=$result->customer_id;
+	$cust_arry['guest_id']=$result->guest_id;
+	$data1['customer_details']=$this->trip_booking_model->getCustomer($cust_arry);
+	
+	$data1['booking_source']			=	$booking_sources[$result->booking_source_id];	
+	$data1['source']					=	$result->source;
+	$data1['booking_date']				=	$result->booking_date;	
+	$data1['booking_time']				=	$result->booking_time;
+	$data1['trip_model']				=	$trip_models[$result->trip_model_id];
+	$data1['pick_up_city']		=	$result->pick_up_city;
+	$data1['drop_city']		=	$result->drop_city;
+	$data1['pickup_date']		=	$result->pick_up_date;
+	$strt_km=$result->kilometer_reading_start;
+	$end_km=$result->kilometer_reading_drop;
+	$data1['total_km']		= $end_km-$strt_km;
+	$pickdate=$result->pick_up_date.' '.$result->pick_up_time;
+	$dropdate=$result->drop_date." ".$result->drop_time;
+	$date1 = date_create($pickdate);
+	$date2 = date_create($dropdate);
+						
+						$diff= date_diff($date1, $date2);
+						if($diff->d > 0 && $diff->h >= 0 && $diff->i >=1 ){
+							$no_of_days=$diff->d+1;
+						}else{
+							$no_of_days=$diff->d;
+						}
+						
+	$data1['time_duration']=$no_of_days."days".nbs(3).$diff->h."hrs".nbs(3).$diff->i."mints";
+	$data1['pick_up_time']		=	$result->pick_up_time;
+	$data1['drop_time']		=	$result->drop_time;
+	
+	$data1['vehicle_type']			=	$vehicle_types[$result->vehicle_type_id];
+	$data1['vehicle_ac_type']		=	$vehicle_ac_types[$result->vehicle_ac_type_id];
+	if($result->vehicle_seating_capacity_id!=gINVALID){
+	$data1['vehicle_seating_capacity']		=$vehicle_seating_capacity[$result->vehicle_seating_capacity_id];
+	}else{
+	$data1['vehicle_seating_capacity']		='';
+	}
+	if($result->vehicle_seating_capacity_id!=gINVALID){
+	$data1['vehicle_beacon_light']		=	$vehicle_beacon_light_options[$result->vehicle_beacon_light_option_id];		
+	}else{
+	$data1['vehicle_beacon_light']		='';
+	}
+
+	$data1['vehicle']				=	$vehicles[$result->vehicle_id];
+	$data1['driver']				=	$drivers[$result->driver_id];
+	$trip_id = array('trip_id'=>$trip_id);
+	$tariff_details=$this->trip_booking_model->getRoughEstimate($trip_id);
+	$tariff_details=$tariff_details[0];
+	
+	$data1['time_of_journey']				=	$tariff_details->time_of_journey;
+	$data1['distance']				=	$tariff_details->distance;
+	$data1['charge']				=	$tariff_details->charge;
+	$data1['additional_charge']				=	$tariff_details->additional_charge;
+	$data1['min_kilometers']				=	$tariff_details->min_kilometers;
+	$data1['total_amt']				=	$tariff_details->total_amt;
+		$page='user-pages/tour_quotation';
+		$data1['title']="Trip | ".PRODUCT_NAME;  
+		$this->load_templates($page,$data1);
+	
+	
+	}
+	else{
+			$this->notAuthorized();
+		}
 	}
 }

@@ -66,12 +66,16 @@ class Trip_booking_model extends CI_Model {
 	}
 	}
 
-	function  bookTrip($data) {
-	
+	function  bookTrip($data,$estimate) {
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert('trips',$data);
 	if($this->db->insert_id()>0){
-		return $this->db->insert_id();
+		$id =$this->db->insert_id();
+		//$this->db->set('trip_id', $id);
+		$estimate['trip_id']=$id;
+		$estimate['organisation_id']=$this->session->userdata('organisation_id');
+		$this->db->insert('rough_estimate',$estimate);
+		return $id;
 	}else{
 		return false;
 	}
@@ -121,7 +125,7 @@ class Trip_booking_model extends CI_Model {
 		return $id;
 	}
 
-	function  updateTrip($data,$id) {
+	function  updateTrip($data,$id,$estimate) {
 	$this->db->where('id',$id );
 		//newly added-to be organisation based
 		$org_id=$this->session->userdata('organisation_id');
@@ -129,6 +133,9 @@ class Trip_booking_model extends CI_Model {
 		//---
 	$this->db->set('updated', 'NOW()', FALSE);
 	$this->db->update("trips",$data);
+	$this->db->where('trip_id',$id );
+	$this->db->update("rough_estimate",$estimate);
+	
 	return true;
 	}
 
@@ -378,6 +385,42 @@ $qry='SELECT T.id,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.pick_u
 		}else{
 		return false;
 		}
+	}
+	
+	  //get customer details as per values
+	function getCustomer($cust_arry){
+		if($cust_arry['group_id']!=-1){
+		$qry=$this->db->select('name');
+		$qry=$this->db->where('id',$cust_arry['group_id']);
+		$qry=$this->db->from('customer_groups'); 
+		$result = $this->db->get()->result();
+		$res['group'] = $result[0]->name;
+		}
+		if($cust_arry['cust_id']!=-1){
+		$qry=$this->db->select('name,mobile');
+		$qry=$this->db->where('id',$cust_arry['cust_id']);
+		$qry=$this->db->from('customers'); 
+		$result = $this->db->get()->result();
+		$res['customer_name'] =$result[0]->name;
+		$res['customer_mob'] =$result[0]->mobile;
+		}
+		if($cust_arry['guest_id']!=-1){
+		$qry=$this->db->select('name,mobile');
+		$qry=$this->db->where('id',$cust_arry['guest_id']);
+		$qry=$this->db->from('customers'); 
+		$result = $this->db->get()->result();
+		$res['guest_name']=$result[0]->name;
+		$res['guest_mob']=$result[0]->mobile;
+		}
+		
+		return $res;
+	}
+	
+	function getRoughEstimate($conditon=''){ 
+	$this->db->where($conditon);
+	$this->db->from('rough_estimate');
+	$results = $this->db->get()->result();
+	return $results;
 	}
 }
 ?>

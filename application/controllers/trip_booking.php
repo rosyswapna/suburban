@@ -361,8 +361,12 @@ class Trip_booking extends CI_Controller {
 			$dbdata['remarks']						=$data['remarks'];
 			$dbdata['organisation_id']				=$this->session->userdata('organisation_id');
 			$dbdata['user_id']						=$this->session->userdata('id');
-			
-
+			$estimate['time_of_journey']			=$this->input->post('time_journey');
+			$estimate['distance']			=$this->input->post('est_distance');
+			$estimate['charge']			=$this->input->post('charge');
+			$estimate['additional_charge']			=$this->input->post('additional-charge');
+			$estimate['min_kilometers']			=$this->input->post('min_kilo');
+			$estimate['total_amt']			=$this->input->post('tot_amt');
 
 			$customer['mob']=$this->session->userdata('customer_mobile');
 			$customer['email']=$this->session->userdata('customer_email');	
@@ -375,7 +379,7 @@ class Trip_booking extends CI_Controller {
 			$this->session->set_userdata('customer_mobile','');
 			
 				if(isset($data['trip_id']) && $data['trip_id']>0){
-				$res = $this->trip_booking_model->updateTrip($dbdata,$data['trip_id']);
+				$res = $this->trip_booking_model->updateTrip($dbdata,$data['trip_id'],$estimate);
 				if($res==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Updated Succesfully..!!'));
 					$this->session->set_userdata(array('dbError'=>''));
@@ -390,7 +394,7 @@ class Trip_booking extends CI_Controller {
 				redirect(base_url().'organization/front-desk/trip-booking');
 
 				}else{
-				$res = $this->trip_booking_model->bookTrip($dbdata);
+				$res = $this->trip_booking_model->bookTrip($dbdata,$estimate);
 				if($res!=false && $res>0){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Booked Succesfully..!!'));
 					$this->session->set_userdata(array('dbError'=>''));

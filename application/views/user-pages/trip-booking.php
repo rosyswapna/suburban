@@ -660,12 +660,16 @@ $customer_type='';
                                         <tbody>
 		                                    <tr>
 		                                        <td class="wdith-30-percent">Time Of Journey<span class="float-right"> : </span></td>
-		                                        <td><div class="estimated-time-of-journey"></div></td>
+		                                        <td><div class="estimated-time-of-journey"></div>
+												<div class="hide-me"><?php echo form_input(array('name'=>'time_journey','class'=>'form-control ','id'=>'time_journey'));?></div>
+												</td>
+		                                        
 		                                        
 		                                    </tr>
 		                                    <tr>
 		                                        <td>Distance<span class="float-right"> : </span></td>
-		                                        <td><div class="estimated-distance-of-journey"></div></td>
+		                                        <td><div class="estimated-distance-of-journey"></div>
+												<div class="hide-me"><?php echo form_input(array('name'=>'est_distance','class'=>'form-control ','id'=>'est_distance'));?></div></td>
 		                                        
 		                                    </tr>
 											<tr>
@@ -675,23 +679,27 @@ $customer_type='';
 		                                    </tr>
 											<tr>
 		                                        <td>Charge<span class="float-right"> : </span></td>
-		                                        <td><div class="charge-per-km"></div></td>
+		                                        <td><div class="charge-per-km"></div>
+												<div class="hide-me"><?php echo form_input(array('name'=>'charge','class'=>'form-control ','id'=>'charge'));?></div></td>
 		                                        
 		                                    </tr>
 											<tr>
 		                                        <td>Additional Charge<span class="float-right"> : </span></td>
-		                                        <td><div class="additional-charge-per-km"></div></td>
+		                                        <td><div class="additional-charge-per-km"></div>
+												<div class="hide-me"><?php echo form_input(array('name'=>'additional-charge','class'=>'form-control ','id'=>'additional-charge'));?></div></td>
 		                                        
 		                                    </tr>
 											<tr>
 		                                        <td>Minimum Kilometers per Day<span class="float-right"> : </span></td>
-		                                        <td><div class="mini-km"></div></td>
+		                                        <td><div class="mini-km"></div>
+												<div class="hide-me"><?php echo form_input(array('name'=>'min_kilo','class'=>'form-control ','id'=>'min_kilo'));?></div></td>
 		                                        
 		                                    </tr>
 											
 											<tr>
 		                                        <td>Total Amount<span class="float-right"> : </span></td>
-		                                        <td><div class="estimated-total-amount"></div></td>
+		                                        <td><div class="estimated-total-amount"></div>
+												<div class="hide-me"><?php echo form_input(array('name'=>'tot_amt','class'=>'form-control ','id'=>'tot_amt'));?></div></td>
 		                                        
 		                                    </tr>
                                    		</tbody>
