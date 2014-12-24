@@ -19,7 +19,20 @@ ADD INDEX ( `delivery_no` , `invoice_no` ) ;
 ALTER TABLE `2_debtor_trans` ADD `tax_group_id` INT(11) NOT NULL
 /* 09/12/2014 */
 ALTER TABLE `organisations` ADD `sms_gateway_url` TEXT NOT NULL AFTER `fa_account`;
-
+ 
  /* 17/12/2014 */
 ALTER TABLE `organisations` ADD `system_email` TEXT NOT NULL AFTER `sms_gateway_url`;
-/*need to b updated*/ 
+/* 22/12/2014 */
+CREATE TABLE IF NOT EXISTS `rough_estimate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `trip_id` int(11) NOT NULL,
+  `time_of_journey` text NOT NULL,
+  `distance` text NOT NULL,
+  `charge` text NOT NULL,
+  `additional_charge` text NOT NULL,
+  `min_kilometers` text NOT NULL,
+  `total_amt` text NOT NULL,
+  `organisation_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+/*need to b updated*/

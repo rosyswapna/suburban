@@ -80,10 +80,10 @@ Dear '.$customer_details['customer_name'].',</br>
 </div>
 ';
 $content1='<div>
-<h4>VEHICLE & DRIVER DETAILS</h4><hr>
+<h4 >VEHICLE & DRIVER DETAILS</h4><hr>
 <p>Vehicle Registration Number : '.$vehicle.'</p>
 <p>AC Type : '.$vehicle_ac_type.'</p>
-<p>Type :'.$vehicle_type.'</p>
+<p>Vehicle Type :'.$vehicle_type.'</p>
 <p>Seating Capacity : '.$vehicle_seating_capacity.'</p>
 <p>Beacon Light : '.$vehicle_beacon_light.'</p>
 <p>Driver Name : '.$driver.'</p>
@@ -98,7 +98,7 @@ $content2='<div>
 <p>Total Amount : '.$total_amt.'</p>
 </div>';
 $content3='<div>
-<h4>TERMS & CONDITIONS</h4><hr>
+<h4 >TERMS & CONDITIONS</h4><hr>
 <p>We are delighted to advise that once the booking is confirmed and provided all payment schedules are met, the tour is
 fully guaranteed against currency surcharges. For detailed booking terms and conditions please visit our website or
 contact us</p>

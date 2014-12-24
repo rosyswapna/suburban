@@ -1195,34 +1195,6 @@ $('#vehicle-model').val('');
 $('#vehicle-ac-type,#vehicle-model').on('change',function(){
 GenerateVehiclesAndTarif(tarif_id='',available_vehicle_id='');
 });
-/* for cnc
-function GenerateVehiclesAndTarif(tarif_id='',available_vehicle_id=''){
-
-var vehicle_ac_type = $('#vehicle-ac-type').val();
-if(vehicle_ac_type==-1){
-vehicle_ac_type=1;
-}
-var vehicle_model = $('#vehicle-model').val();
-
-var tarif_id=tarif_id;
-if(vehicle_type!=-1 && vehicle_ac_type!=-1 && vehicle_make!=-1 && vehicle_model!=-1 && pickupdate!='' && pickuptime!='' && dropdate!='' && droptime!='' ){
-
-var pickupdatetime = pickupdate+' '+pickuptime+':00';
-var dropdatetime   = dropdate+' '+droptime+':00';
-$('.display-me').css('display','block');
-generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id);
-generateTariffs(vehicle_type,vehicle_ac_type,vehicle_make,vehicle_model,tarif_id);
-
-}else 
-if(vehicle_ac_type!=-1 && vehicle_model!=-1){
-$('.display-me').css('display','block');
-generateTariffs(vehicle_ac_type,vehicle_model,tarif_id);
-
-}
-
-
-}
-*/
 
 function GenerateVehiclesAndTarif(tarif_id='',available_vehicle_id=''){
 var vehicle_type = $('#vehicle-type').val();
