@@ -66,7 +66,7 @@ class Trip_booking_model extends CI_Model {
 	}
 	}
 
-	function  bookTrip($data,$estimate) {
+	function  bookTrip($data,$estimate) {// print_r($data);exit;
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert('trips',$data);
 	if($this->db->insert_id()>0){
@@ -129,12 +129,15 @@ class Trip_booking_model extends CI_Model {
 	$this->db->where('id',$id );
 		//newly added-to be organisation based
 		$org_id=$this->session->userdata('organisation_id');
-		$this->db->where( 'organisation_id', $org_id );
+		$this->db->where( 'organisation_id', $org_id ); 
 		//---
 	$this->db->set('updated', 'NOW()', FALSE);
-	$this->db->update("trips",$data);
+	$this->db->update("trips",$data); 
+	if(!empty($estimate)){
 	$this->db->where('trip_id',$id );
 	$this->db->update("rough_estimate",$estimate);
+	}
+	
 	
 	return true;
 	}
@@ -170,7 +173,7 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 
 	}
 
-	function getDriverVouchers($driver_id,$fpdate='',$tpdate=''){ 
+	function getDriverVouchers($driver_id,$fpdate='',$tpdate=''){ //echo "heloo";exit;
 			
 		$qry='SELECT TV.trip_id,TV.driver_bata,TV.vehicle_tarif,TV.voucher_no,V.registration_number,VT.name as v_type,TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON  TV.trip_id =T.id LEFT JOIN vehicles As V on T.vehicle_id=V.id LEFT JOIN vehicle_types As VT on T.vehicle_type_id=VT.id WHERE TV.organisation_id = '.$this->session->userdata('organisation_id').' AND T.driver_id='.$driver_id;
 		if($fpdate!=null && $tpdate!=null){ 
@@ -182,7 +185,7 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 		if($fpdate==null && $tpdate!=null){
 		$qry.=' AND T.drop_date= "'.$tpdate.'"';
 				} //echo $qry;exit;
-	$result=$this->db->query($qry);
+	$result=$this->db->query($qry); //echo $this->db->last_query();exit;
 	$result=$result->result_array();
 	if(count($result)>0){
 	return $result; 

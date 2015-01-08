@@ -60,7 +60,8 @@ class user_model extends CI_Model {
 	$qry=$this->db->query($query);
 	$flag=1;
 	}elseif($tbl=='available_vehicles'){
-	$query='SELECT * FROM vehicles WHERE  organisation_id='.$org_id.' ';
+	//$query='SELECT * FROM vehicles WHERE  organisation_id='.$org_id.' ';
+	$query='SELECT id, SUBSTR(registration_number, -4)as registration_number FROM vehicles WHERE organisation_id='.$org_id;
 	$qry=$this->db->query($query);
 	$flag=2;
 	}elseif($tbl=='available_drivers'){
@@ -229,14 +230,25 @@ class user_model extends CI_Model {
 	
 	}
 	public function getOwnerDetails($id){
-	$qry=$this->db->select('mobile,address');
-	//newly added-to be organisation based
-	$org_id=$this->session->userdata('organisation_id');
-	$qry=$this->db->where('organisation_id', $org_id );
-	//---
-	$qry=$this->db->where('id',$id);
-	$qry=$this->db->get('vehicle_owners');
-	return $qry->row_array();
+		$qry=$this->db->select('mobile,address');
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$qry=$this->db->where('organisation_id', $org_id );
+		//---
+		$qry=$this->db->where('id',$id);
+		$qry=$this->db->get('vehicle_owners');
+		return $qry->row_array();
+	}
+	
+	public function getDriverUser($driver_id)
+	{
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->select('drivers.*,users.username');
+		$this->db->from('drivers');
+		$this->db->join('users', 'drivers.login_id = users.id','left');
+		$this->db->where(array('drivers.id'=>$driver_id,'drivers.organisation_id'=>$org_id));
+		return $this->db->get()->row_array();
+   
 	}
 	
 }

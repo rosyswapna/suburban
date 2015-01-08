@@ -6,6 +6,12 @@ class Home extends CI_Controller {
 	 * Index Page for this controller.
 	 
 	 */
+	 public function __construct()
+	{
+		parent::__construct();
+		//no_cache();
+
+	}
 	public function index()
 	{	if( $this->session->userdata('isLoggedIn') ) {
 		if( $this->session->userdata('type')==SYSTEM_ADMINISTRATOR){
@@ -17,7 +23,7 @@ class Home extends CI_Controller {
 		}
 		}else{
 		$data['title']="Login | ".PRODUCT_NAME;	
-		$this->load->view('organization-pages/login',$data);
+		$this->load->view('access/login',$data);
 		//redirect(base_url().'organization/login');
 		}
 	}

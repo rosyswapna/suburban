@@ -9,7 +9,41 @@ class Driver extends CI_Controller {
 		no_cache();
 
 		}
-		public function session_check() {
+		//redirect driver pages
+	public function index()
+	{
+		$param1=$this->uri->segment(2);
+		$param2=$this->uri->segment(3);
+		$param3=$this->uri->segment(4);
+		if($this->driver_session_check()==true || $this->session_check()==true) {
+			if($param1=='' || $param1 == 'home'){
+				$this->Dashboard();
+			}
+			if($param1=='driver_manage'){
+				$this->driver_manage($param2);
+			}else{
+				$this->notAuthorized();
+			}
+		}
+		else{
+			$this->notAuthorized();
+		}
+	}
+	
+	public function Dashboard(){
+		$data['title']="Home | ".PRODUCT_NAME;    
+       		$page='driver-pages/dashboard';
+		$this->load_templates($page,$data);
+	}
+	
+	public function driver_session_check() {
+		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==DRIVER)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public function session_check() {
 	if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==FRONT_DESK)) {
 		return true;
 	} else {
@@ -18,8 +52,8 @@ class Driver extends CI_Controller {
 	}
 	//for driver view display
 
-	public function driver_manage(){
-	if($this->session_check()==true) {
+	public function driver_manage($param2=''){ 
+	if($this->session_check()==true) { 
 	if(isset($_REQUEST['driver-submit'])){ 
 	$data['name']=$this->input->post('driver_name');
 	$data['place_of_birth']=$this->input->post('place_of_birth');
@@ -59,6 +93,7 @@ class Driver extends CI_Controller {
 	$dr_id=$this->input->post('hidden_id');
 	$data['organisation_id']=$this->session->userdata('organisation_id'); 
 	$data['user_id']=$this->session->userdata('id'); 
+	
 		$err=True;
 	/*if($data['blood_group'] ==-1){
 	$data['blood_group'] ='';
@@ -99,10 +134,10 @@ class Driver extends CI_Controller {
 	 }else{
 	 $this->form_validation->set_rules('mobile','10 digit Mobile Number ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[drivers.mobile]');
 	 }if($data['email']==$hmail){
-	 $this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email');
+	 $this->form_validation->set_rules('email','Email','trim|required|xss_clean|valid_email');
 	 }
 	 else{
-	 $this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email|is_unique[drivers.email]');
+	 $this->form_validation->set_rules('email','Email','trim|required|xss_clean|valid_email|is_unique[drivers.email]');
 	 }
 	 $this->form_validation->set_rules('date_of_joining','Date of Joining ','trim|required|xss_clean');
 	 $this->form_validation->set_rules('badge','Badge','trim|xss_clean');
@@ -118,30 +153,39 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('id_proof_type_id','ID Proof','trim|xss_clean');
 	 $this->form_validation->set_rules('id_proof_document_number','ID Proof Number','trim|xss_clean');
 	 $this->form_validation->set_rules('name_on_id_proof','ID Proof Holder','trim|xss_clean');
+		if($dr_id==gINVALID ){
+				$this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
+				$this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|matches[cpassword]|xss_clean');
+				$this->form_validation->set_rules('cpassword','Confirmation','trim|required|min_length[5]|max_length[12]|xss_clean');
+				}
 	
-	
-	
+	 
 		
-	 if($this->form_validation->run()==False|| $err==False){ 
+	 if($this->form_validation->run()==False|| $err==False){
 		$this->mysession->set('driver_id',$dr_id);
+		$data['username']  = trim($this->input->post('username'));  
+		$data['password'] = $this->input->post('password'); 
 		$this->mysession->set('post',$data); 
 		redirect(base_url().'organization/front-desk/driver-profile',$data);	
 	 } 
 	 else{
 	//echo "val success";exit;
 		if($dr_id==gINVALID ){
-			$res=$this->driver_model->addDriverdetails($data); 
+			$login['username']  = trim($this->input->post('username')); 
+		    	$login['password'] = $this->input->post('password');
+			$res=$this->driver_model->addDriverdetails($data,$login);  
 			//$ins_id=$this->mysession->get('vehicle_id');
 			if($res){
 				//add driver as supplier in fa
 				$this->account_model->add_fa_supplier($res,"DR");
+				
 				//$data['driver_tab']='active';
-				$this->session->set_userdata(array('dbSuccess'=>' Added Succesfully..!'));
+				$this->session->set_userdata(array('dbSuccess'=>' Added Succesfully..!')); 
 				$this->session->set_userdata(array('dbError'=>''));
 				redirect(base_url().'organization/front-desk/driver-profile');
 			}
 		}
-		else{
+		else{ 
 			
 			$res=$this->driver_model->UpdateDriverdetails($data,$dr_id);
 			
@@ -182,7 +226,7 @@ class Driver extends CI_Controller {
 	
 	
 	public function load_templates($page='',$data=''){
-	if($this->session_check()==true) {
+	if($this->session_check()==true || $this->driver_session_check()==true) {
 		$this->load->view('admin-templates/header',$data);
 		$this->load->view('admin-templates/nav');
 		$this->load->view($page,$data);

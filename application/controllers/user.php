@@ -23,7 +23,22 @@ class User extends CI_Controller {
 		} else {
 		return false;
 		}
-	}   
+	} 
+	
+	public function customer_session_check() {
+		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==CUSTOMER)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public function driver_session_check() {
+		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==DRIVER)) {
+			return true;
+		} else {
+			return false;
+		}
+	}  
 	public function index(){
 		$param1=$this->uri->segment(3);
 		$param2=$this->uri->segment(4);
@@ -92,7 +107,25 @@ class User extends CI_Controller {
 		}else{
 			$this->notFound();
 		}
-		}else{
+		}
+		elseif($this->customer_session_check()==true){
+			if($param1=='trip-booking'){
+				$this->ShowBookTrip($param2);
+			}elseif($param1=='customer') {
+				$this->Customer($param2);
+			}elseif($param1=='trips'){
+				$this->Trips($param2);
+			}else{
+				$this->notAuthorized();
+			}
+		}elseif($this->driver_session_check()==true){
+			if($param1=='driver-profile'&&($param2== ''|| is_numeric($param2))){
+				$this->ShowDriverProfile($param1,$param2);
+			}elseif($param1=='trips'){
+				$this->Trips($param2);
+			}
+		}
+		else{
 			$this->notAuthorized();
 		}
 	
@@ -401,9 +434,17 @@ class User extends CI_Controller {
 
 
 
-
+	//trip booking from front-desk and customer
 	public function ShowBookTrip($trip_id =''){
-	if($this->session_check()==true) {
+	if($this->session_check()==true || $this->customer_session_check()==true) {
+	//set flag for new trip by 'customer' or 'organization'
+			if($this->customer_session_check() == true){
+				$data['booking_by'] = 'customer';
+			}else{
+				$data['booking_by'] = 'organization ';
+			}
+			
+			//set form arrays
 	
 	//echo $this->session->userdata('organisation_id');
 	$tbl_arry=array('booking_sources','available_drivers','available_vehicles','trip_models','vehicle_types','vehicle_models','vehicle_makes','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','languages','payment_type','customer_types','customer_groups');
@@ -416,12 +457,15 @@ class User extends CI_Controller {
 	else{
 	$data[$tbl_arry[$i]]='';
 	}
-	}//echo date('Y-m-d H:i');
-	$conditon =array('trip_status_id'=>TRIP_STATUS_PENDING,'CONCAT(pick_up_date," ",pick_up_time) >='=>date('Y-m-d H:i'),'organisation_id'=>$this->session->userdata('organisation_id'));
-	$orderby = ' CONCAT(pick_up_date,pick_up_time) ASC';
-	$data['notification']=$this->trip_booking_model->getDetails($conditon,$orderby);
-	$data['customers_array']=$this->customers_model->getArray();
-	$data['tariffs']='';
+	}
+	//echo date('Y-m-d H:i');
+	//$conditon =array('trip_status_id'=>TRIP_STATUS_PENDING,'CONCAT(pick_up_date," ",pick_up_time) >='=>date('Y-m-d H:i'),'organisation_id'=>$this->session->userdata('organisation_id'));
+	//$orderby = ' CONCAT(pick_up_date,pick_up_time) ASC';
+	//$data['notification']=$this->trip_booking_model->getDetails($conditon,$orderby);
+	//$data['customers_array']=$this->customers_model->getArray();
+		
+		//get notification and customer array
+	list($data['notification'],$data['customers_array']) = $this->getNotifications();$data['tariffs']='';
 	if($trip_id!='' && $trip_id > 0) {
 	$conditon = array('id'=>$trip_id,'organisation_id'=>$this->session->userdata('organisation_id'));
 	$result=$this->trip_booking_model->getDetails($conditon);
@@ -548,6 +592,18 @@ class User extends CI_Controller {
 	redirect(base_url().'organization/front-desk/trips');
 	}
 	}
+	else if($this->session->userdata('customer')){
+				$customer=$this->session->userdata('customer');
+				$data1['customer']	= $this->session->userdata('customer')->name;
+				$data1['new_customer']		= 'false';
+				$data1['email']			= $this->session->userdata('customer')->email;
+				$data1['mobile']		= $this->session->userdata('customer')->mobile;
+
+				$this->session->set_userdata('customer_id',$this->session->userdata('customer')->id);
+				$this->session->set_userdata('customer_name',$this->session->userdata('customer')->name);
+				$this->session->set_userdata('customer_email',$this->session->userdata('customer')->email);
+				$this->session->set_userdata('customer_mobile',$this->session->userdata('customer')->mobile);
+			}
 	/*if(isset($data1['vehicle_type']) && isset($data1['vehicle_ac_type']) && isset($data1['vehicle_make']) && isset($data1['vehicle_model']) && isset($pickupdatetime) && isset($dropdatetime)){
 	$available=array('vehicle_type'=>$data1['vehicle_type'],'vehicle_ac_type'=>$data1['vehicle_ac_type'],'vehicle_make'=>$data1['vehicle_make'],'vehicle_model'=>$data1['vehicle_model'],'pickupdatetime'=>$pickupdatetime,'dropdatetime'=>$dropdatetime,'organisation_id'=>$this->session->userdata('organisation_id'));
 	$res_vehicles=$this->getAvailableVehicle($available);
@@ -607,7 +663,7 @@ class User extends CI_Controller {
 
 	}
 	public function Trips($param2){
-		if($this->session_check()==true) {
+		if($this->session_check()==true|| $this->customer_session_check()==true || $this->driver_session_check()==true) {
 			$like_arry='';
 			$where_arry='';
 			$tbl="trips";
@@ -625,12 +681,22 @@ class User extends CI_Controller {
 			$data['customer']='';
 			$data['trip_status_id']='';
 			$qry='SELECT ORG.name as company_name ,VO.name as ownership,T.customer_id,T.customer_group_id,T.remarks,T.vehicle_model_id,T.vehicle_ac_type_id,T.driver_id,T.vehicle_id,T.guest_id,V.vehicle_ownership_types_id,T.tariff_id,T.trip_status_id,T.id as trip_id,T.booking_date,T.drop_date,T.drop_time,T.pick_up_date,T.pick_up_time,VM.name as model,V.registration_number,T.pick_up_city,T.pick_up_area,G.name as guest_name,G.mobile as guest_info,T.drop_city,T.drop_area,C.name as customer_name,C.mobile as customer_mobile,CG.name as customer_group,D.name as driver,D.mobile as driver_info FROM trips T LEFT JOIN vehicle_models VM ON VM.id=T.vehicle_model_id LEFT JOIN vehicles V ON V.id=T.vehicle_id LEFT JOIN customers G ON G.id=T.guest_id LEFT JOIN customers C ON C.id=T.customer_id LEFT JOIN customer_groups CG ON CG.id=T.customer_group_id LEFT JOIN drivers D ON D.id=T.driver_id LEFT JOIN vehicle_ownership_types VO ON V.vehicle_ownership_types_id=VO.id LEFT JOIN organisations ORG ON ORG.id = T.organisation_id where T.organisation_id='.$this->session->userdata('organisation_id');
+			//customer session check
+			if($this->session->userdata('customer')){
+				$qry .= ' AND T.customer_id='.$this->session->userdata('customer')->id;
+			}
+			//driver session check 
+			
+			if($this->session->userdata('driver')){ 
+				$qry .= ' AND T.driver_id='.$this->session->userdata('driver')->id;
+			}
 			if($param2=='1' ){
 				$param2='0';
 			}
 			//$where_arry['organisation_id']=$this->session->userdata('organisation_id');
 			//$order_arry="id desc";
 			if((isset($_REQUEST['trip_pick_date'])|| isset($_REQUEST['trip_drop_date'])|| isset($_REQUEST['vehicles'])|| isset($_REQUEST['drivers'])|| isset($_REQUEST['trip_status_id'])|| isset($_REQUEST['cgroup'])||isset($_REQUEST['customer']))&& isset($_REQUEST['trip_search'])){
+				
 				if($param2==''){
 				$param2='0';
 				}
@@ -683,6 +749,7 @@ class User extends CI_Controller {
 				
 			}else if($this->mysession->get('condition')!=''){ 
 				$condition=$this->mysession->get('condition');
+				
 				if(isset($condition['where']['trip_pick_date']) || isset($condition['where']['trip_drop_date'])|| isset($condition['where']['vehicle_id']) || isset($condition['where']['driver_id'])|| isset($condition['where']['trip_status_id'])){
 				//print_r($condition);
 				/*if(isset($condition['where']['trip_id'])){
@@ -728,7 +795,8 @@ class User extends CI_Controller {
 				}
 			}
 			}
-			$qry.=' order by T.id desc';
+			//$qry.=' order by T.id desc';
+			$qry.=' order by CONCAT( T.pick_up_date, " ", T.pick_up_time ) ASC';
 			
 			$tbl_arry=array('trip_statuses','customer_groups');
 	
@@ -767,6 +835,11 @@ class User extends CI_Controller {
 			$data['customers']=$this->customers_model->getArray();
 			$data['title']="Trips | ".PRODUCT_NAME;  
 			$page='user-pages/trips';
+			
+			//input hide class if needed
+			$data['input_class'] = $this->trip_filter_inputs();
+			$data['trip_action_allowed'] = $this->trip_action_allowed();
+			
 		    $this->load_templates($page,$data);
 		    }else{
 				$this->notAuthorized();
@@ -774,14 +847,37 @@ class User extends CI_Controller {
 		
 	}	
 	
+			//show or hide input based on session check, for trip list page inputs
+		function trip_filter_inputs(){
+				$inputs= array('trip_pick_date'=>'','trip_drop_date'=>'','vehicles' => '',
+						'drivers' => '','trip_status_id' => '','cgroups' => '','customer' => '');
+				if($this->session->userdata('type')==CUSTOMER){
+					$inputs['vehicles']=$inputs['drivers']=$inputs['cgroups']=$inputs['customer']=' hide-me';
+				}else if($this->session->userdata('type')==DRIVER){
+			$inputs['vehicles']=$inputs['drivers']=$inputs['customer']=' hide-me';
+		}
+				return $inputs;
+				
+			}
+			//actions for trip list table filter by user type in session
+		function trip_action_allowed(){
+				
+				if($this->session->userdata('type')==CUSTOMER){
+					$actions = array();
+				}elseif($this->session->userdata('type')==DRIVER){
+					$actions = array('new_voucher');
+				}else{
+					$actions = array('edit','complete','new_voucher','edit_voucher','proposal','send_sms');
+				}
+				return $actions;
+			}
 	public function Customer($param2=''){
-		if($this->session_check()==true) {
-		$data['mode']=$param2;
-		
-		
-			if($param2!=''){
-				$condition=array('id'=>$param2);
-				$result=$this->customers_model->getCustomerDetails($condition);
+		if($this->session_check()==true  || ($param2==$this->session->userdata['customer']->id && $this->customer_session_check()==true)) {
+	
+		if($param2!=''){
+				//$condition=array('id'=>$param2);
+				//$result=$this->customers_model->getCustomerDetails($condition);
+				$result=$this->customers_model->getCustomerUser($param2);
 				$pagedata['id']=$result[0]['id'];
 				$pagedata['name']=$result[0]['name'];
 				$pagedata['email']=$result[0]['email'];
@@ -790,6 +886,7 @@ class User extends CI_Controller {
 				$pagedata['address']=$result[0]['address'];
 				$pagedata['customer_group_id']=$result[0]['customer_group_id'];
 				$pagedata['customer_type_id']=$result[0]['customer_type_id'];
+				$pagedata['username']=$result[0]['username'];
 			}
 			$tbl_arry=array('customer_types','customer_groups');
 			
@@ -808,24 +905,31 @@ class User extends CI_Controller {
 			}else{
 				$data['values']=false;
 			}
+			$active_tab = 'c_tab';//default profile tab
 			if($param2!=''){
 			$tdate=date('Y-m-d');
 			$date=explode("-",$tdate);
-			$fdate='2014-'.$date[1].'-01';
-			$todate='2014-'.$date[1].'-31';
+			$fdate=$date[0].'-'.$date[1].'-01';
+			$todate=$date[0].'-'.$date[1].'-31';
 			if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['cdate_search'])){ 
 			if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
-			$fdate='2014-'.$date[1].'-01';
-			$todate='2014-'.$date[1].'-31';
+			$fdate=$date[0].'-'.$date[1].'-01';
+			$todate=$date[0].'-'.$date[1].'-31';
 			} else{
 			$fdate=$_REQUEST['from_pick_date'];
 			$todate=$_REQUEST['to_pick_date']; }
-			$data['trip_tab']='active';
-			
+			//$data['trip_tab']='active';
+			$active_tab = 't_tab';//trip tab
 			}
 			$data['trips']=$this->trip_booking_model->getCustomerVouchers($param2,$fdate,$todate);
 			}
-			$data['cust_tab']='active';
+			$data['tabs'] = $this->set_up_customer_tabs($active_tab,$param2);
+
+			if($this->session->userdata('type') == CUSTOMER){
+				$data['edit_profile'] = false;
+			}else{
+				$data['edit_profile'] = true;
+			}
 			$data['c_id']=$param2;
 			$page='user-pages/customer';
 		    $this->load_templates($page,$data);
@@ -836,7 +940,7 @@ class User extends CI_Controller {
 	}	
 
 	public function load_templates($page='',$data=''){
-	if($this->session_check()==true) {
+	if($this->session_check()==true|| $this->customer_session_check()==true || $this->driver_session_check()==true) {
 		$this->load->view('admin-templates/header',$data);
 		$this->load->view('admin-templates/nav');
 		$this->load->view($page,$data);
@@ -1017,7 +1121,7 @@ public function profile() {
 	   $data['old_password'] = 	'';
 		$data['password']	  = 	'';
 		$data['cpassword'] 	  = 	'';
-       if(isset($_REQUEST['user-password-update'])){
+       if(isset($_REQUEST['user-password-update'])){ 
 			$this->form_validation->set_rules('old_password','Current Password','trim|required|min_length[5]|max_length[12]|xss_clean');
 			$this->form_validation->set_rules('password','New Password','trim|required|min_length[5]|max_length[12]|xss_clean');
 			$this->form_validation->set_rules('cpassword','Confirm Password','trim|required|min_length[5]|max_length[12]|matches[password]|xss_clean');
@@ -1045,8 +1149,41 @@ public function profile() {
 		else{
 			$this->notAuthorized();
 		}
-	}	
-   
+	}
+	
+	/*customer page tab setting ,
+	1.first parameter is tab identifier you want set active tab, default profile
+		tabs are c_tab=>profile,t_tab=>trip , p_tab=>payments and a_tab=>accounts 
+	2.second parameter is the customer id */
+	function set_up_customer_tabs($tab_active='c_tab',$customer_id=''){
+			
+		$tabs['c_tab'] = array('class'=>'','tab_id'=>'tab_1','text'=>'Profile',
+						'content_class'=>'tab-pane');
+
+		if($customer_id!='' && $customer_id > 0){
+
+			$tabs['t_tab'] = array('class'=>'','tab_id'=>'tab_2','text'=>'Trip',
+						'content_class'=>'tab-pane');
+			if(!$this->session->userdata('customer')){
+				$tabs['p_tab'] = array('class'=>'','tab_id'=>'tab_3','text'=>'Payments',
+						'content_class'=>'tab-pane');
+					
+			}
+			$tabs['a_tab'] = array('class'=>'','tab_id'=>'tab_4','text'=>'Accounts',
+						'content_class'=>'tab-pane');
+		}
+
+		if (array_key_exists($tab_active, $tabs)) {
+			$tabs[$tab_active]['class'] = 'active';
+			$tabs[$tab_active]['content_class'] = 'tab-pane active';
+		}else{
+			$tabs['c_tab']['class'] = 'active';
+			$tabs['c_tab']['content_class'] = 'tab-pane active';
+		}
+
+
+		return $tabs;
+	}
 	public function show_change_password($data) {
 		if($this->session_check()==true) {
 				$data['title']="Change Password | ".PRODUCT_NAME;  
@@ -1068,7 +1205,7 @@ public function profile() {
 			$data['trips']=$this->trip_booking_model->getDriverVouchers($param2);
 			}
 			
-			//sample ends
+			
 				$data['title']="Driver Details | ".PRODUCT_NAME;  
 				$page='user-pages/addDrivers';
 				 $this->load_templates($page,$data);
@@ -1250,34 +1387,41 @@ if(isset($where_arry) || isset($like_arry)){
 	}
 	}
 		
-		public function ShowDriverProfile($param1,$param2){
-			if($this->session_check()==true) {
+		public function ShowDriverProfile($param1,$param2){ 
+			if($this->session_check()==true || $this->driver_session_check()==true) { 
 			$data['mode']=$param2;
 			if($param2!=null&& $param2!=gINVALID){
 			$org_id=$this->session->userdata('organisation_id');
 			$arry=array('id'=>$param2,'organisation_id'=>$org_id);
-			$data['result']=$this->user_model->getDriverDetails($arry);
+			//$data['result']=$this->user_model->getDriverDetails($arry);
+			$data['result']=$this->user_model->getDriverUser($param2);
 			}   
 			//trip details
-		
+			$active_tab = 'd_tab';//default profile tab
 			if($param2!=''){
 			$tdate=date('Y-m-d');
 			$date=explode("-",$tdate);
-			$fdate='2014-'.$date[1].'-01';
-			$todate='2014-'.$date[1].'-31';
-			
+			$fdate=$date[0].'-'.$date[1].'-01';
+			$todate=$date[0].'-'.$date[1].'-31';
+			//echo $fdate.",".$todate;exit;
 			if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['date_search'])){
 			if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
-			$fdate='2014-'.$date[1].'-01';
-			$todate='2014-'.$date[1].'-31';
+			$fdate=$date[0].'-'.$date[1].'-01';
+			$todate=$date[0].'-'.$date[1].'-31';
 			} else{
 			$fdate=$_REQUEST['from_pick_date'];
 			$todate=$_REQUEST['to_pick_date']; }
 			$data['trip_tab']='active';
-			
-			}
+			$active_tab = 't_tab';//trip tab
+			} 
 			$data['trips']=$this->trip_booking_model->getDriverVouchers($param2,$fdate,$todate); 
 			//$this->mysession->set('trips',$data['trips']);
+			} 
+			$data['tabs'] = $this->set_up_driver_tabs($active_tab,$param2);
+			if($this->session->userdata('type') == DRIVER){
+				$data['edit_profile'] = false;
+			}else{
+				$data['edit_profile'] = true;
 			}
 			$data['driver_tab']='active';
 			//print_r($data['trips']);exit;
@@ -1293,6 +1437,40 @@ if(isset($where_arry) || isset($like_arry)){
 			}
 	}
 
+	/*driver page tab setting ,
+	1.first parameter is tab identifier you want set active tab, default profile
+		tabs are d_tab=>profile,t_tab=>trip , p_tab=>payments and a_tab=>accounts 
+	2.second parameter is the customer id */
+	function set_up_driver_tabs($tab_active='d_tab',$driver_id=''){
+			
+		$tabs['d_tab'] = array('class'=>'','tab_id'=>'tab_1','text'=>'Profile',
+						'content_class'=>'tab-pane');
+
+		if($driver_id!='' && $driver_id > 0){
+
+			$tabs['t_tab'] = array('class'=>'','tab_id'=>'tab_2','text'=>'Trip',
+						'content_class'=>'tab-pane');
+			if(!$this->session->userdata('driver')){
+				$tabs['p_tab'] = array('class'=>'','tab_id'=>'tab_3','text'=>'Payments',
+						'content_class'=>'tab-pane');
+					
+			}
+			$tabs['a_tab'] = array('class'=>'','tab_id'=>'tab_4','text'=>'Accounts',
+						'content_class'=>'tab-pane');
+		}
+
+		if (array_key_exists($tab_active, $tabs)) {
+			$tabs[$tab_active]['class'] = 'active';
+			$tabs[$tab_active]['content_class'] = 'tab-pane active';
+		}else{
+			$tabs['d_tab']['class'] = 'active';
+			$tabs['d_tab']['content_class'] = 'tab-pane active';
+		}
+
+
+		return $tabs;
+	}
+	
 	public function tripVouchers($param2){
 			if($this->session_check()==true) {
 		
@@ -1433,13 +1611,13 @@ if(isset($where_arry) || isset($like_arry)){
 				if($id!=''){
 						$tdate=date('Y-m-d');
 						$date=explode("-",$tdate);
-						$fdate='2014-'.$date[1].'-01';
-						$todate='2014-'.$date[1].'-31';
+						$fdate=$date[0].'-'.$date[1].'-01';
+						$todate=$date[0].'-'.$date[1].'-31';
 						
 						if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['vdate_search'])){
 						if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
-						$fdate='2014-'.$date[1].'-01';
-						$todate='2014-'.$date[1].'-31';
+						$fdate=$date[0].'-'.$date[1].'-01';
+						$todate=$date[0].'-'.$date[1].'-31';
 						}else{
 						$fdate=$_REQUEST['from_pick_date'];
 						$todate=$_REQUEST['to_pick_date'];}
@@ -1756,21 +1934,28 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 			$this->notAuthorized();
 	}
 	}
-
+	//get notification with organisaion id and customer if exists in session
 	public function getNotifications(){
-	if(isset($_REQUEST['notify']) ){
+	
 	$conditon =array('trip_status_id'=>TRIP_STATUS_PENDING,'CONCAT(pick_up_date," ",pick_up_time) >='=>date('Y-m-d H:i'),'organisation_id'=>$this->session->userdata('organisation_id'));
-	//$where_or=array('trip_status_id'=>TRIP_STATUS_CONFIRMED,'trip_status_id'=>TRIP_STATUS_ONTRIP);
-	$orderby = ' CONCAT(pick_up_date," ",pick_up_time) ASC';
-	$notification=$this->trip_booking_model->getDetails($conditon,$orderby);
-	$customers_array=$this->customers_model->getArray();
+	//check customer session if yes show only logged in customer notification
+		if($this->session->userdata('customer'))
+		{
+			$conditon['customer_id']= $this->session->userdata('customer')->id;
+		}
+		$orderby = ' CONCAT(pick_up_date," ",pick_up_time) ASC';
+		$notification=$this->trip_booking_model->getDetails($conditon,$orderby);
+		$customers_array=$this->customers_model->getArray();
+	if(isset($_REQUEST['notify']) ){
 	$json_data=array('notifications'=>$notification,'customers'=>$customers_array);
 	if(count($notification)>0 && count($customers_array) >0 ){
 		echo json_encode($json_data);
 	}else{
 		echo 'false';
 	}
-	}
+	}else{
+			return array($notification,$customers_array);
+		}
 
 	}
 	 

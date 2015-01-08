@@ -24,9 +24,18 @@ class Customers_model extends CI_Model {
 	return $this->db->get()->result_array();
 	
 	}
+	public function getCustomerUser($cust_id){ 
+		$this->db->select('customers.*,users.username');
+		$this->db->from('customers');
+		$this->db->join('users', 'customers.login_id = users.id','left');
+		$this->db->where('customers.id',$cust_id);
+		
+		return $this->db->get()->result_array();
+	
+	}
 
 	//to add customer details with unique mobile number
-	public function addCustomer($data){ 
+	/*public function addCustomer($data){ 
 		$data['organisation_id']=$this->session->userdata('organisation_id');
 		$data['user_id']=$this->session->userdata('id');
 		
@@ -62,6 +71,107 @@ class Customers_model extends CI_Model {
 			}
 
 	}
+	}*/
+	
+	public function addGuest($data){
+		$data['organisation_id']=$this->session->userdata('organisation_id');
+		$data['user_id']=$this->session->userdata('id');
+		
+ 		if($data['mobile']!=''){
+		$condition['mobile']=$data['mobile'];
+		$condition['organisation_id']=$this->session->userdata('organisation_id');
+		$res=$this->getCustomerDetails($condition);
+		if(count($res)==0){
+			$this->db->set('created', 'NOW()', FALSE);
+			$this->db->insert('customers',$data);
+			$insert_id=$this->db->insert_id();
+
+			if($insert_id > 0){
+
+				return $insert_id;
+			}else{
+				return false;
+			}
+		}else{
+			return $res[0]['id'];
+		}
+	
+		}else{
+			$this->db->set('created', 'NOW()', FALSE);
+			$this->db->insert('customers',$data);
+			$insert_id=$this->db->insert_id();
+
+			if($insert_id > 0){
+				return $insert_id;
+			}else{
+				return false;
+			}
+
+		}
+	}
+	
+		public function addCustomer($data,$login=false){
+
+		$org_id=$this->session->userdata('organisation_id');
+		if($org_id && $login){
+			
+			//add customer login details
+			$userdata=array(
+				'username'=>$login['username'],
+				'password'=>md5($login['password']),
+				'first_name'=>$data['name'],
+				'phone'=>$data['mobile'],
+				'address'=>$data['address'],
+				'user_status_id'=>USER_STATUS_ACTIVE,
+				'user_type_id'=>CUSTOMER,
+				'email'=>$data['email'],
+				'organisation_id'=>$org_id);
+			$this->db->set('created', 'NOW()', FALSE);
+			$this->db->insert('users',$userdata);
+			$login_id = $this->db->insert_id();
+			
+			//insert customer
+			if($login_id > 0){
+				$data['organisation_id'] = $org_id;
+				$data['user_id']=$this->session->userdata('id');
+				$data['login_id'] = $login_id;
+				
+				//mobile validation for customer
+				$insert_customer = true;
+		 		if($data['mobile']!=''){
+					$res=$this->getCustomerDetails(array('mobile'=>$data['mobile'],'organisation_id'=>$org_id));
+					if(count($res)==0){
+						$insert_customer = true;
+					}else{
+						$insert_customer = false;
+					}
+	
+				}else{
+					$insert_customer = true;
+				}
+
+				//validation true insert data and return insert customer id
+				if($insert_customer){
+					$this->db->set('created', 'NOW()', FALSE);
+					$this->db->insert('customers',$data);
+					$customer_id=$this->db->insert_id();
+
+					if($customer_id > 0)
+						return $customer_id;
+					
+				}
+
+				// customer not inserted , delete user
+				$this->db->delete('users', array('id' => $login_id));
+				return false;
+		
+			}else{//user not added
+				return false;
+			}
+
+		}else{//organisation id not in session and customer login details not found
+			return false;
+		}
 	}
 	
 	public function getCurrentStatuses($id){ 

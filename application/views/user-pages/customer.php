@@ -10,7 +10,7 @@
 	$email				= 	'';
 	$mobile				= 	'';
 	$address			= 	'';
-
+	$username			=	'';
 	if($this->mysession->get('post')!=NULL || $values!=false){
 	
 	if($this->mysession->get('post')!=NULL){
@@ -33,6 +33,7 @@
 	$email				= 	$data['email'];
 	$mobile				= 	$data['mobile'];
 	$address			= 	$data['address'];
+	$username			=	$data['username'];
 	}
 	$this->mysession->delete('post');
 ?>
@@ -41,151 +42,157 @@
 		<legend class="body-head">Customers</legend>
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-			<?php 
-	if(isset($insurance_tab)){
-	$ins_class=$insurance_tab;
-	$i_tab="tab-pane active";
-	}
-	else{
-	$ins_class='';
-	$i_tab="tab-pane ";
-	}
-	if(isset($trip_tab)){
-	$trip_class=$trip_tab;
-	$t_tab="tab-pane active";
-	}
-	else{
-	$trip_class='';
-	$t_tab="tab-pane ";
-	}
-	if(isset($cust_tab)){ 
-	$cust_class=$cust_tab;
-	$c_tab="tab-pane active";
-	}
-	else{
-	$cust_class='';
-	$c_tab="tab-pane";
-	}
-	if(isset($loan_tab)){
-	$loan_class=$loan_tab;
-	$l_tab="tab-pane active";
-	}
-	else{
-	$loan_class='';
-	$l_tab="tab-pane ";
-	}
-	if(isset($owner_tab)){
-	$owner_class=$owner_tab;
-	$o_tab="tab-pane active";
-	}
-	else{
-	$owner_class='';
-	$o_tab="tab-pane ";
-	}
-	if(isset($trip_tab)){
-	$trip_class=$trip_tab;
-	$t_tab="tab-pane active";
-	$c_tab="tab-pane";
-	$cust_class='';
-	}
-	else{
-	$trip_class='';
-	$t_tab="tab-pane ";
-	}
-	if(isset($pay_tab)){
-	$pay_class=$pay_tab;
-	$p_tab="tab-pane active";
-	}
-	else{
-	$pay_class='';
-	$p_tab="tab-pane ";
-	}
-	if(isset($acc_tab)){
-	$acc_class=$acc_tab;
-	$a_tab="tab-pane active";
-	}
-	else{
-	$acc_class='';
-	$a_tab="tab-pane ";
-	}
+		<?php 
+		foreach($tabs as $tab=>$attr){
+			echo '<li class="'.$attr['class'].'">
+				<a href="#'.$attr['tab_id'].'" data-toggle="tab">'.$attr['text'].'</a>
+			      </li>';
+		}
 	?>
-        <li class="<?php echo $cust_class;?>"><a href="#tab_1" data-toggle="tab">Profile</a></li>
-		<?php if(isset($mode)&& $mode!='' ){?>
-		<li class="<?php echo $trip_class;?>"><a href="#tab_2" data-toggle="tab">Trip</a></li>
-        <li class="<?php echo $pay_class;?>"><a href="#tab_3" data-toggle="tab">Payments</a></li>
-         <li class="<?php echo $acc_class;?>"><a href="#tab_4" data-toggle="tab">Accounts</a></li>
-       <?php } ?>
     </ul>
     <div class="tab-content">
-        <div class="<?php echo $c_tab;?>" id="tab_1">
+	<?php if (array_key_exists('c_tab', $tabs)) {?>
+       <div class="<?php echo $tabs['c_tab']['content_class'];?>" id="<?php echo $tabs['c_tab']['tab_id'];?>">
             		 <div class="profile-body width-80-percent-and-margin-auto">
 			<fieldset class="body-border">
    			 <legend class="body-head">Personal Details</legend>
-			 <div class="nav-tabs-custom">
-				
-				<div class="tab-content">
-				
-				<div class="tab-pane active" id="tab_1">
 			<div class="div-with-50-percent-width-with-margin-10">
 				<?php echo form_open(base_url().'customers/AddUpdate');?>
 				
 				<div class="form-group">
 					<?php echo form_label('Name','namelabel'); ?>
-				    <?php echo form_input(array('name'=>'name','class'=>'form-control','placeholder'=>'Enter Name','value'=>$name)); ?>
+				    <?php $input = array('name'=>'name','class'=>'form-control',
+						'placeholder'=>'Enter Name','value'=>$name); 
+					if(!$edit_profile)					
+					$input['disabled'] ='';
+				echo form_input($input);?>
+					
 					<?php echo $this->form_functions->form_error_session('name', '<p class="text-red">', '</p>'); ?>
 				</div>
 			
 				<div class="form-group">
 					<?php echo form_label('Email','emaillabel'); ?>
-				    <?php echo form_input(array('name'=>'email','class'=>'form-control','placeholder'=>'Enter email','value'=>$email)); 
-					if($customer_id!='' && $customer_id>gINVALID) {  ?><div class="hide-me"> <?php echo form_input(array('name'=>'h_email','class'=>'form-control','value'=>$email)); ?></div><?php } ?>
+				    <?php $input = array('name'=>'email',
+						'class'=>'form-control',
+						'placeholder'=>'Enter email','value'=>$email);
+					if(!$edit_profile)					
+						$input['disabled'] ='';
+					echo form_input($input);
+					if($customer_id!='' && $customer_id>0) {  ?>
+					<div class="hide-me"> 
+					<?php echo form_input(array('name'=>'h_email','class'=>'form-control','value'=>$email)); ?>
+					</div>
+					<?php } ?>
 					<?php echo $this->form_functions->form_error_session('email', '<p class="text-red">', '</p>'); ?>
 				</div>
 				<div class="form-group">
 					<?php echo form_label('Date Of Birth ','doblabel'); ?>
-				    <?php echo form_input(array('name'=>'dob','class'=>'form-control initialize-date-picker','placeholder'=>'Enter DOB','value'=>$dob)); 
-					 echo $this->form_functions->form_error_session('dob', '<p class="text-red">', '</p>'); ?>
+				    <?php $input = array('name'=>'dob',
+						'class'=>'form-control initialize-date-picker',
+						'placeholder'=>'Enter DOB','value'=>$dob);
+					if(!$edit_profile)					
+						$input['disabled'] ='';
+					echo form_input($input);
+
+					echo $this->form_functions->form_error_session('dob', '<p class="text-red">', '</p>'); ?>
 				</div>
 				<div class="form-group">
 					<?php echo form_label('Phone','phonelabel'); ?>
-				    <?php echo form_input(array('name'=>'mobile','class'=>'form-control','placeholder'=>'Enter Phone','value'=>$mobile)); 
-					if($customer_id!='' && $customer_id>gINVALID) {  ?><div class="hide-me"> <?php echo form_input(array('name'=>'h_phone','value'=>$mobile)); ?></div><?php } ?>
+				    <?php $input = array('name'=>'mobile',
+							'class'=>'form-control','placeholder'=>'Enter Phone',
+							'value'=>$mobile);
+							if(!$edit_profile)					
+							$input['disabled'] ='';
+						echo form_input($input);
+					if($customer_id!='' && $customer_id>0) {  ?>
+					<div class="hide-me"> 
+					<?php echo form_input(array('name'=>'h_phone','value'=>$mobile)); ?>
+					</div>
+					<?php } ?>
 					<?php echo $this->form_functions->form_error_session('mobile', '<p class="text-red">', '</p>'); ?>
 				</div>
 			
 				<div class="form-group">
 					<?php echo form_label('Customer Type','ctypelabel'); 
 				   $class="form-control customer-type";
-					echo $this->form_functions->populate_dropdown('customer_type_id',$customer_types,$customer_type_id,$class,$id='',$msg="Customer type");?> 
+				   $disabled=($edit_profile)?'':'disabled';
+					echo $this->form_functions->populate_dropdown('customer_type_id',$customer_types,$customer_type_id,$class,$id='',$msg="Customer type",$disabled);?> 
+				</div>
+				<div class="form-group">
+					<?php echo form_label('Customer Group','cgrouplabel'); ?>
+				   <?php echo $this->form_functions->populate_dropdown('customer_group_id',$customer_groups,$customer_group_id,$class ='form-control',$id='',$msg="Groups",$disabled); ?>
+					
 				</div>
 			</div>
 			<div class="div-with-50-percent-width-with-margin-10">
-				<div class="form-group">
-					<?php echo form_label('Customer Group','cgrouplabel'); ?>
-				   <?php echo $this->form_functions->populate_dropdown('customer_group_id',$customer_groups,$customer_group_id,$class ='form-control',$id='',$msg="Groups"); ?>
-					
-				</div>
+				
 				<div class="form-group">
 					<?php echo form_label('Address','addresslabel'); ?>
-				    <?php echo form_textarea(array('name'=>'address','class'=>'form-control','placeholder'=>'Enter Address','value'=>$address)); ?>
+				    <?php   $input = array('name'=>'address','class'=>'form-control',
+							'placeholder'=>'Enter Address','value'=>$address,'rows'=>4);
+						if(!$edit_profile)					
+						$input['disabled'] ='';
+						echo form_textarea($input); ?>
 					<?php echo form_error('address', '<p class="text-red">', '</p>'); ?>
 				</div>
+				
+			<?php if($customer_id!='' && $customer_id>0){?>
+				<div class="form-group">
+				   <?php echo form_label('Username','usernamelabel');
+					
+					echo form_input(array('name'=>'username','class'=>'form-control','id'=>'username','placeholder'=>'Enter Username','value'=>$username,'readonly'=>'readonly'));
+				   ?>			
+				  <?php echo $this->form_functions->form_error_session('username', '<p class="text-red">', '</p>'); ?>
+				</div>
+					
+				<?php }else{?>
+			
+				<div class="form-group">
+				   <?php echo form_label('Username','usernamelabel');
+					
+					echo form_input(array('name'=>'username','class'=>'form-control','id'=>'username','placeholder'=>'Enter Username','value'=>$username));
+				   ?>			
+				   <?php echo $this->form_functions->form_error_session('username', '<p class="text-red">', '</p>'); ?>
+				</div>
+
+				<div class="form-group">
+				   <?php echo form_label('Password','passwordlabel'); ?>
+				   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'password','placeholder'=>'Enter Password','value'=>$password)); ?>			
+					<?php echo $this->form_functions->form_error_session('password', '<p class="text-red">', '</p>'); ?>
+				</div>
+				
+				<div class="form-group">
+				   <?php echo form_label('Confirm Password','cpasswordlabel'); ?>
+				   <?php echo form_password(array('name'=>'cpassword','class'=>'form-control','id'=>'cpassword','placeholder'=>'Enter Confirm password')); ?>			
+					<?php echo $this->form_functions->form_error_session('cpassword', '<p class="text-red">', '</p>'); ?>
+				</div>
+				<?php }?>
 		   		<div class="box-footer">
-				<?php if($customer_id!='' && $customer_id>gINVALID){ $save_update_button='UPDATE';$class_save_update_button="class='btn btn-primary'"; }else{ $save_update_button='SAVE';$class_save_update_button="class='btn btn-success'"; }?>
-				<?php echo form_submit("customer-add-update",$save_update_button,$class_save_update_button).nbs(2).form_reset("customer_reset","RESET","class='btn btn-danger'"); ?> 
+				<?php if($customer_id!='' && $customer_id>gINVALID){ 
+				
+				$save_update_button='UPDATE';$class_save_update_button="class='btn btn-primary'"; 
+				}
+				else{
+				$save_update_button='SAVE';$class_save_update_button="class='btn btn-success'"; 
+				}?>
+				<?php if(!$this->session->userdata('customer')){echo form_submit("customer-add-update",$save_update_button,$class_save_update_button).nbs(2).form_reset("customer_reset","RESET","class='btn btn-danger'"); }?> 
 				<div class="hide-me"> <?php echo form_input(array('name'=>'customer_id','class'=>'form-control','value'=>$customer_id)); 
 				?></div>
 			 <?php echo form_close(); ?>
 			</div>
-			</div>
+			
 		 
 			</fieldset>
 		</div>
         </div>
-		 <div class="<?php echo $t_tab;?>" id="tab_2">
+		<?php }?>
+		
+		<?php if (array_key_exists('t_tab', $tabs)) {?>
+		 <div class="<?php echo $tabs['t_tab']['content_class'];?>" id="<?php echo $tabs['t_tab']['tab_id'];?>">
             <div class="page-outer">
 	   <fieldset class="body-border">
-		<legend class="body-head">Trip</legend><div class="form-group">
+		<legend class="body-head">Trip</legend>
+		<div class="form-group">
 	<div class="box-body table-responsive no-padding">
 	
 	<?php //for search ?>
@@ -262,16 +269,22 @@
 </fieldset>
 </div>
         </div>
-        <div class="<?php echo $p_tab;?>" id="tab_3">
+		<?php }?>
+		
+		<?php if (array_key_exists('p_tab', $tabs)) {?>
+		<div class="<?php echo $tabs['p_tab']['content_class'];?>" id="<?php echo $tabs['p_tab']['tab_id'];?>">
             <iframe src="<?php echo base_url().'account/front_desk/CustomerPayment/C'.$customer_id.'/true';?>" height="600px" width="100%">
 		<p>Browser not Support</p>
 		</iframe>
         </div>
-        <div class="<?php echo $a_tab;?>" id="tab_4">
-          <iframe src="<?php echo base_url().'account/front_desk/CustomerPaymentInquiry/C'.$customer_id.'/true';?>" height="600px" width="100%">
+			<?php }?>
+		<?php if (array_key_exists('a_tab', $tabs)) {?>	
+		<div class="<?php echo $tabs['a_tab']['content_class'];?>" id="<?php echo $tabs['a_tab']['tab_id'];?>">		
+        <iframe src="<?php echo base_url().'account/front_desk/CustomerPaymentInquiry/C'.$customer_id.'/true';?>" height="600px" width="100%">
 		<p>Browser not Support</p>
 		</iframe>
         </div>
+		<?php }?>
     </div>
 </div>
 	

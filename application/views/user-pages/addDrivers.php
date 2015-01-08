@@ -1,5 +1,5 @@
  <?php
-
+	
  $driver_id=gINVALID;
 	$name='';
 	$place_of_birth='';
@@ -31,10 +31,10 @@
 	$id_proof_type_id='';
 	$id_proof_document_number='';
 	$name_on_id_proof='';
+	$username =	''; 
 	
 
  if($this->mysession->get('post')!=null){
- //echo $result[''];
  $data=$this->mysession->get('post');
 	$driver_id=$this->mysession->get('driver_id');
 	$name=$data['name'];
@@ -67,10 +67,10 @@
 	$id_proof_type_id=$data['id_proof_type_id'];
 	$id_proof_document_number=$data['id_proof_document_number'];
 	$name_on_id_proof=$data['name_on_id_proof'];
-
+	$username	=	$data['username']; 
 $this->mysession->delete('post');
 }
- else if(isset($result)&&$result!=null){ 
+ else if(isset($result)&&$result!=null){
    $driver_id=$result['id'];
 	$name=$result['name'];
 	$place_of_birth=$result['place_of_birth'];
@@ -102,10 +102,10 @@ $this->mysession->delete('post');
 	$id_proof_type_id=$result['id_proof_type_id'];
 	$id_proof_document_number=$result['id_proof_document_number'];
 	$name_on_id_proof=$result['name_on_id_proof'];
-
+	$username	=	$result['username']; 
 } 
 ?>
-<?php if($this->session->userdata('dbSuccess') != '') { ?>
+<?php if($this->session->userdata('dbSuccess') != '') {?>
         <div class="success-message">
 			
             <div class="alert alert-success alert-dismissable">
@@ -122,118 +122,63 @@ $this->mysession->delete('post');
 	   <fieldset class="body-border">
 		<legend class="body-head">Manage Drivers</legend>
 	<div class="nav-tabs-custom">
-    <ul class="nav nav-tabs">
-		<?php 
-	if(isset($insurance_tab)){
-	$ins_class=$insurance_tab;
-	$i_tab="tab-pane active";
-	}
-	else{
-	$ins_class='';
-	$i_tab="tab-pane ";
-	}
-	if(isset($trip_tab)){
-	$trip_class=$trip_tab;
-	$t_tab="tab-pane active";
-	}
-	else{
-	$trip_class='';
-	$t_tab="tab-pane ";
-	}
-	if(isset($driver_tab)){
-	$driver_class=$driver_tab;
-	$d_tab="tab-pane active";
-	}
-	else{
-	$driver_class='';
-	$d_tab="tab-pane";
-	}
-	if(isset($loan_tab)){
-	$loan_class=$loan_tab;
-	$l_tab="tab-pane active";
-	}
-	else{
-	$loan_class='';
-	$l_tab="tab-pane ";
-	}
-	if(isset($owner_tab)){
-	$owner_class=$owner_tab;
-	$o_tab="tab-pane active";
-	}
-	else{
-	$owner_class='';
-	$o_tab="tab-pane ";
-	}
-	if(isset($trip_tab)){
-	$trip_class=$trip_tab;
-	$t_tab="tab-pane active";
-	$d_tab="tab-pane";
-	$driver_class='';
-	}
-	else{
-	$trip_class='';
-	$t_tab="tab-pane ";
-	}
-	if(isset($pay_tab)){
-	$pay_class=$pay_tab;
-	$p_tab="tab-pane active";
-	}
-	else{
-	$pay_class='';
-	$p_tab="tab-pane ";
-	}
-	if(isset($acc_tab)){
-	$acc_class=$acc_tab;
-	$a_tab="tab-pane active";
-	}
-	else{
-	$acc_class='';
-	$a_tab="tab-pane ";
+   <ul class="nav nav-tabs">
+	<?php 
+
+	foreach($tabs as $tab=>$attr){
+	echo '<li class="'.$attr['class'].'">
+		<a href="#'.$attr['tab_id'].'" data-toggle="tab">'.$attr['text'].'</a>
+	      </li>';
 	}
 	?>
-        <li class="<?php echo $driver_class;?>"><a href="#tab_1" data-toggle="tab">Profile</a></li>
-	 <?php if(isset($mode)&& $mode!='' ){?>
-        <li class="<?php echo $trip_class;?>"><a href="#tab_2" data-toggle="tab">Trip</a></li>
-         <li class=""><a href="#tab_3" data-toggle="tab">Payments</a></li>
-       <li class=""><a href="#tab_4" data-toggle="tab">Accounts</a></li>
-	   <?php }?>
-    </ul>
+	</ul>
     <div class="tab-content">
         
-        <div class="<?php echo $d_tab;?>" id="tab_1">
-
-       
-			 <div class="width-30-percent-with-margin-left-20-Driver-View">
-
+        <?php if (array_key_exists('d_tab', $tabs)) {?>
+		<div class="<?php echo $tabs['d_tab']['content_class'];?>" id="<?php echo $tabs['d_tab']['tab_id'];?>">       
+		<div class="div-with-50-percent-width-with-margin-10">
 <fieldset class="body-border-Driver-View border-style-Driver-view" >
 <legend class="body-head">Personal Details</legend>
 
 		<?php  echo form_open(base_url()."driver/driver_manage");?>
         <div class="form-group">
-		<?php echo form_label('Enter Name','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'driver_name','class'=>'form-control','id'=>'name','placeholder'=>'Enter Name','value'=>$name)); ?>
+		<?php echo form_label('Enter Name','usernamelabel'); 
+			$input = array('name'=>'driver_name','class'=>'form-control','id'=>'name','placeholder'=>'Enter Name','value'=>$name);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('name', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
-	<?php echo form_label('Enter Place Of Birth','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'place_of_birth','class'=>'form-control','id'=>'place_of_birth','placeholder'=>'Enter Place Of Birth','value'=>$place_of_birth)); ?>
+	<?php echo form_label('Enter Place Of Birth','usernamelabel');
+			$input = array('name'=>'place_of_birth','class'=>'form-control','id'=>'place_of_birth','placeholder'=>'Enter Place Of Birth','value'=>$place_of_birth);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			echo form_input($input); 
+	?>
+           
 	   <?php echo $this->form_functions->form_error_session('place_of_birth', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
-	<?php echo form_label('Date of Birth','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'dob','class'=>'fromdatepicker form-control' ,'placeholder'=>'Date of Birth','value'=>$dob));?>
+	<?php echo form_label('Date of Birth','usernamelabel'); 
+			$input = array('name'=>'dob','class'=>'fromdatepicker form-control' ,'placeholder'=>'Date of Birth','value'=>$dob);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('dob', '<p class="text-red">', '</p>'); ?>
         </div>
         <div class="form-group">
 		<?php echo form_label('Blood Group','usernamelabel'); ?>
            <?php 
-		$class="form-control";
-		$msg="Blood Group ";
-		$name="blood_group";
-		$id='blood_group';
-		$group=array('A+','A-','B+','B-','O+','O-','AB+','AB-');
-	echo $this->form_functions->populate_dropdown($name,$group,$blood_group,$class,$id,$msg);
-		   ?>
+		$disabled=($edit_profile)?'':'disabled';
+				$class="form-control";
+				$msg="Blood Group ";
+				$name="blood_group";
+				$id='blood_group';
+				$group=array('A+','A-','B+','B-','O+','O-','AB+','AB-');
+			echo $this->form_functions->populate_dropdown($name,$group,$blood_group,$class,$id,$msg,$disabled);
+				   ?>
+	
 	   <?php echo $this->form_functions->form_error_session('blood_group', '<p class="text-red">', '</p>'); ?>
 	   <p class="text-red"><?php
  if($this->session->userdata('blood group') != ''){
@@ -245,11 +190,12 @@ $this->mysession->delete('post');
 		<div class="form-group">
 		<?php echo form_label(' Marital Status','usernamelabel'); ?>
 	<?php
-		$class="form-control";
-		$msg="Marital Status";
-		$name="marital_status_id";
-		$id='marital_id';
-	echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id,$class,$id,$msg);
+		$disabled=($edit_profile)?'':'disabled';
+				$class="form-control";
+				$msg="Select Marital Status";
+				$name="marital_status_id";
+				$id='marital_id';
+	echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id,$class,$id,$msg,$disabled);
 	?>
 	<p class="text-red"><?php
  if($this->session->userdata('marital_status_id') != ''){
@@ -262,80 +208,122 @@ $this->mysession->delete('post');
 	<?php 
 	
 	echo form_label('Children','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'children','class'=>'form-control','id'=>'children','placeholder'=>'Children','value'=>$children)); ?>
+           <?php $input = array('name'=>'children','class'=>'form-control','id'=>'children','placeholder'=>'Children','value'=>$children);
+				if(!$edit_profile)					
+					$input['disabled'] ='';
+			   	echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('children', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Present Address','usernamelabel'); ?>
-           <?php echo form_textarea(array('name'=>'present_address','class'=>'form-control','id'=>'present_address','placeholder'=>'Present Address','value'=>$present_address,'rows'=>5)); ?>
+           <?php $input = array('name'=>'present_address','class'=>'form-control','id'=>'present_address','placeholder'=>'Present Address','value'=>$present_address,'rows'=>5);
+				if(!$edit_profile)					
+					$input['disabled'] ='';
+			 	echo form_textarea($input);?>
 	   <?php echo $this->form_functions->form_error_session('present_address', '<p class="text-red">', '</p>'); ?>
         </div>
 	
 	<div class="form-group">
 	<?php echo form_label('Permanent Address','usernamelabel'); ?>
-           <?php echo form_textarea(array('name'=>'permanent_address','class'=>'form-control','id'=>'permanent_address','placeholder'=>'Permanent Address','value'=>$permanent_address,'rows'=>5)); ?>
+           <?php $input = array('name'=>'permanent_address','class'=>'form-control','id'=>'permanent_address','placeholder'=>'Permanent Address','value'=>$permanent_address,'rows'=>5);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			 echo form_textarea($input);?>
 	   <?php echo $this->form_functions->form_error_session('permanent_address', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('District','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'district','class'=>'form-control','id'=>'district','placeholder'=>'District','value'=>$district)); ?>
+           <?php $input = array('name'=>'district','class'=>'form-control','id'=>'district','placeholder'=>'District','value'=>$district); 
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			 echo form_input($input);
+			 echo $this->form_functions->form_error_session('district', '<p class="text-red">', '</p>');?>
 	   <?php echo $this->form_functions->form_error_session('district', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('State','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'state','class'=>'form-control','id'=>'state','placeholder'=>'State','value'=>$state)); ?>
+           <?php $input = array('name'=>'state','class'=>'form-control','id'=>'state','placeholder'=>'State','value'=>$state);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			 echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('state', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Pin Code','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'pin_code','class'=>'form-control','id'=>'pin_code','placeholder'=>'Pin Code','value'=>$pin_code)); ?>
+           <?php $input = array('name'=>'pin_code','class'=>'form-control','id'=>'pin_code','placeholder'=>'Pin Code','value'=>$pin_code);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			 echo form_input($input);?>
 	   <?php echo $this->form_functions->form_error_session('pin_code', '<p class="text-red">', '</p>'); ?>
         </div>	
 	<div class="form-group">
 	<?php echo form_label('Phone','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'phone','class'=>'form-control','id'=>'phone','placeholder'=>'Phone','value'=>$phone)); ?>
+           <?php $input = array('name'=>'phone','class'=>'form-control','id'=>'phone','placeholder'=>'Phone','value'=>$phone);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('phone', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Mobile','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'mobile','class'=>'form-control','id'=>'drivermobile','placeholder'=>'Mobile','value'=>$mobile)); ?>
+           <?php $input = array('name'=>'mobile','class'=>'form-control','id'=>'drivermobile','placeholder'=>'Mobile','value'=>$mobile);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			echo form_input($input);?>
 	   <?php echo $this->form_functions->form_error_session('mobile', '<p class="text-red">', '</p>'); ?>
        <div class="hide-me" > <?php echo form_input(array('name'=>"hmob",'value'=>$mobile));?></div>
 		</div>
 	<div class="form-group">
 	<?php echo form_label('E-mail ID','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'email','class'=>'form-control','id'=>'driveremail','placeholder'=>'E-mail ID','value'=>$email)); ?>
+           <?php $input = array('name'=>'email','class'=>'form-control','id'=>'driveremail','placeholder'=>'E-mail ID','value'=>$email);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			 echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('email', '<p class="text-red">', '</p>'); ?>
 	 <div class="hide-me" >  <?php echo form_input(array('name'=>"hmail",'value'=>$email));?></div>
         </div>
 		<div class="form-group">
 	<?php echo form_label('Date of Joining','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'date_of_joining','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of Joining','value'=>$date_of_joining));?>
+           <?php $input = array('name'=>'date_of_joining','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of Joining','value'=>$date_of_joining);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			echo form_input($input);?>
 	   <?php echo $this->form_functions->form_error_session('date_of_joining', '<p class="text-red">', '</p>'); ?>
         </div>	
-			<div class="hide-me"><?php echo form_input(array('name'=>'h_join','value'=>$date_of_joining));?></div>
-		</fieldset> </div>
-		
-	<div class="width-30-percent-with-margin-left-20-Driver-View">
-<fieldset class="body-border-Driver-View border-style-Driver-view" >
-<legend class="body-head">Other Details</legend>
-	<div class="form-group">
+	
+		<div class="form-group">
 	<?php echo form_label('License Number','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'license_number','class'=>'form-control','id'=>'license_number','placeholder'=>'License Number','value'=>$license_number)); ?>
+           <?php $input =array('name'=>'license_number','class'=>'form-control','id'=>'license_number','placeholder'=>'License Number','value'=>$license_number);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('license_number', '<p class="text-red">', '</p>'); ?>
         </div>
 	
 	<div class="form-group">
 	<?php echo form_label('Date of License Renewal','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'license_renewal_date','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of License Renewal','value'=>$license_renewal_date));?>
+           <?php $input = array('name'=>'license_renewal_date','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of License Renewal','value'=>$license_renewal_date);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			echo form_input($input);?>
 	   <?php echo $this->form_functions->form_error_session('license_renewal_date', '<p class="text-red">', '</p>'); 
 
 	  ?>
         </div>
 		<div class="hide-me"><?php echo form_input(array('name'=>'h_license','value'=>$license_renewal_date));?></div>
+			<div class="hide-me"><?php echo form_input(array('name'=>'h_join','value'=>$date_of_joining));?></div>
+		</fieldset> </div>
+		
+	<div class="div-with-50-percent-width-with-margin-10">
+<fieldset class="body-border-Driver-View border-style-Driver-view" >
+<legend class="body-head">Other Details</legend>
+	
 	<div class="form-group">
 	<?php echo form_label('Badge','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'badge','class'=>'form-control','id'=>'badge','placeholder'=>'Badge','value'=>$badge)); ?>
+           <?php $input = array('name'=>'badge','class'=>'form-control','id'=>'badge','placeholder'=>'Badge','value'=>$badge);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+		   echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('badge', '<p class="text-red">', '</p>'); ?>
        	<p class="text-red"><?php
  if($this->mysession->get('Err_badge') != ''){
@@ -345,49 +333,72 @@ $this->mysession->delete('post');
 	   </div>
 	<div class="form-group">
 	<?php echo form_label('Date of Badge Renewal','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'badge_renewal_date','class'=>'fromdatepicker form-control' ,'placeholder'=>'Date of Badge Renewal','value'=>$badge_renewal_date));?>
+           <?php $input = array('name'=>'badge_renewal_date','class'=>'fromdatepicker form-control' ,'placeholder'=>'Date of Badge Renewal','value'=>$badge_renewal_date);
+		  if(!$edit_profile)					
+			$input['disabled'] ='';
+		echo form_input($input);?>
 	   <?php echo $this->form_functions->form_error_session('badge_renewal_date', '<p class="text-red">', '</p>'); 
 				?>
         </div>
 		<div class="hide-me"><?php echo form_input(array('name'=>'h_badge','value'=>$badge_renewal_date));?></div>
 	<div class="form-group">
 	<?php echo form_label('Mother Tongue','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'mother_tongue','class'=>'form-control','id'=>'mother_tongue','placeholder'=>'Mother Tongue','value'=>$mother_tongue)); ?>
+           <?php $input = array('name'=>'mother_tongue','class'=>'form-control','id'=>'mother_tongue','placeholder'=>'Mother Tongue','value'=>$mother_tongue);
+		if(!$edit_profile)					
+			$input['disabled'] ='';
+		echo form_input($input);  ?>
 	   <?php echo $this->form_functions->form_error_session('mother_tongue', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Pan Number','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'pan_number','class'=>'form-control','id'=>'pan_number','placeholder'=>'Pan Number','value'=>$pan_number)); ?>
+           <?php $input = array('name'=>'pan_number','class'=>'form-control','id'=>'pan_number','placeholder'=>'Pan Number','value'=>$pan_number);
+		 if(!$edit_profile)					
+			$input['disabled'] ='';
+		echo form_input($input);?>
 	   <?php echo $this->form_functions->form_error_session('pan_number', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Bank Account Number','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'bank_account_number','class'=>'form-control','id'=>'bank_account number','placeholder'=>'Bank Account Number','value'=>$bank_account_number)); ?>
+           <?php $input = array('name'=>'bank_account_number','class'=>'form-control','id'=>'bank_account number','placeholder'=>'Bank Account Number','value'=>$bank_account_number);
+		 if(!$edit_profile)					
+			$input['disabled'] ='';
+		echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('bank_account_number', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Name on Bank PassBook','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'name_on_bank_pass_book','class'=>'form-control','id'=>'name_on_bank_pass_book','placeholder'=>'Name on Bank PassBook','value'=>$name_on_bank_pass_book)); ?>
+           <?php $input = array('name'=>'name_on_bank_pass_book','class'=>'form-control','id'=>'name_on_bank_pass_book','placeholder'=>'Name on Bank PassBook','value'=>$name_on_bank_pass_book);
+		if(!$edit_profile)					
+			$input['disabled'] ='';
+		 echo form_input($input);?>
 	   <?php echo $this->form_functions->form_error_session('name_on_bank_pass_book', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Bank Name','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'bank_name','class'=>'form-control','id'=>'bank_name','placeholder'=>'Bank Name','value'=>$bank_name)); ?>
+           <?php $input = array('name'=>'bank_name','class'=>'form-control','id'=>'bank_name','placeholder'=>'Bank Name','value'=>$bank_name);
+		if(!$edit_profile)					
+			$input['disabled'] ='';
+		echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('bank_name', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Branch','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'branch','class'=>'form-control','id'=>'branch','placeholder'=>'Branch','value'=>$branch)); ?>
+           <?php $input = array('name'=>'branch','class'=>'form-control','id'=>'branch','placeholder'=>'Branch','value'=>$branch);
+		if(!$edit_profile)					
+			$input['disabled'] ='';
+		echo form_input($input);?>
 	   <?php echo $this->form_functions->form_error_session('branch', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Bank Account','usernamelabel'); ?>
 	<?php
 		$class="form-control";
-		$msg="Bank Account";
-		$name="bank_account_type_id";
+			$msg="Select Bank Account";
+			$name="bank_account_type_id";
+			$disabled=($edit_profile)?'':'disabled';
 
-	echo $this->form_functions->populate_dropdown($name,$select['bank_account_types'],$bank_account_type_id,$class,$id='',$msg); 
+
+	echo $this->form_functions->populate_dropdown($name,$select['bank_account_types'],$bank_account_type_id,$class,$id='',$msg,$disabled); 
 	
 	?>
 	<p class="text-red"><?php
@@ -399,17 +410,23 @@ $this->mysession->delete('post');
 	</div>
 	<div class="form-group">
 	<?php echo form_label('IFSC Code','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'ifsc_code','class'=>'form-control','id'=>'ifsc_code','placeholder'=>'IFSC Code','value'=>$ifsc_code)); ?>
+           <?php $input = array('name'=>'ifsc_code','class'=>'form-control','id'=>'ifsc_code','placeholder'=>'IFSC Code','value'=>$ifsc_code);
+		if(!$edit_profile)					
+			$input['disabled'] ='';
+
+
+		echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('ifsc_code', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('ID Proof Type','usernamelabel'); ?>
 	<?php
 		$class="form-control";
-		$msg="ID Proof Type";
-		$name="id_proof_type_id";
+			$msg="Select ID Proof Type";
+			$name="id_proof_type_id";
+			$disabled=($edit_profile)?'':'disabled';
 
-	echo $this->form_functions->populate_dropdown($name,$select['id_proof_types'],$id_proof_type_id,$class,$id='',$msg); 
+		echo $this->form_functions->populate_dropdown($name,$select['id_proof_types'],$id_proof_type_id,$class,$id='',$msg,$disabled); 
 	?>
 	<p class="text-red"><?php
  if($this->session->userdata('id_proof_type_id') != ''){
@@ -420,35 +437,87 @@ $this->mysession->delete('post');
 	</div>
 	<div class="form-group">
 	<?php echo form_label('ID Proof Document Number','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'id_proof_document_number','class'=>'form-control','id'=>'id_proof_document_number','placeholder'=>'ID Proof Document Number','value'=>$id_proof_document_number)); ?>
+           <?php $input = array('name'=>'id_proof_document_number','class'=>'form-control','id'=>'id_proof_document_number','placeholder'=>'ID Proof Document Number','value'=>$id_proof_document_number);
+		if(!$edit_profile)					
+			$input['disabled'] ='';
+		echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('id_proof_document_number', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Name on ID Proof','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'name_on_id_proof','class'=>'form-control','id'=>'name_on_id_proof','placeholder'=>'Name on ID Proof','value'=>$name_on_id_proof)); ?>
+           <?php $input = array('name'=>'name_on_id_proof','class'=>'form-control','id'=>'name_on_id_proof','placeholder'=>'Name on ID Proof','value'=>$name_on_id_proof);
+		if(!$edit_profile)					
+			$input['disabled'] ='';
+		echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('name_on_id_proof', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Salary','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'salary','class'=>'form-control','id'=>'ifsc_code','placeholder'=>'Salary','value'=>'2500.00','readonly'=>'readonly')); ?>
+           <?php $input = array('name'=>'salary','class'=>'form-control','id'=>'ifsc_code','placeholder'=>'Salary','value'=>'2500.00','readonly'=>'readonly');
+		if(!$edit_profile)					
+			$input['disabled'] ='';
+		echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('salary', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Minimum Working Days','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'minimum_working_days','class'=>'form-control','id'=>'minimum_working_days','placeholder'=>'Minimum Working Days','value'=>' 25','readonly'=>'readonly')); ?>
+           <?php $input = array('name'=>'minimum_working_days','class'=>'form-control','id'=>'minimum_working_days','placeholder'=>'Minimum Working Days','value'=>' 25','readonly'=>'readonly');
+		if(!$edit_profile)					
+			$input['disabled'] ='';
+		echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('minimum_working_days', '<p class="text-red">', '</p>'); ?>
         </div>
+		
+	<?php if($driver_id!='' && $driver_id>0){?>
+		<div class="form-group">
+		   <?php echo form_label('Username','usernamelabel');
+			
+			echo form_input(array('name'=>'username','class'=>'form-control','id'=>'username','placeholder'=>'Enter Username','value'=>$username,'readonly'=>'readonly'));
+		   ?>			
+		  <?php echo $this->form_functions->form_error_session('username', '<p class="text-red">', '</p>'); ?>
+		</div>
+		<div class="hide-me"><?php //echo form_input(array('name'=>'h_user','value'=>$username));?></div>	
+		<?php }else{?>
+	
+		<div class="form-group">
+		   <?php echo form_label('Username','usernamelabel');
+			
+			echo form_input(array('name'=>'username','class'=>'form-control','id'=>'username','placeholder'=>'Enter Username','value'=>$username));
+		   ?>			
+		   <?php echo $this->form_functions->form_error_session('username', '<p class="text-red">', '</p>'); ?>
+		</div>
+
+		<div class="form-group">
+		   <?php echo form_label('Password','passwordlabel'); ?>
+		   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'password','placeholder'=>'Enter Password','value'=>$password)); ?>			
+			<?php echo $this->form_functions->form_error_session('password', '<p class="text-red">', '</p>'); ?>
+		</div>
+		
+		<div class="form-group">
+		   <?php echo form_label('Confirm Password','cpasswordlabel'); ?>
+		   <?php echo form_password(array('name'=>'cpassword','class'=>'form-control','id'=>'cpassword','placeholder'=>'Enter Confirm password')); ?>			
+			<?php echo $this->form_functions->form_error_session('cpassword', '<p class="text-red">', '</p>'); ?>
+		</div>
+		<?php }?>	
+		
+		
+		
+		
 		<div class='hide-me'><?php  
 		echo form_input(array('name'=>'hidden_id','class'=>'form-control','value'=>$driver_id));?></div>
    		<div class="box-footer">
 		
-		<?php echo br();
+		<?php echo br(2);
 		 if($driver_id==gINVALID||$driver_id==''){
 			$btn_name='Save';
 		 }else {
 			$btn_name='Update';
 			}
-		echo form_submit("driver-submit",$btn_name,"class='btn btn-primary'"); ?>  
+		if(!$this->session->userdata('driver')){
+		echo form_submit("driver-submit",$btn_name,"class='btn btn-primary'"); 
+		} 
+		echo br(3);
+		?>  
         </div>
 	 <?php echo form_close(); ?>
 	</fieldset>
@@ -456,9 +525,10 @@ $this->mysession->delete('post');
 
 </div>	
         </div>
+			<?php }?>
 		
-		
-		<div class="<?php echo $t_tab;?>" id="tab_2">
+		<?php if (array_key_exists('t_tab', $tabs)) {?>
+		<div class="<?php echo $tabs['t_tab']['content_class'];?>" id="<?php echo $tabs['t_tab']['tab_id'];?>"> 
            <div class="page-outer">
 	   <fieldset class="body-border">
 		<legend class="body-head">Trip</legend><div class="form-group">
@@ -493,7 +563,7 @@ $this->mysession->delete('post');
 						<th>Over Time</th>
 					    
 					</tr>
-					<?php
+					<?php 
 						$repeated_dates=array();					
 						$tot_nod=$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_over_time=$tot_night_halt=$tot_extra=$tot_fuel_extra=$tot_trip_amount= $tth=$ttp=$tto=$dbh=$dbp=$dbo=$i=0;
 					if(isset($trips) && $trips!=false){
@@ -637,23 +707,32 @@ $this->mysession->delete('post');
 		</div>
 </div>
 </fieldset>
-</div>
+	</div>
         </div>
-        <div class="tab-pane" id="tab_3">
-         
+	<?php }?>
+	
+	<?php if (array_key_exists('p_tab', $tabs)) {?>
 
-<div class="page-outer">
+        <div class="<?php echo $tabs['p_tab']['content_class'];?>" id="<?php echo $tabs['p_tab']['tab_id'];?>"> 
+
 		<iframe src="<?php echo base_url().'account/front_desk/SupplierPayment/DR'.$driver_id.'/true';?>" height="600px" width="100%">
 		<p>Browser not Support</p>
 		</iframe>
 
-</div>
+
+	
         </div>
-		<div class="tab-pane" id="tab_4">
+	<?php }?>
+		
+		<?php if (array_key_exists('a_tab', $tabs)) {?>
+	<div class="<?php echo $tabs['a_tab']['content_class'];?>" id="<?php echo $tabs['a_tab']['tab_id'];?>"> 
         		<iframe src="<?php echo base_url().'account/front_desk/DriverPaymentInquiry/DR'.$driver_id.'/true';?>" height="600px" width="100%">
 		<p>Browser not Support</p>
 		</iframe>
         	</div>
+		</div>
+
+	<?php }?>
     </div>
 </div>	
 

@@ -91,7 +91,7 @@ $guest_id=$data['guest_id'];
 }
 }
 
-if($data['booking_source']!=-1){
+if($data['booking_source']!=-1){ 
 $booking_source				=	$data['booking_source'];
 }
 $source						=	$data['source'];
@@ -236,12 +236,27 @@ $customer_type='';
 						
 						<?php echo $this->form_functions->form_error_session('booking_sources', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('source', '<p class="text-red">', '</p>'); ?>
 						</div>
+						
 					</fieldset>
 				</div>
 				<div class="booking-source">
 					<fieldset class="body-border">
+					<?php if($booking_by == 'customer'){?>
+					<legend class="body-head font-size-18-px">Guest Information</legend>
+					<?php }else{?>
 					<legend class="body-head font-size-18-px">Customer Information</legend>
+					<?php } ?>
 					<table>
+					<?php if($booking_by == 'customer'){?>
+							<tr>
+							<td><?php echo form_hidden('mobile',$mobile).br();?>
+					<div class="hide-me"><?php echo form_input(array('name'=>'new_customer','class'=>'form-control new-customer','value'=>$new_customer)); ?></div>		
+							</td>
+							<td><?php echo form_hidden('email',$email);echo form_hidden('customer',$customer);echo form_hidden('new_customer',$new_customer).br();?></td>
+							</tr>	
+							<?php }else{?>
+							
+							
 						<tr>
 							<td>
 							<div class="div-with-90-percent-width-and-marigin-5 passenger-basic-info">
@@ -269,6 +284,7 @@ $customer_type='';
 								
 							</td>
 						</tr>
+						<?php }?>
 						<tr>
 							<td>
 								<div class="form-group advanced-container margin-top-less-20">
@@ -304,8 +320,8 @@ $customer_type='';
 						<tr>
 							<td>
 								<div class="guest-toggle div-with-90-percent-width-and-marigin-5">
-									<div class="form-group">
-										<?php 
+									<div class="form-group"> 
+										<?php   
 										echo form_input(array('name'=>'guestname','class'=>'form-control','id'=>'guestname','placeholder'=>'Guest','value'=>$guestname));
 										 ?>
 										<?php echo $this->form_functions->form_error_session('guestname', '<p class="text-red">', '</p>');?>
@@ -334,9 +350,13 @@ $customer_type='';
 							<table>
 								<tr>
 									<td>
+									
 									<div class="form-group">
 										<?php $class="form-control row-source-50-percent-width-with-margin-8";
-										 echo $this->form_functions->populate_dropdown('trip_model',$trip_models,$trip_model,$class,$id='',$msg="Trip"); 
+										if($booking_by == 'customer') 
+											form_hidden('trip_model',$trip_model);
+										else
+										echo $this->form_functions->populate_dropdown('trip_model',$trip_models,$trip_model,$class,$id='',$msg="Trip"); 
 										echo form_input(array('name'=>'no_of_passengers','class'=>'form-control row-source-50-percent-width-with-margin-8','id'=>'no_of_passengers','placeholder'=>'No of passengers','value'=>$no_of_passengers)).br(2);?>
 									<?php echo $this->form_functions->form_error_session('trip_models', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('no_of_passengers', '<p class="text-red">', '</p>');?>
 									</div>
@@ -438,7 +458,7 @@ $customer_type='';
 					</fieldset>
 				</div>
 			</div>
-			<div class="inner-second-column-trip-booking div-with-49-percent-width-with-margin-10">
+			<div class="inner-second-column-trip-booking div-with-50-percent-width-with-margin-10">
 				<a href="<?php echo base_url().'organization/front-desk/trips'?>" class="btn btn-primary trips-redirect btn-sm">TRIPS</a>
 				<div class="booking-source">
 					<fieldset class="body-border">

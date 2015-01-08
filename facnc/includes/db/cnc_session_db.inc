@@ -1,4 +1,17 @@
 <?php
+function get_organisation_login($user_id){
+	set_global_connection();
+
+	$sql = "SELECT organisation_id,username,password FROM users WHERE id=".db_escape($user_id);
+	$sql .= " AND fa_account > 0";
+		//echo $sql;exit;
+
+
+	$result = db_query($sql, "could not get user");
+
+
+	return db_fetch_row($result);
+}
 
 function get_cnc_session($session_id)
 {

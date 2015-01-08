@@ -264,17 +264,27 @@
                                         
                                     </p>
                                 </li>
-                              <?php 
-				 if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==SYSTEM_ADMINISTRATOR){
-						$profile_url=base_url().'admin/profile';
-						$change_password_url=base_url().'admin/changepassword';
-	 			 }else if($this->session->userdata('isLoggedIn')==true && ($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR )){
-					$profile_url=base_url().'organization/admin/profile';
-					$change_password_url=base_url().'organization/admin/changepassword';
-	  			 }else if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==FRONT_DESK){
-					$profile_url=base_url().'organization/front-desk/profile';
-					$change_password_url=base_url().'organization/front-desk/changepassword';
-				 }?>
+                                          <?php 
+					if($this->session->userdata('isLoggedIn')==true){
+
+						$change_password_url=base_url().'login/changepassword';
+						switch($this->session->userdata('type')){
+							case SYSTEM_ADMINISTRATOR:
+							$profile_url=base_url().'admin/profile';break;
+
+							case ORGANISATION_ADMINISTRATOR:
+							$profile_url=base_url().'organization/admin/profile';break;
+
+							case FRONT_DESK:
+							$profile_url=base_url().'organization/front-desk/profile';break;
+
+							case CUSTOMER:
+							$profile_url=base_url().'organization/front-desk/customer/'.$this->session->userdata('customer')->id;break;
+							case DRIVER:
+							$profile_url=base_url().'organization/front-desk/driver-profile/'.$this->session->userdata('driver')->id;break;
+						}
+					}
+				?>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">

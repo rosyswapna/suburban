@@ -460,16 +460,36 @@ if (!defined('FA_LOGOUT_PHP_FILE')){
 		if (!$_SESSION["wa_current_user"]->logged_in()){
 			
 		
-			$cnc_session = get_cnc_session($_GET['cnc_token']);
+					$cnc_session = get_cnc_session($_GET['cnc_token']);
 		
 			if($cnc_session != false && $cnc_session['user_data'] != ""){
 				$_SESSION['cnc_token'] = $_GET['cnc_token'];
 				$cnc_data = unserialize($cnc_session['user_data']);
 
-				$_POST["company_login_name"] = (isset($cnc_data['organisation_id']))?$cnc_data['organisation_id']:0;
-				$_POST["user_name_entry_field"] = $cnc_data['username'];
-				$_POST["password"] = $cnc_data['token_pass'];
-//print_r($_POST);exit;
+				if(isset($cnc_data['customer'])||isset($cnc_data['driver'])||isset($cnc_data['owner'])){
+					if(isset($cnc_data['customer'])) {
+						$user_id = $cnc_data['customer']->user_id;
+						$_SESSION['cnc_customer'] = $cnc_data['customer']->id;
+					}elseif(isset($cnc_data['driver'])) {
+						$user_id = $cnc_data['driver']->user_id;
+						$_SESSION['cnc_driver'] = $cnc_data['driver']->id;
+					}elseif(isset($cnc_data['owner'])) {
+						$user_id = $cnc_data['owner']->user_id;
+					}else{
+						$user_id =0;
+					}
+					$org_login = get_organisation_login($user_id);
+					
+					$_POST["company_login_name"] = $org_login[0];
+					$_POST["user_name_entry_field"] = $org_login[1];
+					$_POST["password"] = $org_login[2];
+				}else{
+					$_POST["company_login_name"] = (isset($cnc_data['organisation_id']))?$cnc_data['organisation_id']:0;
+					$_POST["user_name_entry_field"] = $cnc_data['username'];
+					$_POST["password"] = $cnc_data['token_pass'];
+				}
+
+				//echo "<pre>";print_r($_POST);echo "</pre>";exit;
 
 			}else{
 				$_SESSION["wa_current_user"]->logged = false;

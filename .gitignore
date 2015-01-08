@@ -3,6 +3,7 @@
 /facnc/company
 /facnc/config_db.php
 /facnc/config.php
+/facnc/tmp/
 /issue_track
 *.php~
 .gitignore~

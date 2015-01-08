@@ -1051,11 +1051,11 @@ window.onbeforeunload = function(){
 
 $('.book-trip-validate').on('click',function(){
 
-if($('.new-customer').val()=='false'){//alert('clciked');
+if($('.new-customer').val()=='false'){
 $('.book-trip-validate').attr('enable_redirect','true');
 $('.book-trip').trigger('click');
 }else{
-
+//alert($('.new-customer').val());return false;
 alert("Add Customer Informations");
 
 }
@@ -1654,7 +1654,7 @@ var r = confirm("Please Select Vehicle Model To Complete The Trip..Click OK to C
 
 //--to expand and collapse table rows for trips	
 
-	$('.common').click(function(){
+	$('.common').click(function(){ 
 		$(this).hide();
 	if($(this).attr('limited')=='true'){
 		

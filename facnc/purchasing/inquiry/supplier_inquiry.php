@@ -34,6 +34,12 @@ if (!@$_GET['popup'])
 	else
 		page(_($help_context = "Supplier Inquiry"), isset($_GET['supplier_id']), false, "", $js);
 }
+
+if (isset($_SESSION['cnc_driver'])){
+	 	
+	$_POST['supplier_id'] = get_cnc_supplier_id('DR'.$_SESSION['cnc_driver']);
+}
+
 if (isset($_GET['supplier_id'])){
 	$_POST['supplier_id'] = $_GET['supplier_id'];
 }
@@ -56,11 +62,11 @@ start_table_left(TABLESTYLE_NOBORDER);
 start_row();
 
 if (!@$_GET['popup']){
-	if(isset($_GET['DriverPaymentInquiry'])){
+	if(isset($_GET['DriverPaymentInquiry']) || isset($_SESSION['cnc_driver'])){
 		hidden('supplier_id');
 		$_POST['supplier_type'] = CNC_DRIVER;
 	}
-	if(isset($_GET['OwnerPaymentInquiry'])){
+	elseif(isset($_GET['OwnerPaymentInquiry'])){
 		hidden('supplier_id');
 		$_POST['supplier_type'] = CNC_VEHICLE_OWNER;
 	}

@@ -45,7 +45,10 @@ class Trip_booking extends CI_Controller {
 		}else{
 			$this->notFound();
 		}
-	}else{
+	}elseif($this->customer_session_check()==true && $param2=='book-trip') {
+			$this->bookTrip();
+		}
+	else{
 			$this->notAuthorized();
 	}
 	}
@@ -103,13 +106,16 @@ class Trip_booking extends CI_Controller {
 					$data['guestmobile']='';
 					$data['guest_id']=gINVALID;
 				}
-
+		
 				$this->form_validation->set_rules('customer','Customer name','trim|xss_clean');
 				$this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email|');
 				$this->form_validation->set_rules('mobile','Mobile','trim|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
 				$this->form_validation->set_rules('booking_source','Booking source','trim|xss_clean');
 				$this->form_validation->set_rules('source','Source','trim|min_length[2]|xss_clean');
-				$this->form_validation->set_rules('trip_model','Trip models','trim|required|xss_clean');
+				//$this->form_validation->set_rules('trip_model','Trip models','trim|required|xss_clean');
+				if(!$this->session->userdata('customer')){
+					$this->form_validation->set_rules('trip_model','Trip models','trim|required|xss_clean');
+				}
 				$this->form_validation->set_rules('no_of_passengers','No of passengers','trim|xss_clean');
 				$this->form_validation->set_rules('pickupcity','Pickup city','trim|required|xss_clean');
 				$this->form_validation->set_rules('pickuparea','Pickup area','trim|xss_clean');
@@ -279,7 +285,7 @@ class Trip_booking extends CI_Controller {
 				if(isset($_REQUEST['guest_id']) && $_REQUEST['guest_id']==gINVALID){
 				
 				$dbdata1=array('name'=>$data['guestname'],'email'=>$data['guestemail'],'mobile'=>$data['guestmobile'],'registration_type_id'=>$data['registration_type_id']);
-				$data['guest_id']=$this->customers_model->addCustomer($dbdata1);
+				$data['guest_id']=$this->customers_model->addGuest($dbdata1);
 				//------------fa module integration code starts here-----
 				//save customer in fa table
 
@@ -378,7 +384,7 @@ class Trip_booking extends CI_Controller {
 			$this->session->set_userdata('customer_email','');
 			$this->session->set_userdata('customer_mobile','');
 			
-				if(isset($data['trip_id']) && $data['trip_id']>0){
+				if(isset($data['trip_id']) && $data['trip_id']>0){ 
 				$res = $this->trip_booking_model->updateTrip($dbdata,$data['trip_id'],$estimate);
 				if($res==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Updated Succesfully..!!'));
@@ -617,6 +623,13 @@ class Trip_booking extends CI_Controller {
 		return true;
 		} else {
 		return false;
+		}
+	} 
+	public function customer_session_check() {
+		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==CUSTOMER)) {
+			return true;
+		} else {
+			return false;
 		}
 	} 
 	public function SendTripConfirmation($data,$id,$customer,$flag){

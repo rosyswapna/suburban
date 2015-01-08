@@ -53,6 +53,10 @@ $route['general/(:any)'] = 'general/$0';
 $route['trip-booking/(:any)'] = 'trip_booking/index/$0';
 $route['customers/(:any)'] = 'customers/$0';
 $route['maps/(:any)'] = 'maps/$0';
+$route['login/(:any)'] = 'login/$0';
 
+
+$route['customer/(:any)'] = 'customer/index';
+$route['driver/(:any)'] = 'driver/index';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
