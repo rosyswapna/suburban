@@ -542,10 +542,11 @@ $customer_type='';
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
 						$id="tarrif";
 						echo $this->form_functions->populate_dropdown('tariff',$tariffs,$tariff,$class,$id,$msg="Tariffs");
+						if(!$booking_by == 'customer') {
 						$id="available_vehicle";
 						echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles,$available_vehicle,$class,$id,$msg="Available Vehicles");
 						echo br(2);
-						 ?>
+						}?>
 						<div class="hide-me vehicle-tarif-checker" tariff_id="<?php echo $tariff;?>" available_vehicle_id="<?php echo $available_vehicle;?>"></div>
 						</div>
 					</fieldset>

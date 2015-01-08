@@ -11,18 +11,16 @@ class Driver extends CI_Controller {
 		}
 		//redirect driver pages
 	public function index()
-	{
+	{ 
 		$param1=$this->uri->segment(2);
 		$param2=$this->uri->segment(3);
-		$param3=$this->uri->segment(4);
+		$param3=$this->uri->segment(4); 
 		if($this->driver_session_check()==true || $this->session_check()==true) {
 			if($param1=='' || $param1 == 'home'){
 				$this->Dashboard();
 			}
 			if($param1=='driver_manage'){
 				$this->driver_manage($param2);
-			}else{
-				$this->notAuthorized();
 			}
 		}
 		else{

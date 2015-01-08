@@ -80,9 +80,9 @@ $trip_sl_no=$page;
 						<td><?php echo form_submit("trip_search","Search","class='btn btn-primary'");
 echo form_close();?></td>
 					<td><?php
-						//if((!$this->session->userdata('driver'))&&(!$this->session->userdata('customer'))){					
+						if((!$this->session->userdata('driver'))&&(!$this->session->userdata('customer'))){					
 						echo form_button('print-trip','Print',"class='btn btn-primary print-trip'");
-						//} ?></td>
+						} ?></td>
 						
 					</tr>
 				</tbody>

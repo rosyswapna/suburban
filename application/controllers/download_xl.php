@@ -255,13 +255,13 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 				
 				if(isset($_REQUEST['pickupdate']) && isset($_REQUEST['dropdate'])){
 					
-					$qry.=' AND T.pick_up_date BETWEEN "'.$_REQUEST['pickupdate'].'" AND "'.$_REQUEST['dropdate'].'" AND T.drop_date BETWEEN "'.$_REQUEST['pickupdate'].'" AND "'.$_REQUEST['dropdate'].'"';		
-					
+					//new $qry.=' AND T.pick_up_date BETWEEN "'.$_REQUEST['pickupdate'].'" AND "'.$_REQUEST['dropdate'].'" AND T.drop_date BETWEEN "'.$_REQUEST['pickupdate'].'" AND "'.$_REQUEST['dropdate'].'"';		
+					$qry.=' AND (T.drop_date BETWEEN "'.$_REQUEST['pickupdate'].'" AND "'.$_REQUEST['dropdate'].'")';
 				}else if(isset($_REQUEST['pickupdate'])){
 				
 				//$qry.=' AND T.pick_up_date ="'.$_REQUEST['pickupdate'].'"';
-				$qry.=' AND (T.pick_up_date="'.$_REQUEST['pickupdate'].'" OR T.drop_date="'.$_REQUEST['pickupdate'].'")';
-				
+				//new $qry.=' AND (T.pick_up_date="'.$_REQUEST['pickupdate'].'" OR T.drop_date="'.$_REQUEST['pickupdate'].'")';
+				$qry.='  AND  (T.pick_up_date="'.$_REQUEST['pickupdate'].'" or "'.$_REQUEST['pickupdate'].'" BETWEEN T.pick_up_date and T.drop_date)';
 				}else if(isset($_REQUEST['dropdate'])){
 				
 				$qry.=' AND T.drop_date ="'.$_REQUEST['dropdate'].'"';
