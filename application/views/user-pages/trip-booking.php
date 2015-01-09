@@ -226,6 +226,11 @@ $customer_type='';
 		<fieldset class="body-border">
 		<legend class="body-head ">Trip Booking</legend>
 			<div class="inner-first-column-trip-booking div-with-50-percent-width-with-margin-10">
+				<?php if($booking_by=='customer'){ 
+					$booking_source='';
+
+					}else{
+				?>
 				<div class="booking-source">
 					<fieldset class="body-border">
 					<legend class="body-head font-size-18-px">Booking Source</legend>
@@ -239,6 +244,7 @@ $customer_type='';
 						
 					</fieldset>
 				</div>
+				<?php } ?>
 				<div class="booking-source">
 					<fieldset class="body-border">
 					<?php if($booking_by == 'customer'){?>
@@ -538,17 +544,20 @@ $customer_type='';
 						echo br(2);
 						 ?>
 						</div>
+						<?php if($booking_by == 'customer') { ?>
+						<div class ="hide-me"> <?php echo form_input(array('id'=>'tarrif','value'=>'-1'));?></div>
+						<?php } else{?>
 						<div class="form-group">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
-						$id="tarrif";
+						$id="tarrif"; 
 						echo $this->form_functions->populate_dropdown('tariff',$tariffs,$tariff,$class,$id,$msg="Tariffs");
-						if(!$booking_by == 'customer') {
+						
 						$id="available_vehicle";
 						echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles,$available_vehicle,$class,$id,$msg="Available Vehicles");
 						echo br(2);
-						}?>
+						?>
 						<div class="hide-me vehicle-tarif-checker" tariff_id="<?php echo $tariff;?>" available_vehicle_id="<?php echo $available_vehicle;?>"></div>
-						</div>
+						</div><?php }?>
 					</fieldset>
 				</div>
 				<?php $count=count($reccurent_alternatives_pickupdatepicker);?>

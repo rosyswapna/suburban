@@ -1674,7 +1674,7 @@ $('.voucher').on('click',function(){
 	var driver_id=$(this).attr('driver_id');
 	var tarrif_id=$(this).attr('tarrif_id');
 	//var no_of_days=$(this).attr('no_of_days');
-	var pick_up_time=$(this).attr('pick_up_time');
+	var pick_up_time=$(this).attr('pick_up_time'); 
 	var vehicle_model_id=$(this).attr('vehicle_model_id');
 	var vehicle_ac_type=$(this).attr('vehicle_ac_type_id');
 

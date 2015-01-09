@@ -48,10 +48,24 @@ class Trip_booking extends CI_Controller {
 	}elseif($this->customer_session_check()==true && $param2=='book-trip') {
 			$this->bookTrip();
 		}
+		elseif($this->driver_session_check()==true){
+		if($param2=='getVouchers'){
+			$this->getVouchers();
+		}else if($param2=='tripVoucher'){
+			$this->tripVoucher();
+		}
+		}
 	else{
 			$this->notAuthorized();
 	}
 	}
+		public function driver_session_check() {
+		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==DRIVER)) {
+			return true;
+		} else {
+			return false;
+		}
+	}  
 	public function notFound(){
 		if($this->session_check()==true) {
 		 $this->output->set_status_header('404'); 
@@ -111,7 +125,7 @@ class Trip_booking extends CI_Controller {
 				$this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email|');
 				$this->form_validation->set_rules('mobile','Mobile','trim|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
 				$this->form_validation->set_rules('booking_source','Booking source','trim|xss_clean');
-				$this->form_validation->set_rules('source','Source','trim|min_length[2]|xss_clean');
+				$this->form_validation->set_rules('source','Source','trim|xss_clean');
 				//$this->form_validation->set_rules('trip_model','Trip models','trim|required|xss_clean');
 				if(!$this->session->userdata('customer')){
 					$this->form_validation->set_rules('trip_model','Trip models','trim|required|xss_clean');
@@ -488,7 +502,7 @@ class Trip_booking extends CI_Controller {
 	public function tripVoucher()
 	{
 		
-		if($_REQUEST['startkm'] && $_REQUEST['endkm'] && $_REQUEST['trip_id']){
+		if(isset($_REQUEST['startkm']) && isset($_REQUEST['endkm']) && isset($_REQUEST['trip_id'])){
  
 
 			//trip data
@@ -555,8 +569,8 @@ class Trip_booking extends CI_Controller {
 
 	}	
 
-	public function getVouchers($trip_id='',$ajax='NO'){
-	if(isset($_REQUEST['trip_id']) && isset($_REQUEST['ajax'])){
+	public function getVouchers($trip_id='',$ajax='NO'){ 
+	if(isset($_REQUEST['trip_id']) && isset($_REQUEST['ajax'])){ 
 	$trip_id=$_REQUEST['trip_id'];
 	$ajax=$_REQUEST['ajax'];
 	}

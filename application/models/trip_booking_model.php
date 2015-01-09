@@ -72,9 +72,11 @@ class Trip_booking_model extends CI_Model {
 	if($this->db->insert_id()>0){
 		$id =$this->db->insert_id();
 		//$this->db->set('trip_id', $id);
+		if(!empty($estimate)){
 		$estimate['trip_id']=$id;
 		$estimate['organisation_id']=$this->session->userdata('organisation_id');
 		$this->db->insert('rough_estimate',$estimate);
+		}
 		return $id;
 	}else{
 		return false;

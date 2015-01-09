@@ -865,7 +865,9 @@ class User extends CI_Controller {
 		function trip_action_allowed(){
 				
 				if($this->session->userdata('type')==CUSTOMER){
-					$actions = array();
+					$actions = array('edit');
+					
+
 				}elseif($this->session->userdata('type')==DRIVER){
 					$actions = array('new_voucher');
 				}else{
