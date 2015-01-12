@@ -195,7 +195,12 @@ echo form_close();?></td>
 		<?php if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_CONFIRMED || $trips[$trip_index]['trip_status_id']==TRIP_STATUS_PENDING ) { 
 			
 			if(in_array('edit',$trip_action_allowed)){
-				echo anchor_popup_default(base_url().'organization/front-desk/trip-booking/'.$trips[$trip_index]['trip_id'],'<span></span>',array('class'=>' fa fa-edit','title'=>'Edit')).nbs(5);
+				if(isset($input_class) && $trips[$trip_index]['trip_status_id']==TRIP_STATUS_CONFIRMED ){
+				$hide=$input_class['hide_edit'];
+				}else{
+				$hide=' ';
+				}
+				echo anchor_popup_default(base_url().'organization/front-desk/trip-booking/'.$trips[$trip_index]['trip_id'],'<span></span>',array('class'=>' fa fa-edit '.$hide.'','title'=>'Edit')).nbs(5);
 				
 			}
 			if(in_array('proposal',$trip_action_allowed)){
@@ -296,7 +301,12 @@ echo form_close();?></td>
 			<?php if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_CONFIRMED || $trips[$trip_index]['trip_status_id']==TRIP_STATUS_PENDING ) { 
 			
 			if(in_array('edit',$trip_action_allowed)){
-			echo anchor_popup_default(base_url().'organization/front-desk/trip-booking/'.$trips[$trip_index]['trip_id'],'<span></span>',array('class'=>' fa fa-edit','title'=>'Edit')).nbs(5);
+			if(isset($input_class) && $trips[$trip_index]['trip_status_id']==TRIP_STATUS_CONFIRMED ){
+				$hide=$input_class['hide_edit'];
+				}else{
+				$hide=' ';
+				}
+			echo anchor_popup_default(base_url().'organization/front-desk/trip-booking/'.$trips[$trip_index]['trip_id'],'<span></span>',array('class'=>' fa fa-edit '.$hide.'','title'=>'Edit')).nbs(5);
 			}
 			if(in_array('proposal',$trip_action_allowed)){
 			echo "<a href=".base_url().'trip/proposal/'.$trips[$trip_index]['trip_id']." class= ' fa fa-paperclip' target='_blank' title='Proposal'></a>".nbs(5); 

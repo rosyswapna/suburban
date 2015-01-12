@@ -854,7 +854,7 @@ class User extends CI_Controller {
 				$inputs= array('trip_pick_date'=>'','trip_drop_date'=>'','vehicles' => '',
 						'drivers' => '','trip_status_id' => '','cgroups' => '','customer' => '');
 				if($this->session->userdata('type')==CUSTOMER){
-					$inputs['vehicles']=$inputs['drivers']=$inputs['cgroups']=$inputs['customer']=' hide-me';
+					$inputs['vehicles']=$inputs['drivers']=$inputs['cgroups']=$inputs['customer']=$inputs['hide_edit']=' hide-me';
 				}else if($this->session->userdata('type')==DRIVER){
 			$inputs['vehicles']=$inputs['drivers']=$inputs['customer']=' hide-me';
 		}

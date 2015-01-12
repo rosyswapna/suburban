@@ -127,14 +127,18 @@ class Trip_booking_model extends CI_Model {
 		return $id;
 	}
 
-	function  updateTrip($data,$id,$estimate) {
+	function  updateTrip($data,$id,$estimate,$guest) {
 	$this->db->where('id',$id );
 		//newly added-to be organisation based
 		$org_id=$this->session->userdata('organisation_id');
 		$this->db->where( 'organisation_id', $org_id ); 
 		//---
 	$this->db->set('updated', 'NOW()', FALSE);
-	$this->db->update("trips",$data); 
+	$this->db->update("trips",$data);
+	if(!empty($guest)){
+	$this->db->where('id',$data['guest_id'] );
+	$this->db->update("customers",$guest);
+	}
 	if(!empty($estimate)){
 	$this->db->where('trip_id',$id );
 	$this->db->update("rough_estimate",$estimate);

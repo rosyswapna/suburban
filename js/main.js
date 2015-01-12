@@ -1821,7 +1821,7 @@ function formatDate_d_m_Y(date) {
         return date;
     }
 
-function formatDate_Y_m_d(date) {
+/*function formatDate_Y_m_d(date) {
         var d = new Date(date);
         var day = d.getDate();
         var month = d.getMonth() + 1;
@@ -1835,8 +1835,17 @@ function formatDate_Y_m_d(date) {
         var date = year + "-" + month + "-" + day;
 
         return date;
-    }
+    }*/
+function formatDate_Y_m_d(date) {
+        var d = date.split('-');
+        var day = d[0];
+        var month = d[1];
+        var year = d[2];
+        
+        var date = year + "-" + month + "-" + day;
 
+        return date;
+    }
 function toSeconds(time_str) {
     // Extract hours, minutes and seconds
     var parts = time_str.split(':');
@@ -1855,14 +1864,13 @@ function toSeconds(time_str) {
 	return sec;
 }
 
-function timeDifference(fromdate,fromtime,todate,totime){
+function timeDifference(fromdate,fromtime,todate,totime){ 
 
 	var fromdate=fromdate.split('-');
 	var todate=todate.split('-');
     var start_actual_time  =  fromdate[0]+'/'+fromdate[1]+'/'+fromdate[2]+' '+fromtime;
     var end_actual_time    =  todate[0]+'/'+todate[1]+'/'+todate[2]+' '+totime;
-
-
+	
     start_actual_time = new Date(start_actual_time);
     end_actual_time = new Date(end_actual_time);
 
@@ -1872,8 +1880,11 @@ function timeDifference(fromdate,fromtime,todate,totime){
     var HH = Math.floor(diffSeconds/3600);
     var MM = Math.floor(diffSeconds%3600)/60;
 	var result='';
-	var no_of_days=Math.floor(HH/24);
-    if((HH>=24 && MM>=1) || HH>24){
+	var no_of_days=Math.floor(HH/24);  alert(no_of_days+","+HH);
+    if(HH>24 && MM==0){
+    result+=no_of_days+'-'+HH+'-'+MM;	
+    }
+    else if((HH>=24 && MM>=1) || HH>24){
       no_of_days=no_of_days+1; 
 	result+=no_of_days+'-'+HH+'-'+MM;	
     }else{
@@ -1949,8 +1960,8 @@ function set_tarif_row_with_daysno(days=1)
 $('.tripendingtime').blur(function(e) {
 	var start = $('.tripstartingtime').val();
 	var end = $('.tripendingtime').val();
-	var fromdate=$('#startdt').val();
-	var todate=$('.enddt').val();
+	var fromdate=formatDate_Y_m_d($('#startdt').val()); 
+	var todate=formatDate_Y_m_d($('.enddt').val());
 	if(fromdate!='' && todate!='' && end!='' && start!=''){
 		var total = timeDifference(fromdate,start,todate,end);
 		total=total.split('-');
@@ -1970,8 +1981,8 @@ $('.tripendingtime').blur(function(e) {
 $('.tripstartingtime').blur(function(e) {
 	var end = $('.tripendingtime').val();
 	var start =$('.tripstartingtime').val();
-	var fromdate=$('#startdt').val();
-	var todate=$('.enddt').val();
+	var fromdate=formatDate_Y_m_d($('#startdt').val());
+	var todate=formatDate_Y_m_d($('.enddt').val());
 	if(fromdate!='' && todate!='' && end!='' && start!=''){
 	var total = timeDifference(fromdate,start,todate,end);
 	total=total.split('-');
@@ -2001,8 +2012,8 @@ $('.tripstartingtime').blur(function(e) {
 $('.enddt').blur(function(e) {
 	var end = $('.tripendingtime').val();
 	var start = $('.tripstartingtime').val();
-	var fromdate=$('#startdt').val();
-	var todate=$('.enddt').val();
+	var fromdate=formatDate_Y_m_d($('#startdt').val());
+	var todate=formatDate_Y_m_d($('.enddt').val());
 	if(fromdate!='' && todate!='' && end!='' && start!=''){
 	var total = timeDifference(fromdate,start,todate,end);
 	total=total.split('-');

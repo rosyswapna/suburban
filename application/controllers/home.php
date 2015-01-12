@@ -13,7 +13,9 @@ class Home extends CI_Controller {
 
 	}
 	public function index()
-	{	if( $this->session->userdata('isLoggedIn') ) {
+	{	
+	
+	if( $this->session->userdata('isLoggedIn') ) {
 		if( $this->session->userdata('type')==SYSTEM_ADMINISTRATOR){
 			redirect(base_url().'admin');
 		}else if($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR){

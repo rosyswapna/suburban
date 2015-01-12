@@ -338,6 +338,9 @@ class Trip_booking extends CI_Controller {
 			
 			$dbdata['customer_id']					=$this->session->userdata('customer_id');
 			$dbdata['guest_id']						=$data['guest_id'];
+			$guest['name']					=$this->input->post('guestname');
+			$guest['email']					=$this->input->post('guestemail');
+			$guest['mobile']					=$this->input->post('guestmobile');
 			$dbdata['customer_type_id']				=$data['customer_type'];
 			$dbdata['customer_group_id']			=$data['customer_group'];
 			$dbdata['trip_status_id']				=$trip_status;
@@ -399,7 +402,7 @@ class Trip_booking extends CI_Controller {
 			$this->session->set_userdata('customer_mobile','');
 			
 				if(isset($data['trip_id']) && $data['trip_id']>0){ 
-				$res = $this->trip_booking_model->updateTrip($dbdata,$data['trip_id'],$estimate);
+				$res = $this->trip_booking_model->updateTrip($dbdata,$data['trip_id'],$estimate,$guest);
 				if($res==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Updated Succesfully..!!'));
 					$this->session->set_userdata(array('dbError'=>''));
