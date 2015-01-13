@@ -44,7 +44,7 @@ $this->session->set_userdata('post','');
 <td><?php echo form_open(base_url()."organization/front-desk/tarrif-masters"); 
 echo form_input(array('name'=>'search_title','class'=>'form-control','id'=>'title1','placeholder'=>'Title','value'=>$title1)); ?>
 </td>
-<td><?php $class="form-control";
+<!--<td><?php $class="form-control";
 		$msg="Trip Model";
 		$name="search_trip_model";
 		echo $this->form_functions->populate_dropdown($name,$trip_models,$trip_model_id,$class,$id='model',$msg)?></td>
@@ -52,7 +52,7 @@ echo form_input(array('name'=>'search_title','class'=>'form-control','id'=>'titl
 <td><?php  	$class="form-control";
 		$msg=" AC Type";
 		$name="search_ac_type";
-		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$vehicle_ac_type_id,$class,$id='ac_type',$msg)?></td>
+		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$vehicle_ac_type_id,$class,$id='ac_type',$msg)?></td>-->
 <td><?php echo form_submit("search","Search","class='btn btn-primary'");?></td>
 <td><?php echo form_button('print-tariff','Print',"class='btn btn-primary print-tariff'"); 
 echo form_close();?></td>
@@ -76,7 +76,7 @@ echo form_close();?></td>
 <?php echo form_open(base_url()."tarrif/tarrif_master_manage");
 		echo form_input(array('name'=>'title','class'=>'form-control','id'=>'title1','placeholder'=>'Title','value'=>$title1)); ?>
 		</td>
-		<td><?php  	$class="form-control";
+		<!--<td><?php  	$class="form-control";
 		$msg="Trip Model";
 		$name="select_trip_model";
 		echo $this->form_functions->populate_dropdown($name,$trip_models,$trip_model_id,$class,$id='',$msg)?>
@@ -99,7 +99,7 @@ echo form_close();?></td>
 		$name="select_ac_type";
 		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$vehicle_ac_type_id,$class,$id='',$msg)?>
 		   
-		</td>
+		</td>-->
 		<td><?php echo form_input(array('name'=>'min_kilo','class'=>'form-control','id'=>'min_kilo','placeholder'=>'Minimum Kilometers','value'=>$minimum_kilometers)); ?></td>
 		<td><?php echo form_input(array('name'=>'min_hours','class'=>'form-control','id'=>'min_hours','placeholder'=>'Minimum Hours','value'=>$minimum_hours)); ?></td>
 		<td><div  class="tarrif-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=tarrif-add-id","class=btn");?></div
@@ -168,10 +168,10 @@ echo form_close();?></td>
 <table>
 <tr>
 <td><?php echo form_label('Master Title ','master_Title'); ?></td>
-<td><?php echo form_label('Trip Model','trip_Model'); ?></td>
+<!--<td><?php echo form_label('Trip Model','trip_Model'); ?></td>
 <td><?php echo form_label('Vehicle Types','vehicle_types'); ?></td>
 <td><?php echo form_label('Vehicle Makes','vehicle_Makes'); ?></td>
-<td><?php echo form_label('Ac Type','ac_Type'); ?></td>
+<td><?php echo form_label('Ac Type','ac_Type'); ?></td>-->
 <td><?php echo form_label('Min Kilo','min_Kilometers'); ?></td>
 <td><?php echo form_label('Min Hrs','min_Hours'); ?></td>
 
@@ -184,7 +184,7 @@ foreach($values as $det):
 
 <tr>
 <td><div class="form-group"><?php echo form_open(base_url()."tarrif/tarrif_master_manage"); echo form_input(array('name'=>'manage_title','class'=>'form-control','id'=>'manage_title','placeholder'=>'Title','value'=> $det['title'] )); ?></div></td>
-<td><div class="form-group"><?php 
+<!--<td><div class="form-group"><?php 
 $class="form-control";
 		$msg="Select Trip Model";
 		$name="manage_select_trip_model";
@@ -203,7 +203,7 @@ $class="form-control";
 <td><div class="form-group"><?php  	$class="form-control";
 		$msg="Select AC Type";
 		$name="manage_select_ac_type";
-		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$det['vehicle_ac_type_id'],$class,$id='',$msg)?></div></td>
+		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$det['vehicle_ac_type_id'],$class,$id='',$msg)?></div></td>-->
 <td><div class="form-group"><?php echo form_input(array('name'=>'manage_min_kilo','class'=>'form-control','id'=>'manage_min_kilo','placeholder'=>'Minimum Kilometers','value'=> $det['minimum_kilometers'])); ?></div></td>
 <td><div class="form-group"><?php echo form_input(array('name'=>'manage_min_hours','class'=>'form-control','id'=>'min_hours','placeholder'=>'Minimum Hours','value'=> $det['minimum_hours'] )); ?>
            <div class="hide-me"><?php echo form_input(array('name'=>'manage_id','class'=>'form-control','id'=>'manage_id','value'=> $det['id'],'trigger'=>'true' ));?></div></td>

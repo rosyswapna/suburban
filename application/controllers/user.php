@@ -255,8 +255,8 @@ class User extends CI_Controller {
 	}
 	public function tarrif($param1,$param2){
 	if($this->session_check()==true) {
-	$tbl_arry=array('vehicle_models');
-	for ($i=0;$i<1;$i++){
+	$tbl_arry=array('vehicle_models','vehicle_ac_types');
+	for ($i=0;$i<count($tbl_arry);$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
 	if($result!=false){
 	$data[$tbl_arry[$i]]=$result;
@@ -266,6 +266,7 @@ class User extends CI_Controller {
 	$data[$tbl_arry[$i]]='';
 	}
 	}
+	$data['customers']=$this->customers_model->getArray();
 	$result=$this->user_model->getTarrif_masters();
 	if($result!=false){
 	$data['masters']=$result;
@@ -347,7 +348,7 @@ class User extends CI_Controller {
 		$this->mysession->delete('condition');
 		}
 		
-	$data['values']=$p_res['values'];
+	$data['values']=$p_res['values'];//echo '<pre>';//print_r($data['values']);exit;
 	if(empty($data['values'])){
 	$data['result']="No Results Found !";
 	}
@@ -928,7 +929,7 @@ class User extends CI_Controller {
 			$data['trips']=$this->trip_booking_model->getCustomerVouchers($param2,$fdate,$todate);
 			}
 			$data['tabs'] = $this->set_up_customer_tabs($active_tab,$param2);
-
+			$data['tariffs'] = $this->customers_model->getCustomerTariffs($param2);//print_r($data['tariffs']);exit;
 			if($this->session->userdata('type') == CUSTOMER){
 				$data['edit_profile'] = false;
 			}else{
@@ -1174,6 +1175,8 @@ public function profile() {
 					
 			}
 			$tabs['a_tab'] = array('class'=>'','tab_id'=>'tab_4','text'=>'Accounts',
+						'content_class'=>'tab-pane');
+			$tabs['tr_tab'] = array('class'=>'','tab_id'=>'tab_5','text'=>'Tariffs',
 						'content_class'=>'tab-pane');
 		}
 

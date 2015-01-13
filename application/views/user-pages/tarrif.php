@@ -2,6 +2,8 @@
 if($this->session->userdata('post')==null){
 $tariff_master_id='';
 $vehicle_model_id='';
+$vehicle_ac_type_id='';
+$customer_id='';
 $from_date='';
 $rate='';
 $additional_kilometer_rate='';
@@ -14,6 +16,8 @@ else
 $data=$this->session->userdata('post');
 $tariff_master_id=$data['tariff_master_id'];
 $vehicle_model_id=$data['vehicle_model_id'];
+$vehicle_ac_type_id=$data['vehicle_ac_type_id'];
+$customer_id=$data['customer_id'];
 $from_date=$data['from_date'];
 $rate=$data['rate'];
 $additional_kilometer_rate=$data['additional_kilometer_rate'];
@@ -38,7 +42,7 @@ $this->session->set_userdata('post','');
        </div>
        <?php    } ?>
 <div class="tarrif_master_body">
-<fieldset class="body-border " >
+
 <!--<legend class="body-head">Search</legend>
 <table>
 <tr>
@@ -70,7 +74,7 @@ echo form_close();?></td>
 	?></p>
 
 	
-</fieldset>
+
 <fieldset class="body-border " >
 <legend class="body-head">Add New Tariff</legend>
 <div class="form-group">
@@ -93,6 +97,24 @@ echo $this->form_functions->populate_dropdown($name,$masters,$tariff_master_id,$
 		$name="vehicle_model";
 		$selected='';
 echo $this->form_functions->populate_dropdown($name,$vehicle_models,$vehicle_model_id,$class,$id='',$msg); 
+?></div></td>
+		<td>
+<div class="form-group">
+<?php 
+		$class="form-control";
+		$msg="Vehicle Ac Type";
+		$name="vehicle_ac_type";
+		$selected='';
+echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$vehicle_ac_type_id,$class,$id='',$msg); 
+?></div></td>
+		<td>
+<div class="form-group">
+<?php 
+		$class="form-control";
+		$msg="Customers";
+		$name="customers";
+		$selected='';
+echo $this->form_functions->populate_dropdown($name,$customers,$customer_id,$class,$id='',$msg); 
 ?></div></td>
 		
 		<td><div class="form-group"><?php echo form_input(array('name'=>'fromdatepicker','class'=>'fromdatepicker form-control' ,'placeholder'=>' From Date','value'=>$from_date)); ?></div></td>
@@ -150,6 +172,13 @@ echo $this->form_functions->populate_dropdown($name,$vehicle_models,$vehicle_mod
 	$this->session->set_userdata(array('vehicle_model'=>''));
  }
 	?></p></td>
+		<td><p class="text-red"><?php
+ if($this->session->userdata('vehicle_ac_type') != ''){
+	echo $this->session->userdata('vehicle_ac_type');
+	$this->session->set_userdata(array('vehicle_ac_type'=>''));
+ }
+	?></p></td>
+		<td></td>
 		<td><?php echo  $this->form_functions->form_error_session('fromdatepicker','<p class="text-red">', '</p>');?>
 		<p class="text-red"><?php
 		if($this->session->userdata('Err_dt') != ''){
@@ -177,9 +206,11 @@ echo $this->form_functions->populate_dropdown($name,$vehicle_models,$vehicle_mod
 <tr>
 <td><?php echo form_label('Tariff Master ','tariff_Master'); ?></td>
 <td><?php echo form_label('Vehicle Models','v_models'); ?></td>
+<td><?php echo form_label('Ac type','v_ac'); ?></td>
+<td><?php echo form_label('Customer','customer_l'); ?></td>
 <td><?php echo form_label('From Date','from_Date'); ?></td>
 <td><?php echo form_label('Rate','rate'); ?></td>
-<td><?php echo form_label('Ad Kilo Rate','additional_Kilometer_Rate'); ?></td>
+<td><?php echo form_label('Ad KM Rate','additional_Kilometer_Rate'); ?></td>
 <td><?php echo form_label('Ad Hr Rate','additional_Hour_Rate'); ?></td>
 <td><?php echo form_label('Driver Bata','driver_Bata'); ?></td>
 <td><?php echo form_label('Night Halt','night_Halt'); ?></td>
@@ -202,6 +233,16 @@ foreach($values as $det):
 		$msg="Select Vehicle Models";
 		$name="vehicle_model";
 		echo $this->form_functions->populate_dropdown($name,$vehicle_models,$det['vehicle_model_id'],$class,$id='',$msg); ?></div>
+</td>
+<td><div class="form-group"><?php $class="form-control";
+		$msg="Select Ac Type";
+		$name="vehicle_ac_type";
+		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$det['vehicle_ac_type_id'],$class,$id='',$msg); ?></div>
+</td>
+<td><div class="form-group"><?php $class="form-control";
+		$msg="Customers";
+		$name="customers";
+		echo $this->form_functions->populate_dropdown($name,$customers,$det['customer_id'],$class,$id='',$msg); ?></div>
 </td>
 
 <td><div class="form-group"><?php echo form_input(array('name'=>'manage_datepicker','class'=>'fromdatepicker form-control' ,'placeholder'=>'Pick up From Date','value'=> $det['from_date'])); ?></div>
