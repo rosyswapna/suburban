@@ -472,7 +472,7 @@ class User extends CI_Controller {
 	$conditon = array('id'=>$trip_id,'organisation_id'=>$this->session->userdata('organisation_id'));
 	$result=$this->trip_booking_model->getDetails($conditon);
 	$result=$result[0];
-	if($result->trip_status_id==TRIP_STATUS_PENDING || $result->trip_status_id==TRIP_STATUS_CONFIRMED){
+	if($result->trip_status_id==TRIP_STATUS_PENDING || ($result->trip_status_id==TRIP_STATUS_CONFIRMED && $this->customer_session_check() != true )){
 		
 	$data1['trip_id']=$result->id;
 	$data1['recurrent_continues']='';
