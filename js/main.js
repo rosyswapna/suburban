@@ -1880,8 +1880,8 @@ function timeDifference(fromdate,fromtime,todate,totime){
     var HH = Math.floor(diffSeconds/3600);
     var MM = Math.floor(diffSeconds%3600)/60;
 	var result='';
-	var no_of_days=Math.floor(HH/24);  alert(no_of_days+","+HH);
-    if(HH>24 && MM==0){
+	var no_of_days=Math.floor(HH/24);  
+    if(HH%24==0 && MM==0){
     result+=no_of_days+'-'+HH+'-'+MM;	
     }
     else if((HH>=24 && MM>=1) || HH>24){
