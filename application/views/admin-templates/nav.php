@@ -267,7 +267,7 @@
                             </a>
                             <ul class="treeview-menu">
 				<li><a href="<?php echo base_url().'organization/front-desk/trips';?>"><i class="fa fa-angle-double-right"></i>Trip Bookings</a></li>
-
+				<li><a href="<?php echo base_url().'organization/front-desk/tripvouchers';?>"><i class="fa fa-angle-double-right"></i>Trip Vouchers</a></li>
                             </ul>
                         </li>
 			<?php } ?>

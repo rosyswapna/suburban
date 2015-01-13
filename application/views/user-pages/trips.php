@@ -374,7 +374,7 @@ echo form_close();?></td>
 				
 						<div class="form-group">
 						   <?php echo form_label('Voucher Number','voucherno'); ?>
-						   <?php echo form_input(array('name'=>'voucherno','class'=>'form-control voucherno','id'=>'voucherno','placeholder'=>'Voucher No')); ?>			
+						   <?php echo form_input(array('name'=>'voucherno','class'=>'form-control voucherno','id'=>'voucherno','placeholder'=>'Voucher No','tabindex'=>"1")); ?>			
 							<span class="voucher-no-error text-red"></span>
 						</div>
 					</div>
@@ -382,21 +382,21 @@ echo form_close();?></td>
 				
 						<div class="form-group">
 						   <?php echo form_label('Company Name','company'); ?>
-						   <?php echo form_input(array('name'=>'company','class'=>'form-control company','id'=>'company','placeholder'=>'Company Name','readonly'=>'true')); ?>			
+						   <?php echo form_input(array('name'=>'company','class'=>'form-control company','id'=>'company','placeholder'=>'Company Name','readonly'=>'true','tabindex'=>"2")); ?>			
 						</div>
 					</div>
 					<div class="div-with-20-percent-width-with-margin-10">
 				
 						<div class="form-group">
 						   <?php echo form_label('Customer Name','customer'); ?>
-						   <?php echo form_input(array('name'=>'customer','class'=>'form-control customer','id'=>'customer','placeholder'=>'Customer Name','readonly'=>'true')); ?>			
+						   <?php echo form_input(array('name'=>'customer','class'=>'form-control customer','id'=>'customer','placeholder'=>'Customer Name','readonly'=>'true','tabindex'=>"3")); ?>			
 						</div>
 					</div>
 					<div class="div-with-67-percent-width-with-margin-10">
 				
 						<div class="form-group">
 						   <?php echo form_label('Description','description'); ?>
-						   <?php echo form_input(array('name'=>'description','class'=>'form-control description','id'=>'description','placeholder'=>'Description')); ?>			
+						   <?php echo form_input(array('name'=>'description','class'=>'form-control description','id'=>'description','placeholder'=>'Description','tabindex'=>"4")); ?>			
 						</div>
 					</div>
 				</div>
@@ -409,13 +409,13 @@ echo form_close();?></td>
 				
 						<div class="form-group">
 						   <?php echo form_label('Start Date','startdt'); ?>
-						   <?php echo form_input(array('name'=>'startdt','class'=>'form-control startdt','id'=>'startdt','placeholder'=>'Start Date','readonly'=>'true')); ?>			
+						   <?php echo form_input(array('name'=>'startdt','class'=>'form-control startdt','id'=>'startdt','placeholder'=>'Start Date','readonly'=>'true','tabindex'=>"5")); ?>			
 							<span class="start-dt-error text-red"></span>
 						</div>
 						
 						<div class="form-group">
 						   <?php echo form_label('Start KM Reading','startkm'); ?>
-						   <?php echo form_input(array('name'=>'startkm','class'=>'form-control startkm','id'=>'startkm','placeholder'=>'Enter Start K M')); ?>			
+						   <?php echo form_input(array('name'=>'startkm','class'=>'form-control startkm','id'=>'startkm','placeholder'=>'Enter Start K M','tabindex'=>"9")); ?>			
 							<span class="start-km-error text-red"></span>
 						</div>
 					</div>
@@ -423,12 +423,12 @@ echo form_close();?></td>
 					<div class="div-with-20-percent-width-with-margin-10">
 						<div class="form-group">
 							<?php echo form_label('End Date','enddt'); ?>
-							<?php echo form_input(array('name'=>'enddt','class'=>'form-control enddt','placeholder'=>'End Date')); ?>
+							<?php echo form_input(array('name'=>'enddt','class'=>'form-control enddt','placeholder'=>'End Date','tabindex'=>"6")); ?>
 							<span class="end-dt-error text-red"></span>
 						</div>
 						<div class="form-group">
 							<?php echo form_label('End Km Reading','endkm'); ?>
-							<?php echo form_input(array('name'=>'endkm','class'=>'form-control endkm','placeholder'=>'Enter End KM')); ?>
+							<?php echo form_input(array('name'=>'endkm','class'=>'form-control endkm','placeholder'=>'Enter End KM','tabindex'=>"10")); ?>
 							<span class="end-km-error text-red"></span>
 						</div>
 					</div>
@@ -436,24 +436,24 @@ echo form_close();?></td>
 
 						<div class="form-group">
 							<?php echo form_label('Trip Starting Time','tripstartingtime'); ?>
-							<?php echo form_input(array('name'=>'tripstartingtime','class'=>'form-control tripstartingtime format-time','placeholder'=>'Enter Trip Starting Time')); 
+							<?php echo form_input(array('name'=>'tripstartingtime','class'=>'form-control tripstartingtime format-time','placeholder'=>'Enter Trip Starting Time','tabindex'=>"7")); 
 							?>
 						</div>
 						<div class="form-group">
 							<?php echo form_label('Total Time','triptime'); ?>
-							<?php echo form_input(array('name'=>'triptime','class'=>'form-control triptime format-time','placeholder'=>'Total Trip Time','readonly'=>'true')); 
+							<?php echo form_input(array('name'=>'triptime','class'=>'form-control triptime format-time','placeholder'=>'Total Trip Time','readonly'=>'true','tabindex'=>"11")); 
 							?>
 						</div>
 					</div>
 					<div class="div-with-20-percent-width-with-margin-10">
 						<div class="form-group">
 							<?php echo form_label('Trip Ending Time','tripendingtimelabel'); ?>
-							<?php echo form_input(array('name'=>'tripendingtime','class'=>'form-control tripendingtime format-time','placeholder'=>'HH:MM')); 
+							<?php echo form_input(array('name'=>'tripendingtime','class'=>'form-control tripendingtime format-time','placeholder'=>'HH:MM','tabindex'=>"8")); 
 							?>
 						</div>
 						<div class="form-group">
 							<?php echo form_label('Total Km Reading','totalkm'); ?>
-							<?php echo form_input(array('name'=>'totalkm','class'=>'form-control totalkm','placeholder'=>'Total KM','readonly'=>'true')); ?>
+							<?php echo form_input(array('name'=>'totalkm','class'=>'form-control totalkm','placeholder'=>'Total KM','readonly'=>'true','tabindex'=>"12")); ?>
 							<span class="total-km-error text-red"></span>
 						</div>
 
@@ -483,12 +483,12 @@ echo form_close();?></td>
 					<div class="div-with-20-percent-width-with-margin-10">
 						<div class="form-group">
 							<?php echo form_label('Vehicle','model'); ?>
-							<?php echo form_input(array('name'=>'model','class'=>'form-control model','placeholder'=>'Vehicle Model','readonly'=>'true')); 
+							<?php echo form_input(array('name'=>'model','class'=>'form-control model','placeholder'=>'Vehicle Model','readonly'=>'true','tabindex'=>"13")); 
 							?>
 						</div>
 						<div class="form-group">
 							<?php echo form_label('Base KM','basekm'); ?>
-							<?php echo form_input(array('name'=>'basekm','class'=>'form-control basekm','placeholder'=>'Base KM')); 
+							<?php echo form_input(array('name'=>'basekm','class'=>'form-control basekm','placeholder'=>'Base KM','tabindex'=>"16")); 
 							?>
 						</div>
 						<div class="form-group">
@@ -507,12 +507,12 @@ echo form_close();?></td>
 					<div class="div-with-20-percent-width-with-margin-10">
 						<div class="form-group">
 							<?php echo form_label('Vehicle No.','vehicleno'); ?>
-							<?php echo form_input(array('name'=>'vehicleno','class'=>'form-control vehicleno','placeholder'=>'Vehicle Number','readonly'=>'true')); 
+							<?php echo form_input(array('name'=>'vehicleno','class'=>'form-control vehicleno','placeholder'=>'Vehicle Number','readonly'=>'true','tabindex'=>"14")); 
 							?>
 						</div>
 						<div class="form-group">
 							<?php echo form_label('Base Amount','baseamount'); ?>
-							<?php echo form_input(array('name'=>'baseamount','class'=>'form-control baseamount','placeholder'=>'Base Amount')); 
+							<?php echo form_input(array('name'=>'baseamount','class'=>'form-control baseamount','placeholder'=>'Base Amount','tabindex'=>"17")); 
 							?>
 						</div>
 						<div class="form-group">
@@ -531,12 +531,12 @@ echo form_close();?></td>
 					<div class="div-with-20-percent-width-with-margin-10">
 						<div class="form-group">
 							<?php echo form_label('Releasing Place','releasingplace'); ?>
-							<?php echo form_input(array('name'=>'releasingplace','class'=>'form-control releasingplace','placeholder'=>'Enter Releasing Place')); 
+							<?php echo form_input(array('name'=>'releasingplace','class'=>'form-control releasingplace','placeholder'=>'Enter Releasing Place','tabindex'=>"14")); 
 							?>
 						</div>
 						<div class="form-group">
 							<?php echo form_label('Additional KM','adtkm'); ?>
-							<?php echo form_input(array('name'=>'adtkm','class'=>'form-control adtkm','placeholder'=>'Additional KM','readonly'=>'true')); 
+							<?php echo form_input(array('name'=>'adtkm','class'=>'form-control adtkm','placeholder'=>'Additional KM','readonly'=>'true','tabindex'=>"18")); 
 							?>
 						</div>
 						<div class="form-group">
@@ -555,12 +555,12 @@ echo form_close();?></td>
 					<div class="div-with-20-percent-width-with-margin-10">
 						<div class="form-group">
 							<?php echo form_label('No of Days','daysno'); ?>
-							<?php echo form_input(array('name'=>'daysno','class'=>'form-control daysno','placeholder'=>'No Of Days','readonly'=>'true')); 
+							<?php echo form_input(array('name'=>'daysno','class'=>'form-control daysno','placeholder'=>'No Of Days','readonly'=>'true','tabindex'=>"15")); 
 							?>
 						</div>
 						<div class="form-group">
 							<?php echo form_label('Adl KM Rate','adlkmrate'); ?>
-							<?php echo form_input(array('name'=>'adlkmrate','class'=>'form-control adlkmrate','placeholder'=>'Additional KM Rate')); 
+							<?php echo form_input(array('name'=>'adlkmrate','class'=>'form-control adlkmrate','placeholder'=>'Additional KM Rate','tabindex'=>"19")); 
 							?>
 						</div>
 						<div class="form-group">

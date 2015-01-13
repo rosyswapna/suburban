@@ -123,6 +123,8 @@ class User extends CI_Controller {
 				$this->ShowDriverProfile($param1,$param2);
 			}elseif($param1=='trips'){
 				$this->Trips($param2);
+			}elseif($param1=='tripvouchers'){
+			$this->tripVouchers($param2);
 			}
 		}
 		else{
@@ -471,7 +473,7 @@ class User extends CI_Controller {
 	$conditon = array('id'=>$trip_id,'organisation_id'=>$this->session->userdata('organisation_id'));
 	$result=$this->trip_booking_model->getDetails($conditon);
 	$result=$result[0];
-	if($result->trip_status_id==TRIP_STATUS_PENDING || $result->trip_status_id==TRIP_STATUS_CONFIRMED){
+	if($result->trip_status_id==TRIP_STATUS_PENDING || ($result->trip_status_id==TRIP_STATUS_CONFIRMED && $this->customer_session_check() != true )){
 		
 	$data1['trip_id']=$result->id;
 	$data1['recurrent_continues']='';
@@ -1479,7 +1481,7 @@ if(isset($where_arry) || isset($like_arry)){
 	}
 	
 	public function tripVouchers($param2){
-			if($this->session_check()==true) {
+			if($this->session_check()==true || $this->driver_session_check()==true) { 
 		
 			//$data['trips']=$this->trip_booking_model->getTripVouchers();
 			//print_r($data['trips']);exit;
@@ -1490,6 +1492,13 @@ if(isset($where_arry) || isset($like_arry)){
 			$data['to_date']='';
 			$data['trip_id']='';
 			$qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON  TV.trip_id =T.id AND TV.organisation_id = '.$this->session->userdata('organisation_id').' WHERE T.organisation_id = '.$this->session->userdata('organisation_id').' ';
+			
+			//driver session check 
+			
+			if($this->session->userdata('driver')){ 
+				$qry .= ' AND T.driver_id='.$this->session->userdata('driver')->id;
+			}
+			
 			if($param2=='1' ){
 				$param2='0';
 			}
@@ -1500,7 +1509,7 @@ if(isset($where_arry) || isset($like_arry)){
 				}
 				if($_REQUEST['trip_id']!=null){
 					$data['trip_id']=$_REQUEST['trip_id'];
-					$qry.='AND T.id ='.$_REQUEST['trip_id'];
+					$qry.=' AND T.id ='.$_REQUEST['trip_id'];
 					$where_arry['trip_id']=$_REQUEST['trip_id'];
 				}
 				

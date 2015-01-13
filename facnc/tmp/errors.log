@@ -6104,3 +6104,8 @@
 [13-Jan-2015 06:12:13 Europe/Paris] 2::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
 [13-Jan-2015 06:13:26 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
 [13-Jan-2015 06:13:26 Europe/Paris] 2::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[13-Jan-2015 12:23:09 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[13-Jan-2015 12:23:09 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[13-Jan-2015 12:23:09 Europe/Paris] 2::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[13-Jan-2015 12:23:09 Europe/Paris] 2:sneha:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[13-Jan-2015 12:23:21 Europe/Paris] 2:sneha:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead

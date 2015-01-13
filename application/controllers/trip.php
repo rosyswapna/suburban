@@ -46,12 +46,25 @@ class Trip extends CI_Controller {
 					}
 		}
 		
-	}
-		
-		else{
+	}elseif($this->driver_session_check()==true){
+			if($param1=='view') {
+			
+			$this->tripView($param2);
+			
+			}
+		}else{
 			$this->notAuthorized();
 			}
 	}
+	
+	public function driver_session_check() {
+		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==DRIVER)) {
+			return true;
+		} else {
+			return false;
+		}
+	}  
+	
 	public function notFound(){
 		if($this->session_check()==true) {
 		 $this->output->set_status_header('404'); 
@@ -147,8 +160,8 @@ class Trip extends CI_Controller {
 		return false;
 		}
 	} 
-	public function tripView($param2){
-	if($this->session_check()==true) {
+	public function tripView($param2){ 
+	if($this->session_check()==true || $this->driver_session_check()==true) {
 	$trip_id=$param2;
 	$tbl_arry=array('customer_types','booking_sources','trip_models','vehicle_types','vehicle_ac_types','vehicle_beacon_light_options','vehicle_seating_capacity');
 	for ($i=0;$i<count($tbl_arry);$i++){
@@ -261,6 +274,7 @@ class Trip extends CI_Controller {
 	/*echo "<pre>";
 	print_r($data1);
 	echo "</pre>";*/
+	
 		$page='user-pages/trip';
 		$data1['title']="Trip | ".PRODUCT_NAME;  
 		$this->load_templates($page,$data1);
@@ -269,7 +283,7 @@ class Trip extends CI_Controller {
 			}
 	}
 	public function load_templates($page='',$data=''){
-	if($this->session_check()==true) {
+	if($this->session_check()==true || $this->driver_session_check()==true) {
 		$this->load->view('admin-templates/header',$data);
 		$this->load->view('admin-templates/nav');
 		$this->load->view($page,$data);
