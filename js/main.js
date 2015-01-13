@@ -922,8 +922,9 @@ if(data.via=='NO'){
 var tot_distance = data.distance.replace(/\km\b/g, '');
 $('.estimated-distance-of-journey').html(data.distance);
 $('.estimated-distance-of-journey').attr('estimated-distance-of-journey',tot_distance);
-$('#time_journey').val(tot_distance);
+$('#est_distance').val(tot_distance);
 $('.estimated-time-of-journey').html(data.duration);
+$('#time_journey').val(data.duration);
 }else if(data.via=='YES'){
 first_duration=data.first_duration.replace(/\hour\b/g, 'h');
 first_duration=first_duration.replace(/\hours\b/g, 'h');
