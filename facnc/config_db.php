@@ -26,7 +26,7 @@ $db_connections = array (
     'host' => 'localhost',
     'dbuser' => 'root',
     'dbpassword' => '',
-    'dbname' => 'taxi_local',
+    'dbname' => 'taxi',
     'tbpref' => '0_',
   ),
   2 => 
@@ -35,7 +35,7 @@ $db_connections = array (
     'host' => 'localhost',
     'dbuser' => 'root',
     'dbpassword' => '',
-    'dbname' => 'taxi_local',
+    'dbname' => 'taxi',
     'tbpref' => '2_',
   ),
   4 => 
@@ -44,7 +44,7 @@ $db_connections = array (
     'host' => 'localhost',
     'dbuser' => 'root',
     'dbpassword' => '',
-    'dbname' => 'taxi_local',
+    'dbname' => 'taxi',
     'tbpref' => '4_',
   ),
 );

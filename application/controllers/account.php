@@ -75,6 +75,7 @@ class Account extends CI_Controller {
 
 	//organisation user pages from fa
 	public function front_desk($action='None',$value='',$tab = false){
+	
 		
 		if($this->org_user_session_check()==true|| $this->customer_session_check()==true || $this->driver_session_check()==true) {
 			$data['title'] =$action." | ".PRODUCT_NAME;
@@ -118,7 +119,7 @@ class Account extends CI_Controller {
 	//admin templates
 	public function load_admin_templates($page='',$data=''){
 	
-		if($this->admin_session_check()==true || $this->org_admin_session_check()==true || $this->org_user_session_check()==true) {
+		if($this->admin_session_check()==true || $this->org_admin_session_check()==true || $this->org_user_session_check()==true || $this->driver_session_check()==true) {
 		    	$this->load->view('admin-templates/header',$data);
 			$this->load->view('admin-templates/nav');
 			$this->load->view($page,$data);
