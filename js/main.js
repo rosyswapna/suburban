@@ -817,7 +817,7 @@ getDistance();
 
 //-----------------starts --new google maps via place selection in trip page
 	var options = {
-            types: ['(cities)'],
+           
 			componentRestrictions: {country: "IN"}
 
          };
