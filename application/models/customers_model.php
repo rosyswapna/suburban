@@ -24,6 +24,18 @@ class Customers_model extends CI_Model {
 	return $this->db->get()->result_array();
 	
 	}
+	public function getCustomerTariffs($customer_id){ 
+	
+	$qry='SELECT T.id as tariff_id,VM.name as vehicle_model,VACT.name as vehicle_ac_type,T.rate,TM.title,T.from_date,T.additional_kilometer_rate,T.	additional_hour_rate,T.driver_bata,T.night_halt FROM tariffs as T LEFT JOIN vehicle_models as VM on VM.id=T.vehicle_model_id LEFT JOIN vehicle_ac_types as VACT on VACT.id=T.vehicle_ac_type_id LEFT JOIN tariff_masters as TM on TM.id=T.tariff_master_id where T.customer_id="'.$customer_id.'" AND T.organisation_id = '.$this->session->userdata('organisation_id');
+	$results=$this->db->query($qry);
+	$results=$results->result_array();
+	if(!empty($results)){
+		return $results;
+	}else{
+		return false;
+	}
+	
+	}
 	public function getCustomerUser($cust_id){ 
 		$this->db->select('customers.*,users.username');
 		$this->db->from('customers');
@@ -195,6 +207,7 @@ class Customers_model extends CI_Model {
 	
 	public function getArray(){
 		//newly added- to be organisation based----
+		
 		$qry=$this->db->where('organisation_id',$this->organisation_id);
 		//---
 		$qry=$this->db->get('customers');

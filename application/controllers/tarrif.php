@@ -19,10 +19,10 @@ class Tarrif extends CI_Controller {
 	if($this->session_check()==true) {
 	if(isset($_REQUEST['add'])){
 	 $data['title'] = $this->input->post('title');
-	 $data['trip_model_id'] = $this->input->post('select_trip_model');
+	 /*$data['trip_model_id'] = $this->input->post('select_trip_model');
 	 $data['vehicle_make_id'] = $this->input->post('select_vehicle_makes');
 	 $data['vehicle_type_id'] = $this->input->post('search_vehicle_type');
-	 $data['vehicle_ac_type_id'] = $this->input->post('select_ac_type');
+	 $data['vehicle_ac_type_id'] = $this->input->post('select_ac_type');*/
 	 $data['minimum_kilometers'] = $this->input->post('min_kilo');
 	 $data['minimum_hours'] = $this->input->post('min_hours');
 	 $data['organisation_id']=$this->session->userdata('organisation_id');
@@ -30,7 +30,7 @@ class Tarrif extends CI_Controller {
 	 
 	$err=True;
 	$this->form_validation->set_rules('title','Title','trim|required|min_length[2]|xss_clean');
-	 if($data['trip_model_id'] ==-1){
+	/* if($data['trip_model_id'] ==-1){
 	 $data['trip_model_id'] ='';
 	 $err=False;
 	 $this->session->set_userdata('select_trip_model','Choose Any Trip Model');
@@ -49,7 +49,7 @@ class Tarrif extends CI_Controller {
 	 $data['vehicle_type_id'] ='';
 	 $err=False;
 	 $this->session->set_userdata('select_vehicle_type','Choose Any Vehicle Type');
-	 }
+	 }*/
 	 $this->form_validation->set_rules('min_kilo','Minimum Kilometers','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('min_hours','Minimum Hours','trim|required|xss_clean|numeric');
 	
@@ -69,15 +69,15 @@ class Tarrif extends CI_Controller {
 	if(isset($_REQUEST['edit'])){
 	 $id= $this->input->post('manage_id');
 	 $data['title'] = $this->input->post('manage_title');
-	 $data['trip_model_id'] = $this->input->post('manage_select_trip_model');
+	/* $data['trip_model_id'] = $this->input->post('manage_select_trip_model');
 	 $data['vehicle_type_id'] = $this->input->post('manage_select_vehicle_type');
 	 $data['vehicle_make_id'] = $this->input->post('manage_select_vehicle_makes');
-	 $data['vehicle_ac_type_id'] = $this->input->post('manage_select_ac_type');
+	 $data['vehicle_ac_type_id'] = $this->input->post('manage_select_ac_type');*/
 	 $data['minimum_kilometers'] = $this->input->post('manage_min_kilo');
 	 $data['minimum_hours'] = $this->input->post('manage_min_hours');
 	
 		$err=False;
-			if($data['trip_model_id'] ==-1){
+			/*if($data['trip_model_id'] ==-1){
 			 $data['trip_model_id'] ='';
 			 $err=true;
 			 $this->session->set_userdata('m_trip_model','Choose Trip Model');
@@ -96,7 +96,7 @@ class Tarrif extends CI_Controller {
 			 $data['vehicle_ac_type_id'] ='';
 			 $err=true;
 			 $this->session->set_userdata('m_vehicle_ac','Choose Vehicle AC Type');
-			 }
+			 }*/
 		if($data['title']==''||$data['minimum_kilometers']==''||$data['minimum_hours']==''){
 			
 			$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
@@ -145,6 +145,12 @@ class Tarrif extends CI_Controller {
 	if(isset($_REQUEST['tarrif-add'])){
 	$data['tariff_master_id']=$this->input->post('select_tariff');
 	$data['vehicle_model_id']=$this->input->post('vehicle_model');
+	$data['vehicle_ac_type_id']=$this->input->post('vehicle_ac_type');
+	if($this->input->post('customers')!=''){
+			 $data['customer_id']=$this->input->post('customers');
+		}else{
+			 $data['customer_id']=gINVALID;
+		}
 	$data['from_date']=$this->input->post('fromdatepicker');
 	$data['rate']=str_replace(",","",$this->input->post('rate'));
 	$data['additional_kilometer_rate']=str_replace(",","",$this->input->post('additional_kilometer_rate'));
@@ -155,6 +161,7 @@ class Tarrif extends CI_Controller {
 	 $data['user_id']=$this->session->userdata('id');
 	 $this->form_validation->set_rules('select_tariff','Tariff Master','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('vehicle_model','Vehicle model','trim|required|xss_clean|numeric');
+	 $this->form_validation->set_rules('vehicle_ac_type','Vehicle Ac type','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('fromdatepicker','Date ','trim|xss_clean');
 	 $this->form_validation->set_rules('rate','Rate','trim|required|xss_clean');
 	 $this->form_validation->set_rules('additional_kilometer_rate','Kilometer Rate','trim|required|xss_clean');
@@ -175,6 +182,11 @@ class Tarrif extends CI_Controller {
 	 $data['vehicle_model_id'] ='';
 	 $err=False;
 	 $this->session->set_userdata('vehicle_model','Choose Vehicle Model');
+	 }
+	if($data['vehicle_ac_type_id'] ==-1){
+	 $data['vehicle_ac_type_id'] ='';
+	 $err=False;
+	 $this->session->set_userdata('vehicle_ac_type','Choose Ac Type');
 	 }
 	 if($this->form_validation->run()==False){
 		$this->session->set_userdata('post',$data);
@@ -198,6 +210,12 @@ class Tarrif extends CI_Controller {
 	 $id= $this->input->post('manage_id');
 	 $data['tariff_master_id'] = $this->input->post('manage_tariff');
 	 $data['vehicle_model_id']=$this->input->post('vehicle_model');
+	 $data['vehicle_ac_type_id']=$this->input->post('vehicle_ac_type');
+		if($this->input->post('customers')!=''){
+			 $data['customer_id']=$this->input->post('customers');
+		}else{
+			 $data['customer_id']=gINVALID;
+		}
 	 $data['from_date'] = $this->input->post('manage_datepicker');
 	 $h_dtpicker=$this->input->post('h_dtpicker');
 	 $data['rate'] =  str_replace(",","",$this->input->post('manage_rate'));
@@ -220,6 +238,10 @@ class Tarrif extends CI_Controller {
 			}
 		if($data['vehicle_model_id']==-1){
 			$this->session->set_userdata(array('Err_m_vid'=>'Vehicle Model Required..!'));
+			$err=true;
+			}
+		if($data['vehicle_ac_type_id']==-1){
+			$this->session->set_userdata(array('Err_ac_vid'=>'Ac type Required..!'));
 			$err=true;
 			}
 		if($data['from_date']==''){

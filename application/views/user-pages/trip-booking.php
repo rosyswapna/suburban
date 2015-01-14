@@ -382,15 +382,15 @@ $customer_type='';
 								 </div>
 									
 									</div>
-									<div class="form-group">
+									<!--<div class="form-group">
 									<?php 
 									echo form_input(array('name'=>'pickuparea','class'=>'form-control width-96-percent-and-margin-8','id'=>'pickuparea','placeholder'=>'Pick up Area','value'=>$pickuparea));
 										echo $this->form_functions->form_error_session('pickuparea', '<p class="text-red">', '</p>');
 									 ?>
-									</div>
+									</div>-->
 									<div class="form-group">
 									<?php 
-									echo form_input(array('name'=>'pickuplandmark','class'=>'form-control width-96-percent-and-margin-8','id'=>'pickuplandmark','placeholder'=>'Pickup Landmark','value'=>$pickuplandmark));
+									echo form_textarea((array('name'=>'pickuplandmark','class'=>'form-control width-96-percent-and-margin-8','id'=>'pickuplandmark','placeholder'=>'Pickup Landmark','value'=>$pickuplandmark,'rows'=>'2')));
 									echo $this->form_functions->form_error_session('pickuplandmark', '<p class="text-red">', '</p>');
 									 ?>
 									</div>
@@ -406,15 +406,15 @@ $customer_type='';
                                           		  </ul>
                                         </div>
 										</div>
-										<div class="form-group">
+									<!--	<div class="form-group">
 										<?php 
 										echo form_input(array('name'=>'viaarea','class'=>'form-control width-96-percent-and-margin-8' ,'id'=>'viaarea','placeholder'=>'Via Area','value'=>$viaarea));
 										echo $this->form_functions->form_error_session('viaarea', '<p class="text-red">', '</p>');
 										 ?>
-										</div>
+										</div>-->
 										<div class="form-group">
 										<?php 
-										echo form_input(array('name'=>'vialandmark','class'=>'form-control width-96-percent-and-margin-8','id'=>'vialandmark','placeholder'=>'Via Landmark','value'=>$vialandmark));
+										echo form_textarea(array('name'=>'vialandmark','class'=>'form-control width-96-percent-and-margin-8','id'=>'vialandmark','placeholder'=>'Via Landmark','value'=>$vialandmark,'rows'=>'2'));
 										echo $this->form_functions->form_error_session('vialandmark', '<p class="text-red">', '</p>');
 										 ?>
 										</div>
@@ -430,15 +430,15 @@ $customer_type='';
                                             </ul>
                                         </div>
 									</div>
-									<div class="form-group">
+									<!--<div class="form-group">
 									<?php 
 									echo form_input(array('name'=>'dropdownarea','class'=>'form-control width-96-percent-and-margin-8' ,'id'=>'dropdownarea','placeholder'=>'Drop Down Area','value'=>$dropdownarea));
 										echo $this->form_functions->form_error_session('dropdownarea', '<p class="text-red">', '</p>');
 									 ?>
-									</div>
+									</div>-->
 									<div class="form-group">
 									<?php 
-							echo form_input(array('name'=>'dropdownlandmark','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdownlandmark','placeholder'=>'Drop Down Landmark','value'=>$dropdownlandmark));
+							echo form_textarea((array('name'=>'dropdownlandmark','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdownlandmark','placeholder'=>'Drop Down Landmark','value'=>$dropdownlandmark,'rows'=>'2')));
 										echo $this->form_functions->form_error_session('dropdownlandmark', '<p class="text-red">', '</p>');
 									 ?>
 									</div>
@@ -470,28 +470,31 @@ $customer_type='';
 					<fieldset class="body-border">
 					<legend class="body-head font-size-18-px">Vehicle Information</legend>
 						<div class="form-group">
-						<?php $class="form-control row-source-50-percent-width-with-margin-8";
+						<?php /* $class="form-control row-source-50-percent-width-with-margin-8";
 							  $id='vehicle-type';
-						echo $this->form_functions->populate_dropdown('vehicle_type',$vehicle_types,$vehicle_type,$class,$id,$msg="Type");
+						echo $this->form_functions->populate_dropdown('vehicle_type',$vehicle_types,$vehicle_type,$class,$id,$msg="Type");*/
+								$class="form-control row-source-50-percent-width-with-margin-8";
+							  $id='vehicle-model';
+						echo $this->form_functions->populate_dropdown('vehicle_model',$vehicle_models,$vehicle_model_id,$class,$id,$msg="Vehicle Models");
 								$class="form-control row-source-50-percent-width-with-margin-8";	
 								$id='vehicle-ac-type';
 						echo $this->form_functions->populate_dropdown('vehicle_ac_type',$vehicle_ac_types,$vehicle_ac_type,$class,$id,$msg="AC/Non AC");
-						echo $this->form_functions->form_error_session('vehicle_type', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('vehicle_ac_types', '<p class="text-red">', '</p>');						
+						/*echo $this->form_functions->form_error_session('vehicle_type', '<p class="text-red">', '</p>')*/ echo $this->form_functions->form_error_session('vehicle_model', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('vehicle_ac_types', '<p class="text-red">', '</p>');						
 						echo br(2);
 						 ?>
 						</div>
-						<div class="form-group">
+						<!--<div class="form-group">
 						<?php 
 								$class="form-control row-source-50-percent-width-with-margin-8";	
 								$id='vehicle-make';
-						echo $this->form_functions->populate_dropdown('vehicle_make',$vehicle_makes,$vehicle_make_id,$class,$id,$msg="Vehicle Makes");
+						//echo $this->form_functions->populate_dropdown('vehicle_make',$vehicle_makes,$vehicle_make_id,$class,$id,$msg="Vehicle Makes");
 						$class="form-control row-source-50-percent-width-with-margin-8";
 							  $id='vehicle-model';
 						echo $this->form_functions->populate_dropdown('vehicle_model',$vehicle_models,$vehicle_model_id,$class,$id,$msg="Vehicle Models");
 						echo $this->form_functions->form_error_session('vehicle_make', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('vehicle_model', '<p class="text-red">', '</p>');						
 						echo br(2);
 						 ?>
-						</div>
+						</div>-->
 						<div class="form-group">
 						<table class="radio-checkbox-vehicle-group">
 						<tr>

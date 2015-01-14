@@ -285,6 +285,63 @@
 		</iframe>
         </div>
 		<?php }?>
+		<?php if (array_key_exists('tr_tab', $tabs)) {?>	
+		<div class="<?php echo $tabs['tr_tab']['content_class'];?>" id="<?php echo $tabs['tr_tab']['tab_id'];?>">	
+		<?php
+					if(isset($tariffs) && $tariffs!=false){	?>
+      	<fieldset class="body-border">
+   			 <legend class="body-head">Customer Tariff Details</legend>
+			
+			<table class="table table-hover table-bordered">
+				<tbody>
+					<tr>
+						<td>Sl No</td>
+						<td>Tariff Master</td>
+						<td>Vehicle Models</td>
+						<td>Ac type</td>
+						<td>From Date</td>
+						<td>Rate</td>
+						<td>Ad KM Rate</td>
+						<td>Ad Hr Rate</td>
+						<td>Driver Bata</td>
+						<td>Night Halt</td>
+
+					    
+					</tr>
+					<?php	
+					
+						for($tariff_index=0;$tariff_index<count($tariffs);$tariff_index++){
+						
+						?>
+						<tr>
+							<td><?php echo $tariff_index+1; ?></td>
+							<td><?php echo $tariffs[$tariff_index]['title']; ?></td>
+							<td><?php echo $tariffs[$tariff_index]['vehicle_model'] ?></td>
+							<td><?php echo $tariffs[$tariff_index]['vehicle_ac_type'] ?></td>
+							<td><?php echo $tariffs[$tariff_index]['from_date'] ?></td>
+							<td><?php echo $tariffs[$tariff_index]['rate'] ?></td>
+							<td><?php echo $tariffs[$tariff_index]['additional_kilometer_rate'] ?></td>
+							<td><?php echo $tariffs[$tariff_index]['additional_hour_rate'] ?></td>
+							<td><?php echo $tariffs[$tariff_index]['driver_bata'] ?></td>
+							<td><?php echo $tariffs[$tariff_index]['night_halt'] ?></td>
+						
+						</tr>
+						<?php } 
+										
+					?>
+					
+					<?php //endforeach;
+					//}
+					?>
+				</tbody>
+			</table>
+		</fieldset>
+		<?php 	}else{
+						echo "<p class='text-red'>No Tariffs Available For this Customer</p>";
+				}	
+?>
+        </div>
+		<?php }?>
     </div>
 </div>
 	
