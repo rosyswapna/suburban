@@ -392,9 +392,12 @@ class Trip extends CI_Controller {
 	
 	$data1['time_of_journey']				=	$tariff_details->time_of_journey;
 	$data1['distance']				=	$tariff_details->distance;
-	$data1['charge']				=	$tariff_details->charge;
+	$data1['min_charge']				=	$tariff_details->min_charge;
 	$data1['additional_charge']				=	$tariff_details->additional_charge;
 	$data1['min_kilometers']				=	$tariff_details->min_kilometers;
+	$data1['amount']				=	$tariff_details->amount;
+	$data1['tax_payable']				=	$tariff_details->tax_payable;
+	$data1['additional_km']				=	$tariff_details->additional_km;
 	$data1['total_amt']				=	$tariff_details->total_amt;
 		$page='user-pages/tour_quotation';
 		$data1['title']="Trip | ".PRODUCT_NAME;  
