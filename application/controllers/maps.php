@@ -66,9 +66,9 @@ class Maps extends CI_Controller {
 			$decode = json_decode($data);//print_r($decode);exit;
 			if(isset($decode->rows[0]->elements[0]->status) && $decode->rows[0]->elements[0]->status!='NOT_FOUND' && isset($decode->rows[0]->elements[1]->status) && $decode->rows[0]->elements[1]->status!='NOT_FOUND') {
 			$jsondata['first_distance']=$decode->rows[0]->elements[0]->distance->text;
-			$jsondata['first_duration']=$decode->rows[0]->elements[0]->duration->text;
+			$jsondata['first_duration']=$decode->rows[0]->elements[0]->duration->value;
 			$jsondata['second_distance']=$decode->rows[1]->elements[1]->distance->text;
-			$jsondata['second_duration']=$decode->rows[1]->elements[1]->duration->text;
+			$jsondata['second_duration']=$decode->rows[1]->elements[1]->duration->value;
 			$jsondata['via']='YES';
 			$jsondata['No_Data']='false';
 			echo json_encode($jsondata);

@@ -926,27 +926,58 @@ $('#est_distance').val(tot_distance);
 $('.estimated-time-of-journey').html(data.duration);
 $('#time_journey').val(data.duration);
 }else if(data.via=='YES'){
-first_duration=data.first_duration.replace(/\hour\b/g, 'h');
+var tot_duration_sec=Number(data.first_duration)+Number(data.second_duration);
+hours = Math.floor(tot_duration_sec / 3600);
+tot_duration_sec %= 3600;
+minutes = Math.floor(tot_duration_sec / 60);
+seconds = tot_duration_sec % 60;
+var total_duration=hours+"hr "+minutes+"min "+seconds+"sec";
+/*var tot_duration_min=tot_duration_sec/60;
+if(tot_duration_min>60){
+//var tot_duration=((tot_duration_min/60).toFixed(2)).toString();  
+var tot_duration=(tot_duration_min/60).toString(); 
+if(tot_duration.indexOf('.') != -1){
+var duration_split=tot_duration.split('.'); 
+var total_hr=duration_split[0]; 
+var total_min=duration_split[1];
+var total_duration=total_hr+"hr "+total_min+" min";
+}
+else{
+alert ("no");
+}
+var duration_split=tot_duration.split('.'); 
+var total_hr=duration_split[0]; 
+var total_min=duration_split[1];
+var total_duration=total_hr+"hr "+total_min+" min";
+
+}else{
+var total_duration=tot_duration_min+"min";
+}
+alert(tot_duration_min);*/
+
+/*first_duration=data.first_duration.replace(/\hour\b/g, 'h');
 first_duration=first_duration.replace(/\hours\b/g, 'h');
 first_duration=first_duration.replace(/\mins\b/g, 'm');
 second_duration=data.second_duration.replace(/\hours\b/g, 'h');
 second_duration=second_duration.replace(/\hour\b/g, 'h');
 second_duration=second_duration.replace(/\mins\b/g, 'm');
-
+*/
 var first_distance = data.first_distance.replace(/\km\b/g, '');
+
 var second_distance = data.second_distance.replace(/\km\b/g, '');
 var tot_distance=Number(first_distance)+Number(second_distance);
-
-var distance_estimation='<div class="via-distance-estimation">Pick up to Via Loc : '+data.first_distance+'<br/> Via to Drop Loc : '+data.second_distance+'</div>';
-var duration_estimation='<div class="via-duration-estimation">Pick up to Via Loc : '+first_duration+'<br/>  Via to Drop Loc : '+second_duration+'</div>';
-var est_distance='Pick up to Via Loc : '+data.first_distance+',Via to Drop Loc : '+data.second_distance;
-var time_journey='Pick up to Via Loc : '+first_duration+',Via to Drop Loc : '+second_duration;
+//var distance_estimation='<div class="via-distance-estimation">Pick up to Via Loc : '+data.first_distance+'<br/> Via to Drop Loc : '+data.second_distance+'</div>';
+var distance_estimation='<div class="via-distance-estimation">'+tot_distance+' km </div>'; 
+//var duration_estimation='<div class="via-duration-estimation">Pick up to Via Loc : '+first_duration+'<br/>  Via to Drop Loc : '+second_duration+'</div>';
+var duration_estimation='<div class="via-duration-estimation">'+total_duration+'</div>';
+var est_distance=tot_distance+' km';
+var time_journey=total_duration;
 $('.estimated-distance-of-journey').html(distance_estimation);
 $('#time_journey').val(time_journey);
 $('#est_distance').val(est_distance);
 $('.estimated-distance-of-journey').attr('estimated-distance-of-journey',tot_distance);
 
-$('.estimated-time-of-journey').html(duration_estimation);
+$('.estimated-time-of-journey').html(duration_estimation);  
 }
 }else{
 $('.estimated-distance-of-journey').html('');
@@ -1120,16 +1151,18 @@ var droptime = $('#droptimepicker').val();
 	var days="Day";
 	}
 if($('#tarrif').val()!=-1){
+var extra_distance='';
+var extra_charge='';
 if(HH>=24){
 
 if(Number(estimated_distance) > Number(minimum_kilometers)*Number(no_of_days)){
 var extra_distance=Number(estimated_distance)-(Number(minimum_kilometers)*Number(no_of_days));
-charge=(Number(minimum_kilometers)*Number(no_of_days))*Number(rate);
+charge=Number(no_of_days)*Number(rate);
 extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
-total=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
+amount=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 
 }else{
-total=Math.round((Number(minimum_kilometers)*Number(no_of_days))*Number(rate)).toFixed(2);
+amount=Math.round((Number(minimum_kilometers)*Number(no_of_days))*Number(rate)).toFixed(2);
 
 }
 
@@ -1139,35 +1172,50 @@ total=Math.round((Number(minimum_kilometers)*Number(no_of_days))*Number(rate)).t
 
 if(Number(estimated_distance) > minimum_kilometers){
 var extra_distance=Number(estimated_distance)-Number(minimum_kilometers);
-charge=Number(minimum_kilometers)*Number(rate);
+charge=Number(rate);
 extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
-total=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
+amount=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 
 }else{
-total=Math.round(Number(minimum_kilometers)*Number(rate)).toFixed(2);
+amount=Math.round(Number(minimum_kilometers)*Number(rate)).toFixed(2);
 
 }
 
 }
+var tax=(amount*4.944)/100;
+var total=Number(tax)+Number(amount);
 
-$('.additional-charge-per-km').html('RS . '+additional_kilometer_rate);
-$('#additional-charge').val('Rs . '+additional_kilometer_rate);
+
+
+$('.additional-km').html(extra_distance+' Km');
+$('#additional-km').val(extra_distance+' Km');
+$('.additional-charge-per-km').html('RS . '+extra_charge);
+$('#additional-charge').val('Rs . '+extra_charge);
 $('.mini-km').html(minimum_kilometers+' Km');
 $('#min_kilo').val(minimum_kilometers+' Km');
 $('.charge-per-km').html('RS . '+rate);
 $('#charge').val('RS . '+rate);
+$('.estimated-amount').html('RS . '+amount);
+$('#amt').val('RS . '+amount);
+$('.tax-payable').html('RS . '+tax);
+$('#tax').val('RS . '+tax);
 $('.estimated-total-amount').html('RS . '+total);
 $('#tot_amt').val('RS . '+total);
 $('.no-of-days').html(no_of_days+' '+days+' Trip');
 
 }else{
-
+$('.additional-km').html('0 Km');
+$('#additional-km').val('0 Km');
 $('.additional-charge-per-km').html('RS . 0');
 $('#additional-charge').val('RS . 0');
 $('.mini-km').html('0 Km');
 $('#min_kilo').val('0 Km');
 $('.charge-per-km').html('RS . 0');
 $('#charge').val('RS . 0');
+$('.estimated-amount').html('RS .0');
+$('#amt').val('RS .0');
+$('.tax-payable').html('RS .0');
+$('#tax').val('RS .0');
 $('.estimated-total-amount').html('RS . 0');
 $('#tot_amt').val('RS . 0');
 $('.no-of-days').html(no_of_days+' '+days+' Trip');
