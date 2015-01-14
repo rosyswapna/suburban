@@ -693,7 +693,7 @@ $customer_type='';
                                     <table class="table table-striped rough-estimate-table">
                                         <tbody>
 		                                    <tr>
-		                                        <td class="wdith-30-percent">Time Of Journey<span class="float-right"> : </span></td>
+		                                        <td class="wdith-30-percent">Total Time Of Journey<span class="float-right"> : </span></td>
 		                                        <td><div class="estimated-time-of-journey"></div>
 												<div class="hide-me"><?php echo form_input(array('name'=>'time_journey','class'=>'form-control ','id'=>'time_journey'));?></div>
 												</td>
@@ -701,7 +701,7 @@ $customer_type='';
 		                                        
 		                                    </tr>
 		                                    <tr>
-		                                        <td>Distance<span class="float-right"> : </span></td>
+		                                        <td>Total Distance<span class="float-right"> : </span></td>
 		                                        <td><div class="estimated-distance-of-journey"></div>
 												<div class="hide-me"><?php echo form_input(array('name'=>'est_distance','class'=>'form-control ','id'=>'est_distance'));?></div></td>
 		                                        
@@ -712,11 +712,25 @@ $customer_type='';
 		                                        
 		                                    </tr>
 											<tr>
-		                                        <td>Charge<span class="float-right"> : </span></td>
+		                                        <td>Minimum Charge<span class="float-right"> : </span></td>
 		                                        <td><div class="charge-per-km"></div>
 												<div class="hide-me"><?php echo form_input(array('name'=>'charge','class'=>'form-control ','id'=>'charge'));?></div></td>
 		                                        
 		                                    </tr>
+															<tr>
+		                                        <td>Minimum Kilometers per Day<span class="float-right"> : </span></td>
+		                                        <td><div class="mini-km"></div>
+												<div class="hide-me"><?php echo form_input(array('name'=>'min_kilo','class'=>'form-control ','id'=>'min_kilo'));?></div></td>
+		                                        
+		                                    </tr>
+											
+											<tr>
+		                                        <td>Additional KM<span class="float-right"> : </span></td>
+		                                        <td><div class="additional-km"></div>
+												<div class="hide-me"><?php echo form_input(array('name'=>'additional-km','class'=>'form-control ','id'=>'additional-km'));?></div></td>
+		                                        
+		                                    </tr>
+											
 											<tr>
 		                                        <td>Additional Charge<span class="float-right"> : </span></td>
 		                                        <td><div class="additional-charge-per-km"></div>
@@ -724,9 +738,15 @@ $customer_type='';
 		                                        
 		                                    </tr>
 											<tr>
-		                                        <td>Minimum Kilometers per Day<span class="float-right"> : </span></td>
-		                                        <td><div class="mini-km"></div>
-												<div class="hide-me"><?php echo form_input(array('name'=>'min_kilo','class'=>'form-control ','id'=>'min_kilo'));?></div></td>
+		                                        <td> Amount<span class="float-right"> : </span></td>
+		                                        <td><div class="estimated-amount"></div>
+												<div class="hide-me"><?php echo form_input(array('name'=>'amt','class'=>'form-control ','id'=>'amt'));?></div></td>
+		                                        
+		                                    </tr>
+											<tr>
+		                                        <td> Tax Payable<span class="float-right"> : </span></td>
+		                                        <td><div class="tax-payable"></div>
+												<div class="hide-me"><?php echo form_input(array('name'=>'tax','class'=>'form-control ','id'=>'tax'));?></div></td>
 		                                        
 		                                    </tr>
 											

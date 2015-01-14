@@ -856,7 +856,7 @@ class User extends CI_Controller {
 			//show or hide input based on session check, for trip list page inputs
 		function trip_filter_inputs(){
 				$inputs= array('trip_pick_date'=>'','trip_drop_date'=>'','vehicles' => '',
-						'drivers' => '','trip_status_id' => '','cgroups' => '','customer' => '');
+						'drivers' => '','trip_status_id' => '','cgroups' => '','customer' => '','hide_edit'=> '');
 				if($this->session->userdata('type')==CUSTOMER){
 					$inputs['vehicles']=$inputs['drivers']=$inputs['cgroups']=$inputs['customer']=$inputs['hide_edit']=' hide-me';
 				}else if($this->session->userdata('type')==DRIVER){

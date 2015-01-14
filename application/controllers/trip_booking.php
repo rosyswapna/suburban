@@ -386,9 +386,12 @@ class Trip_booking extends CI_Controller {
 			$dbdata['user_id']						=$this->session->userdata('id');
 			$estimate['time_of_journey']			=$this->input->post('time_journey');
 			$estimate['distance']			=$this->input->post('est_distance');
-			$estimate['charge']			=$this->input->post('charge');
+			$estimate['min_charge']			=$this->input->post('charge');
 			$estimate['additional_charge']			=$this->input->post('additional-charge');
 			$estimate['min_kilometers']			=$this->input->post('min_kilo');
+			$estimate['amount']			=$this->input->post('amt');
+			$estimate['tax_payable']			=$this->input->post('tax');
+			$estimate['additional_km']			=$this->input->post('additional-km');
 			$estimate['total_amt']			=$this->input->post('tot_amt');
 
 			$customer['mob']=$this->session->userdata('customer_mobile');

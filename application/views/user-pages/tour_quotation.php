@@ -92,9 +92,12 @@ $content2='<div>
 <h4>TARRIF DETAILS</h4><hr>
 <p>Time Of Journey : '.$time_of_journey.'</p>
 <p>Distance : '.$distance.'</p>
-<p>Charge : '.$charge.'</p>
+<p>Minimum Charge : '.$min_charge.'</p>
 <p>Additional Charge : '.$additional_charge.'</p>
+<p>Additional Kilometer : '.$additional_km.'</p>
 <p>Minimum Kilometers per Day : '.$min_kilometers.'</p>
+<p>Amount : '.$amount.'</p>
+<p>Tax Payable : '.$tax_payable.'</p>
 <p>Total Amount : '.$total_amt.'</p>
 </div>';
 $content3='<div>
