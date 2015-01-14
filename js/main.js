@@ -1129,9 +1129,29 @@ SetRoughEstimate();
 	
 function SetRoughEstimate(){
 
-var additional_kilometer_rate = $('#tarrif option:selected').attr('additional_kilometer_rate');
-var minimum_kilometers = $('#tarrif option:selected').attr('minimum_kilometers');
-var rate = $('#tarrif option:selected').attr('rate');
+		var vehicle_model=$('#tarrif option:selected').attr('vehicle_model_id');
+		var vehicle_ac_type=$('#tarrif option:selected').attr('vehicle_ac_type_id');
+		var tariff_master_id=$('#tarrif option:selected').attr('tariff_master_id');
+		 $.post(base_url+"/tarrif/customertariff",
+		  {
+			vehicle_model_id:vehicle_model,
+			vehicle_ac_type_id:vehicle_ac_type,
+			tariff_master_id:tariff_master_id
+		  },function(data){
+
+		data=jQuery.parseJSON(data);
+		if(data!='false'){
+			var additional_kilometer_rate = data.data[0].additional_kilometer_rate;
+			var minimum_kilometers = data.data[0].minimum_kilometers;
+			var rate = data.data[0].rate;
+		}else{
+		
+			var additional_kilometer_rate = $('#tarrif option:selected').attr('additional_kilometer_rate');
+			var minimum_kilometers = $('#tarrif option:selected').attr('minimum_kilometers');
+			var rate = $('#tarrif option:selected').attr('rate');
+
+		}
+
 var estimated_distance = $('.estimated-distance-of-journey').attr('estimated-distance-of-journey');
 
 var extra_charge=0;
@@ -1234,8 +1254,9 @@ $('#tot_amt').val('RS . 0');
 $('.no-of-days').html(no_of_days+' '+days+' Trip');
 
 }
+});
 }
-
+/*
 $('#tarrif,#available_vehicle').on('change',function(){
 var tarriff_vehicle_make_id=$('#tarrif option:selected').attr('vehicle_make_id');
 var avaiable_vehicle_make_id=$('#available_vehicle option:selected').attr('vehicle_make_id');
@@ -1247,6 +1268,7 @@ alert('Select Vehicle and Tarrif correctly.');
 }
 }
 });
+*/
 
 $('#vehicle-type').on('change',function(){
 $('#vehicle-make').val('');
@@ -1448,7 +1470,7 @@ function generateTariffs(vehicle_model,vehicle_ac_type,tarif_id=''){
 			}else{
 			var selected="";
 			}
-			  $('#tarrif').append($("<option rate='"+data.data[i].rate+"' additional_kilometer_rate='"+data.data[i].additional_kilometer_rate+"' minimum_kilometers='"+data.data[i].minimum_kilometers+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' "+selected+"></option>").attr("value",data.data[i].id).text(data.data[i].title));
+			  $('#tarrif').append($("<option rate='"+data.data[i].rate+"' additional_kilometer_rate='"+data.data[i].additional_kilometer_rate+"' minimum_kilometers='"+data.data[i].minimum_kilometers+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"' vehicle_ac_type_id ='"+data.data[i].vehicle_ac_type_id+"' tariff_master_id='"+data.data[i].tariff_master_id+"' "+selected+"></option>").attr("value",data.data[i].id).text(data.data[i].title));
 				
 			}
 			$('.display-me').css('display','none');

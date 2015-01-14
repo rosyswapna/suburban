@@ -334,6 +334,28 @@ class Tarrif extends CI_Controller {
 
 	}	
 	}
+
+	public function customertariff(){
+	if(isset($_REQUEST['vehicle_ac_type_id']) && isset($_REQUEST['vehicle_model_id'])){
+
+		$data['vehicle_ac_type_id']=$_REQUEST['vehicle_ac_type_id'];
+		$data['vehicle_model_id']=$_REQUEST['vehicle_model_id'];
+		$data['tariff_master_id']=$_REQUEST['tariff_master_id'];
+		$data['customer_id']=$this->session->userdata('customer_id');
+		$data['organisation_id']=$this->session->userdata('organisation_id');
+		if($this->session->userdata('customer_id')!=''){
+		$res['data']=$this->tarrif_model->getCustomerTariff($data);
+		if(count($res['data'])>0){
+		echo json_encode($res);
+		}else{
+		echo 'false';
+		}
+		}else{
+		echo 'false';
+		}
+
+		}	
+	}
 	
 	public function notAuthorized(){
 	$data['title']='Not Authorized | '.PRODUCT_NAME;
