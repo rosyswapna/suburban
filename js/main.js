@@ -857,11 +857,11 @@ getDistance();
 function getDistance(){
 
 var pickupcity=$("#pickupcity").val();//alert(pickupcity);
-var pickuparea=$("#pickuparea").val();
+//var pickuparea=$("#pickuparea").val();
 var viacity=$("#viacity").val();
-var viaarea=$("#viaarea").val();
+//var viaarea=$("#viaarea").val();
 var dropdownlocation=$("#dropdownlocation").val();
-var dropdownarea=$("#dropdownarea").val();
+//var dropdownarea=$("#dropdownarea").val();
 var origin='';
 var destination='';
 if(pickupcity!=''){
@@ -869,22 +869,22 @@ pickupcity=pickupcity.replace(/\s/g,"");
 origin=pickupcity;
 
 }
-if(pickuparea!='' && pickupcity!=''){
+/*if(pickuparea!='' && pickupcity!=''){
 pickuparea=pickuparea.replace(/\s/g,"");
 origin=origin+'+'+pickuparea;
 
-}
+}*/
 
 if(viacity!=''){
 viacity=viacity.replace(/\s/g,"");
 origin=origin+'|'+viacity;
 destination=viacity;
 }
-if(viaarea!='' && viacity!=''){
+/*if(viaarea!='' && viacity!=''){
 viaarea=viaarea.replace(/\s/g,"");
 origin=origin+'+'+viaarea;
 destination=destination+'+'+viaarea;
-}
+}*/
 
 if(dropdownlocation!=''){
 if(viacity!=''){
@@ -898,11 +898,11 @@ destination=destination+dropdownlocation;
 }
 
 }
-if(dropdownarea!='' && dropdownlocation!=''){
+/*if(dropdownarea!='' && dropdownlocation!=''){
 dropdownarea=dropdownarea.replace(/\s/g,"");
 destination=destination+'+'+dropdownarea;
 
-}
+}*/
 if(viacity!=''){
 var via='YES';
 }else{

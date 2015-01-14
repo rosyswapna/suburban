@@ -23,9 +23,25 @@ class Maps extends CI_Controller {
 			$this->getLatLng();
 		}
 		
-	}else{
+	}elseif($this->customer_session_check()==true){
+		if($param1=='get-distance') {
+			
+			$this->getDistance();
+				
+		}
+	
+	}
+	else{
 			echo 'you are not authorized access this page..';
 	}
+	}
+	
+	public function customer_session_check() {
+		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==CUSTOMER)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 		
 		public function getDistance(){
