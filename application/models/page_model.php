@@ -59,7 +59,7 @@ function getCount($tbl){
 		if(!empty($order_arry) && count($order_arry) > 0){
 		$this->db->order_by($order_arry);
 		}
-		$qry= $this->db->get($tbl,$num,$offset); //echo $this->db->last_query();exit;
+		$qry= $this->db->get($tbl,$num,$offset);//echo $this->db->last_query();exit;
 	   return $qry->result_array();
 	}
 

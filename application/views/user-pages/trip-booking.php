@@ -21,22 +21,22 @@ $remarks			=	'';
 $trip_model			=	'';		
 $no_of_passengers	=	'';
 $pickupcity			=	'';
-$pickuparea			=	'';
+//$pickuparea			=	'';
 $pickuplandmark		=	'';
 $viacity			=	'';
-$viaarea			=	'';
+//$viaarea			=	'';
 $vialandmark		=	'';
 $dropdownlocation	=	'';
-$dropdownarea		=	'';
+//$dropdownarea		=	'';
 $dropdownlandmark	=	'';
 $pickupdatepicker	=	'';
 $dropdatepicker		=	'';
 $pickuptimepicker	=	'';
 $droptimepicker 	=	'';
 
-$vehicle_type 				=	'';
+//$vehicle_type 				=	'';
 $vehicle_ac_type			=	'';
-$vehicle_make_id			=	'';
+//$vehicle_make_id			=	'';
 $vehicle_model_id			=	'';
 $beacon_light				=	'';
 $beacon_light_radio	   	    =	'';
@@ -116,32 +116,33 @@ $no_of_passengers			=	$data['no_of_passengers'];
 $pickupcity					=	$data['pickupcity'];
 $pickupcitylat				=	$data['pickupcitylat'];
 $pickupcitylng				=	$data['pickupcitylng'];
-$pickuparea					=	$data['pickuparea'];
+//$pickuparea					=	$data['pickuparea'];
 $pickuplandmark				=	$data['pickuplandmark'];
 $viacity					=	$data['viacity'];
 $viacitylat					=	$data['viacitylat'];
 $viacitylng					=	$data['viacitylng'];
-$viaarea					=	$data['viaarea'];
+//$viaarea					=	$data['viaarea'];
 $vialandmark				=	$data['vialandmark'];
 $dropdownlocation			=	$data['dropdownlocation'];
 $dropdownlocationlat		=	$data['dropdownlocationlat'];
 $dropdownlocationlng		=	$data['dropdownlocationlng'];
-$dropdownarea				=	$data['dropdownarea'];
+//$dropdownarea				=	$data['dropdownarea'];
 $dropdownlandmark			=	$data['dropdownlandmark'];
 $pickupdatepicker			=	$data['pickupdatepicker'];
 $dropdatepicker				=	$data['dropdatepicker'];
 $pickuptimepicker			=	$data['pickuptimepicker'];
 $droptimepicker 			=	$data['droptimepicker'];
 $remarks					=	$data['remarks'];
-if($data['vehicle_type']!=-1){
+/*if($data['vehicle_type']!=-1){
 $vehicle_type 				=	$data['vehicle_type'];
-}
-if($data['vehicle_ac_type']!=-1){
-$vehicle_ac_type			=	$data['vehicle_ac_type'];
 }
 if($data['vehicle_make']!=-1){
 $vehicle_make_id			=	$data['vehicle_make'];
+}*/
+if($data['vehicle_ac_type']!=-1){
+$vehicle_ac_type			=	$data['vehicle_ac_type'];
 }
+
 if($data['vehicle_model']!=-1){
 $vehicle_model_id			=	$data['vehicle_model'];
 }

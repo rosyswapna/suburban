@@ -323,7 +323,8 @@ class User extends CI_Controller {
 	//print_r($where_arry);
 	}
 	}
-	}
+	}	$where_arry['to_date >= ']=date("Y-m-d");
+		$where_arry['from_date >= ']=date("Y-m-d");
 	    	//to avoid session problem while session value sets from another page--starts--
 		if(!is_null($this->mysession->get('condition'))){ //print_r($where_arry);exit;
 		$condition=$this->mysession->get('condition');

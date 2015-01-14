@@ -132,19 +132,19 @@ class Trip_booking extends CI_Controller {
 				}
 				$this->form_validation->set_rules('no_of_passengers','No of passengers','trim|xss_clean');
 				$this->form_validation->set_rules('pickupcity','Pickup city','trim|required|xss_clean');
-				$this->form_validation->set_rules('pickuparea','Pickup area','trim|xss_clean');
+				//$this->form_validation->set_rules('pickuparea','Pickup area','trim|xss_clean');
 				$this->form_validation->set_rules('pickuplandmark','Pickup landmark','trim|xss_clean');
 				$this->form_validation->set_rules('viacity','Via city','trim|xss_clean');
-				$this->form_validation->set_rules('viaarea','Via area','trim|xss_clean');
+				//$this->form_validation->set_rules('viaarea','Via area','trim|xss_clean');
 				$this->form_validation->set_rules('vialandmark','Via landmark','trim|xss_clean');
 				$this->form_validation->set_rules('dropdownlocation','Drop location','trim|xss_clean');
-				$this->form_validation->set_rules('dropdownarea','Drop  area','trim|xss_clean');
+				//$this->form_validation->set_rules('dropdownarea','Drop  area','trim|xss_clean');
 				$this->form_validation->set_rules('dropdownlandmark','Drop landmark','trim|xss_clean');
 				$this->form_validation->set_rules('pickupdatepicker','Date','trim|required|xss_clean');
 				$this->form_validation->set_rules('dropdatepicker','Date ','trim|required|xss_clean');
 				$this->form_validation->set_rules('pickuptimepicker','Time','trim|required|xss_clean');
 				$this->form_validation->set_rules('droptimepicker','Time','trim|required|xss_clean');
-				$this->form_validation->set_rules('vehicle_type','Vehicle types','trim|xss_clean');
+				//$this->form_validation->set_rules('vehicle_type','Vehicle types','trim|xss_clean');
 				$this->form_validation->set_rules('vehicle_ac_type','Vehicle ac types','trim|xss_clean');
 				$this->form_validation->set_rules('seating_capacity','Vehicle seating capacity','trim|xss_clean');
 				$this->form_validation->set_rules('language','Languages','trim|xss_clean');
@@ -163,25 +163,25 @@ class Trip_booking extends CI_Controller {
 				$data['pickupcity']			=	$this->input->post('pickupcity');
 				$data['pickupcitylat']		=	$this->input->post('pickupcitylat');
 				$data['pickupcitylng']		=	$this->input->post('pickupcitylng');
-				$data['pickuparea']			=	$this->input->post('pickuparea');
+				//$data['pickuparea']			=	$this->input->post('pickuparea');
 				$data['pickuplandmark']		=	$this->input->post('pickuplandmark');
 				$data['viacity']			=	$this->input->post('viacity');
 				$data['viacitylat']			=	$this->input->post('viacitylat');
 				$data['viacitylng']			=	$this->input->post('viacitylng');
-				$data['viaarea']			=	$this->input->post('viaarea');
+				//$data['viaarea']			=	$this->input->post('viaarea');
 				$data['vialandmark']		=	$this->input->post('vialandmark');
 				$data['dropdownlocation']	=	$this->input->post('dropdownlocation');
 				$data['dropdownlocationlat']	=	$this->input->post('dropdownlocationlat');
 				$data['dropdownlocationlng']	=	$this->input->post('dropdownlocationlng');
-				$data['dropdownarea']		=	$this->input->post('dropdownarea');
+				//$data['dropdownarea']		=	$this->input->post('dropdownarea');
 				$data['dropdownlandmark']	=	$this->input->post('dropdownlandmark');
 				$data['pickupdatepicker']	=	$this->input->post('pickupdatepicker');
 				$data['dropdatepicker']		=	$this->input->post('dropdatepicker');
 				$data['pickuptimepicker']	=	$this->input->post('pickuptimepicker');
 				$data['droptimepicker']		=	$this->input->post('droptimepicker');
-				$data['vehicle_type']		=	$this->input->post('vehicle_type');
+				//$data['vehicle_type']		=	$this->input->post('vehicle_type');
 				$data['vehicle_ac_type']	=	$this->input->post('vehicle_ac_type');
-				$data['vehicle_make']		=	$this->input->post('vehicle_make');
+				//$data['vehicle_make']		=	$this->input->post('vehicle_make');
 				$data['vehicle_model']		=	$this->input->post('vehicle_model');
 				$data['remarks']			=	$this->input->post('remarks');
 				if(isset($_REQUEST['beacon_light'])){
@@ -355,22 +355,22 @@ class Trip_booking extends CI_Controller {
 			$dbdata['pick_up_city']					=$data['pickupcity'];
 			$dbdata['pick_up_lat']					=$data['pickupcitylat'];
 			$dbdata['pick_up_lng']					=$data['pickupcitylng'];
-			$dbdata['pick_up_area']					=$data['pickuparea'];
+			//$dbdata['pick_up_area']					=$data['pickuparea'];
 			$dbdata['pick_up_landmark']				=$data['pickuplandmark'];
 			$dbdata['via_city']						=$data['viacity'];
 			$dbdata['via_lat']						=$data['viacitylat'];
 			$dbdata['via_lng']						=$data['viacitylng'];
-			$dbdata['via_area']						=$data['viaarea'];
+			//$dbdata['via_area']						=$data['viaarea'];
 			$dbdata['via_landmark']					=$data['vialandmark'];
 			$dbdata['drop_city']					=$data['dropdownlocation'];
 			$dbdata['drop_lat']						=$data['dropdownlocationlat'];
 			$dbdata['drop_lng']						=$data['dropdownlocationlng'];
-			$dbdata['drop_area']					=$data['dropdownarea'];	
+			//$dbdata['drop_area']					=$data['dropdownarea'];	
 			$dbdata['drop_landmark']				=$data['dropdownlandmark'];
 			$dbdata['no_of_passengers']				=$data['no_of_passengers'];
-			$dbdata['vehicle_type_id']				=$data['vehicle_type'];
+			//$dbdata['vehicle_type_id']				=$data['vehicle_type'];
 			$dbdata['vehicle_ac_type_id']			=$data['vehicle_ac_type'];
-			$dbdata['vehicle_make_id']				=$data['vehicle_make'];
+			//$dbdata['vehicle_make_id']				=$data['vehicle_make'];
 			$dbdata['vehicle_model_id']				=$data['vehicle_model'];
 			$dbdata['vehicle_seating_capacity_id']	=$data['seating_capacity'];
 			$dbdata['vehicle_beacon_light_option_id']=$data['beacon_light_id'];
@@ -605,10 +605,8 @@ class Trip_booking extends CI_Controller {
 		}
 	}
 	public function getAvailableVehicles(){
-	if($_REQUEST['vehicle_type'] && $_REQUEST['vehicle_ac_type'] && $_REQUEST['vehicle_make'] && $_REQUEST['vehicle_model'] && $_REQUEST['pickupdatetime'] && $_REQUEST['dropdatetime']){
-	$data['vehicle_type']=$_REQUEST['vehicle_type'];
+	if($_REQUEST['vehicle_ac_type'] &&  $_REQUEST['vehicle_model'] && $_REQUEST['pickupdatetime'] && $_REQUEST['dropdatetime']){
 	$data['vehicle_ac_type']=$_REQUEST['vehicle_ac_type'];
-	$data['vehicle_make']=$_REQUEST['vehicle_make'];
 	$data['vehicle_model']=$_REQUEST['vehicle_model'];
 	$data['pickupdatetime']=$_REQUEST['pickupdatetime'];
 	$data['dropdatetime']=$_REQUEST['dropdatetime'];

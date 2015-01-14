@@ -49,6 +49,7 @@ function drawChart() {
 	json_obj.push([
   	'All Drivers','Trips Time-Sheet of '+ ORGANIZATION_NAME,new Date(0,0,0,0,0,0),new Date(0,0,0,24,0,0)
 	]);
+	
 	for(var i=0;i<data.length;i++){
 		P_date=data[i].pick_up_date.split('-');
 		D_date=data[i].drop_date.split('-');
@@ -67,8 +68,20 @@ function drawChart() {
 		}
 		var pickdate=new Date(0,0,0,P_time[0],P_time[1],00);
 		var dropdate=new Date(0,0,0,D_time[0],D_time[1],00);
+		if(data[i].pick_up_city!='' && data[i].drop_city!=''){
+			travel_city=data[i].pick_up_city+' to '+data[i].drop_city+',';
+			
+		}else{
+			travel_city='';
+			pickdate=new Date(0,0,0,00,00,00);
+			dropdate=new Date(0,0,0,00,00,00);
+		}
+		
+		/*json_obj.push([
+	  	data[i].name,travel_city+'Driver Mobile '+data[i].mobile,pickdate,dropdate
+		]);*/
 		json_obj.push([
-	  	data[i].name,data[i].pick_up_city+' to '+data[i].drop_city,pickdate,dropdate
+	  	data[i].name,travel_city,pickdate,dropdate
 		]);
 		
 	}
