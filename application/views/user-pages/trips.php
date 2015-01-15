@@ -372,33 +372,56 @@ echo form_close();?></td>
 				<div class="row-source-100-percent-width-with-margin-8">
 					<div class="div-with-20-percent-width-with-margin-10">
 				
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 						   <?php echo form_label('Voucher Number','voucherno'); ?>
-						   <?php echo form_input(array('name'=>'voucherno','class'=>'form-control voucherno','id'=>'voucherno','placeholder'=>'Voucher No','tabindex'=>"1")); ?>			
+						   <?php echo form_input(array('name'=>'voucherno','class'=>'form-control voucher-text-box voucherno','id'=>'voucherno','placeholder'=>'Voucher No','tabindex'=>"1")); ?>			
 							<span class="voucher-no-error text-red"></span>
 						</div>
-					</div>
-					<div class="div-with-20-percent-width-with-margin-10">
-				
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 						   <?php echo form_label('Company Name','company'); ?>
-						   <?php echo form_input(array('name'=>'company','class'=>'form-control company','id'=>'company','placeholder'=>'Company Name','readonly'=>'true','tabindex'=>"2")); ?>			
+						   <?php echo form_input(array('name'=>'company','class'=>'form-control voucher-text-box company','id'=>'company','placeholder'=>'Company Name','readonly'=>'true','tabindex'=>"2")); ?>			
 						</div>
 					</div>
 					<div class="div-with-20-percent-width-with-margin-10">
-				
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Vehicle','model'); ?>
+							<?php echo form_input(array('name'=>'model','class'=>'form-control voucher-text-box model','placeholder'=>'Vehicle Model','readonly'=>'true','tabindex'=>"13")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
 						   <?php echo form_label('Customer Name','customer'); ?>
-						   <?php echo form_input(array('name'=>'customer','class'=>'form-control customer','id'=>'customer','placeholder'=>'Customer Name','readonly'=>'true','tabindex'=>"3")); ?>			
+						   <?php echo form_input(array('name'=>'customer','class'=>'form-control voucher-text-box customer','id'=>'customer','placeholder'=>'Customer Name','readonly'=>'true','tabindex'=>"3")); ?>			
 						</div>
+											
 					</div>
-					<div class="div-with-67-percent-width-with-margin-10">
-				
-						<div class="form-group">
+					<div class="div-with-20-percent-width-with-margin-10">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Vehicle No.','vehicleno'); ?>
+							<?php echo form_input(array('name'=>'vehicleno','class'=>'form-control voucher-text-box vehicleno','placeholder'=>'Vehicle Number','readonly'=>'true','tabindex'=>"14")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
 						   <?php echo form_label('Description','description'); ?>
-						   <?php echo form_input(array('name'=>'description','class'=>'form-control description','id'=>'description','placeholder'=>'Description','tabindex'=>"4")); ?>			
+						   <?php echo form_input(array('name'=>'description','class'=>'form-control voucher-text-box voucher-text-box description','id'=>'description','placeholder'=>'Description','tabindex'=>"4")); ?>			
 						</div>
+						
 					</div>
+					<div class="div-with-20-percent-width-with-margin-10">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Tariff','tariff'); ?>
+							<?php echo form_input(array('name'=>'tariff','class'=>'form-control voucher-text-box tariff voucher-text-box','placeholder'=>'Tariff','tabindex'=>"14")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Releasing Place','releasingplace'); ?>
+							<?php echo form_input(array('name'=>'releasingplace','class'=>'form-control releasingplace voucher-text-box','placeholder'=>'Enter Releasing Place','tabindex'=>"14")); 
+							?>
+						</div>
+						
+						
+					</div>
+					
+					
 				</div>
 				<!-- section 1 ends  -->
 				
@@ -407,53 +430,53 @@ echo form_close();?></td>
 					
 					<div class="div-with-20-percent-width-with-margin-10">
 				
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 						   <?php echo form_label('Start Date','startdt'); ?>
-						   <?php echo form_input(array('name'=>'startdt','class'=>'form-control startdt','id'=>'startdt','placeholder'=>'Start Date','readonly'=>'true','tabindex'=>"5")); ?>			
+						   <?php echo form_input(array('name'=>'startdt','class'=>'form-control voucher-text-box startdt','id'=>'startdt','placeholder'=>'Start Date','tabindex'=>"5")); ?>			
 							<span class="start-dt-error text-red"></span>
 						</div>
 						
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 						   <?php echo form_label('Start KM Reading','startkm'); ?>
-						   <?php echo form_input(array('name'=>'startkm','class'=>'form-control startkm','id'=>'startkm','placeholder'=>'Enter Start K M','tabindex'=>"9")); ?>			
+						   <?php echo form_input(array('name'=>'startkm','class'=>'form-control voucher-text-box startkm','id'=>'startkm','placeholder'=>'Enter Start K M','tabindex'=>"9")); ?>			
 							<span class="start-km-error text-red"></span>
 						</div>
 					</div>
 					
 					<div class="div-with-20-percent-width-with-margin-10">
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('End Date','enddt'); ?>
-							<?php echo form_input(array('name'=>'enddt','class'=>'form-control enddt','placeholder'=>'End Date','tabindex'=>"6")); ?>
+							<?php echo form_input(array('name'=>'enddt','class'=>'form-control voucher-text-box enddt','placeholder'=>'End Date','tabindex'=>"6")); ?>
 							<span class="end-dt-error text-red"></span>
 						</div>
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('End Km Reading','endkm'); ?>
-							<?php echo form_input(array('name'=>'endkm','class'=>'form-control endkm','placeholder'=>'Enter End KM','tabindex'=>"10")); ?>
+							<?php echo form_input(array('name'=>'endkm','class'=>'form-control voucher-text-box endkm','placeholder'=>'Enter End KM','tabindex'=>"10")); ?>
 							<span class="end-km-error text-red"></span>
 						</div>
 					</div>
 					<div class="div-with-20-percent-width-with-margin-10">
 
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Trip Starting Time','tripstartingtime'); ?>
-							<?php echo form_input(array('name'=>'tripstartingtime','class'=>'form-control tripstartingtime format-time','placeholder'=>'Enter Trip Starting Time','tabindex'=>"7")); 
+							<?php echo form_input(array('name'=>'tripstartingtime','class'=>'form-control voucher-text-box tripstartingtime format-time','placeholder'=>'Enter Trip Starting Time','tabindex'=>"7")); 
 							?>
 						</div>
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Total Time','triptime'); ?>
-							<?php echo form_input(array('name'=>'triptime','class'=>'form-control triptime format-time','placeholder'=>'Total Trip Time','readonly'=>'true','tabindex'=>"11")); 
+							<?php echo form_input(array('name'=>'triptime','class'=>'form-control voucher-text-box triptime format-time','placeholder'=>'Total Trip Time','readonly'=>'true','tabindex'=>"11")); 
 							?>
 						</div>
 					</div>
 					<div class="div-with-20-percent-width-with-margin-10">
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Trip Ending Time','tripendingtimelabel'); ?>
-							<?php echo form_input(array('name'=>'tripendingtime','class'=>'form-control tripendingtime format-time','placeholder'=>'HH:MM','tabindex'=>"8")); 
+							<?php echo form_input(array('name'=>'tripendingtime','class'=>'form-control voucher-text-box tripendingtime format-time','placeholder'=>'HH:MM','tabindex'=>"8")); 
 							?>
 						</div>
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Total Km Reading','totalkm'); ?>
-							<?php echo form_input(array('name'=>'totalkm','class'=>'form-control totalkm','placeholder'=>'Total KM','readonly'=>'true','tabindex'=>"12")); ?>
+							<?php echo form_input(array('name'=>'totalkm','class'=>'form-control voucher-text-box totalkm','placeholder'=>'Total KM','readonly'=>'true','tabindex'=>"12")); ?>
 							<span class="total-km-error text-red"></span>
 						</div>
 
@@ -461,14 +484,14 @@ echo form_close();?></td>
 					</div>
 					
 					
-					<div class="form-group hide-me">
+					<div class=" form-group margin-bottom-0-px hide-me">
 						<?php echo form_label('Gariage Clossing KM','gariageclosingkm'); ?>
-						<?php echo form_input(array('name'=>'garageclosingkm','class'=>'form-control garageclosingkm','placeholder'=>'Enter Gariage closing km')); ?>
+						<?php echo form_input(array('name'=>'garageclosingkm','class'=>'form-control voucher-text-box garageclosingkm','placeholder'=>'Enter Gariage closing km')); ?>
 						<span class="garage-km-error text-red"></span>
 					</div>
-					<div class="form-group hide-me">
+					<div class=" form-group margin-bottom-0-px hide-me">
 						<?php echo form_label('Gariage Closing Time','gariageclosingtime'); ?>
-						<?php echo form_input(array('name'=>'garageclosingtime','class'=>'form-control garageclosingtime initialize-time-picker','placeholder'=>'Enter Gariage Closing Time')); 
+						<?php echo form_input(array('name'=>'garageclosingtime','class'=>'form-control voucher-text-box garageclosingtime initialize-time-picker','placeholder'=>'Enter Gariage Closing Time')); 
 						?>
 						<span class="garage-time-error text-red"></span>
 					</div>
@@ -480,101 +503,96 @@ echo form_close();?></td>
 				<!-- section 3 start -->
 				<div class="row-source-100-percent-width-with-margin-8">
 					<!-- col 1 -->
-					<div class="div-with-20-percent-width-with-margin-10">
-						<div class="form-group">
-							<?php echo form_label('Vehicle','model'); ?>
-							<?php echo form_input(array('name'=>'model','class'=>'form-control model','placeholder'=>'Vehicle Model','readonly'=>'true','tabindex'=>"13")); 
-							?>
-						</div>
-						<div class="form-group">
+					<div class="div-with-15-percent-width-with-margin-10">
+						
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Base KM','basekm'); ?>
-							<?php echo form_input(array('name'=>'basekm','class'=>'form-control basekm','placeholder'=>'Base KM','tabindex'=>"16")); 
+							<?php echo form_input(array('name'=>'basekm','class'=>'form-control basekm voucher-text-box','placeholder'=>'Base KM','tabindex'=>"16")); 
 							?>
 						</div>
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Base Hrs','basehrs'); ?>
-							<?php echo form_input(array('name'=>'basehrs','class'=>'form-control basehrs format-time','placeholder'=>'Base Hours')); 
-							?>
-						</div>
-						<div class="form-group">
-							<?php echo form_label('Per Day KM','perdaykm'); ?>
-							<?php echo form_input(array('name'=>'perdaykm','class'=>'form-control perdaykm','placeholder'=>'Per Day KM')); 
+							<?php echo form_input(array('name'=>'basehrs','class'=>'form-control basehrs format-time voucher-text-box','placeholder'=>'Base Hours')); 
 							?>
 						</div>
 						
 					</div>
 					<!-- col 2 -->
-					<div class="div-with-20-percent-width-with-margin-10">
-						<div class="form-group">
-							<?php echo form_label('Vehicle No.','vehicleno'); ?>
-							<?php echo form_input(array('name'=>'vehicleno','class'=>'form-control vehicleno','placeholder'=>'Vehicle Number','readonly'=>'true','tabindex'=>"14")); 
-							?>
-						</div>
-						<div class="form-group">
+					<div class="div-with-15-percent-width-with-margin-10">
+						
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Base Amount','baseamount'); ?>
-							<?php echo form_input(array('name'=>'baseamount','class'=>'form-control baseamount','placeholder'=>'Base Amount','tabindex'=>"17")); 
+							<?php echo form_input(array('name'=>'baseamount','class'=>'form-control baseamount voucher-text-box','placeholder'=>'Base Amount','tabindex'=>"17")); 
 							?>
 						</div>
-						<div class="form-group">
-							<?php echo form_label('Base Hrs Amount','basehrslabel'); ?>
-							<?php echo form_input(array('name'=>'basehrsamount','class'=>'form-control basehrsamount','placeholder'=>'Base Hours ')); 
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Base Amount','basehrslabel'); ?>
+							<?php echo form_input(array('name'=>'basehrsamount','class'=>'form-control basehrsamount voucher-text-box','placeholder'=>'Base Hours ')); 
 							?>
 						</div>
-						<div class="form-group">
-							<?php echo form_label('Per Day KM Amount','perdaykmamountlabel'); ?>
-							<?php echo form_input(array('name'=>'perdaykmamount','class'=>'form-control perdaykmamount','placeholder'=>'Per Day KM Amount')); 
-							?>
-						</div>
+						
 						
 					</div>
 					<!-- col 3 -->
-					<div class="div-with-20-percent-width-with-margin-10">
-						<div class="form-group">
-							<?php echo form_label('Releasing Place','releasingplace'); ?>
-							<?php echo form_input(array('name'=>'releasingplace','class'=>'form-control releasingplace','placeholder'=>'Enter Releasing Place','tabindex'=>"14")); 
-							?>
-						</div>
-						<div class="form-group">
+					<div class="div-with-15-percent-width-with-margin-10">
+						
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Additional KM','adtkm'); ?>
-							<?php echo form_input(array('name'=>'adtkm','class'=>'form-control adtkm','placeholder'=>'Additional KM','readonly'=>'true','tabindex'=>"18")); 
+							<?php echo form_input(array('name'=>'adtkm','class'=>'form-control adtkm voucher-text-box','placeholder'=>'Additional KM','tabindex'=>"18")); 
 							?>
 						</div>
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Additional Hrs','adthrs'); ?>
-							<?php echo form_input(array('name'=>'adthrs','class'=>'form-control adthrs','placeholder'=>'Additional Hrs','readonly'=>'true')); 
+							<?php echo form_input(array('name'=>'adthrs','class'=>'form-control adthrs voucher-text-box','placeholder'=>'Additional Hrs')); 
 							?>
 						</div>
-						<div class="form-group">
-							<?php echo form_label('Additional KM','adtperdaykmlabel'); ?>
-							<?php echo form_input(array('name'=>'adtperdaykm','class'=>'form-control adtperdaykm','placeholder'=>'Additional KM','readonly'=>'true')); 
-							?>
-						</div>
+						
 						
 					</div>
 					<!-- col 4 -->
-					<div class="div-with-20-percent-width-with-margin-10">
-						<div class="form-group">
-							<?php echo form_label('No of Days','daysno'); ?>
-							<?php echo form_input(array('name'=>'daysno','class'=>'form-control daysno','placeholder'=>'No Of Days','readonly'=>'true','tabindex'=>"15")); 
+					<div class="div-with-15-percent-width-with-margin-10">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adl KM Amnt','adlkmamnt'); ?>
+							<?php echo form_input(array('name'=>'aditionalkmamount','class'=>'form-control aditionalkmamount voucher-text-box','placeholder'=>'Aditional Amount','tabindex'=>"15")); 
 							?>
 						</div>
-						<div class="form-group">
-							<?php echo form_label('Adl KM Rate','adlkmrate'); ?>
-							<?php echo form_input(array('name'=>'adlkmrate','class'=>'form-control adlkmrate','placeholder'=>'Additional KM Rate','tabindex'=>"19")); 
-							?>
-						</div>
-						<div class="form-group">
-							<?php echo form_label('Adl Hr Rate','adlhrrate'); ?>
-							<?php echo form_input(array('name'=>'adlhrrate','class'=>'form-control adlhrrate','placeholder'=>'Additional Hr Rate')); 
-							?>
-						</div>
-						<div class="form-group">
-							<?php echo form_label('Adl KM Rate','adtperdaykmratelabel'); ?>
-							<?php echo form_input(array('name'=>'adtperdaykmrate','class'=>'form-control adtperdaykmrate','placeholder'=>'Additional KM Rate')); 
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adl Hr Amnt','adlhramnt'); ?>
+							<?php echo form_input(array('name'=>'aditionalhramount','class'=>'form-control aditionalhramount voucher-text-box','placeholder'=>'Additional Amount','tabindex'=>"19")); 
 							?>
 						</div>
 						
+						
 					</div>
+					<div class="div-with-15-percent-width-with-margin-10">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('No of Days','daysno'); ?>
+							<?php echo form_input(array('name'=>'daysno','class'=>'form-control daysno voucher-text-box','placeholder'=>'No Of Days','readonly'=>'true','tabindex'=>"15")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('No of Days','daysno'); ?>
+							<?php echo form_input(array('name'=>'daysno','class'=>'form-control daysno voucher-text-box','placeholder'=>'No Of Days','readonly'=>'true','tabindex'=>"15")); 
+							?>
+						</div>
+						
+						
+					</div>
+					<div class="div-with-15-percent-width-with-margin-10">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Total Amount','totkmamnt'); ?>
+							<?php echo form_input(array('name'=>'totalkmamount','class'=>'form-control totalkmamount voucher-text-box','placeholder'=>'Total Amount','readonly'=>'true','tabindex'=>"15")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Total Amount','tothramnt'); ?>
+							<?php echo form_input(array('name'=>'totalhramount','class'=>'form-control totalhramount voucher-text-box','placeholder'=>'Total Amount','readonly'=>'true','tabindex'=>"19")); 
+							?>
+						</div>
+						
+						
+					</div>
+					
 				</div>
 				<!-- section 3 end -->
 
@@ -582,28 +600,28 @@ echo form_close();?></td>
 				<div class="row-source-100-percent-width-with-margin-8">
 					<!-- col 1 -->
 					<div class="div-with-20-percent-width-with-margin-10">
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('State Tax','statetax'); ?>
-							<?php echo form_input(array('name'=>'statetax','class'=>'form-control statetax','placeholder'=>'Enter State Tax')); 
+							<?php echo form_input(array('name'=>'statetax','class'=>'form-control statetax voucher-text-box','placeholder'=>'Enter State Tax')); 
 							?>
 						</div>
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Night Halt','nighthalt'); ?>
-							<?php echo form_input(array('name'=>'nighthalt','class'=>'form-control nighthalt','placeholder'=>'Enter Night Halt')); 
+							<?php echo form_input(array('name'=>'nighthalt','class'=>'form-control nighthalt voucher-text-box','placeholder'=>'Enter Night Halt')); 
 							?>
 						</div>
 						
 					</div>
 					<!-- col 2 -->
 					<div class="div-with-20-percent-width-with-margin-10">
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Driver Bata','driverbatalabel'); ?>
-							<?php echo form_input(array('name'=>'driverbata','class'=>'form-control driverbata','placeholder'=>'Enter Driver Bata')); ?>
+							<?php echo form_input(array('name'=>'driverbata','class'=>'form-control driverbata voucher-text-box','placeholder'=>'Enter Driver Bata')); ?>
 					
 						</div>
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Parking Fee','parking'); ?>
-							<?php echo form_input(array('name'=>'parkingfee','class'=>'form-control parkingfee','placeholder'=>'Enter Parking Fee')); ?>
+							<?php echo form_input(array('name'=>'parkingfee','class'=>'form-control parkingfee voucher-text-box','placeholder'=>'Enter Parking Fee')); ?>
 					
 						</div>
 						
@@ -611,59 +629,59 @@ echo form_close();?></td>
 					<!-- col 3 -->
 					<div class="div-with-20-percent-width-with-margin-10">
 						
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Toll Fee','tollfee'); ?>
-							<?php echo form_input(array('name'=>'tollfee','class'=>'form-control tollfee','placeholder'=>'Enter Toll Fee')); ?>
+							<?php echo form_input(array('name'=>'tollfee','class'=>'form-control tollfee voucher-text-box','placeholder'=>'Enter Toll Fee')); ?>
 					
 						</div>
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Vehicle Tarriff Amt','vehicletarif'); ?>
-							<?php echo form_input(array('name'=>'vehicletarif','class'=>'form-control vehicletarif','placeholder'=>'Amount')); ?>
+							<?php echo form_input(array('name'=>'vehicletarif','class'=>'form-control vehicletarif voucher-text-box','placeholder'=>'Amount')); ?>
 					
 						</div>
 						
 					</div>
 					<!-- col 4 -->
 					<div class="div-with-20-percent-width-with-margin-10">
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Total Amount','totalamount'); ?>
-							<?php echo form_input(array('name'=>'totalamount','class'=>'form-control totalamount','placeholder'=>'Total Amount')); ?>
+							<?php echo form_input(array('name'=>'totalamount','class'=>'form-control totalamount voucher-text-box','placeholder'=>'Total Amount','readonly'=>'true')); ?>
 					
 						</div>
-						<div class="form-group">
+						<div class=" form-group margin-bottom-0-px">
 						<?php echo form_label('Total Tax','totaltax'); ?>
 						<?php 
-						$class="form-control taxgroup";
+						$class="form-control taxgroup voucher-text-box";
 						$tbl="taxes";
 						echo $this->form_functions->populate_editable_dropdown('taxgroup',$taxes,$class,$tbl);
-						echo form_input(array('name'=>'select_text','id'=>'totaltax','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>	
+						echo form_input(array('name'=>'select_text','id'=>'totaltax','class'=>'form-control voucher-text-box','style'=>'display:none','trigger'=>'true'));?>	
 
 							</div>
 						
 					</div>
 					
 					<!-- hidden -->
-					<div class="form-group hide-me">
+					<div class=" form-group margin-bottom-0-px hide-me">
 						<?php echo form_label('Extra Fuel Charge','extrafuel'); ?>
-						<?php echo form_input(array('name'=>'extrafuel','class'=>'form-control extrafuel','placeholder'=>'Enter Extra Fuel Charge')); ?>
+						<?php echo form_input(array('name'=>'extrafuel','class'=>'form-control extrafuel voucher-text-box','placeholder'=>'Enter Extra Fuel Charge')); ?>
 				
 					</div>
-					<div class="form-group hide-me">
+					<div class=" form-group margin-bottom-0-px hide-me">
 						<?php $class="form-control";
 						$id="tarrif";
 						echo form_label('Tariff','triptariflabel'); 
 						echo $this->form_functions->populate_dropdown('tariff',$tariffs='',$tariff='',$class,$id,$msg="Tariffs");?>
 						<span class="tariff-error text-red"></span>
 					</div>
-					<div class="form-group hide-me">
+					<div class=" form-group margin-bottom-0-px hide-me">
 						<?php echo form_label('Addt KM Rate','adtkmamount'); ?>
-						<?php echo form_input(array('name'=>'adtkmamount','class'=>'form-control adtkmamount','placeholder'=>'Additional KM Amount')); 
+						<?php echo form_input(array('name'=>'adtkmamount','class'=>'form-control adtkmamount voucher-text-box','placeholder'=>'Additional KM Amount')); 
 						?>
 					</div>
 
-					<div class="form-group hide-me">
+					<div class=" form-group margin-bottom-0-px hide-me">
 						<?php echo form_label('KM/HRs','kmhr'); ?>
-						<?php echo form_input(array('name'=>'kmhr','class'=>'form-control kmhr','placeholder'=>'KM/HRs')); 
+						<?php echo form_input(array('name'=>'kmhr','class'=>'form-control kmhr voucher-text-box','placeholder'=>'KM/HRs')); 
 						?>
 					</div>
 

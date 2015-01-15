@@ -20,6 +20,8 @@
         <link href="<?php echo base_url();?>css/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" />
         <!-- Daterange picker -->
         <link href="<?php echo base_url();?>css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+		<!-- Daterange picker -->
+        <link href="<?php echo base_url();?>css/tripvoucher.css" rel="stylesheet" type="text/css" />
 		<!-- Date picker -->
         <link href="<?php echo base_url();?>plugins/datetimepicker-master/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
         <!-- bootstrap wysihtml5 - text editor -->
