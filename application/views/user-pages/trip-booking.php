@@ -187,6 +187,11 @@ $recurrent									=	$data['recurrent'];
 $customer_type					= $data['customer_type'];
 
 $this->mysession->delete('post');
+}else{
+	$this->session->set_userdata('customer_id','');
+	$this->session->set_userdata('customer_name','');
+	$this->session->set_userdata('customer_email','');
+	$this->session->set_userdata('customer_mobile','');
 }
 if($customer_type==-1){
 $customer_type='';

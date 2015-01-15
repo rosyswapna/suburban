@@ -1183,7 +1183,7 @@ var droptime = $('#droptimepicker').val();
  	no_of_days=1;
 	var days="Day";
 	}
-if($('#tarrif').val()!=-1){
+if($('#tarrif').val()!='-1'){
 var extra_distance='';
 var extra_charge='';
 if(HH>=24){
