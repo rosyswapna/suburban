@@ -336,7 +336,7 @@ class Tarrif extends CI_Controller {
 	}
 
 	public function customertariff(){
-	if(isset($_REQUEST['vehicle_ac_type_id']) && isset($_REQUEST['vehicle_model_id'])){
+	if(isset($_REQUEST['vehicle_ac_type_id']) && isset($_REQUEST['vehicle_model_id']) && isset($_REQUEST['tariff_master_id'])){
 
 		$data['vehicle_ac_type_id']=$_REQUEST['vehicle_ac_type_id'];
 		$data['vehicle_model_id']=$_REQUEST['vehicle_model_id'];
@@ -348,12 +348,14 @@ class Tarrif extends CI_Controller {
 		if(count($res['data'])>0){
 		echo json_encode($res);
 		}else{
-		echo 'false';
+			echo 'false';
 		}
 		}else{
-		echo 'false';
+			echo 'false';
 		}
 
+		}else{
+			echo 'false';
 		}	
 	}
 	
