@@ -1140,7 +1140,7 @@ function SetRoughEstimate(){
 		  },function(data){
 
 		data=jQuery.parseJSON(data);
-		if(data!='false'){
+		if(data!=false){
 			var additional_kilometer_rate = data.data[0].additional_kilometer_rate;
 			var minimum_kilometers = data.data[0].minimum_kilometers;
 			var rate = data.data[0].rate;
@@ -1215,7 +1215,7 @@ amount=Math.round(Number(minimum_kilometers)*Number(rate)).toFixed(2);
 }
 
 }
-var tax=(amount*4.944)/100;
+var tax=((amount*4.944)/100).toFixed(2);
 var total=Number(tax)+Number(amount);
 
 
