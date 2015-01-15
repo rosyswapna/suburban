@@ -84,14 +84,16 @@ class Customers extends CI_Controller {
 
 		public function addCustomer(){
 		if(isset($_REQUEST['mobile']) || $_REQUEST['mobile']!=''  && isset($_REQUEST['name']) && $_REQUEST['name']!='' && isset($_REQUEST['c_group']) && $_REQUEST['c_group']!=''){
+			
 			$data['mobile']=$_REQUEST['mobile'];
 			$data['email']=$_REQUEST['email'];
 			$data['name']=$_REQUEST['name'];
+			$data['address']='';
 			$data['registration_type_id']=CUSTOMER_REG_TYPE_PHONE_CALL;	
 			$data['organisation_id']=$this->session->userdata('organisation_id');
 			$data['user_id']=$this->session->userdata('id');
 			$data['customer_type_id']=gINVALID;
-			if($_REQUEST['c_group']==''){
+			if(!isset($_REQUEST['c_group'])){
 				$data['customer_group_id']=gINVALID;
 			}else{
 				$data['customer_group_id']=$_REQUEST['c_group'];
