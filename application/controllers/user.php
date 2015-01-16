@@ -824,7 +824,7 @@ class User extends CI_Controller {
 			//print_r($data['taxes']);exit;
 
 			$data['vehicles']=$this->trip_booking_model->getVehiclesArray($condition='');
-			$data['drivers']=$this->driver_model->getDriversArray($condition=''); 
+			$data['drivers']=$this->driver_model->getDriversArray($condition='');  
 			$paginations=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$qry);
 			if($param2==''){
 				$this->mysession->delete('condition');
@@ -1365,7 +1365,7 @@ if(isset($where_arry) || isset($like_arry)){
 	
 	$drivers=$this->vehicle_model->getDriversInfo();
 	if($drivers!=false){
-	$data['drivers']=$drivers;//print_r($data['drivers']);exit;
+	$data['drivers']=$drivers; //print_r($data['drivers'][1]);exit;
 	}else{
 	$data['drivers']='';
 	}

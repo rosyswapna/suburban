@@ -69,13 +69,15 @@
 						<th> Account Statement</th>
 					</tr>
 					<?php 
-				
+					$attributes=array('class'=>'label-font-style');
 					if(isset($values)){ 
 					foreach ($values as $det):
 					$phone_numbers='';
 					?>
 					<tr>
-					    <td><?php echo anchor(base_url().'organization/front-desk/driver-profile/'.$det['id'],$drivers[$det['id']]['name']).nbs(3);?></td>
+					    <td><?php echo anchor(base_url().'organization/front-desk/driver-profile/'.$det['id'],$drivers[$det['id']]['name']).nbs(3);?>
+					    <?php if( !isset($drivers[$det['id']]['place_of_birth']) || $drivers[$det['id']]['place_of_birth']==''){ echo '';}else{echo br().$drivers[$det['id']]['place_of_birth'].br();}  ?>
+					    </td>
 					    <td><?php if( !isset($drivers[$det['id']]['phone']) || $drivers[$det['id']]['phone']==''){ echo '';}else{echo $drivers[$det['id']]['phone'].br();}
 								  if( !isset($drivers[$det['id']]['mobile']) || $drivers[$det['id']]['mobile']==''){ echo '';}else{echo $drivers[$det['id']]['mobile'].br();}
 								  if( !isset($drivers[$det['id']]['present_address']) || $drivers[$det['id']]['present_address']==''){ echo '';}else{echo $drivers[$det['id']]['present_address'].br();}
@@ -83,8 +85,18 @@
 						<td><?php if( !isset($vehicles[$det['id']]['registration_number']) || $vehicles[$det['id']]['registration_number']==''){ echo '';}else{echo $vehicles[$det['id']]['registration_number'].br();}
 						if(!isset($vehicles[$det['id']]['vehicle_model_id']) || $vehicles[$det['id']]['vehicle_model_id']==gINVALID){ echo '';}else{echo $v_models[$vehicles[$det['id']]['vehicle_model_id']].br();}
 						if(!isset($vehicles[$det['id']]['vehicle_make_id']) || $vehicles[$det['id']]['vehicle_make_id']==gINVALID){ echo '';}else{echo $v_makes[$vehicles[$det['id']]['vehicle_make_id']];}?></td>
-						<td><?php if($driver_statuses[$det['id']]!='Available'){ echo '<span class="label label-info">'.$driver_statuses[$det['id']].'</span>'.br(); }else{ echo '<span class="label label-success">'.$driver_statuses[$det['id']].'</span>'.br(); } if($driver_trips[$det['id']]!=gINVALID){ echo anchor(base_url().'organization/front-desk/trip-booking/'.$driver_trips[$det['id']],'Trip ID :'.$driver_trips[$det['id']]); } else{ echo ''; } ?></td>
-						<td></td>
+						<td><?php if($driver_statuses[$det['id']]!='Available'){ echo '<span class="label label-info">'.$driver_statuses[$det['id']].'</span>'.br(); }else{ echo '<span class="label label-success">'.$driver_statuses[$det['id']].'</span>'.br(); } if($driver_trips[$det['id']]!=gINVALID){ echo anchor(base_url().'organization/front-desk/trip-booking/'.$driver_trips[$det['id']],'Trip ID :'.$driver_trips[$det['id']]); } else{ echo ''; } ?>
+						<?php echo br().form_label('License','license',$attributes).nbs(2);?>: <span><?php if( !isset($drivers[$det['id']]['license_renewal_date']) || $drivers[$det['id']]['license_renewal_date']==''){ echo '';}else{echo $drivers[$det['id']]['license_renewal_date'];}?></span>
+						<?php echo br().form_label('Badge','badge',$attributes).nbs(2);?>: <span><?php if( !isset($drivers[$det['id']]['badge_renewal_date']) || $drivers[$det['id']]['badge_renewal_date']==''){ echo '';}else{echo $drivers[$det['id']]['badge_renewal_date'];}?></span>
+						</td>
+						<td> 
+						<div>
+						<?php echo form_label('Total Trips','total_trips',$attributes).nbs(2);?> :
+						<?php echo  br().form_label('Trip Advance','trip_advance',$attributes).nbs(2);?> :
+						<?php echo br().form_label('Outstanding','outstanding',$attributes).nbs(2);?> :
+						<?php echo br().form_label('Current Balance','current_balance',$attributes).nbs(2);?> :
+						</div>
+						</td>
 					</tr>
 					<?php endforeach;
 					}

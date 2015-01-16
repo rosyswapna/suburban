@@ -612,7 +612,7 @@ $this->mysession->delete('post');
 						
 						
 						
-						if( $trips[$trip_index]['v_type']=='Hatchback'){
+						/*if( $trips[$trip_index]['v_type']=='Hatchback'){
 						 $tth=  $tth+$trips[$trip_index]['vehicle_tarif'];
 						 $dbh=	$dbh+$trips[$trip_index]['driver_bata'];
 						}
@@ -623,6 +623,10 @@ $this->mysession->delete('post');
 						if( $trips[$trip_index]['v_type']!='Premium' && $trips[$trip_index]['v_type']!='Hatchback'){
 						 $tto=  $tto+$trips[$trip_index]['vehicle_tarif'];
 						 $dbo=	$dbo+$trips[$trip_index]['driver_bata'];
+						}*/
+						if($trips[$trip_index]['v_type']!=''){
+						$tto=  $tto+$trips[$trip_index]['vehicle_tarif'];
+						$dbo=	$dbo+$trips[$trip_index]['driver_bata'];
 						}
 						
 						
@@ -682,9 +686,9 @@ $this->mysession->delete('post');
 					    <th>Bata</th>
 						<th>Total</th>
 					</tr>
-					<tr><td>Total Trips Hatchback</td><td><?php echo number_format($tth,2);?></td><td><?php echo  number_format($dbh,2);?></td><td><?php echo  number_format($tth+$dbh,2);?></td></tr>
-					<tr><td>Total Trips Others</td><td><?php echo  number_format($tto,2);?></td><td><?php echo  number_format($dbo,2);?></td><td><?php echo  number_format($tto+$dbo,2);?></td></tr>
-					<tr><td>Total Trips Benz</td><td><?php echo  number_format($ttp,2);?></td><td><?php echo  number_format($dbp,2);?></td><td><?php echo  number_format($ttp+$dbp,2);?></td></tr>
+					<tr><td>Total Trips</td><td><?php echo number_format($tto,2);?></td><td><?php echo  number_format($dbo,2);?></td><td><?php echo  number_format($tto+$dbo,2);?></td></tr>
+					<!--<tr><td>Total Trips Others</td><td><?php echo  number_format($tto,2);?></td><td><?php echo  number_format($dbo,2);?></td><td><?php echo  number_format($tto+$dbo,2);?></td></tr>-->
+					<!--<tr><td>Total Trips Benz</td><td><?php echo  number_format($ttp,2);?></td><td><?php echo  number_format($dbp,2);?></td><td><?php echo  number_format($ttp+$dbp,2);?></td></tr>-->
 					<tr><td>Salary</td><td><?php  if($tot_nod>=20){
 					$sal=2500;
 					}else{

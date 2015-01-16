@@ -699,3 +699,8 @@ color:#F4543C;
 margin-bottom:5px;
 margin-right:5px;
 }
+.label-font-style{
+ 
+  font-style: normal;
+  font-weight: normal !important;
+}
