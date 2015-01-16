@@ -81,6 +81,7 @@ echo form_close();?></td>
 						
 					</tr>
 					<?php
+					$attributes=array('class'=>'label-font-style');
 					
 					for($customer_index=0;$customer_index<count($customers);$customer_index++) {
 					?>
@@ -95,7 +96,14 @@ if($customers[$customer_index]['customer_group_id']==gINVALID || $customers[$cus
 
 					    <td><?php if($customer_trips[$customers[$customer_index]['id']]!=gINVALID){ echo anchor(base_url().'organization/front-desk/trip-booking/'.$customer_trips[$customers[$customer_index]['id']],'Trip ID :'.$customer_trips[$customers[$customer_index]['id']]); } else{ echo ''; } ?></td>
 					    <td><?php if($customer_statuses[$customers[$customer_index]['id']]!='NoBookings'){ echo '<span class="label label-info">'.$customer_statuses[$customers[$customer_index]['id']].'</span>'.br(); }else{ echo '<span class="label label-danger">'.$customer_statuses[$customers[$customer_index]['id']].'</span>'.br(); } ?></td>	
-
+					    <td>
+						<div>
+						<?php echo form_label('Total Trips','total_trips',$attributes).nbs(2);?> :
+						<?php echo  br().form_label('Trip Advance','trip_advance',$attributes).nbs(2);?> :
+						<?php echo br().form_label('Outstanding','outstanding',$attributes).nbs(2);?> :
+						<?php echo br().form_label('Current Balance','current_balance',$attributes).nbs(2);?> :
+						</div>
+					    </td>
 					</tr>
 					<?php 
 						}

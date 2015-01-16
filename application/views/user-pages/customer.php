@@ -264,6 +264,26 @@
 					?>
 				</tbody>
 			</table><?php //echo $page_links;?>
+			
+			<?php if(!empty($trips)){?>
+			<table class="table table-hover table-bordered">
+				<tbody>
+				
+					<tr style="background:#CCC">
+						<th>Heading1</th>
+						<th>Heading2</th>
+						<th>Heading3</th>
+						
+					    
+					</tr>
+					<tr><td>Value1</td><td>Value2</td><td>Value3</td></tr>
+					
+				</tbody>
+			</table>
+			<?php  }?>
+			
+			
+			
 		</div>
 </div>
 </fieldset>

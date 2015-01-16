@@ -92,6 +92,7 @@
 					    
 					</tr>
 					<?php
+					$attributes=array('class'=>'label-font-style');
 					if(isset($values)){  //print_r($values);exit;
 					foreach ($values as $det): 
 					
@@ -107,8 +108,16 @@
 						<td><?php if(!isset($drivers[$det['id']]['driver_name']) || $drivers[$det['id']]['driver_name']==''){ echo '';}else{echo $drivers[$det['id']]['driver_name'].br();}
 						if(!isset($drivers[$det['id']]['mobile']) || $drivers[$det['id']]['mobile']==''){ echo '';}else{echo $drivers[$det['id']]['mobile'].br();}
 						if(!isset($drivers[$det['id']]['from_date']) || $drivers[$det['id']]['from_date']==''){ echo '';}else{echo $drivers[$det['id']]['from_date']; } ?></td>
-						<td><?php if($vehicle_statuses[$det['id']]!='Available'){ echo '<span class="label label-info">'.$vehicle_statuses[$det['id']].'</span>'.br(); }else{ echo '<span class="label label-success">'.$vehicle_statuses[$det['id']].'</span>'.br(); } if($vehicle_trips[$det['id']]!=gINVALID){ echo anchor(base_url().'organization/front-desk/trip-booking/'.$vehicle_trips[$det['id']],'Trip ID :'.$vehicle_trips[$det['id']]); } else{ echo ''; } ?></td>
-						<td><?php ?></td>
+						<td><?php if($vehicle_statuses[$det['id']]!='Available'){ echo '<span class="label label-info">'.$vehicle_statuses[$det['id']].'</span>'.br(); }else{ echo '<span class="label label-success">'.$vehicle_statuses[$det['id']].'</span>'.br(); } if($vehicle_trips[$det['id']]!=gINVALID){ echo anchor(base_url().'organization/front-desk/trip-booking/'.$vehicle_trips[$det['id']],'Trip ID :'.$vehicle_trips[$det['id']]); } else{ echo ''; } ?>
+						<?php echo br().form_label('Permit','permit',$attributes).nbs(2);?>: <span><?php if( !isset($vehicles[$det['id']]['vehicle_permit_renewal_date']) || $vehicles[$det['id']]['vehicle_permit_renewal_date']==''){ echo '';}else{echo $vehicles[$det['id']]['vehicle_permit_renewal_date'];}?></span>
+						<?php echo br().form_label('Tax','tax',$attributes).nbs(2);?>: <span><?php if( !isset($vehicles[$det['id']]['tax_renewal_date']) || $vehicles[$det['id']]['tax_renewal_date']==''){ echo '';}else{echo $vehicles[$det['id']]['tax_renewal_date'];}?></span>
+						</td>
+						<td><div>
+						<?php echo form_label('Total Trips','total_trips',$attributes).nbs(2);?> :
+						<?php echo  br().form_label('Trip Advance','trip_advance',$attributes).nbs(2);?> :
+						<?php echo br().form_label('Outstanding','outstanding',$attributes).nbs(2);?> :
+						<?php echo br().form_label('Current Balance','current_balance',$attributes).nbs(2);?> :
+						</div></td>
 					
 					    	
 						
