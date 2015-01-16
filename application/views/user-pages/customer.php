@@ -11,6 +11,7 @@
 	$mobile				= 	'';
 	$address			= 	'';
 	$username			=	'';
+	$password			=	'';
 	if($this->mysession->get('post')!=NULL || $values!=false){
 	
 	if($this->mysession->get('post')!=NULL){
@@ -34,6 +35,7 @@
 	$mobile				= 	$data['mobile'];
 	$address			= 	$data['address'];
 	$username			=	$data['username'];
+	$password			=	$data['password'];
 	}
 	$this->mysession->delete('post');
 ?>
@@ -136,7 +138,7 @@
 					<?php echo form_error('address', '<p class="text-red">', '</p>'); ?>
 				</div>
 				
-			<?php if($customer_id!='' && $customer_id>0){?>
+			<?php if(!$edit_profile){?> 
 				<div class="form-group">
 				   <?php echo form_label('Username','usernamelabel');
 					
@@ -156,17 +158,22 @@
 				</div>
 
 				<div class="form-group">
-				   <?php echo form_label('Password','passwordlabel'); ?>
-				   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'password','placeholder'=>'Enter Password','value'=>$password)); ?>			
+				   <?php if($password==''){
+				   echo form_label('Password','passwordlabel'); ?>
+				   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'password','placeholder'=>'Enter Password','value'=>$password)); 
+				   
+				   }?>			
 					<?php echo $this->form_functions->form_error_session('password', '<p class="text-red">', '</p>'); ?>
 				</div>
-				
+				<?php if($customer_id!='' && $customer_id>gINVALID){  echo '';}else{?>
 				<div class="form-group">
 				   <?php echo form_label('Confirm Password','cpasswordlabel'); ?>
 				   <?php echo form_password(array('name'=>'cpassword','class'=>'form-control','id'=>'cpassword','placeholder'=>'Enter Confirm password')); ?>			
 					<?php echo $this->form_functions->form_error_session('cpassword', '<p class="text-red">', '</p>'); ?>
 				</div>
-				<?php }?>
+				<?php 
+					}
+				}?>
 		   		<div class="box-footer">
 				<?php if($customer_id!='' && $customer_id>gINVALID){ 
 				

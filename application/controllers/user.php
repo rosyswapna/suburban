@@ -895,6 +895,7 @@ class User extends CI_Controller {
 				$pagedata['customer_group_id']=$result[0]['customer_group_id'];
 				$pagedata['customer_type_id']=$result[0]['customer_type_id'];
 				$pagedata['username']=$result[0]['username'];
+				$pagedata['password']=$result[0]['password'];
 			}
 			$tbl_arry=array('customer_types','customer_groups');
 			

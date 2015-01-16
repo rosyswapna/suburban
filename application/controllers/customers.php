@@ -149,6 +149,7 @@ class Customers extends CI_Controller {
 			if($customer_id!=gINVALID){ 
 				$hmail=$this->input->post('h_email');
 				$hphone=$this->input->post('h_phone');
+
 			}else{
 				$hmail='';
 				$hphone='';
@@ -178,7 +179,7 @@ class Customers extends CI_Controller {
 			$data['user_id']=$this->session->userdata('id');
 			if($this->form_validation->run() != False) {
 				if($customer_id>gINVALID) {
-				$res=$this->customers_model->updateCustomers($data,$customer_id);
+				$res=$this->customers_model->updateCustomers($data,$customer_id,$login);
 					if(isset($res) && $res!=false){
 						
 						//------------fa module integration code starts here-----
@@ -208,6 +209,7 @@ class Customers extends CI_Controller {
 				}
 				}else{
 				$data['username']  = trim($this->input->post('username'));
+				$data['password']  = trim($this->input->post('password'));
 				$data['customer_id']=$customer_id;
 				$this->mysession->set('post',$data);
 				if($customer_id==gINVALID){
