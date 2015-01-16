@@ -6,7 +6,16 @@ height:24px;
 margin-bottom:0px;
 }
 .div-with-15-percent-width-with-margin-10{
-width: 13%;
+width: 14%;
 margin: 10px;
 float: left;
+}
+.margin-0-10-0-10{
+margin:0 10px 0 10px;
+}
+.height-1250-px{
+height: 1250px;
+}
+.padding-2px{
+padding: 2px;
 }

@@ -34,6 +34,8 @@
         <script src="<?php echo base_url();?>js/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
 		<!--main.js -->
         <script src="<?php echo base_url();?>js/main.js" type="text/javascript"></script>
+		<!--trip-voucher.js -->
+        <script src="<?php echo base_url();?>js/trip-voucher.js" type="text/javascript"></script>
 		<!--editable_dropdown.js -->
         <script src="<?php echo base_url();?>js/editable_dropdown.js" type="text/javascript"></script>
 		<!--googlemaps -->

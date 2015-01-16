@@ -703,6 +703,7 @@ CREATE TABLE IF NOT EXISTS `trip_vouchers` (
   `end_km_reading` double NOT NULL,
   `organisation_id` int(11) NOT NULL,
   `driver_id` int(11) NOT NULL,
+  `driver_bata` double NOT NULL,
   `user_id` int(11) NOT NULL,
   `garage_closing_kilometer_reading` double NOT NULL,
   `garage_closing_time` time NOT NULL,
@@ -713,18 +714,24 @@ CREATE TABLE IF NOT EXISTS `trip_vouchers` (
   `night_halt_charges` double NOT NULL,
   `fuel_extra_charges` double NOT NULL,
   `no_of_days` int(11) NOT NULL,
+  `trip_starting_time` time NOT NULL,
+  `trip_ending_time` time NOT NULL,
   `total_trip_amount` double NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `voucher_no` int(11) NOT NULL,
+  `km_hr` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 -km tarif,2 hourly tarif',
+  `base_tarif` varchar(50) NOT NULL,
+  `base_amount` double NOT NULL,
+  `adt_tarif` varchar(50) NOT NULL,
+  `adt_tarif_rate` double NOT NULL,
+  `vehicle_tarif` double NOT NULL,
   `delivery_no` int(11) NOT NULL COMMENT 'fa delivery number',
   `invoice_no` int(11) NOT NULL COMMENT 'fa invoice no',
   PRIMARY KEY (`id`),
   KEY `trip_id` (`trip_id`,`organisation_id`,`driver_id`,`user_id`),
   KEY `delivery_no` (`delivery_no`,`invoice_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
 --
 -- Table structure for table `users`
 --
