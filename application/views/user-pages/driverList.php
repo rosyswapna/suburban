@@ -84,7 +84,7 @@
 						if(!isset($vehicles[$det['id']]['vehicle_model_id']) || $vehicles[$det['id']]['vehicle_model_id']==gINVALID){ echo '';}else{echo $v_models[$vehicles[$det['id']]['vehicle_model_id']].br();}
 						if(!isset($vehicles[$det['id']]['vehicle_make_id']) || $vehicles[$det['id']]['vehicle_make_id']==gINVALID){ echo '';}else{echo $v_makes[$vehicles[$det['id']]['vehicle_make_id']];}?></td>
 						<td><?php if($driver_statuses[$det['id']]!='Available'){ echo '<span class="label label-info">'.$driver_statuses[$det['id']].'</span>'.br(); }else{ echo '<span class="label label-success">'.$driver_statuses[$det['id']].'</span>'.br(); } if($driver_trips[$det['id']]!=gINVALID){ echo anchor(base_url().'organization/front-desk/trip-booking/'.$driver_trips[$det['id']],'Trip ID :'.$driver_trips[$det['id']]); } else{ echo ''; } ?></td>
-						<td></td>
+						<td> Total Trips :</td>
 					</tr>
 					<?php endforeach;
 					}
