@@ -158,11 +158,11 @@
 				</div>
 
 				<div class="form-group">
-				   <?php if($password==''){
+				   <?php 
 				   echo form_label('Password','passwordlabel'); ?>
 				   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'password','placeholder'=>'Enter Password','value'=>$password)); 
-				   
-				   }?>			
+				   ?><div class="hide-me"><?php echo form_input(array('name'=>'h_pass','value'=>$password)); ?></div>
+				  			
 					<?php echo $this->form_functions->form_error_session('password', '<p class="text-red">', '</p>'); ?>
 				</div>
 				<?php if($customer_id!='' && $customer_id>gINVALID){  echo '';}else{?>

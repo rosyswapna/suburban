@@ -224,9 +224,13 @@ class Customers_model extends CI_Model {
 	}
 	}
 	
-	function  updateCustomers($data,$id,$login='') {
+	function  updateCustomers($data,$id,$login='',$flag='') {
 	$username=$login['username'];
+	if($flag==1){
+	$password=$login['password'];
+	}else{
 	$password=md5($login['password']);
+	}
 	if($username!='' && $password!=''){
 	$qry=$this->db->where('id',$id );
 	$qry=$this->db->get("customers");
