@@ -5,5 +5,51 @@ ALTER TABLE `rough_estimate` ADD `additional_km` TEXT NOT NULL AFTER `total_amt`
 ALTER TABLE `rough_estimate` ADD `amount` TEXT NOT NULL AFTER `min_kilometers`;
 ALTER TABLE `rough_estimate` ADD `tax_payable` TEXT NOT NULL AFTER `amount`;
 /*need to be updated*/
-20/01/2015
+
+>>>>>>>>>>>>>>>Table structure for table `tariffs`>>>>>>>>>>>>>>>>>>>>>
+
+CREATE TABLE IF NOT EXISTS `tariffs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tariff_master_id` int(11) NOT NULL,
+  `vehicle_model_id` int(11) NOT NULL,
+  `vehicle_ac_type_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `from_date` date NOT NULL,
+  `to_date` date NOT NULL,
+  `rate` float NOT NULL,
+  `additional_kilometer_rate` float NOT NULL,
+  `additional_hour_rate` float NOT NULL,
+  `driver_bata` float NOT NULL,
+  `night_halt` int(11) NOT NULL,
+  `organisation_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`),
+  KEY `tariff_master_id` (`tariff_master_id`),
+  KEY `organisation_id` (`organisation_id`),
+  KEY `user_id` (`user_id`),
+  KEY `vehicle_model_id` (`vehicle_model_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+>>>>>>>>>>>>>>>Table structure for table `tariff_masters`>>>>>>>>>>>>>>>>>>>>>
+
+CREATE TABLE IF NOT EXISTS `tariff_masters` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` text NOT NULL,
+  `minimum_kilometers` double NOT NULL,
+  `minimum_hours` double NOT NULL,
+  `organisation_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `organisation_id` (`organisation_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+>>>>>>>>>>>>>>>>>need to be updated>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+/*20/01/2015*/
 ALTER TABLE `vehicle_owners` ADD `login_id` INT(11) NOT NULL AFTER `user_id`;

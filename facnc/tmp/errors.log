@@ -6926,3 +6926,7 @@
 [20-Jan-2015 10:53:58 Europe/Paris] 2::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
 [20-Jan-2015 10:53:58 Europe/Paris] Brute force attack on account 'divya' detected. Access for non-logged users temporarily blocked.
 [20-Jan-2015 10:53:58 Europe/Paris] Brute force attack on account 'divya' detected. Access for non-logged users temporarily blocked.
+[20-Jan-2015 11:04:18 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[20-Jan-2015 11:04:18 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[20-Jan-2015 11:04:18 Europe/Paris] 2::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[20-Jan-2015 11:04:18 Europe/Paris] 2::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
