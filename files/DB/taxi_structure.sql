@@ -753,6 +753,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `organisation_admin_id` int(11) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fa_account` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_status_id` (`user_status_id`),
   KEY `organisation_id` (`organisation_id`),
@@ -761,7 +762,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `user_type_id` (`user_type_id`),
   KEY `organisation_id_2` (`organisation_id`),
   KEY `organisation_admin_id` (`organisation_admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
