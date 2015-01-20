@@ -40,6 +40,7 @@ $trip_sl_no=1;
 }else{
 $trip_sl_no=$page;
 }
+$tariffs='';
 ?>
 
 <div class="trips">
@@ -225,10 +226,10 @@ echo form_close();?></td>
 			}
 			
 		}else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_COMPLETED && in_array('new_voucher',$trip_action_allowed)){ 
-			echo "<a href=".base_url().'trip/view/'.$trips[$trip_index]['trip_id']." class= ' fa fa-print' target='_blank' title='Print'></a>".nbs(5)."<span title='Voucher' class=' sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' new_voucher = 1 company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ></span>"; 
+			echo "<a href=".base_url().'trip/view/'.$trips[$trip_index]['trip_id']." class= ' fa fa-print' target='_blank' title='Print'></a>".nbs(5)."<span title='Voucher' class=' sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' new_voucher = 1 company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' customer_id='".$trips[$trip_index]['customer_id']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ></span>"; 
 			
 		}else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_BILLED && in_array('edit_voucher',$trip_action_allowed)){
-			echo "<span title='Voucher' class='sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' new_voucher = 0 vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ></span>"; 
+			echo "<span title='Voucher' class='sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' new_voucher = 0 vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' customer_id='".$trips[$trip_index]['customer_id']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ></span>"; 
 			} ?>
 			<?php }//action buttons?>
 			</td>
@@ -330,9 +331,9 @@ echo form_close();?></td>
 			
 			
 			}else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_COMPLETED && in_array('new_voucher',$trip_action_allowed)){ 
-			echo "<a href=".base_url().'trip/view/'.$trips[$trip_index]['trip_id']." class= ' fa fa-print' target='_blank' title='Print'></a>".nbs(5)."<span title='Voucher' class=' sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' new_voucher = 1 company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ></span>"; 
+			echo "<a href=".base_url().'trip/view/'.$trips[$trip_index]['trip_id']." class= ' fa fa-print' target='_blank' title='Print'></a>".nbs(5)."<span title='Voucher' class=' sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' new_voucher = 1 company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' customer_id='".$trips[$trip_index]['customer_id']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ></span>"; 
 			}else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_BILLED && in_array('edit_voucher',$trip_action_allowed)){
-			echo "<span title='Voucher' class='sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' new_voucher = 0 vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ></span>"; 
+			echo "<span title='Voucher' class='sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' new_voucher = 0 vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' customer_id='".$trips[$trip_index]['customer_id']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ></span>"; 
 			} ?>
 					<?php }//action buttons?>
 			</td>
@@ -364,13 +365,13 @@ echo form_close();?></td>
    		<div class="overlay modal"></div>
 		<div class="loading-img"></div>
 		<div class="modal-body border-2-px box-shadow">
-			<div class="profile-body width-80-percent-and-margin-auto ">
+			<div class="profile-body width-80-percent-and-margin-auto height-1250-px ">
 			<fieldset class="body-border">
-   			 <legend class="body-head">Trip Voucher</legend>
+   			 <legend class="body-head">Trip Details</legend>
 
 				<!-- section 1 start -->
-				<div class="row-source-100-percent-width-with-margin-8">
-					<div class="div-with-20-percent-width-with-margin-10">
+				<div class="row-source-full-100-percent-width-with-margin-8">
+					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
 				
 						<div class=" form-group margin-bottom-0-px">
 						   <?php echo form_label('Voucher Number','voucherno'); ?>
@@ -382,7 +383,7 @@ echo form_close();?></td>
 						   <?php echo form_input(array('name'=>'company','class'=>'form-control voucher-text-box company','id'=>'company','placeholder'=>'Company Name','readonly'=>'true','tabindex'=>"2")); ?>			
 						</div>
 					</div>
-					<div class="div-with-20-percent-width-with-margin-10">
+					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Vehicle','model'); ?>
 							<?php echo form_input(array('name'=>'model','class'=>'form-control voucher-text-box model','placeholder'=>'Vehicle Model','readonly'=>'true','tabindex'=>"13")); 
@@ -394,7 +395,7 @@ echo form_close();?></td>
 						</div>
 											
 					</div>
-					<div class="div-with-20-percent-width-with-margin-10">
+					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Vehicle No.','vehicleno'); ?>
 							<?php echo form_input(array('name'=>'vehicleno','class'=>'form-control voucher-text-box vehicleno','placeholder'=>'Vehicle Number','readonly'=>'true','tabindex'=>"14")); 
@@ -406,11 +407,12 @@ echo form_close();?></td>
 						</div>
 						
 					</div>
-					<div class="div-with-20-percent-width-with-margin-10">
-						<div class=" form-group margin-bottom-0-px">
-							<?php echo form_label('Tariff','tariff'); ?>
-							<?php echo form_input(array('name'=>'tariff','class'=>'form-control voucher-text-box tariff voucher-text-box','placeholder'=>'Tariff','tabindex'=>"14")); 
-							?>
+					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
+						<div class=" form-group margin-bottom-0-px"><?php
+							$id="trip-tariff";
+							$class="form-control voucher-text-box padding-2px";
+						echo form_label('Tariff','triptariflabel'); 
+						echo $this->form_functions->populate_dropdown('tariff',$tariffs='',$tariff='',$class,$id,$msg="Tariffs");?>
 						</div>
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Releasing Place','releasingplace'); ?>
@@ -426,13 +428,13 @@ echo form_close();?></td>
 				<!-- section 1 ends  -->
 				
 				<!-- section 2 start -->				
-				<div class="row-source-100-percent-width-with-margin-8">
+				<div class="row-source-full-100-percent-width-with-margin-8">
 					
-					<div class="div-with-20-percent-width-with-margin-10">
+					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
 				
 						<div class=" form-group margin-bottom-0-px">
 						   <?php echo form_label('Start Date','startdt'); ?>
-						   <?php echo form_input(array('name'=>'startdt','class'=>'form-control voucher-text-box startdt','id'=>'startdt','placeholder'=>'Start Date','tabindex'=>"5")); ?>			
+						   <?php echo form_input(array('name'=>'startdt','class'=>'form-control initialize-date-picker-d-m-Y voucher-text-box startdt','id'=>'startdt','placeholder'=>'Start Date','tabindex'=>"5")); ?>			
 							<span class="start-dt-error text-red"></span>
 						</div>
 						
@@ -443,10 +445,10 @@ echo form_close();?></td>
 						</div>
 					</div>
 					
-					<div class="div-with-20-percent-width-with-margin-10">
+					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('End Date','enddt'); ?>
-							<?php echo form_input(array('name'=>'enddt','class'=>'form-control voucher-text-box enddt','placeholder'=>'End Date','tabindex'=>"6")); ?>
+							<?php echo form_input(array('name'=>'enddt','class'=>'form-control initialize-date-picker-d-m-Y voucher-text-box enddt','placeholder'=>'End Date','tabindex'=>"6")); ?>
 							<span class="end-dt-error text-red"></span>
 						</div>
 						<div class=" form-group margin-bottom-0-px">
@@ -455,7 +457,7 @@ echo form_close();?></td>
 							<span class="end-km-error text-red"></span>
 						</div>
 					</div>
-					<div class="div-with-20-percent-width-with-margin-10">
+					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
 
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Trip Starting Time','tripstartingtime'); ?>
@@ -468,7 +470,7 @@ echo form_close();?></td>
 							?>
 						</div>
 					</div>
-					<div class="div-with-20-percent-width-with-margin-10">
+					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Trip Ending Time','tripendingtimelabel'); ?>
 							<?php echo form_input(array('name'=>'tripendingtime','class'=>'form-control voucher-text-box tripendingtime format-time','placeholder'=>'HH:MM','tabindex'=>"8")); 
@@ -493,15 +495,17 @@ echo form_close();?></td>
 						<?php echo form_label('Gariage Closing Time','gariageclosingtime'); ?>
 						<?php echo form_input(array('name'=>'garageclosingtime','class'=>'form-control voucher-text-box garageclosingtime initialize-time-picker','placeholder'=>'Enter Gariage Closing Time')); 
 						?>
-						<span class="garage-time-error text-red"></span>
+				Trips(		<span class="garage-time-error text-red"></span>
 					</div>
 						
 					
 				</div>
+				</fieldset>
 				<!-- section 2 ends -->
-
+				<fieldset class="body-border">
+   			  <legend class="body-head">Trip Payment</legend>
 				<!-- section 3 start -->
-				<div class="row-source-100-percent-width-with-margin-8">
+				<div class="row-source-full-100-percent-width-with-margin-8">
 					<!-- col 1 -->
 					<div class="div-with-15-percent-width-with-margin-10">
 						
@@ -521,8 +525,8 @@ echo form_close();?></td>
 					<div class="div-with-15-percent-width-with-margin-10">
 						
 						<div class=" form-group margin-bottom-0-px">
-							<?php echo form_label('Base Amount','baseamount'); ?>
-							<?php echo form_input(array('name'=>'baseamount','class'=>'form-control baseamount voucher-text-box','placeholder'=>'Base Amount','tabindex'=>"17")); 
+							<?php echo form_label('Base Amount','basekmamnt'); ?>
+							<?php echo form_input(array('name'=>'basekmamount','class'=>'form-control basekmamount voucher-text-box','placeholder'=>'Base Amount','tabindex'=>"17")); 
 							?>
 						</div>
 						<div class=" form-group margin-bottom-0-px">
@@ -537,13 +541,30 @@ echo form_close();?></td>
 					<div class="div-with-15-percent-width-with-margin-10">
 						
 						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adnl KM Rate','adtkmratelabel'); ?>
+							<?php echo form_input(array('name'=>'adtkmrate','class'=>'form-control adtkmrate voucher-text-box','placeholder'=>'Addnl KM Rate','tabindex'=>"18")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Addnl Hrs Rate','adthrsratelabel'); ?>
+							<?php echo form_input(array('name'=>'adthrsrate','class'=>'form-control adthrsrate voucher-text-box','placeholder'=>'Addnl Hrs Rate')); 
+							?>
+						</div>
+						
+						
+					</div>
+					<!-- col 4 -->
+					<!-- col 3 -->
+					<div class="div-with-15-percent-width-with-margin-10">
+						
+						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Additional KM','adtkm'); ?>
-							<?php echo form_input(array('name'=>'adtkm','class'=>'form-control adtkm voucher-text-box','placeholder'=>'Additional KM','tabindex'=>"18")); 
+							<?php echo form_input(array('name'=>'adtkm','class'=>'form-control adtkm voucher-text-box','placeholder'=>'Additional KM','tabindex'=>"18",'readonly'=>'true')); 
 							?>
 						</div>
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Additional Hrs','adthrs'); ?>
-							<?php echo form_input(array('name'=>'adthrs','class'=>'form-control adthrs voucher-text-box','placeholder'=>'Additional Hrs')); 
+							<?php echo form_input(array('name'=>'adthrs','class'=>'form-control adthrs voucher-text-box','placeholder'=>'Additional Hrs','readonly'=>'true')); 
 							?>
 						</div>
 						
@@ -592,14 +613,26 @@ echo form_close();?></td>
 						
 						
 					</div>
+					<div class="div-with-5-percent-width-with-margin-10">
+						<div class=" form-group margin-top-23-px totamount-radio-container1">
+						<?php echo	form_radio(array('name' => 'totalamountradio','id' => 'totalkmamountradio')); 
+							?>
+						</div>
+						<div class=" form-group margin-top-33-px totamount-radio-container2">
+							<?php echo form_radio(array('name' => 'totalamountradio','id' => 'totalhramountradio')); 
+							?>
+						</div>
+						
+						
+					</div>
 					
-				</div>
+				<!--</div>
 				<!-- section 3 end -->
-
-				<!--  section 4 start -->
-				<div class="row-source-100-percent-width-with-margin-8">
+				
+				<!--  section 4 start
+				<div class="row-source-full-100-percent-width-with-margin-8">-->
 					<!-- col 1 -->
-					<div class="div-with-20-percent-width-with-margin-10">
+					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('State Tax','statetax'); ?>
 							<?php echo form_input(array('name'=>'statetax','class'=>'form-control statetax voucher-text-box','placeholder'=>'Enter State Tax')); 
@@ -613,7 +646,7 @@ echo form_close();?></td>
 						
 					</div>
 					<!-- col 2 -->
-					<div class="div-with-20-percent-width-with-margin-10">
+					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px ">
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Driver Bata','driverbatalabel'); ?>
 							<?php echo form_input(array('name'=>'driverbata','class'=>'form-control driverbata voucher-text-box','placeholder'=>'Enter Driver Bata')); ?>
@@ -627,7 +660,7 @@ echo form_close();?></td>
 						
 					</div>
 					<!-- col 3 -->
-					<div class="div-with-20-percent-width-with-margin-10">
+					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
 						
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Toll Fee','tollfee'); ?>
@@ -635,17 +668,17 @@ echo form_close();?></td>
 					
 						</div>
 						<div class=" form-group margin-bottom-0-px">
-							<?php echo form_label('Vehicle Tarriff Amt','vehicletarif'); ?>
-							<?php echo form_input(array('name'=>'vehicletarif','class'=>'form-control vehicletarif voucher-text-box','placeholder'=>'Amount')); ?>
+							<?php echo form_label('Adt Fuel Charge','adtfuel'); ?>
+							<?php echo form_input(array('name'=>'extrafuel','class'=>'form-control extrafuel voucher-text-box','placeholder'=>'Adt Fuel Charge')); ?>
 					
 						</div>
 						
 					</div>
 					<!-- col 4 -->
-					<div class="div-with-20-percent-width-with-margin-10">
+					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Total Amount','totalamount'); ?>
-							<?php echo form_input(array('name'=>'totalamount','class'=>'form-control totalamount voucher-text-box','placeholder'=>'Total Amount','readonly'=>'true')); ?>
+							<?php echo form_input(array('name'=>'totalamount','class'=>'form-control totalamount voucher-text-box','placeholder'=>'Total Amount','readonly'=>'true','amount-class-to-be-selected'=>'')); ?>
 					
 						</div>
 						<div class=" form-group margin-bottom-0-px">
@@ -660,38 +693,320 @@ echo form_close();?></td>
 						
 					</div>
 					
-					<!-- hidden -->
-					<div class=" form-group margin-bottom-0-px hide-me">
-						<?php echo form_label('Extra Fuel Charge','extrafuel'); ?>
-						<?php echo form_input(array('name'=>'extrafuel','class'=>'form-control extrafuel voucher-text-box','placeholder'=>'Enter Extra Fuel Charge')); ?>
-				
-					</div>
-					<div class=" form-group margin-bottom-0-px hide-me">
-						<?php $class="form-control";
-						$id="tarrif";
-						echo form_label('Tariff','triptariflabel'); 
-						echo $this->form_functions->populate_dropdown('tariff',$tariffs='',$tariff='',$class,$id,$msg="Tariffs");?>
-						<span class="tariff-error text-red"></span>
-					</div>
-					<div class=" form-group margin-bottom-0-px hide-me">
-						<?php echo form_label('Addt KM Rate','adtkmamount'); ?>
-						<?php echo form_input(array('name'=>'adtkmamount','class'=>'form-control adtkmamount voucher-text-box','placeholder'=>'Additional KM Amount')); 
-						?>
-					</div>
-
-					<div class=" form-group margin-bottom-0-px hide-me">
-						<?php echo form_label('KM/HRs','kmhr'); ?>
-						<?php echo form_input(array('name'=>'kmhr','class'=>'form-control kmhr voucher-text-box','placeholder'=>'KM/HRs')); 
-						?>
-					</div>
-
+					
 				</div>
 				<!-- second section ends -->
-
+				</fieldset>
+				<fieldset class="body-border">
+   					 <legend class="body-head">Driver Payment</legend>
+						<div class="row-source-full-100-percent-width-with-margin-8">
+					<!-- col 1 -->
+					<div class="div-with-9-percent-width-with-margin-8">
+						
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Base KM','basekm'); ?>
+							<?php echo form_input(array('name'=>'basedriverkm','class'=>'form-control basedriverkm voucher-text-box','placeholder'=>'Base KM','tabindex'=>"16")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Base Hrs','basehrs'); ?>
+							<?php echo form_input(array('name'=>'basedriverhrs','class'=>'form-control basedriverhrs format-time voucher-text-box','placeholder'=>'Base Hours')); 
+							?>
+						</div>
+						
+					</div>
+					<!-- col 2 -->
+					<div class="div-with-9-percent-width-with-margin-8">
+						
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Base Amount','basekmamt'); ?>
+							<?php echo form_input(array('name'=>'basedriverkmamount','class'=>'form-control basedriverkmamount voucher-text-box','placeholder'=>'Base Amount','tabindex'=>"17")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Base Amount','basehrslabel'); ?>
+							<?php echo form_input(array('name'=>'basedriverhrsamount','class'=>'form-control basedriverhrsamount voucher-text-box','placeholder'=>'Base Hours ')); 
+							?>
+						</div>
+						
+						
+					</div>
+					<!-- col 3 -->
+					<!-- col 3 -->
+					<div class="div-with-9-percent-width-with-margin-8">
+						
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adnl KM Rate','adtkmratelabel'); ?>
+							<?php echo form_input(array('name'=>'adtdriverkmrate','class'=>'form-control adtdriverkmrate voucher-text-box','placeholder'=>'Adnl KM Rate','tabindex'=>"18")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adnl Hr Rate','adthrsratelabel'); ?>
+							<?php echo form_input(array('name'=>'adtdriverhrrate','class'=>'form-control adtdriverhrrate voucher-text-box','placeholder'=>'Adnl Hrs Rate')); 
+							?>
+						</div>
+						
+						
+					</div>
+					<!-- col 4 -->
+					<div class="div-with-9-percent-width-with-margin-8">
+						
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adnl KM','adtkm'); ?>
+							<?php echo form_input(array('name'=>'adtdriverkm','class'=>'form-control adtdriverkm voucher-text-box','placeholder'=>'Additional KM','tabindex'=>"18",'readonly'=>'true')); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adnl Hrs','adthrs'); ?>
+							<?php echo form_input(array('name'=>'adtdriverhrs','class'=>'form-control adtdriverhrs voucher-text-box','placeholder'=>'Additional Hrs','readonly'=>'true')); 
+							?>
+						</div>
+						
+						
+					</div>
+					<!-- col 4 -->
+					<div class="div-with-9-percent-width-with-margin-8">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adl KM Amnt','adlkmamnt'); ?>
+							<?php echo form_input(array('name'=>'aditionaldriverkmamount','class'=>'form-control aditionaldriverkmamount voucher-text-box','placeholder'=>'Aditional Amount','tabindex'=>"15")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adl Hr Amnt','adlhramnt'); ?>
+							<?php echo form_input(array('name'=>'aditionaldriverhramount','class'=>'form-control aditionaldriverhramount voucher-text-box','placeholder'=>'Additional Amount','tabindex'=>"19")); 
+							?>
+						</div>
+						
+						
+					</div>
+					<div class="div-with-5-percent-width-with-margin-10">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Days','daysno'); ?>
+							<?php echo form_input(array('name'=>'daysno','class'=>'form-control daysno voucher-text-box','placeholder'=>'No Of Days','readonly'=>'true','tabindex'=>"15")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Days','daysno'); ?>
+							<?php echo form_input(array('name'=>'daysno','class'=>'form-control daysno voucher-text-box','placeholder'=>'No Of Days','readonly'=>'true','tabindex'=>"15")); 
+							?>
+						</div>
+						
+						
+					</div>
+					<div class="div-with-9-percent-width-with-margin-8">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Tot Amnt','totkmamnt'); ?>
+							<?php echo form_input(array('name'=>'totaldriverkmamount','totamountset'=>'false','class'=>'form-control totaldriverkmamount voucher-text-box','placeholder'=>'Tot Amnt','readonly'=>'true','tabindex'=>"15",'amount-class-to-be-selected'=>'')); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Total Amount','tothramnt'); ?>
+							<?php echo form_input(array('name'=>'totaldriverhramount','totamountset'=>'false','class'=>'form-control totaldriverhramount voucher-text-box','placeholder'=>'Tot Amnt','readonly'=>'true','tabindex'=>"19",'amount-class-to-be-selected'=>'')); 
+							?>
+						</div>
+						
+						
+					</div>
+					<div class="div-with-5-percent-width-with-margin-10">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label(nbs(5).'%'.nbs(2),'commperclabel'); ?>
+							<?php echo form_input(array('name'=>'driverkmcommisionpercentage','class'=>'form-control driverkmcommisionpercentage voucher-text-box','placeholder'=>'','tabindex'=>"15")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label(nbs(5).'%'.nbs(2),'commperclabel'); ?>
+							<?php echo form_input(array('name'=>'driverhrcommisionpercentage','class'=>'form-control driverhrcommisionpercentage voucher-text-box','placeholder'=>'','tabindex'=>"15")); 
+							?>
+						</div>
+						
+						
+					</div>
+					<div class="div-with-9-percent-width-with-margin-8">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Comsn Amnt','comsnamountlabel'); ?>
+							<?php echo form_input(array('name'=>'drivercommisionkmamount','totamountset'=>'false','class'=>'form-control drivercommisionkmamount voucher-text-box','placeholder'=>'Comsn Amnt','readonly'=>'true','tabindex'=>"15")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Comsn Amnt','comsnamountlabel'); ?>
+							<?php echo form_input(array('name'=>'drivercommisionhramount','totamountset'=>'false','class'=>'form-control drivercommisionhramount voucher-text-box','placeholder'=>'Comsn Amnt','readonly'=>'true','tabindex'=>"19")); 
+							?>
+						</div>
+						
+						
+					</div>
+					<div class="div-with-5-percent-width-with-margin-10">
+						<div class=" form-group margin-top-23-px totdriveramount-radio-container1">
+						<?php echo	form_radio(array('name' => 'totaldriveramountradio','id' => 'totaldriverkmamountradio')); 
+							?>
+						</div>
+						<div class=" form-group margin-top-33-px totdriveramount-radio-container2">
+							<?php echo form_radio(array('name' => 'totaldriveramountradio','id' => 'totaldriverhramountradio')); 
+							?>
+						</div>
+						
+						
+					</div>
+					
+				</div>
 				
-
+				</fieldset>
+				<fieldset class="body-border">
+   			 		<legend class="body-head">Vehicle Payment</legend>
+						<div class="row-source-full-100-percent-width-with-margin-8">
+					<!-- col 1 -->
+					<div class="div-with-9-percent-width-with-margin-8">
+						
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Base KM','basekm'); ?>
+							<?php echo form_input(array('name'=>'basevehiclekm','class'=>'form-control basevehiclekm voucher-text-box','placeholder'=>'Base KM','tabindex'=>"16")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Base Hrs','basehrs'); ?>
+							<?php echo form_input(array('name'=>'basevehiclehrs','class'=>'form-control basevehiclehrs format-time voucher-text-box','placeholder'=>'Base Hours')); 
+							?>
+						</div>
+						
+					</div>
+					<!-- col 2 -->
+					<div class="div-with-9-percent-width-with-margin-8">
+						
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Base Amount','basekmamnt'); ?>
+							<?php echo form_input(array('name'=>'basevehiclekmamount','class'=>'form-control basevehiclekmamount voucher-text-box','placeholder'=>'Base Amount','tabindex'=>"17")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Base Amount','basehrslabel'); ?>
+							<?php echo form_input(array('name'=>'basevehiclehrsamount','class'=>'form-control basevehiclehrsamount voucher-text-box','placeholder'=>'Base Hours ')); 
+							?>
+						</div>
+						
+						
+					</div>
+					<!-- col 3 -->
+					<div class="div-with-9-percent-width-with-margin-8">
+						
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adnl KM Rate','adtkmratelabel'); ?>
+							<?php echo form_input(array('name'=>'adtvehiclekmrate','class'=>'form-control adtvehiclekmrate voucher-text-box','placeholder'=>'Addnl KM Rate','tabindex'=>"18")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adnl Hr Rate','adthrsratelabel'); ?>
+							<?php echo form_input(array('name'=>'adtvehiclehrrate','class'=>'form-control adtvehiclehrrate voucher-text-box','placeholder'=>'Addnl Hrs Rate')); 
+							?>
+						</div>
+						
+						
+					</div>
+					<!-- col 4 -->
+					
+					<div class="div-with-9-percent-width-with-margin-8">
+						
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adnl KM','adtkmlabel'); ?>
+							<?php echo form_input(array('name'=>'adtvehiclekm','class'=>'form-control adtvehiclekm voucher-text-box','placeholder'=>'Additional KM','tabindex'=>"18",'readonly'=>'true')); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adnl Hrs','adthrslabel'); ?>
+							<?php echo form_input(array('name'=>'adtvehiclehrs','class'=>'form-control adtvehiclehrs voucher-text-box','placeholder'=>'Additional Hrs','readonly'=>'true')); 
+							?>
+						</div>
+						
+						
+					</div>
+					<!-- col 4 -->
+					<div class="div-with-9-percent-width-with-margin-8">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adnl KM Amnt','adlkmamnt'); ?>
+							<?php echo form_input(array('name'=>'aditionalvehiclekmamount','class'=>'form-control aditionalvehiclekmamount voucher-text-box','placeholder'=>'Aditional Amount','tabindex'=>"15")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Adnl Hr Amnt','adlhramnt'); ?>
+							<?php echo form_input(array('name'=>'aditionalvehiclehramount','class'=>'form-control aditionalvehiclehramount voucher-text-box','placeholder'=>'Additional Amount','tabindex'=>"19")); 
+							?>
+						</div>
+						
+						
+					</div>
+					<div class="div-with-5-percent-width-with-margin-10">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Days','daysno'); ?>
+							<?php echo form_input(array('name'=>'daysno','class'=>'form-control daysno voucher-text-box','placeholder'=>'No Of Days','readonly'=>'true','tabindex'=>"15")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Days','daysno'); ?>
+							<?php echo form_input(array('name'=>'daysno','class'=>'form-control daysno voucher-text-box','placeholder'=>'No Of Days','readonly'=>'true','tabindex'=>"15")); 
+							?>
+						</div>
+						
+						
+					</div>
+					<div class="div-with-9-percent-width-with-margin-8">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Tot Amnt','totkmamnt'); ?>
+							<?php echo form_input(array('name'=>'totalvehiclekmamount','totamountset'=>'false','class'=>'form-control totalvehiclekmamount voucher-text-box','placeholder'=>'Total Amount','readonly'=>'true','tabindex'=>"15",'amount-class-to-be-selected'=>'')); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Tot Amnt','tothramnt'); ?>
+							<?php echo form_input(array('name'=>'totalvehiclehramount','totamountset'=>'false','class'=>'form-control totalvehiclehramount voucher-text-box','placeholder'=>'Total Amount','readonly'=>'true','tabindex'=>"19",'amount-class-to-be-selected'=>'')); 
+							?>
+						</div>
+						
+						
+					</div>
+					<div class="div-with-5-percent-width-with-margin-10">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label(nbs(5).'%'.nbs(2),'commperclabel'); ?>
+							<?php echo form_input(array('name'=>'vehiclekmcommisionpercentage','class'=>'form-control vehiclekmcommisionpercentage voucher-text-box','placeholder'=>'','tabindex'=>"15")); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label(nbs(5).'%'.nbs(2),'commperclabel'); ?>
+							<?php echo form_input(array('name'=>'vehiclehrcommisionpercentage','class'=>'form-control vehiclehrcommisionpercentage voucher-text-box','placeholder'=>'','tabindex'=>"15")); 
+							?>
+						</div>
+						
+						
+					</div>
+					<div class="div-with-9-percent-width-with-margin-8">
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Comsn Amnt','comsnamountlabel'); ?>
+							<?php echo form_input(array('name'=>'vehiclecommisionkmamount','totamountset'=>'false','class'=>'form-control vehiclecommisionkmamount voucher-text-box','placeholder'=>'Comsn Amnt','readonly'=>'true','tabindex'=>"15",'amount-class-to-be-selected'=>'')); 
+							?>
+						</div>
+						<div class=" form-group margin-bottom-0-px">
+							<?php echo form_label('Comsn Amnt','comsnamountlabel'); ?>
+							<?php echo form_input(array('name'=>'vehiclecommisionhramount','totamountset'=>'false','class'=>'form-control vehiclecommisionhramount voucher-text-box','placeholder'=>'Comsn Amnt','readonly'=>'true','tabindex'=>"19",'amount-class-to-be-selected'=>'')); 
+							?>
+						</div>
+						
+						
+					</div>
+					<div class="div-with-5-percent-width-with-margin-10">
+						<div class=" form-group margin-top-23-px totvehicleamount-radio-container1">
+						<?php echo	form_radio(array('name' => 'totalvehicleamountradio','id' => 'totalvehiclekmamountradio')); 
+							?>
+						</div>
+						<div class=" form-group margin-top-33-px totvehicleamount-radio-container2">
+							<?php echo form_radio(array('name' => 'totalvehicleamountradio','id' => 'totalvehiclehramountradio')); 
+							?>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				
+				</fieldset>
 				<!-- controls  -->
-				<div class="row-source-100-percent-width-with-margin-8">
+				<div class="row-source-full-100-percent-width-with-margin-8">
 			   		<div class="box-footer">
 					<?php 
 						echo form_submit("trip-voucher-save","SAVE","class='btn btn-success trip-voucher-save'").nbs(5);  ?>
@@ -699,7 +1014,7 @@ echo form_close();?></td>
 					</div>
 				</div>
 			
-			</fieldset>
+			
 		</div><!-- body -->
 
 		</div>

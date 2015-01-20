@@ -341,9 +341,17 @@ class Tarrif extends CI_Controller {
 		$data['vehicle_ac_type_id']=$_REQUEST['vehicle_ac_type_id'];
 		$data['vehicle_model_id']=$_REQUEST['vehicle_model_id'];
 		$data['tariff_master_id']=$_REQUEST['tariff_master_id'];
-		$data['customer_id']=$this->session->userdata('customer_id');
+		if($_REQUEST['from']=='trip-booking'){
+
+			$data['customer_id']=$this->session->userdata('customer_id');
+
+		}else if($_REQUEST['from']=='trip-voucher'){
+
+			$data['customer_id']=$_REQUEST['customer_id'];
+
+		}
 		$data['organisation_id']=$this->session->userdata('organisation_id');
-		if($this->session->userdata('customer_id')!=''){
+		if($this->session->userdata('customer_id')!='' || $_REQUEST['customer_id']!=''){
 		$res['data']=$this->tarrif_model->getCustomerTariff($data);
 		if(count($res['data'])>0){
 		echo json_encode($res);
