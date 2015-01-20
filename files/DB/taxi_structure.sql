@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 15, 2015 at 06:44 AM
+-- Generation Time: Jan 20, 2015 at 11:40 AM
 -- Server version: 5.5.37-0ubuntu0.13.10.1
 -- PHP Version: 5.5.3-1ubuntu2.6
 
@@ -418,10 +418,13 @@ CREATE TABLE IF NOT EXISTS `rough_estimate` (
   `trip_id` int(11) NOT NULL,
   `time_of_journey` text NOT NULL,
   `distance` text NOT NULL,
-  `charge` text NOT NULL,
+  `min_charge` text NOT NULL,
   `additional_charge` text NOT NULL,
   `min_kilometers` text NOT NULL,
+  `amount` text NOT NULL,
+  `tax_payable` text NOT NULL,
   `total_amt` text NOT NULL,
+  `additional_km` text NOT NULL,
   `organisation_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -707,31 +710,58 @@ CREATE TABLE IF NOT EXISTS `trip_vouchers` (
   `user_id` int(11) NOT NULL,
   `garage_closing_kilometer_reading` double NOT NULL,
   `garage_closing_time` time NOT NULL,
-  `releasing_place` text NOT NULL,
+  `releasingplace` text NOT NULL,
   `parking_fees` double NOT NULL,
   `toll_fees` double NOT NULL,
   `state_tax` double NOT NULL,
   `night_halt_charges` double NOT NULL,
   `fuel_extra_charges` double NOT NULL,
   `no_of_days` int(11) NOT NULL,
+  `trip_start_date` date NOT NULL,
+  `trip_end_date` date NOT NULL,
   `trip_starting_time` time NOT NULL,
   `trip_ending_time` time NOT NULL,
   `total_trip_amount` double NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `voucher_no` int(11) NOT NULL,
-  `km_hr` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 -km tarif,2 hourly tarif',
-  `base_tarif` varchar(50) NOT NULL,
-  `base_amount` double NOT NULL,
-  `adt_tarif` varchar(50) NOT NULL,
-  `adt_tarif_rate` double NOT NULL,
-  `vehicle_tarif` double NOT NULL,
+  `base_kilometer_amount` double NOT NULL,
+  `tariff_id` int(11) NOT NULL,
+  `base_kilometers` double NOT NULL,
+  `base_additional_kilometer_rate` double NOT NULL,
+  `base_km_hr` char(1) NOT NULL,
+  `base_hours` double NOT NULL,
+  `base_hour_amount` double NOT NULL,
+  `base_additional_hour_rate` double NOT NULL,
+  `driver_base_kilometers` double NOT NULL,
+  `driver_base_kilometer_amount` double NOT NULL,
+  `driver_additional_kilometer_rate` double NOT NULL,
+  `driver_km_hr` char(1) NOT NULL,
+  `vehicle_base_kilometers` double NOT NULL,
+  `vehicle_base_kilometer_amount` double NOT NULL,
+  `vehicle_additional_kilometer_rate` double NOT NULL,
+  `vehicle_km_hr` char(1) NOT NULL,
+  `driver_base_hours` double NOT NULL,
+  `driver_base_hours_amount` double NOT NULL,
+  `driver_additional_hour_rate` double NOT NULL,
+  `vehicle_base_hours` double NOT NULL,
+  `vehicle_base_hours_amount` double NOT NULL,
+  `vehicle_additional_hour_rate` double NOT NULL,
+  `driver_payment_percentage` double NOT NULL,
+  `vehicle_payment_percentage` double NOT NULL,
+  `driver_payment_amount` double NOT NULL,
+  `vehicle_payment_amount` double NOT NULL,
+  `remarks` text NOT NULL,
   `delivery_no` int(11) NOT NULL COMMENT 'fa delivery number',
   `invoice_no` int(11) NOT NULL COMMENT 'fa invoice no',
   PRIMARY KEY (`id`),
   KEY `trip_id` (`trip_id`,`organisation_id`,`driver_id`,`user_id`),
-  KEY `delivery_no` (`delivery_no`,`invoice_no`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+  KEY `delivery_no` (`delivery_no`,`invoice_no`),
+  KEY `tariff_id` (`tariff_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `users`
 --

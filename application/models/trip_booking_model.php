@@ -87,14 +87,16 @@ class Trip_booking_model extends CI_Model {
 
 	//generate new voucher for a trip
 	function  generateTripVoucher($data,$tariff_id=-1,$trip_data=array()) {
-
+		$data['organisation_id']=$this->session->userdata('organisation_id');
 		$this->db->set('created', 'NOW()', FALSE);
 		$this->db->insert('trip_vouchers',$data);
 		$trip_voucher_id = $this->db->insert_id();
 		
 		//update trip
 		$trip_id = $data['trip_id'];
-		$trip_data['trip_status_id'] = TRIP_STATUS_TRIP_BILLED;		
+		$trip_data['trip_status_id'] = TRIP_STATUS_TRIP_BILLED;	
+		$trip_data['pick_up_date'] = @$data['trip_start_date'];		
+		$trip_data['drop_date'] = @$data['trip_end_date'];		
 		$trip_data['pick_up_time'] = @$data['trip_starting_time'];		
 		$trip_data['drop_time'] = @$data['trip_ending_time'];
 		
@@ -118,7 +120,9 @@ class Trip_booking_model extends CI_Model {
 		$this->db->update("trip_vouchers",$data);
 		$trip_id=$data['trip_id'];
 
-		$trip_data['trip_status_id'] = TRIP_STATUS_TRIP_BILLED;		
+		$trip_data['trip_status_id'] = TRIP_STATUS_TRIP_BILLED;	
+		$trip_data['pick_up_date'] = @$data['trip_start_date'];		
+		$trip_data['drop_date'] = @$data['trip_end_date'];	
 		$trip_data['pick_up_time'] = @$data['trip_starting_time'];		
 		$trip_data['drop_time'] = @$data['trip_ending_time'];
 		
@@ -127,7 +131,7 @@ class Trip_booking_model extends CI_Model {
 		return $id;
 	}
 
-	function  updateTrip($data,$id,$estimate,$guest) {
+	function  updateTrip($data,$id,$estimate='',$guest='') {
 	$this->db->where('id',$id );
 		//newly added-to be organisation based
 		$org_id=$this->session->userdata('organisation_id');
