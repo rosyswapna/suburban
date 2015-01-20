@@ -839,6 +839,8 @@ if($this->mysession->get('loan_post_all')!=null ){
 			$own_mob='';
 			$own_mail='';
 			$own_dob='';
+			$username='';
+			$password='';
 if($this->mysession->get('owner_post_all')!=null ){
 		$data=$this->mysession->get('owner_post_all');
 			$owner_id=$this->mysession->get('owner_id');
@@ -920,6 +922,27 @@ if($this->mysession->get('owner_post_all')!=null ){
         </div>
 		<div class='hide-me'><?php 
 		echo form_input(array('name'=>'hidden_owner_id','class'=>'form-control','value'=>$owner_id));?></div>
+	
+	<div class="form-group">
+		   <?php echo form_label('Username','usernamelabel');
+			
+			echo form_input(array('name'=>'username','class'=>'form-control','id'=>'username','placeholder'=>'Enter Username','value'=>$username));
+		   ?>			
+		   <?php echo $this->form_functions->form_error_session('username', '<p class="text-red">', '</p>'); ?>
+	</div>
+	
+	<div class="form-group">
+		   <?php echo form_label('Password','passwordlabel');  ?>
+		   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'password','placeholder'=>'Enter Password','value'=>$password)); ?>			
+			<?php echo $this->form_functions->form_error_session('password', '<p class="text-red">', '</p>'); ?>
+	</div>
+	
+	<div class="form-group">
+		   <?php echo form_label('Confirm Password','cpasswordlabel'); ?>
+		   <?php echo form_password(array('name'=>'cpassword','class'=>'form-control','id'=>'cpassword','placeholder'=>'Enter Confirm password')); ?>			
+			<?php echo $this->form_functions->form_error_session('cpassword', '<p class="text-red">', '</p>'); ?>
+	</div>
+		
 		<div class="box-footer">
 		<?php if($owner_id==gINVALID){
 			$btn_name='Save';

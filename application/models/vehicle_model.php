@@ -134,7 +134,9 @@ return true;
 
 }
 
-public function insertOwner($data){
+public function insertOwner($data,$login_id){
+
+	
 	$qry=$this->db->set('created', 'NOW()', FALSE);
 	$v_id=$this->mysession->get('vehicle_id');
 	$qry=$this->db->set('vehicle_id', $v_id);
@@ -152,6 +154,7 @@ public function insertOwner($data){
 	}else{
 		return false;
 	}
+	
 	
 
 }

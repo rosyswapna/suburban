@@ -1,6 +1,9 @@
-/*need to be updated*/
+
 14/01/2015
 ALTER TABLE `rough_estimate` CHANGE `charge` `min_charge` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
 ALTER TABLE `rough_estimate` ADD `additional_km` TEXT NOT NULL AFTER `total_amt`;
 ALTER TABLE `rough_estimate` ADD `amount` TEXT NOT NULL AFTER `min_kilometers`;
 ALTER TABLE `rough_estimate` ADD `tax_payable` TEXT NOT NULL AFTER `amount`;
+/*need to be updated*/
+20/01/2015
+ALTER TABLE `vehicle_owners` ADD `login_id` INT(11) NOT NULL AFTER `user_id`;

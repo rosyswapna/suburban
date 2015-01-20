@@ -32,9 +32,10 @@
 	$id_proof_document_number='';
 	$name_on_id_proof='';
 	$username =	''; 
+	$password =	''; 
 	
 
- if($this->mysession->get('post')!=null){
+ if($this->mysession->get('post')!=null){ 
  $data=$this->mysession->get('post');
 	$driver_id=$this->mysession->get('driver_id');
 	$name=$data['name'];
@@ -68,9 +69,10 @@
 	$id_proof_document_number=$data['id_proof_document_number'];
 	$name_on_id_proof=$data['name_on_id_proof'];
 	$username	=	$data['username']; 
+	$password	=	$data['password']; 
 $this->mysession->delete('post');
 }
- else if(isset($result)&&$result!=null){
+ else if(isset($result)&&$result!=null){ 
    $driver_id=$result['id'];
 	$name=$result['name'];
 	$place_of_birth=$result['place_of_birth'];
@@ -102,7 +104,8 @@ $this->mysession->delete('post');
 	$id_proof_type_id=$result['id_proof_type_id'];
 	$id_proof_document_number=$result['id_proof_document_number'];
 	$name_on_id_proof=$result['name_on_id_proof'];
-	$username	=	$result['username']; 
+	$username	=	$result['username'];
+	$password	=	$result['password'];	
 } 
 ?>
 <?php if($this->session->userdata('dbSuccess') != '') {?>
@@ -460,7 +463,7 @@ $this->mysession->delete('post');
 	   <?php echo $this->form_functions->form_error_session('salary', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
-	<?php echo form_label('Minimum Working Days','usernamelabel'); ?>
+	<?php echo form_label('Minimum Working Days','usernamelabel'); echo  "hi".$username;?>
            <?php $input = array('name'=>'minimum_working_days','class'=>'form-control','id'=>'minimum_working_days','placeholder'=>'Minimum Working Days','value'=>' 25','readonly'=>'readonly');
 		if(!$edit_profile)					
 			$input['disabled'] ='';
@@ -468,7 +471,7 @@ $this->mysession->delete('post');
 	   <?php echo $this->form_functions->form_error_session('minimum_working_days', '<p class="text-red">', '</p>'); ?>
         </div>
 		
-	<?php if($driver_id!='' && $driver_id>0){?>
+	<?php if(!$edit_profile){?>
 		<div class="form-group">
 		   <?php echo form_label('Username','usernamelabel');
 			
@@ -488,16 +491,18 @@ $this->mysession->delete('post');
 		</div>
 
 		<div class="form-group">
-		   <?php echo form_label('Password','passwordlabel'); ?>
+		   <?php echo form_label('Password','passwordlabel');  ?>
 		   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'password','placeholder'=>'Enter Password','value'=>$password)); ?>			
 			<?php echo $this->form_functions->form_error_session('password', '<p class="text-red">', '</p>'); ?>
 		</div>
-		
+		<div class="hide-me"><?php echo form_input(array('name'=>'h_pass','value'=>$password)); ?></div>
+		<?php if($driver_id!='' && $driver_id>gINVALID){  echo '';}else{?>
 		<div class="form-group">
 		   <?php echo form_label('Confirm Password','cpasswordlabel'); ?>
 		   <?php echo form_password(array('name'=>'cpassword','class'=>'form-control','id'=>'cpassword','placeholder'=>'Enter Confirm password')); ?>			
 			<?php echo $this->form_functions->form_error_session('cpassword', '<p class="text-red">', '</p>'); ?>
 		</div>
+		<?php } ?>
 		<?php }?>	
 		
 		
