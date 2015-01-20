@@ -231,6 +231,7 @@ class Customers_model extends CI_Model {
 	}else{
 	$password=md5($login['password']);
 	}
+	//to check whether a customer entry in user table or not..if an entry exists, update its account details
 	if($username!='' && $password!=''){
 	$qry=$this->db->where('id',$id );
 	$qry=$this->db->get("customers");

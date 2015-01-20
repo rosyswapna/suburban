@@ -245,7 +245,7 @@ class user_model extends CI_Model {
 	public function getDriverUser($driver_id)
 	{
 		$org_id=$this->session->userdata('organisation_id');
-		$this->db->select('drivers.*,users.username');
+		$this->db->select('drivers.*,users.username,users.password');
 		$this->db->from('drivers');
 		$this->db->join('users', 'drivers.login_id = users.id','left');
 		$this->db->where(array('drivers.id'=>$driver_id,'drivers.organisation_id'=>$org_id));

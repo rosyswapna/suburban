@@ -1405,7 +1405,7 @@ if(isset($where_arry) || isset($like_arry)){
 			$org_id=$this->session->userdata('organisation_id');
 			$arry=array('id'=>$param2,'organisation_id'=>$org_id);
 			//$data['result']=$this->user_model->getDriverDetails($arry);
-			$data['result']=$this->user_model->getDriverUser($param2);
+			$data['result']=$this->user_model->getDriverUser($param2); 
 			}   
 			//trip details
 			$active_tab = 'd_tab';//default profile tab

@@ -4,6 +4,7 @@ class Vehicle extends CI_Controller {
 		{
 		parent::__construct();
 		$this->load->model("settings_model");
+		$this->load->model("customers_model");
 		$this->load->model("vehicle_model");
 		$this->load->helper('my_helper');
 		no_cache();
@@ -643,7 +644,8 @@ $err=True;
 			$data['user_id']=$this->session->userdata('id');
 			$hphone=$this->input->post('hphone_own');
 			$hmail=$this->input->post('hmail_own');
-			
+			$username=$this->input->post('username');
+			$password=$this->input->post('password');
 			//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
 					$this->form_validation->set_rules('owner_name','Owner Name ','trim|required|xss_clean');
 					 $this->form_validation->set_rules('address','Address','trim|xss_clean');
@@ -688,7 +690,7 @@ $err=True;
 		redirect(base_url().'organization/front-desk/vehicle/'.$current_id,$data);	
 	 }
 	  else{ 
-		$id=$this->mysession->get('vehicle_id');
+		$id=$this->mysession->get('vehicle_id'); 
 		if($id==''){
 		$current_id='';
 		}
@@ -698,8 +700,17 @@ $err=True;
 		 //database insertion for vehicle
 		 if($owner_id==gINVALID ){ 
 			$id=$this->mysession->get('vehicle_id');
-			$res=$this->vehicle_model->insertOwner($data);
-			
+			$login['username']=$username;
+			$login['password']=$password;
+			$dbdata['name']=$this->input->post('owner_name');
+			$dbdata['address']=$this->input->post('address');
+			$dbdata['mobile']=$this->input->post('mobile');
+			$dbdata['email']=$this->input->post('mail');
+			$login_id=$this->customers_model->insertUser($dbdata,$login); 
+			if($login_id>0){
+			$data['login_id']=$login_id;
+			$res=$this->vehicle_model->insertOwner($data,$login_id);
+			}
 			if($res) {
 			
 				//vehicle owner enter as supplier in fa 
