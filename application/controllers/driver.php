@@ -91,8 +91,18 @@ class Driver extends CI_Controller {
 	$dr_id=$this->input->post('hidden_id');
 	$data['organisation_id']=$this->session->userdata('organisation_id'); 
 	$data['user_id']=$this->session->userdata('id'); 
-	
-		$err=True;
+	$hidden_pass=$this->input->post('h_pass');
+	$password=$this->input->post('password');
+	$err=True;
+	if(($this->input->post('username')!='') && ($password=='')){
+			$this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|xss_clean');
+			$err=False;
+			}
+	if(($this->input->post('username')=='') && ($password!='')){
+			$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[12]|xss_clean');
+			$err=False;
+			}
+		
 	/*if($data['blood_group'] ==-1){
 	$data['blood_group'] ='';
 	 $err=False;
@@ -167,10 +177,18 @@ class Driver extends CI_Controller {
 		redirect(base_url().'organization/front-desk/driver-profile',$data);	
 	 } 
 	 else{
+			$login['username']  = trim($this->input->post('username')); 
+			if(  $hidden_pass==$password){
+			$flag=1;
+			$login['password']=$password;
+			}
+			else{
+			$login['password']=$password;
+			}
+		    	
 	//echo "val success";exit;
 		if($dr_id==gINVALID ){
-			$login['username']  = trim($this->input->post('username')); 
-		    	$login['password'] = $this->input->post('password');
+			
 			$res=$this->driver_model->addDriverdetails($data,$login);  
 			//$ins_id=$this->mysession->get('vehicle_id');
 			if($res){
@@ -184,8 +202,13 @@ class Driver extends CI_Controller {
 			}
 		}
 		else{ 
+		if(($this->input->post('username')=='') && ($password=='')){
+		$login['username']='';
+		$login['password']='';
+		
+		}
 			
-			$res=$this->driver_model->UpdateDriverdetails($data,$dr_id);
+			$res=$this->driver_model->UpdateDriverdetails($data,$dr_id,$login,$flag);
 			
 			if($res==true){
 				//edit driver as supplier in fa 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 20, 2015 at 11:40 AM
+-- Generation Time: Jan 20, 2015 at 12:35 PM
 -- Server version: 5.5.37-0ubuntu0.13.10.1
 -- PHP Version: 5.5.3-1ubuntu2.6
 
@@ -1153,6 +1153,7 @@ CREATE TABLE IF NOT EXISTS `vehicle_owners` (
   `dob` date NOT NULL,
   `organisation_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `login_id` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),

@@ -895,6 +895,7 @@ class User extends CI_Controller {
 				$pagedata['customer_group_id']=$result[0]['customer_group_id'];
 				$pagedata['customer_type_id']=$result[0]['customer_type_id'];
 				$pagedata['username']=$result[0]['username'];
+				$pagedata['password']=$result[0]['password'];
 			}
 			$tbl_arry=array('customer_types','customer_groups');
 			
@@ -1404,7 +1405,7 @@ if(isset($where_arry) || isset($like_arry)){
 			$org_id=$this->session->userdata('organisation_id');
 			$arry=array('id'=>$param2,'organisation_id'=>$org_id);
 			//$data['result']=$this->user_model->getDriverDetails($arry);
-			$data['result']=$this->user_model->getDriverUser($param2);
+			$data['result']=$this->user_model->getDriverUser($param2); 
 			}   
 			//trip details
 			$active_tab = 'd_tab';//default profile tab

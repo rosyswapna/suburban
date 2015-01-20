@@ -142,13 +142,24 @@ class Customers extends CI_Controller {
 			$data['address']=$this->input->post('address');
 			$data['customer_group_id']=$this->input->post('customer_group_id');
 			$data['customer_type_id']=$this->input->post('customer_type_id');
-			
+			$hidden_pass=$this->input->post('h_pass');
 			$login['username']  = trim($this->input->post('username'));
-		    $login['password'] = $this->input->post('password');
-			
+			$password = $this->input->post('password');
+			if( $hidden_pass!=''&& $password!='' && $hidden_pass==$password){
+			$flag=1;
+			$login['password']=$password;
+			}
+			else{
+			$login['password']=$password;
+			}
+			if($login['username']!='' && $password==''){
+			$this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|xss_clean');
+			$err=true;
+			}
 			if($customer_id!=gINVALID){ 
 				$hmail=$this->input->post('h_email');
 				$hphone=$this->input->post('h_phone');
+
 			}else{
 				$hmail='';
 				$hphone='';
@@ -176,9 +187,9 @@ class Customers extends CI_Controller {
 			$data['registration_type_id']=CUSTOMER_REG_TYPE_PHONE_CALL;	
 			$data['organisation_id']=$this->session->userdata('organisation_id');	
 			$data['user_id']=$this->session->userdata('id');
-			if($this->form_validation->run() != False) {
+			if($this->form_validation->run() != False && $err!=true) {
 				if($customer_id>gINVALID) {
-				$res=$this->customers_model->updateCustomers($data,$customer_id);
+				$res=$this->customers_model->updateCustomers($data,$customer_id,$login,$flag);
 					if(isset($res) && $res!=false){
 						
 						//------------fa module integration code starts here-----
@@ -208,6 +219,7 @@ class Customers extends CI_Controller {
 				}
 				}else{
 				$data['username']  = trim($this->input->post('username'));
+				$data['password']  = trim($this->input->post('password'));
 				$data['customer_id']=$customer_id;
 				$this->mysession->set('post',$data);
 				if($customer_id==gINVALID){

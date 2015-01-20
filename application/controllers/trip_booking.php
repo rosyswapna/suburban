@@ -298,8 +298,8 @@ class Trip_booking extends CI_Controller {
 				if(isset($data['guestname']) && $_REQUEST['guestname']!='' ){
 				if(isset($_REQUEST['guest_id']) && $_REQUEST['guest_id']==gINVALID){
 				
-				$dbdata1=array('name'=>$data['guestname'],'email'=>$data['guestemail'],'mobile'=>$data['guestmobile'],'registration_type_id'=>$data['registration_type_id']);
-				$data['guest_id']=$this->customers_model->addGuest($dbdata1);
+				$dbdata1=array('name'=>$data['guestname'],'email'=>$data['guestemail'],'mobile'=>$data['guestmobile'],'registration_type_id'=>$data['registration_type_id'],'address'=>'');
+				$data['guest_id']=$this->customers_model->addGuest($dbdata1,$login=true);
 				//------------fa module integration code starts here-----
 				//save customer in fa table
 
