@@ -792,14 +792,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `user_status_id_2` (`user_status_id`),
   KEY `user_type_id` (`user_type_id`),
   KEY `organisation_id_2` (`organisation_id`),
-<<<<<<< HEAD
-  KEY `organisation_admin_id` (`organisation_admin_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
-=======
+
   KEY `organisation_admin_id` (`organisation_admin_id`),
   KEY `fa_account` (`fa_account`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
->>>>>>> 900da72f738abc046da1d721761de03eee7f2e2d
+
 
 -- --------------------------------------------------------
 
