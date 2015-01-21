@@ -525,7 +525,7 @@ class Trip_booking extends CI_Controller {
 				$data["trip_ending_time"]					=	$_REQUEST["trip_ending_time"];
 				$data["start_km_reading"]					=	$_REQUEST["start_km_reading"];
 				$data["end_km_reading"]						=	$_REQUEST["end_km_reading"];
-				$data["releasingplace"]						=	$_REQUEST["releasingplace"];
+				$data["releasing_place"]					=	$_REQUEST["releasing_place"];
 				$data["no_of_days"]							=	$_REQUEST["no_of_days"];
 				$data["base_kilometers"]					=	$_REQUEST["base_kilometers"];
 				$data["base_kilometer_amount"]				=	$_REQUEST["base_kilometer_amount"];
