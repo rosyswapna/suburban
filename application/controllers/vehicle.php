@@ -718,6 +718,7 @@ $err=True;
 			$dbdata['address']=$this->input->post('address');
 			$dbdata['mobile']=$this->input->post('mobile');
 			$dbdata['email']=$this->input->post('mail');
+			$dbdata['user_type_id']=VEHICLE_OWNER;
 			$login_id=$this->customers_model->insertUser($dbdata,$login); 
 			if($login_id>0){
 			$data['login_id']=$login_id;
