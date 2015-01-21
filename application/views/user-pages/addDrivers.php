@@ -463,7 +463,7 @@ $this->mysession->delete('post');
 	   <?php echo $this->form_functions->form_error_session('salary', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
-	<?php echo form_label('Minimum Working Days','usernamelabel'); echo  "hi".$username;?>
+	<?php echo form_label('Minimum Working Days','usernamelabel'); ?>
            <?php $input = array('name'=>'minimum_working_days','class'=>'form-control','id'=>'minimum_working_days','placeholder'=>'Minimum Working Days','value'=>' 25','readonly'=>'readonly');
 		if(!$edit_profile)					
 			$input['disabled'] ='';

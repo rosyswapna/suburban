@@ -7135,3 +7135,66 @@
 [21-Jan-2015 06:33:33 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
 [21-Jan-2015 06:33:34 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
 [21-Jan-2015 06:33:34 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): 
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): 
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): 
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:94: mysql_fetch_assoc() expects parameter 1 to be resource, null given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:88: mysql_fetch_row() expects parameter 1 to be resource, null given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): 
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:61:[before upgrade] mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:61:[before upgrade] mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:156:[before upgrade] mysql_errno() expects parameter 1 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:100:[before upgrade] mysql_fetch_array() expects parameter 1 to be resource, null given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:61:[before upgrade] mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:61:[before upgrade] mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:21:01 Europe/Paris] 2:divya:connect_db.inc:156:[before upgrade] mysql_errno() expects parameter 1 to be resource, boolean given
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): 
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): 
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): 
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:61:[before upgrade] mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:156:[before upgrade] mysql_errno() expects parameter 1 to be resource, boolean given
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:94:[before upgrade] mysql_fetch_assoc() expects parameter 1 to be resource, null given
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:61:[before upgrade] mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:156:[before upgrade] mysql_errno() expects parameter 1 to be resource, boolean given
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:100:[before upgrade] mysql_fetch_array() expects parameter 1 to be resource, null given
+[21-Jan-2015 08:23:34 Europe/Paris] 0::session.inc:127:[before upgrade] session_destroy(): Session object destruction failed
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:27: mysql_connect(): 
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given

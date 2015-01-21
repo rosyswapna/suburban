@@ -42,6 +42,14 @@
         <![endif]-->
     </head>
     <body class="skin-blue">
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var ORGANIZATION_NAME = "<?php echo $this->session->userdata('organisation_name');?>";
+			
+		});
+	</script>
+
+	
 		 <!--modal-->
 		
 		

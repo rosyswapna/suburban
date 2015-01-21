@@ -1,3 +1,5 @@
+<?php //print_r($driver);?>
+
 <div class="page-outer">
 	   <fieldset class="body-border">
 		<legend class="body-head">Manage Vehicles</legend>
@@ -138,7 +140,7 @@
 		$this->mysession->delete('post_all');
 		$this->mysession->delete('post_driver');
 		}
-		 else if(isset($driver)&&isset($vehicle)&& $driver!=null&& $vehicle!=null){ 
+		 else if(isset($vehicle)&& $vehicle!=null){ 
 			$vehicle_id=$vehicle['id'];
 		    $ownership =$vehicle['vehicle_ownership_types_id'];
 			$vehicle_type=$vehicle['vehicle_type_id'];
@@ -839,8 +841,6 @@ if($this->mysession->get('loan_post_all')!=null ){
 			$own_mob='';
 			$own_mail='';
 			$own_dob='';
-			$own_user='';
-			$own_pas='';
 if($this->mysession->get('owner_post_all')!=null ){
 		$data=$this->mysession->get('owner_post_all');
 			$owner_id=$this->mysession->get('owner_id');
@@ -849,8 +849,6 @@ if($this->mysession->get('owner_post_all')!=null ){
 			$own_mob=$data['mobile'];
 			$own_mail=$data['email'];
 			$own_dob=$data['dob'];
-			$own_user=$data['username'];
-			$own_pas=$data['password'];
 		$this->mysession->delete('owner_post_all');
 
 }else if(isset($get_owner)&& $get_owner!=null){
@@ -860,8 +858,6 @@ if($this->mysession->get('owner_post_all')!=null ){
 			$own_mob=$get_owner['mobile'];
 			$own_mail=$get_owner['email'];
 			$own_dob=$get_owner['dob'];
-			$own_user=$get_owner['username'];
-			$own_pas=$get_owner['password'];
 	
 	}
 
@@ -926,28 +922,6 @@ if($this->mysession->get('owner_post_all')!=null ){
         </div>
 		<div class='hide-me'><?php 
 		echo form_input(array('name'=>'hidden_owner_id','class'=>'form-control','value'=>$owner_id));?></div>
-	
-	<div class="form-group">
-		   <?php echo form_label('Username','usernamelabel');
-			
-			echo form_input(array('name'=>'username','class'=>'form-control','id'=>'username','placeholder'=>'Enter Username','value'=>$own_user));
-		   ?>			
-		   <?php echo $this->form_functions->form_error_session('username', '<p class="text-red">', '</p>'); ?>
-	</div>
-	
-	<div class="form-group">
-		   <?php echo form_label('Password','passwordlabel');  ?>
-		   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'password','placeholder'=>'Enter Password','value'=>$own_pas)); ?>			
-			<?php echo $this->form_functions->form_error_session('password', '<p class="text-red">', '</p>'); ?>
-	</div>
-	<div class="hide-me"><?php echo form_input(array('name'=>'h_pass','value'=>$own_pas)); ?></div>
-	 <?php if($owner_id!='' && $owner_id>gINVALID){  echo '';}else{?>
-	<div class="form-group">
-		   <?php echo form_label('Confirm Password','cpasswordlabel'); ?>
-		   <?php echo form_password(array('name'=>'cpassword','class'=>'form-control','id'=>'cpassword','placeholder'=>'Enter Confirm password')); ?>			
-			<?php echo $this->form_functions->form_error_session('cpassword', '<p class="text-red">', '</p>'); ?>
-	</div>
-		<?php }?>
 		<div class="box-footer">
 		<?php if($owner_id==gINVALID){
 			$btn_name='Save';

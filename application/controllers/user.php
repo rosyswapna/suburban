@@ -1668,7 +1668,7 @@ if(isset($where_arry) || isset($like_arry)){
 				
 				if($param2!=null&& is_numeric($param2)){
 				
-				$data['record_values']=$this->user_model->getRecordsById($tbl,$id);
+				$data['record_values']=$this->user_model->getRecordsById($tbl,$id); 
 				$data['driver']=$data['record_values']['driver'];
 				$data['vehicle']=$data['record_values']['vehicle'];//print_r($data['vehicle']);exit;
 				$data['device']=$data['record_values']['device'];
