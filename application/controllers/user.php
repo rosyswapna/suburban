@@ -1694,9 +1694,11 @@ if(isset($where_arry) || isset($like_arry)){
 				$result=$this->user_model->getDriverNameById($driver_id);
 				$data['select']['drivers'][$driver_id]=$result['name'];
 				//for device
+				if(isset($data['device']['device_id'])){
 				$device_id=$data['device']['device_id'];
 				$result=$this->user_model->getDeviceImeiById($device_id);
 				$data['select']['devices'][$device_id]=$result['imei'];
+				}
 				}
 			}
 			//sample ends
