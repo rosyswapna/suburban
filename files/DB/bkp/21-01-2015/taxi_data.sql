@@ -200,12 +200,19 @@ INSERT INTO `vehicle_beacon_light_options` (`id`, `name`, `description`, `value`
 (2, 'Blue', 'Blue', NULL, 1, 5, '2014-09-09 06:23:16', '0000-00-00 00:00:00');
 
 --
--- Dumping data for table `vehicle_driver_bata_percentages`
+-- Dumping data for table `driver_payment_percentages`
 --
 
-INSERT INTO `vehicle_driver_bata_percentages` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, '17percent', '17percent', NULL, 1, 5, '2014-09-09 06:24:25', '0000-00-00 00:00:00'),
-(2, '20percent', '20percent', NULL, 1, 5, '2014-09-09 06:24:39', '0000-00-00 00:00:00');
+INSERT INTO `driver_payment_percentages` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
+(1, '9', '9percent', NULL, 1, 5, '2014-09-09 06:24:25', '0000-00-00 00:00:00');
+
+--
+-- Dumping data for table `vehicle_payment_percentages`
+--
+
+INSERT INTO `vehicle_payment_percentages` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
+(1, '9', '9percent', NULL, 1, 5, '2014-09-09 06:24:25', '0000-00-00 00:00:00');
+
 
 --
 -- Dumping data for table `vehicle_fuel_types`

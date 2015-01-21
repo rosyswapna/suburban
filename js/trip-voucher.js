@@ -111,6 +111,23 @@ $('.voucher').on('click',function(){
 
 				id='#trip-tariff';
 				generateTariffs(vehicle_model_id,vehicle_ac_type_id,tarrif_id,id,customer_id,newvoucher='yes');
+			
+				$.post(base_url+"/trip-booking/getVehicleDriverPercentages",
+				  	{
+					VehicleDriverPercentages:'VehicleDriverPercentages'
+					
+			
+					},function(data){
+						data=jQuery.parseJSON(data);
+						if(data!='false'){
+							if(data.driver!='false'){
+								$('.driverhrpaymentpercentage,.driverkmpaymentpercentage').val(data.driver);
+							}
+							if(data.vehicle!='false'){
+								$('.vehiclehrpaymentpercentage,.vehiclekmpaymentpercentage').val(data.vehicle);
+							}
+						}
+					});
 	
 				
 			}else{
@@ -191,7 +208,7 @@ $('.voucher').on('click',function(){
 					$('.adtvehiclehrrate').val(data[0].vehicle_additional_hour_rate);
     
  
-				
+					
 
 				id='#trip-tariff';
 				res=generateTariffs(vehicle_model_id,vehicle_ac_type_id,data[0].tariff_id,id,customer_id,newvoucher='no');
@@ -1702,11 +1719,12 @@ function calculatePaymentAmount(whom){
 
 totkmamount=$('.total'+whom+'kmamount').val();
 tothramount=$('.total'+whom+'hramount').val();
+noofdays=$('.daysno').val();
 
 kmpaymentpercentage=$('.'+whom+'kmpaymentpercentage').val();
 hrpaymentpercentage=$('.'+whom+'hrpaymentpercentage').val();
 
-if(totkmamount!='' && tothramount!='' && kmpaymentpercentage!='' && hrpaymentpercentage!=''){
+if(totkmamount!='' && (tothramount!='' || Number(noofdays)>1) && kmpaymentpercentage!='' && hrpaymentpercentage!=''){
 
 
 kmcommsn=(Number(totkmamount)*(Number(kmpaymentpercentage)/100)).toFixed(2);

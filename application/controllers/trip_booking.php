@@ -24,6 +24,10 @@ class Trip_booking extends CI_Controller {
 		
 			$this->getAvailableVehicles();
 			
+		}else if($param2=='getVehicleDriverPercentages') {
+		
+			$this->getVehicleDriverPercentages();
+			
 		}else if($param2=='getVehicle') {
 		
 			$this->getVehicle();
@@ -590,6 +594,20 @@ class Trip_booking extends CI_Controller {
 		}
 
 	}	
+	public function getVehicleDriverPercentages(){
+
+	if(isset($_REQUEST['VehicleDriverPercentages'])){
+	
+	$driverpercentage=$this->trip_booking_model->getdriverPercentages();
+	$vehiclepercentage=$this->trip_booking_model->getvehiclePercentages();
+	$percentage['driver']=$driverpercentage[0]['name'];
+	$percentage['vehicle']=$vehiclepercentage[0]['name'];
+	echo json_encode($percentage);
+	}else{
+		echo 'false';
+	}
+
+	}
 
 	public function getVouchers($trip_id='',$ajax='NO'){ 
 	if(isset($_REQUEST['trip_id']) && isset($_REQUEST['ajax'])){ 
