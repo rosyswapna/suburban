@@ -41,8 +41,9 @@ class Login_model extends CI_Model {
 				'username' => $username,
 				'password' => md5($password),
 				);
-
+		$this->db->select('users.*,organisations.name as organisation_name');
         	$this->db->from('users');
+		$this->db->join('organisations','users.organisation_id = organisations.id','left');
         	$this->db->where($filter);
         	$login = $this->db->get()->result();
        
@@ -96,6 +97,7 @@ class Login_model extends CI_Model {
 			'email'=>$this->details->email,
 			'username'=>$this->details->username,
 			'organisation_id'=>$this->details->organisation_id,
+			'organisation_name'=>$this->details->organisation_name,
 			'type'=>$this->details->user_type_id,
 			'isLoggedIn'=>true,
 			'token_pass' =>$this->details->password,
