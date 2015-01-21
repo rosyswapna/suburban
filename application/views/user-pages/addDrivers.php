@@ -552,21 +552,19 @@ $this->mysession->delete('post');
 				<tbody>
 					<tr style="background:#CCC">
 						<th>Trip ID</th>
-					    <th>Start Date</th>
-					    <th>End Date</th>
-						<th>Start Time</th>
-						<th>End Time</th>
-						<!--<th>Releasing Place</th>-->
-						<th>Start Km</th>
-						<th>Close Km</th>
+					    <th>Date</th>
+					    <th>Days</th>
 						<th>Total Km</th>
 						<th>Total Hrs</th>
-						<th>Vehicle Tariff</th>
-						<th>Extra</th>
-						<th>Vehicle Number</th>
-						<th>Voucher Number</th>
 						<th>Over Time</th>
-					    
+						<th>Trip Amount</th>
+						<th>Trip %</th>
+						<th>Toll</th>
+						<th>Halt</th>
+						<th>Bata</th>
+						<th>Parking</th>
+						<th>Tax</th>
+						<th>Fuel</th>
 					</tr>
 					<?php 
 						$repeated_dates=array();					
@@ -639,11 +637,7 @@ $this->mysession->delete('post');
 						<tr>
 							<td><?php echo $trips[$trip_index]['trip_id']; ?></td>
 							<td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
-							<td><?php echo $trips[$trip_index]['drop_date']; ?></td>
-							<td><?php echo $trips[$trip_index]['pick_up_time']; ?></td>
-							<td><?php echo $trips[$trip_index]['drop_time']; ?></td>
-							<td><?php echo $trips[$trip_index]['start_km_reading']; ?></td>
-							<td><?php echo $trips[$trip_index]['end_km_reading']; ?></td>
+							<td><?php echo $no_of_days; ?></td>
 							<td><?php echo $tot_km; ?></td>
 							<td><?php 
 							
@@ -651,10 +645,6 @@ $this->mysession->delete('post');
 							
 							echo $tot_hrs;
 							?></td>
-							<td><?php echo $trips[$trip_index]['vehicle_tarif'];?></td>
-							<td><?php echo $extra; ?></td>
-							<td><?php echo $trips[$trip_index]['registration_number']; ?></td>
-							<td><?php  echo $trips[$trip_index]['voucher_no']; ?></td>
 							<td><?php
 							if($no_of_days>1){
 							$over_time=$tot_hrs-(10*$no_of_days);
@@ -666,11 +656,18 @@ $this->mysession->delete('post');
 							echo $over_time=0;
 							}
 							} 
-						$tot_over_time=$tot_over_time+$over_time;
+							$tot_over_time=$tot_over_time+$over_time;
 						
 							?></td>
-							
-						
+							<td><?php  echo $trips[$trip_index]['driver_payment_amount']; ?></td>
+							<td><?php  echo $trips[$trip_index]['driver_payment_amount']; ?></td>
+							<td><?php  echo $trips[$trip_index]['toll_fees']; ?></td>
+							<td><?php  echo $trips[$trip_index]['night_halt_charges'];?></td>
+							<td><?php  echo $trips[$trip_index]['driver_bata']; ?></td>
+							<td><?php  echo $trips[$trip_index]['parking_fees']; ?></td>
+							<td><?php  echo $trips[$trip_index]['state_tax']; ?></td>
+							<td><?php  echo $trips[$trip_index]['fuel_extra_charges']; ?></td>
+												
 						</tr>
 						<?php } 
 							}				
