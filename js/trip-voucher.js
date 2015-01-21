@@ -154,7 +154,7 @@ $('.voucher').on('click',function(){
 				
 
 				$('.description').val(data[0].remarks);
-				$('.releasingplace').val(data[0].releasingplace);
+				$('.releasingplace').val(data[0].releasing_place);
 				start_time=data[0].trip_starting_time.split(':');
 				$('.tripstartingtime').val(start_time[0]+':'+start_time[1]);
 				end_time=data[0].trip_ending_time.split(':');
@@ -1152,7 +1152,7 @@ $('.trip-voucher-save').on('click',function(){
 	var data={};
     data['voucherno']= voucherno = $('.voucherno').val();
     remarks = $('.description').val();	
-	releasingplace=$('.releasingplace').val();
+	releasing_place=$('.releasingplace').val();
 	tariff_id=$('#trip-tariff').val();
 	
 	data['startdt']=startdt=$('.startdt').val();   
@@ -1256,7 +1256,7 @@ $('.trip-voucher-save').on('click',function(){
 				trip_ending_time:trip_ending_time,
 				start_km_reading:startkm,
 				end_km_reading:endkm,
-				releasingplace:releasingplace,
+				releasing_place:releasing_place,
 				no_of_days:no_of_days,
 				base_kilometers:basekm,
 				base_kilometer_amount:basekmamount,
