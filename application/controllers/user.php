@@ -1684,7 +1684,7 @@ if(isset($where_arry) || isset($like_arry)){
 				
 				}
 				if($owner_id!=gINVALID && $owner_id!=0){
-				$data['get_owner']=$this->user_model->getOwner($owner_id);
+				$data['get_owner']=$this->user_model->getOwner($owner_id); 
 				
 				}
 				
