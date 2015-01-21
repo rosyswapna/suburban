@@ -111,10 +111,6 @@ CREATE TABLE IF NOT EXISTS `0_bank_accounts` (
 -- Dumping data for table `0_bank_accounts`
 --
 
-INSERT INTO `0_bank_accounts` (`account_code`, `account_type`, `bank_account_name`, `bank_account_number`, `bank_name`, `bank_address`, `bank_curr_code`, `dflt_curr_act`, `id`, `last_reconciled_date`, `ending_reconcile_balance`, `inactive`) VALUES
-('1060', 0, 'Current account', 'N/A', 'N/A', '', 'INR', 1, 1, '0000-00-00 00:00:00', 0, 0),
-('1065', 3, 'Petty Cash account', 'N/A', 'N/A', '', 'INR', 0, 2, '0000-00-00 00:00:00', 0, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -591,7 +587,7 @@ CREATE TABLE IF NOT EXISTS `0_debtor_trans` (
   `dimension_id` int(11) NOT NULL DEFAULT '0',
   `dimension2_id` int(11) NOT NULL DEFAULT '0',
   `payment_terms` int(11) DEFAULT NULL,
-  `tax_group_id` int(11) DEFAULT NULL,
+  `tax_group_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`type`,`trans_no`),
   KEY `debtor_no` (`debtor_no`,`branch_code`),
   KEY `tran_date` (`tran_date`),
@@ -682,12 +678,7 @@ CREATE TABLE IF NOT EXISTS `0_fiscal_year` (
 --
 
 INSERT INTO `0_fiscal_year` (`id`, `begin`, `end`, `closed`) VALUES
-(1, '2008-01-01', '2008-12-31', 0),
-(2, '2009-01-01', '2009-12-31', 0),
-(3, '2010-01-01', '2010-12-31', 0),
-(4, '2011-01-01', '2011-12-31', 0),
-(5, '2012-01-01', '2012-12-31', 0),
-(6, '2013-01-01', '2013-12-31', 0);
+(1, '2014-04-01', '2015-03-31', 0);
 
 -- --------------------------------------------------------
 
@@ -798,8 +789,6 @@ CREATE TABLE IF NOT EXISTS `0_item_codes` (
 -- Dumping data for table `0_item_codes`
 --
 
-INSERT INTO `0_item_codes` (`id`, `item_code`, `stock_id`, `description`, `category_id`, `quantity`, `is_foreign`, `inactive`) VALUES
-(1, '101', '101', 'Trip', 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -901,8 +890,6 @@ CREATE TABLE IF NOT EXISTS `0_loc_stock` (
 -- Dumping data for table `0_loc_stock`
 --
 
-INSERT INTO `0_loc_stock` (`loc_code`, `stock_id`, `reorder_level`) VALUES
-('DEF', '101', 0);
 
 -- --------------------------------------------------------
 
@@ -1441,8 +1428,6 @@ CREATE TABLE IF NOT EXISTS `0_stock_master` (
 -- Dumping data for table `0_stock_master`
 --
 
-INSERT INTO `0_stock_master` (`stock_id`, `category_id`, `tax_type_id`, `description`, `long_description`, `units`, `mb_flag`, `sales_account`, `cogs_account`, `inventory_account`, `adjustment_account`, `assembly_account`, `dimension_id`, `dimension2_id`, `actual_cost`, `last_cost`, `material_cost`, `labour_cost`, `overhead_cost`, `inactive`, `no_sale`, `editable`) VALUES
-('101', 1, 1, 'Trip', '', 'km', 'D', '4010', '5010', '1510', '5040', '1530', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1870,7 +1855,7 @@ CREATE TABLE IF NOT EXISTS `0_users` (
 -- Dumping data for table `0_users`
 --
 
-INSERT INTO `0_users` VALUES(1, 'admin', '5f4dcc3b5aa765d61d8327deb882cf99', 'Administrator', 2, '', 'adm@adm.com', 'en_US', 0, 0, 0, 0, 'default', 'Letter', 2, 2, 4, 1, 1, 0, 0, '2008-04-04 12:34:29', 10, 1, 1, '1', 1, 0, 'orders', 0);
+INSERT INTO `0_users` VALUES(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 2, '', 'adm@adm.com', 'en_US', 0, 0, 0, 0, 'default', 'Letter', 2, 2, 4, 1, 1, 0, 0, '2008-04-04 12:34:29', 10, 1, 1, '1', 1, 0, 'orders', 0);
 
 -- --------------------------------------------------------
 

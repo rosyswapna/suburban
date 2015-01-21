@@ -508,39 +508,55 @@ class Trip_booking extends CI_Controller {
 	public function tripVoucher()
 	{
 		
-		if(isset($_REQUEST['startkm']) && isset($_REQUEST['endkm']) && isset($_REQUEST['trip_id'])){
+		if(isset($_REQUEST['start_km_reading']) && isset($_REQUEST['end_km_reading']) && isset($_REQUEST['trip_id'])){
  
 
-			//trip data
-			$data['trip_id']			= $_REQUEST['trip_id'];
-			$trip_data['drop_date']			= date('Y-m-d',strtotime($_REQUEST['enddt']));
-			$trip_data['remarks']			= $_REQUEST['remarks'];
-
-			//trip voucher data
-			
-			$data['start_km_reading']		= $_REQUEST['startkm'];
-			$data['end_km_reading']			= $_REQUEST['endkm'];
-			$data['organisation_id']		= $this->session->userdata('organisation_id');
-			$data['driver_id']			= $_REQUEST['driver_id'];
-			$data['driver_bata']			= $_REQUEST['driverbata'];
-			$data['user_id']			= $this->session->userdata('id');
-			$data['releasing_place']		= $_REQUEST['releasingplace'];
-			$data['parking_fees']			= $_REQUEST['parkingfee'];
-			$data['toll_fees']			= $_REQUEST['tollfee'];
-			$data['state_tax']			= $_REQUEST['statetax'];
-			$data['night_halt_charges']		= $_REQUEST['nighthalt'];
-			$data['no_of_days']			= $_REQUEST['no_of_days'];
-			$data['trip_starting_time']		= $_REQUEST['trip_starting_time'];
-			$data['trip_ending_time']		= $_REQUEST['trip_ending_time'];
-			$data['total_trip_amount']		= $_REQUEST['totalamount'];
-
-			$data['voucher_no']			= $_REQUEST['voucherno'];
-			$data['km_hr']				= $_REQUEST['kmhr'];
-			$data['base_tarif']			= $_REQUEST['basetarif'];
-			$data['base_amount']			= $_REQUEST['baseamount'];
-			$data['adt_tarif']			= $_REQUEST['adttarif'];
-			$data['adt_tarif_rate']			= $_REQUEST['adttarifrate'];
-			$data['vehicle_tarif']			= $_REQUEST['vehicletarif'];
+				$data["trip_id"]							=	$_REQUEST["trip_id"];
+				$data["tariff_id"]							=	$_REQUEST["tariff_id"];
+				$data["remarks"]							=	$_REQUEST["remarks"];
+				$data["voucher_no"]							=	$_REQUEST["voucher_no"];
+				$data["trip_end_date"]						=	date('Y-m-d',strtotime($_REQUEST["trip_end_date"]));
+				$data["trip_start_date"]					=	date('Y-m-d',strtotime($_REQUEST["trip_start_date"]));
+				$data["trip_starting_time"]					=	$_REQUEST["trip_starting_time"];
+				$data["trip_ending_time"]					=	$_REQUEST["trip_ending_time"];
+				$data["start_km_reading"]					=	$_REQUEST["start_km_reading"];
+				$data["end_km_reading"]						=	$_REQUEST["end_km_reading"];
+				$data["releasingplace"]						=	$_REQUEST["releasingplace"];
+				$data["no_of_days"]							=	$_REQUEST["no_of_days"];
+				$data["base_kilometers"]					=	$_REQUEST["base_kilometers"];
+				$data["base_kilometer_amount"]				=	$_REQUEST["base_kilometer_amount"];
+				$data["base_additional_kilometer_rate"]		=	$_REQUEST["base_additional_kilometer_rate"];
+				$data["base_km_hr"]							=	$_REQUEST["base_km_hr"];
+				$data["base_hours"]							=	$_REQUEST["base_hours"];
+				$data["base_hour_amount"]					=	$_REQUEST["base_hour_amount"];
+				$data["base_additional_hour_rate"]			=	$_REQUEST["base_additional_hour_rate"];
+				$data["driver_base_kilometers"]				=	$_REQUEST["driver_base_kilometers"];
+				$data["driver_base_kilometer_amount"]		=	$_REQUEST["driver_base_kilometer_amount"];
+				$data["driver_additional_kilometer_rate"]	=	$_REQUEST["driver_additional_kilometer_rate"];
+				$data["driver_km_hr"]						=	$_REQUEST["driver_km_hr"];
+				$data["driver_payment_percentage"]			=	$_REQUEST["driver_payment_percentage"];
+				$data["driver_payment_amount"]				=	$_REQUEST["driver_payment_amount"];
+				$data["driver_base_hours"]					=	$_REQUEST["driver_base_hours"];
+				$data["driver_base_hours_amount"]			=	$_REQUEST["driver_base_hours_amount"];
+				$data["driver_additional_hour_rate"]		=	$_REQUEST["driver_additional_hour_rate"];
+				$data["vehicle_base_kilometers"]			=	$_REQUEST["vehicle_base_kilometers"];
+				$data["vehicle_base_kilometer_amount"]		=	$_REQUEST["vehicle_base_kilometer_amount"];
+				$data["vehicle_additional_kilometer_rate"]	=	$_REQUEST["vehicle_additional_kilometer_rate"];
+				$data["vehicle_km_hr"]						=	$_REQUEST["vehicle_km_hr"];
+				$data["vehicle_payment_percentage"]			=	$_REQUEST["vehicle_payment_percentage"];
+				$data["vehicle_payment_amount"]				=	$_REQUEST["vehicle_payment_amount"];
+				$data["vehicle_base_hours"]					=	$_REQUEST["vehicle_base_hours"];
+				$data["vehicle_base_hours_amount"]			=	$_REQUEST["vehicle_base_hours_amount"];
+				$data["vehicle_additional_hour_rate"]		=	$_REQUEST["vehicle_additional_hour_rate"];
+				$data["parking_fees"]						=	$_REQUEST["parking_fees"];
+				$data["toll_fees"]							=	$_REQUEST["toll_fees"];
+				$data["state_tax"]							=	$_REQUEST["state_tax"];
+				$data["night_halt_charges"]					=	$_REQUEST["night_halt_charges"];
+				$data["driver_bata"]						=	$_REQUEST["driver_bata"];
+				$data["fuel_extra_charges"]					=	$_REQUEST["fuel_extra_charges"];
+				$data["driver_id"]							=	$_REQUEST["driver_id"];
+				$data["total_trip_amount"]					=	$_REQUEST["total_trip_amount"];
+				//$data["tax_group"]							=	$_REQUEST["tax_group"];
 				
 				if($_REQUEST['tax_group']){
 					$this->mysession->set('tax_group',$_REQUEST['tax_group']);
@@ -551,10 +567,10 @@ class Trip_booking extends CI_Controller {
 			$voucher=$this->getVouchers($data['trip_id'],$ajax='NO');
 			$ret = array();
 			if($voucher==false){
-				$res=$this->trip_booking_model->generateTripVoucher($data,-1,$trip_data);
+				$res=$this->trip_booking_model->generateTripVoucher($data,-1,$trip_data='');
 
 				}else{
-				$res=$this->trip_booking_model->updateTripVoucher($data,$voucher[0]->id,-1,$trip_data);
+				$res=$this->trip_booking_model->updateTripVoucher($data,$voucher[0]->id,-1,$trip_data='');
 
 				}
 				$voucher = $this->trip_booking_model->getVoucher($res);

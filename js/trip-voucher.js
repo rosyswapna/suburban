@@ -36,6 +36,7 @@ var r = confirm("Please Select Vehicle Model To Complete The Trip..Click OK to C
 			//ends function		
 
 $('.voucher').on('click',function(){ 
+	clearAllFields();
 	var new_voucher = $(this).attr('new_voucher');
 	var trip_id=$(this).attr('trip_id');
 	var driver_id=$(this).attr('driver_id');
@@ -60,8 +61,6 @@ $('.voucher').on('click',function(){
 	if(vehicle_ac_type_id==-1){
 		vehicle_ac_type_id=1;
 	}
-	id='#trip-tariff';
-	generateTariffs(vehicle_model_id,vehicle_ac_type_id,tarrif_id,id,customer_id);
 	
 
 	$('.overlay-container').css('display','block');
@@ -74,16 +73,25 @@ $('.voucher').on('click',function(){
 	$('.trip-voucher-save').attr('driver_id',driver_id);
 	$('.trip-voucher-save').attr('new_voucher',new_voucher);
 
+	if(new_voucher==0){
 
+		$('.totaldriverkmamount').attr('totamountset','true');
+		$('.totalvehiclekmamount').attr('totamountset','true');
+		$('.totaldriverhramount').attr('totamountset','true');
+		$('.totalvehiclehramount').attr('totamountset','true');
 
-	$('.customer').val(customer_name);
-	$('.company').val(company_name);
-	$('.startdt').val(formatDate_d_m_Y(pick_up_date));
-	$('.enddt').val(formatDate_d_m_Y(drop_date));
-	$('.model').val(model);
-	$('.vehicleno').val(vehicle_no);
-	$('.description').val(description);
+	}else{
+		$('.totaldriverkmamount').attr('totamountset','false');
+		$('.totalvehiclekmamount').attr('totamountset','false');
+		$('.totaldriverhramount').attr('totamountset','false');
+		$('.totalvehiclehramount').attr('totamountset','false');
+	}
 
+	
+				$('.customer').val(customer_name);
+				$('.company').val(company_name);
+				$('.model').val(model);
+				$('.vehicleno').val(vehicle_no);
 
 
 
@@ -97,74 +105,143 @@ $('.voucher').on('click',function(){
 				start_time=pick_up_time.split(':');
 				$('.tripstartingtime').val(start_time[0]+':'+start_time[1]);
 				
+				$('.startdt').val(formatDate_d_m_Y(pick_up_date));
+				$('.enddt').val(formatDate_d_m_Y(drop_date));
+				$('.description').val(description);
+
+				id='#trip-tariff';
+				generateTariffs(vehicle_model_id,vehicle_ac_type_id,tarrif_id,id,customer_id,newvoucher='yes');
+	
+				
 			}else{
 				var total_km = data[0].end_km_reading-data[0].start_km_reading;
-				if(pick_up_date!='' && data[0].trip_starting_time!='' && drop_date!='' && data[0].trip_ending_time!='' && data[0].trip_starting_time!=''){
-					var time_diff = timeDifference(pick_up_date,data[0].trip_starting_time,drop_date,data[0].trip_ending_time);
+				if(data[0].trip_start_date!='' && data[0].trip_starting_time!='' && data[0].trip_end_date!='' && data[0].trip_ending_time!='' ){
+					var time_diff = timeDifference(data[0].trip_start_date,data[0].trip_starting_time,data[0].trip_end_date,data[0].trip_ending_time);
 				
-				time_diff = time_diff.split('-');
+					time_diff = time_diff.split('-');
 					$('.triptime').val(time_diff[1]+':'+time_diff[2]);
 				
 				
 				}
 
 				
-				
-				$('.daysno').val(data[0].no_of_days);
 				//set_tarif_row_with_daysno(data[0].no_of_days);
 
+				$('.voucherno').val(data[0].voucher_no);
+				$('.voucherno').attr('readonly','true');
+
+				$('.startdt').val(formatDate_d_m_Y(data[0].trip_start_date));
+				$('.enddt').val(formatDate_d_m_Y(data[0].trip_end_date));
 				$('.startkm').val(data[0].start_km_reading);
 				$('.endkm').val(data[0].end_km_reading);
-				$('.totalkm').val(total_km);
-				$('.garageclosingkm').val(data[0].garage_closing_kilometer_reading);
-				$('.garageclosingtime').val(data[0].garage_closing_time);
-				$('.releasingplace').val(data[0].releasing_place);
-				$('.parkingfee').val(data[0].parking_fees);
-				$('.tollfee').val(data[0].toll_fees);
-				$('.statetax').val(data[0].state_tax);
+				
+
+				$('.description').val(data[0].remarks);
+				$('.releasingplace').val(data[0].releasingplace);
 				start_time=data[0].trip_starting_time.split(':');
 				$('.tripstartingtime').val(start_time[0]+':'+start_time[1]);
 				end_time=data[0].trip_ending_time.split(':');
 				$('.tripendingtime').val(end_time[0]+':'+end_time[1]);
+	
+				$('.daysno').val(data[0].no_of_days);
 				
-			
+				$('.parkingfee').val(data[0].parking_fees);
+				$('.tollfee').val(data[0].toll_fees);
+				$('.statetax').val(data[0].state_tax);
 				$('.nighthalt').val(data[0].night_halt_charges);
 				$('.extrafuel').val(data[0].fuel_extra_charges);
 				$('.driverbata').val(data[0].driver_bata);
-
-				$('.vehicletarif').val(data[0].vehicle_tarif);//need to b changed
-
-				$('.voucherno').val(data[0].voucher_no);
-				$('.kmhr').val(data[0].km_hr);
+		
+				$('.basekm').val(data[0].base_kilometers);
+				$('.basekmamount').val(data[0].base_kilometer_amount);
+				$('.adtkmrate').val(data[0].base_additional_kilometer_rate);
 				
-				if(data[0].km_hr == hr_flag){
-					$('.basehrs').val(data[0].base_tarif);
-					$('.basehrsamount').val(data[0].base_amount);
-					$('.adthrs').val(data[0].adt_tarif);
-					$('.adlhrrate').val(data[0].adt_tarif_rate);
-					setHR_Tariff(data[0].base_tarif,data[0].base_amount,data[0].adt_tarif_rate);
-				}else if(data[0].km_hr == km_flag && data[0].no_of_days > 1){
-						$('.perdaykm').val(data[0].base_tarif);
-						$('.perdaykmamount').val(data[0].base_amount);
-						$('.adtperdaykm').val(data[0].adt_tarif);
-						$('.adtperdaykmrate').val(data[0].adt_tarif_rate);
-						setPerDay_Tariff(data[0].base_tarif,data[0].base_amount,data[0].adt_tarif_rate);
-				} else{
-						$('.basekm').val(data[0].base_tarif);
-						$('.baseamount').val(data[0].base_amount);
-						$('.adtkm').val(data[0].adt_tarif);
-						$('.adlkmrate').val(data[0].adt_tarif_rate);
-						setKM_Tariff(data[0].base_tarif,data[0].base_amount,data[0].adt_tarif_rate);
+				$('.basedriverkm').val(data[0].driver_base_kilometers);
+				$('.basedriverkmamount').val(data[0].driver_base_kilometer_amount);
+				$('.adtdriverkmrate').val(data[0].driver_additional_kilometer_rate);
+	
+					 
+					 $('.driverhrpaymentpercentage').val(data[0].driver_payment_percentage);
+					 $('.driverkmpaymentpercentage').val(data[0].driver_payment_percentage);
+					//click here
+					 $('.driverhrpaymentpercentage').trigger('click');
+
+					$('.basevehiclekm').val(data[0].vehicle_base_kilometers);
+				    $('.basevehiclekmamount').val(data[0].vehicle_base_kilometer_amount);
+					$('.adtvehiclekmrate').val(data[0].vehicle_additional_kilometer_rate);
+				
+					
+					$('.vehiclehrpaymentpercentage').val(data[0].vehicle_payment_percentage);
+					$('.vehiclekmpaymentpercentage').val(data[0].vehicle_payment_percentage);
+					//click here
+					 $('.vehiclekmpaymentpercentage').trigger('click');
+				   
+					$('.basehrs').val(data[0].base_hours);
+					$('.basehrsamount').val(data[0].base_hour_amount);
+					$('.adthrsrate').val(data[0].base_additional_hour_rate);
+		
+		
+					$('.basedriverhrs').val(data[0].driver_base_hours);
+					$('.basedriverhrsamount').val(data[0].driver_base_hours_amount);
+					$('.adtdriverhrrate').val(data[0].driver_additional_hour_rate);
+		
+	
+					$('.basevehiclehrs').val(data[0].vehicle_base_hours);
+				   	$('.basevehiclehrsamount').val(data[0].vehicle_base_hours_amount);
+					$('.adtvehiclehrrate').val(data[0].vehicle_additional_hour_rate);
+    
+ 
+				
+
+				id='#trip-tariff';
+				res=generateTariffs(vehicle_model_id,vehicle_ac_type_id,data[0].tariff_id,id,customer_id,newvoucher='no');
+				if(res===true){		
+				
+				setTimeout(function(){ 
+				//click here
+				 $('.endkm').trigger('click');
+				 $('.tripendingtime').trigger('click');
+				if(data[0].base_km_hr=='H'){
+						$('.totalamount').attr('amount-class-to-be-selected','totalhramount');
+						//click here
+						$('.totamount-radio-container2 > .iradio_minimal > .iCheck-helper').trigger('click');
+				}else if(data[0].base_km_hr=='K'){
+				 		$('.totalamount').attr('amount-class-to-be-selected','totalkmamount');
+						//click here
+						$('.totamount-radio-container1 > .iradio_minimal > .iCheck-helper').trigger('click');
 				}
-				
-				
-
-			
+				if(data[0].driver_km_hr=='H'){
+						 $('.totaldriverkmamount').attr('amount-class-to-be-selected','totaldriverhramount');
+						//click here
+						$('.totdriveramount-radio-container2 > .iradio_minimal > .iCheck-helper').trigger('click');
+						
+				}else if(data[0].driver_km_hr=='K'){
+				 		$('.totaldriverkmamount').attr('amount-class-to-be-selected','totaldriverkmamount');
+						//click here
+						$('.totdriveramount-radio-container1 > .iradio_minimal > .iCheck-helper').trigger('click');
+						
+				}	
+				if(data[0].vehicle_km_hr=='H'){
+						$('.totalvehiclekmamount').attr('amount-class-to-be-selected','totalvehiclehramount');
+						//click here
+						$('.totvehicleamount-radio-container2 > .iradio_minimal > .iCheck-helper').trigger('click');
+						
+				}else if(data[0].vehicle_km_hr=='K'){
+				 		$('.totalvehiclekmamount').attr('amount-class-to-be-selected','totalvehiclekmamount');
+						//click here
+						$('.totvehicleamount-radio-container1 > .iradio_minimal > .iCheck-helper').trigger('click');
+							 
+				}
+				 }, 1000);
 			
 			}
+			}
 		});
+	
+		
 			
 });
+
 
 
 //formatting date
@@ -260,12 +337,13 @@ function timeDifference(fromdate,fromtime,todate,totime){
 
 $('.modal-close').on('click',function(){
 	clearErrorLabels();
+	clearAllFields();
 	resetTax();
 
 });
 
 //calculate total km readming
-$('.endkm').keyup(function(e) {
+$('.endkm').on('click keyup blur',function(e) {
 	var start = $('.startkm').val();
 	var end = $(this).val();
 	var total = end - start;
@@ -273,7 +351,7 @@ $('.endkm').keyup(function(e) {
 	
 });
 
-$('.startkm').keyup(function(e) {
+$('.startkm').on('click keyup  blur',function(e) {
 	var end = $('.endkm').val();
 	var start = $(this).val();
 	var total = end - start;
@@ -303,7 +381,7 @@ $('.startkm').keyup(function(e) {
 }*/
 
 //calculate total hrs readming
-$('.tripendingtime').blur(function(e) {
+$('.tripendingtime').on('click blur',function(e) {
 	var start = $('.tripstartingtime').val();
 	var end = $('.tripendingtime').val();
 	var fromdate=formatDate_Y_m_d($('#startdt').val()); 
@@ -318,9 +396,15 @@ $('.tripendingtime').blur(function(e) {
 			enablehrfields();
 			setHR_Tariff();
 			setKM_Tariff();
+			setCustomKM_Tariff('driver');
+			setCustomKM_Tariff('vehicle');
+			setCustomHR_Tariff('driver');
+			setCustomHR_Tariff('vehicle');
 		}else{
 			enablekmfields();
 			setKM_Tariff();
+			setCustomKM_Tariff('driver');
+			setCustomKM_Tariff('vehicle');
 			disablehrfields();
 			//clearkmfields();
 			//clearhrfields();
@@ -335,7 +419,7 @@ $('.tripendingtime').blur(function(e) {
 	}
 });
 
-$('.tripstartingtime').blur(function(e) {
+$('.tripstartingtime').on('blur click',function(e) {
 	var end = $('.tripendingtime').val();
 	var start =$('.tripstartingtime').val();
 	var fromdate=formatDate_Y_m_d($('#startdt').val());
@@ -349,9 +433,16 @@ $('.tripstartingtime').blur(function(e) {
 	enablekmfields();
 	enablehrfields();
 	setHR_Tariff()
+	setKM_Tariff();
+	setCustomKM_Tariff('driver');
+	setCustomKM_Tariff('vehicle');
+	setCustomHR_Tariff('driver');
+	setCustomHR_Tariff('vehicle');
 	}else{
 	enablekmfields();
 	setKM_Tariff();
+	setCustomKM_Tariff('driver');
+	setCustomKM_Tariff('vehicle');
 	disablehrfields();
 	//clearkmfields();
 	//clearhrfields();
@@ -361,11 +452,10 @@ $('.tripstartingtime').blur(function(e) {
 	$('.daysno').val('');
 	enablekmfields();
 	enablehrfields();
-	enableperdayfields();
 	}
 });
 
-$('.enddt').blur(function(e) {
+$('.enddt').on('blur click',function(e) {
 	var end = $('.tripendingtime').val();
 	var start = $('.tripstartingtime').val();
 	var fromdate=formatDate_Y_m_d($('#startdt').val());
@@ -380,9 +470,15 @@ $('.enddt').blur(function(e) {
 	enablehrfields();
 	setHR_Tariff();
 	setKM_Tariff();
+	setCustomKM_Tariff('driver');
+	setCustomKM_Tariff('vehicle');
+	setCustomHR_Tariff('driver');
+	setCustomHR_Tariff('vehicle');
 	}else{
 	enablekmfields();
 	setKM_Tariff();
+	setCustomKM_Tariff('driver');
+	setCustomKM_Tariff('vehicle');
 	disablehrfields();
 	//clearkmfields();
 	//clearhrfields();
@@ -397,9 +493,11 @@ $('.enddt').blur(function(e) {
 	
 });
 
-$('.startkm,.endkm').blur(function(){
+$('.startkm,.endkm').on('click blur',function(){
 if($('.startkm').val()!='' && $('.endkm').val()!='' ){
 setKM_Tariff();
+setCustomKM_Tariff('driver');
+setCustomKM_Tariff('vehicle');
 }
 });
 
@@ -410,6 +508,7 @@ $(document).keydown(function(e) {
   
   if (e.keyCode == 27) { 
 	clearErrorLabels();
+	clearAllFields();
  }   // esc
 
 });
@@ -450,16 +549,19 @@ $('.basekm').attr('disabled','true');
 $('.baseamount').attr('disabled','true');
 $('.adlkmrate').attr('disabled','true');
 $('.adtkmrate').attr('disabled','true');
+$('.totamount-radio-container1').hide();
 
 $('.basedriverkm').attr('disabled','true');
 $('.basedriveramount').attr('disabled','true');
 $('.adldriverkmrate').attr('disabled','true');
 $('.adtdriverkmrate').attr('disabled','true');
+$('.totdriveramount-radio-container1').hide();
 
 $('.basevehiclekm').attr('disabled','true');
 $('.basevehicleamount').attr('disabled','true');
 $('.adlvehiclekmrate').attr('disabled','true');
 $('.adtvehiclekmrate').attr('disabled','true');
+$('.totvehicleamount-radio-container1').hide();
 }
 function clearkmfields(){
 total_tarif = 0;
@@ -475,20 +577,25 @@ function disablehrfields(){
 $('.basehrs').attr('disabled','true');
 $('.basehrsamount').attr('disabled','true');
 $('.adlhrrate').attr('disabled','true');
-$('.aditionalhramount').attr('disabled','true');
+//$('.aditionalhramount').attr('disabled','true');
 $('.adthrsrate').attr('disabled','true');
+$('.totamount-radio-container2').hide();
 
 $('.basedriverhrs').attr('disabled','true');
 $('.basedriverhrsamount').attr('disabled','true');
 $('.adldriverhrrate').attr('disabled','true');
 $('.aditionaldriverhramount').attr('disabled','true');
 $('.adtdriverhrrate').attr('disabled','true');
+$('.totdriveramount-radio-container2').hide();
 
 $('.basevehiclehrs').attr('disabled','true');
 $('.basevehiclehrsamount').attr('disabled','true');
 $('.adlvehiclehrrate').attr('disabled','true');
 $('.aditionalvehiclehramount').attr('disabled','true');
 $('.adtvehiclehrrate').attr('disabled','true');
+$('.totvehicleamount-radio-container2').hide();
+
+
 }
 
 function clearhrfields(){
@@ -506,46 +613,110 @@ $('.basekm').removeAttr('disabled');
 $('.baseamount').removeAttr('disabled');
 $('.adlkmrate').removeAttr('disabled');
 $('.adtkmrate').removeAttr('disabled');
+$('.totamount-radio-container1').show();
 
 $('.basedriverkm').removeAttr('disabled');
 $('.basedriveramount').removeAttr('disabled');
 $('.adldriverkmrate').removeAttr('disabled');
 $('.adtdriverkmrate').removeAttr('disabled');
+$('.totdriveramount-radio-container1').show();
 
 $('.basevehiclekm').removeAttr('disabled');
 $('.basevehicleamount').removeAttr('disabled');
 $('.adlvehiclekmrate').removeAttr('disabled');
 $('.adtvehiclekmrate').removeAttr('disabled');
-
+$('.totvehicleamount-radio-container1').show();
 }
 
 function enablehrfields(){
 $('.basehrs').removeAttr('disabled');
 $('.basehrsamount').removeAttr('disabled');
 $('.adlhrrate').removeAttr('disabled');
-$('.aditionalhramount').removeAttr('disabled');
+//$('.aditionalhramount').removeAttr('disabled');
 $('.adthrsrate').removeAttr('disabled');
+$('.totamount-radio-container2').show();
 
 $('.basedriverhrs').removeAttr('disabled');
 $('.basedriverhrsamount').removeAttr('disabled');
 $('.adldriverhrrate').removeAttr('disabled');
 $('.aditionaldriverhramount').removeAttr('disabled');
 $('.adtdriverhrrate').removeAttr('disabled');
+$('.totdriveramount-radio-container2').show();
 
 $('.basevehiclehrs').removeAttr('disabled');
 $('.basevehiclehrsamount').removeAttr('disabled');
 $('.adlvehiclehrrate').removeAttr('disabled');
 $('.aditionalvehiclehramount').removeAttr('disabled');
 $('.adtvehiclehrrate').removeAttr('disabled');
+$('.totvehicleamount-radio-container2').show();
 }
 
 
 
 //clear all tariff inputs
-function clearAllTariff(){
-	clearkmfields();
-	clearhrfields();
-	clearperdaykmfields();
+function clearAllFields(){
+$('.voucherno').val('');
+$('.voucherno').removeAttr('readonly');
+$('.startdt').val('');
+$('.enddt').val('');
+$('.startkm').val('');
+$('.endkm').val('');
+$('.description').val('');
+$('.releasingplace').val('');
+$('.tripstartingtime').val('');
+$('.tripendingtime').val('');
+$('.daysno').val('');
+$('.parkingfee').val('');
+$('.tollfee').val('');
+$('.statetax').val('');
+$('.nighthalt').val('');
+$('.extrafuel').val('');
+$('.driverbata').val('');
+$('.basekm').val('');
+$('.basekmamount').val('');
+$('.adtkmrate').val('');
+$('.adtkm').val('');
+$('.adthrs').val('');
+$('.aditionalkmamount').val('');
+$('.aditionalhramount').val('');
+$('.totaldriverkmamount').val('');
+$('.totaldriverhramount').val('');
+$('.driverpaymentkmamount').val('');
+$('.driverpaymenthramount').val('');
+$('.aditionaldriverkmamount').val('');
+$('.aditionaldriverhramount').val('');
+$('.totalkmamount').val('');
+$('.totalhramount').val('');
+$('.adtvehiclekm').val('');
+$('.adtvehiclehrs').val('');
+$('.aditionalvehiclekmamount').val('');
+$('.aditionalvehiclehramount').val('');
+$('.totalvehiclekmamount').val('');
+$('.totalvehiclehramount').val('');
+$('.vehiclepaymentkmamount').val('');
+$('.vehiclepaymenthramount').val('');
+$('.totalamount').val(''); 
+ $('.adtdriverkm').val(''); 
+ $('.adtdriverhrs').val(''); 
+$('.basedriverkm').val('');
+$('.basedriverkmamount').val('');
+$('.adtdriverkmrate').val('');
+$('.driverhrpaymentpercentage').val('');
+$('.driverkmpaymentpercentage').val('');
+$('.basevehiclekm').val('');
+$('.basevehiclekmamount').val('');
+$('.adtvehiclekmrate').val('');
+$('.vehiclehrpaymentpercentage').val('');
+$('.vehiclekmpaymentpercentage').val('');
+$('.basehrs').val('');
+$('.basehrsamount').val('');
+$('.adthrsrate').val('');
+$('.basedriverhrs').val('');
+$('.basedriverhrsamount').val('');
+$('.adtdriverhrrate').val('');
+$('.basevehiclehrs').val('');
+$('.basevehiclehrsamount').val('');
+$('.adtvehiclehrrate').val('');
 }
 
 
@@ -555,7 +726,7 @@ function setKM_Tariff()
 {
 	var basekm=$('.basekm').val();
 	var basekmamount=$('.basekmamount').val();
-	var tariff_id=$('.trip-tariff').val();
+	var tariff_id=$('#trip-tariff').val();
 	var adlkmrate=$('.adtkmrate').val();
 	var totalkm=$('.totalkm').val();
 	var noofdays=$('.daysno').val();
@@ -718,8 +889,7 @@ function setKM_Tariff()
 			}
 		}
 		compareAmounts();
-		//$('.kmhr').val( km_flag);
-		//setTotalAmount();
+		
 		
 	}else{
 		//clearAllTariff();
@@ -730,7 +900,7 @@ function setHR_Tariff()
 {
 	
 	var basehrs=$('.basehrs').val();
-	var tariff_id=$('.trip-tariff').val();
+	var tariff_id=$('#trip-tariff').val();
 	var basehrsamount=$('.basehrsamount').val();
 	var adlhrrate=$('.adthrsrate').val();
 	var triptime=$('.triptime').val();
@@ -954,117 +1124,156 @@ $('.statetax,.driverbata,.tollfee,.nighthalt,.parkingfee,.extrafuel').keyup(func
 
 $('.trip-voucher-save').on('click',function(){
 	var new_voucher=$(this).attr('new_voucher');
-	var tax_group = $('.taxgroup').val();//tax calculating factor
-    var error = false;
-    if(new_voucher == 1 && tax_group == ''){
+	//var tax_group = $('.taxgroup').val();//tax calculating factor
+    var error = 'false';
+   /* if(new_voucher == 1 && tax_group == ''){
 	 error = true;
-	}
+	}*/
     var trip_id=$(this).attr('trip_id');
     var driver_id=$(this).attr('driver_id');
 
-    var voucherno = $('.voucherno').val();
-    var remarks = $('.description').val();	
-	var releasingplace=$('.releasingplace').val();
-	var tariff_id=$('#trip-tariff').attr('tariff');
+	var data={};
+    data['voucherno']= voucherno = $('.voucherno').val();
+    remarks = $('.description').val();	
+	releasingplace=$('.releasingplace').val();
+	tariff_id=$('#trip-tariff').val();
 	
-	var startdt=$('.startdt').val();   
-    var enddt=$('.enddt').val();
-    var trip_starting_time=$('.tripstartingtime').val();
-    var trip_ending_time=$('.tripendingtime').val();
+	data['startdt']=startdt=$('.startdt').val();   
+    data['enddt']=enddt=$('.enddt').val();
+    data['tripstartingtime']=trip_starting_time=$('.tripstartingtime').val();
+    data['tripendingtime']=trip_ending_time=$('.tripendingtime').val();
 
-    var startkm=$('.startkm').val();
-    var endkm=$('.endkm').val();
+    data['startkm']=startkm=$('.startkm').val();
+    data['endkm']=endkm=$('.endkm').val();
 
    
-    var no_of_days=$('.daysno').val();
+    no_of_days=$('.daysno').val();
 
     //tarif values
-    var basekm=$('.basekm').val();
-    var basekmamount=$('.basekmamount').val();
-    var adtkmrate=$('.adtkmrate').val();
+    data['basekm']=basekm=$('.basekm').val();
+    data['basekmamount']=basekmamount=$('.basekmamount').val();
+    data['adtkmrate']=adtkmrate=$('.adtkmrate').val();
 	if($('.totalamount').attr('amount-class-to-be-selected')=='totalhramount'){
     	var base_km_hr='H';
 	}else if($('.totalamount').attr('amount-class-to-be-selected')=='totalkmamount'){
  		var base_km_hr='K';
 	}
     
-	var driverbasekm=$('.basedriverkm').val();
-    var driverbasekmamount=$('.basedriverkmamount').val();
-    var driveradtkmrate=$('.adtdriverkmrate').val();
+	data['basedriverkm']=driverbasekm=$('.basedriverkm').val();
+    data['basedriverkmamount']=driverbasekmamount=$('.basedriverkmamount').val();
+    data['adtdriverkmrate']=driveradtkmrate=$('.adtdriverkmrate').val();
+	
+
     if($('.totaldriverkmamount').attr('amount-class-to-be-selected')=='totaldriverhramount'){
     	 var driverbase_km_hr='H';
+		 data['driverpaymenthramount']=driverpaymentamount= $('.driverpaymenthramount').val();
+		 data['driverhrpaymentpercentage']=driverpaymentpercentage=$('.driverhrpaymentpercentage').val();
+		 data['driverpaymentkmamount']='NO_VALUE';
+		 data['driverkmpaymentpercentage']='NO_VALUE';
 	}else if($('.totaldriverkmamount').attr('amount-class-to-be-selected')=='totaldriverkmamount'){
  		 var driverbase_km_hr='K';
-	}else{
-			alert('Please Select Total Driver Amount!!.. ');
-			return false;
+		 data['driverpaymentkmamount']=driverpaymentamount= $('.driverpaymentkmamount').val();
+		 data['driverkmpaymentpercentage']=driverpaymentpercentage=$('.driverkmpaymentpercentage').val();
+		 data['driverpaymenthramount']='NO_VALUE';
+		 data['driverhrpaymentpercentage']='NO_VALUE';
 	}	
 
-	var vehiclebasekm=$('.basevehiclekm').val();
-    var vehiclebaseamount=$('.basevehiclekmamount').val();
-    var vehicleadtkmrate=$('.adtvehiclekmrate').val();
+	data['basevehiclekm']=vehiclebasekm=$('.basevehiclekm').val();
+    data['basevehiclekmamount']=vehiclebasekmamount=$('.basevehiclekmamount').val();
+    data['adtvehiclekmrate']=vehicleadtkmrate=$('.adtvehiclekmrate').val();
+	
+
     if($('.totalvehiclekmamount').attr('amount-class-to-be-selected')=='totalvehiclehramount'){
-    	 var vehiclebase_km_hr='H';
+    	 var vehiclebase_km_hr='H'; 
+		 data['vehiclepaymenthramount']=vehiclepaymentamount= $('.vehiclepaymenthramount').val();
+		 data['vehiclehrpaymentpercentage']=vehiclepaymentpercentage=$('.vehiclehrpaymentpercentage').val();	
+		 data['vehiclepaymentkmamount']= 'NO_VALUE';
+		 data['vehiclekmpaymentpercentage']='NO_VALUE';
 	}else if($('.totalvehiclekmamount').attr('amount-class-to-be-selected')=='totalvehiclekmamount'){
- 		 var vehiclebase_km_hr='K';
-	}else{
-			alert('Please Select Total Vehicle Amount!!.. ');
-			return false;
+ 		 var vehiclebase_km_hr='K'; 
+		 data['vehiclepaymentkmamount']=vehiclepaymentamount= $('.vehiclepaymentkmamount').val();
+		 data['vehiclekmpaymentpercentage']=vehiclepaymentpercentage=$('.vehiclekmpaymentpercentage').val();
+		 data['vehiclepaymenthramount']='NO_VALUE';
+		 data['vehiclehrpaymentpercentage']='NO_VALUE';
 	}	
    
-	var basehr=$('.basehrs').val();
-    var basehramount=$('.basehrsamount').val();
-    var adthrrate=$('.adthrsrate').val();
+	data['basehrs']=basehr=$('.basehrs').val();
+    data['basehrsamount']=basehramount=$('.basehrsamount').val();
+    data['adthrsrate']= adthrrate=$('.adthrsrate').val();
     
     
-	var driverbasehr=$('.basedriverhrs').val();
-    var driverbasehramount=$('.basedriverhrsamount').val();
-    var driveradthrrate=$('.adtdriverhrrate').val();
+	data['basedriverhrs']=driverbasehr=$('.basedriverhrs').val();
+    data['basedriverhrsamount']=driverbasehramount=$('.basedriverhrsamount').val();
+    data['adtdriverhrrate']=driveradthrrate=$('.adtdriverhrrate').val();
     
 	
-	var vehiclebasehr=$('.basevehiclehrs').val();
-    var vehiclebasehramount=$('.basevehiclehrsamount').val();
-    var vehicleadthrrate=$('.adtvehiclehrrate').val();
+	data['basevehiclehrs']=vehiclebasehr=$('.basevehiclehrs').val();
+    data['basevehiclehrsamount']=vehiclebasehramount=$('.basevehiclehrsamount').val();
+    data['adtvehiclehrrate']=vehicleadthrrate=$('.adtvehiclehrrate').val();
     
    
     //other charges
-    var parkingfee=$('.parkingfee').val();
-    var tollfee=$('.tollfee').val();
-    var statetax=$('.statetax').val();
-    var nighthalt=$('.nighthalt').val();
-    var driverbata=$('.driverbata').val();
-    var vehicletarif=$('.vehicletarif').val();
+    parkingfee=$('.parkingfee').val();
+    tollfee=$('.tollfee').val();
+    statetax=$('.statetax').val();
+    nighthalt=$('.nighthalt').val();
+    driverbata=$('.driverbata').val();
+    fuel_extra_charges=$('.extrafuel').val();
 
     //total
-    var totalamount=$('.totalamount').val();
+    data['totalamount']=totalamount=$('.totalamount').val();
+	resetErrorFields(data);
+	error=isVarNull(data);
 
-
-    if(error==false){
+	var tax_group='';
+    if(error=='false'){
          $.post(base_url+"/trip-booking/tripVoucher",
               {
                 trip_id:trip_id,
-                remarks:remarks,
-                voucherno:voucherno,
-                enddt:enddt,
-                trip_starting_time:trip_starting_time,
-                trip_ending_time:trip_ending_time,
-                startkm:startkm,
-                endkm:endkm,
-                releasingplace:releasingplace,
-                no_of_days:no_of_days,
-                basetarif:basetarif,
-                baseamount:baseamount,
-                adttarif:adttarif,
-                adttarifrate:adttarifrate,
-                kmhr:kmhr,
-                parkingfee:parkingfee,
-                tollfee:tollfee,
-                statetax:statetax,
-                nighthalt:nighthalt,
-                driverbata:driverbata,
-                vehicletarif:vehicletarif,
-                driver_id:driver_id,
-                totalamount:totalamount,
+				remarks:remarks,
+				tariff_id:tariff_id,
+				voucher_no:voucherno,
+				trip_end_date:enddt,
+				trip_start_date:startdt,
+				trip_starting_time:trip_starting_time,
+				trip_ending_time:trip_ending_time,
+				start_km_reading:startkm,
+				end_km_reading:endkm,
+				releasingplace:releasingplace,
+				no_of_days:no_of_days,
+				base_kilometers:basekm,
+				base_kilometer_amount:basekmamount,
+				base_additional_kilometer_rate:adtkmrate,
+				base_km_hr:base_km_hr,
+				base_hours:basehr,
+				base_hour_amount:basehramount,
+				base_additional_hour_rate:adthrrate,
+				driver_base_kilometers:driverbasekm,
+				driver_base_kilometer_amount:driverbasekmamount,
+				driver_additional_kilometer_rate:driveradtkmrate,
+				driver_km_hr:driverbase_km_hr,
+				driver_payment_percentage:driverpaymentpercentage,
+				driver_payment_amount:driverpaymentamount,
+				driver_base_hours:driverbasehr,
+				driver_base_hours_amount:driverbasehramount,
+				driver_additional_hour_rate:driveradthrrate,
+				vehicle_base_kilometers:vehiclebasekm,
+				vehicle_base_kilometer_amount:vehiclebasekmamount,
+				vehicle_additional_kilometer_rate:vehicleadtkmrate,
+				vehicle_km_hr:vehiclebase_km_hr,
+				vehicle_payment_percentage:vehiclepaymentpercentage,
+				vehicle_payment_amount:vehiclepaymentamount,
+				vehicle_base_hours:vehiclebasehr,
+				vehicle_base_hours_amount:vehiclebasehramount,
+				vehicle_additional_hour_rate:vehicleadthrrate,
+				parking_fees:parkingfee,
+				toll_fees:tollfee,
+				state_tax:statetax,
+				night_halt_charges:nighthalt,
+				driver_bata:driverbata,
+				fuel_extra_charges:fuel_extra_charges,
+				driver_id:driver_id,
+				total_trip_amount:totalamount,
 				tax_group:tax_group
                
             },function(data){
@@ -1092,7 +1301,29 @@ $('.trip-voucher-save').on('click',function(){
     }
 });
 
-function generateTariffs(vehicle_model,vehicle_ac_type,tarif_id='',id,customer_id){
+function isVarNull(data){
+var error='false';
+$.each(data, function(key, value) {
+      if(value==''){
+		error='true';
+		$('.'+key).css('border','1px solid red');
+	  }
+});
+return error;
+}
+
+function resetErrorFields(data){
+
+$.each(data, function(key, value) {
+      
+		$('.'+key).css('border','1px solid #CCC');
+	  
+});
+
+}
+
+
+function generateTariffs(vehicle_model,vehicle_ac_type,tarif_id='',id,customer_id,newvoucher='yes'){
 	var tarif_id=tarif_id;
 	 $.post(base_url+"/tarrif/tariffSelecter",
 		  {
@@ -1113,7 +1344,9 @@ function generateTariffs(vehicle_model,vehicle_ac_type,tarif_id='',id,customer_i
 			  $(id).append($("<option customer_id='"+customer_id+"' rate='"+data.data[i].rate+"' additional_kilometer_rate='"+data.data[i].additional_kilometer_rate+"' minimum_kilometers='"+data.data[i].minimum_kilometers+"' driver_bata='"+data.data[i].driver_bata+"' night_halt='"+data.data[i].night_halt+"' additional_hour_rate='"+data.data[i].additional_hour_rate+"' minimum_hours='"+data.data[i].minimum_hours+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"' vehicle_ac_type_id ='"+data.data[i].vehicle_ac_type_id+"' tariff_master_id='"+data.data[i].tariff_master_id+"' "+selected+"></option>").attr("value",data.data[i].id).text(data.data[i].title));
 				
 			}
-				customizedTariff();
+				if(newvoucher=='yes'){
+					customizedTariff();
+				}
 			}else{
 			 $(id+' option').remove();
 			 $(id).append($("<option rate='-1' additional_kilometer_rate='-1' minimum_kilometers='-1'></option>").attr("value",'-1').text('--Select Tariffs--'));
@@ -1122,7 +1355,7 @@ function generateTariffs(vehicle_model,vehicle_ac_type,tarif_id='',id,customer_i
 			
 		  });
 		
-
+return true;
 }	
 
 	$('#trip-tariff').change(function(){
@@ -1218,7 +1451,7 @@ function setCustomKM_Tariff(whom)
 {
 	var basekm=$('.base'+whom+'km').val();
 	var basekmamount=$('.base'+whom+'kmamount').val();
-	var tariff_id=$('.trip-tariff').val();
+	var tariff_id=$('#trip-tariff').val();
 	var adlkmrate=$('.adt'+whom+'kmrate').val();
 	var totalkm=$('.totalkm').val();
 	var noofdays=$('.daysno').val();
@@ -1302,8 +1535,8 @@ function setCustomKM_Tariff(whom)
 			}
 		}
 		compareCustomAmounts(whom);
-		calculateCommisionAmount('vehicle');
-		calculateCommisionAmount('driver');
+		calculatePaymentAmount('vehicle');
+		calculatePaymentAmount('driver');
 		//$('.kmhr').val( km_flag);
 		//setTotalAmount();
 		
@@ -1316,7 +1549,7 @@ function setCustomHR_Tariff(whom)
 {
 	
 	var basehrs=$('.base'+whom+'hrs').val();
-	var tariff_id=$('.trip-tariff').val();
+	var tariff_id=$('#trip-tariff').val();
 	var basehrsamount=$('.base'+whom+'hrsamount').val();
 	var adlhrrate=$('.adt'+whom+'hrrate').val();
 	var triptime=$('.triptime').val();
@@ -1372,8 +1605,8 @@ function setCustomHR_Tariff(whom)
 			
 		}
 		compareCustomAmounts(whom);
-		calculateCommisionAmount('vehicle');
-		calculateCommisionAmount('driver');
+		calculatePaymentAmount('vehicle');
+		calculatePaymentAmount('driver');
 		//$('.kmhr').val(hr_flag);
 		//setTotalAmount();
 
@@ -1404,13 +1637,13 @@ var noofdays=$('.daysno').val();
 //set which amount is to select-driver
 
 $('.totdriveramount-radio-container2 > .iradio_minimal > .iCheck-helper').click(function(){
-$('.totaldriverkmamount').attr('amount-class-to-be-selected','totaldrivehramount');
+$('.totaldriverkmamount').attr('amount-class-to-be-selected','totaldriverhramount');
 
 });
 
 $('.totdriveramount-radio-container1 > .iradio_minimal > .iCheck-helper').click(function(){
 
-$('.totaldriverkmamount').attr('amount-class-to-be-selected','totaldrivekmamount');
+$('.totaldriverkmamount').attr('amount-class-to-be-selected','totaldriverkmamount');
 
 });
 
@@ -1430,57 +1663,57 @@ $('.totalvehiclekmamount').attr('amount-class-to-be-selected','totalvehiclekmamo
 
 
 //km keyup event
-$('.basedriverkm,.basedriverkmamount,.adtdriverkmrate').keyup(function(){
+$('.basedriverkm,.basedriverkmamount,.adtdriverkmrate').on('blur  click  keyup',function(){
 	
 	setCustomKM_Tariff('driver');
 });
 
-$('.basevehiclekm,.basevehiclekmamount,.adtvehiclekmrate').keyup(function(){
+$('.basevehiclekm,.basevehiclekmamount,.adtvehiclekmrate').on('blur  click  keyup',function(){
 	
 	setCustomKM_Tariff('vehicle');
 });
 
 //hourly tariff calculation
-$('.basedriverhrs,.basedriverhrsamount,.adtdriverhrrate').keyup(function(){
+$('.basedriverhrs,.basedriverhrsamount,.adtdriverhrrate').on('blur  click  keyup',function(){
 	
 	setCustomHR_Tariff('driver');
 });
 
-$('.basevehiclehrs,.basevehiclehrsamount,.adtvehiclehrrate').keyup(function(){
+$('.basevehiclehrs,.basevehiclehrsamount,.adtvehiclehrrate').on('blur  click  keyup',function(){
 	
 	setCustomHR_Tariff('vehicle');
 
 });
 
-$('.driverkmcommisionpercentage,.driverhrcommisionpercentage').blur(function(){
+$('.driverkmpaymentpercentage,.driverhrpaymentpercentage').on('blur  click',function(){
 	
-	calculateCommisionAmount('driver');
+	calculatePaymentAmount('driver');
 
 });
 
-$('.vehiclekmcommisionpercentage,.vehiclehrcommisionpercentage').blur(function(){
+$('.vehiclekmpaymentpercentage,.vehiclehrpaymentpercentage').on('blur  click',function(){
 	
-	calculateCommisionAmount('vehicle');
+	calculatePaymentAmount('vehicle');
 
 });
 
 
-function calculateCommisionAmount(whom){
+function calculatePaymentAmount(whom){
 
 totkmamount=$('.total'+whom+'kmamount').val();
 tothramount=$('.total'+whom+'hramount').val();
 
-kmcommisionpercentage=$('.'+whom+'kmcommisionpercentage').val();
-hrcommisionpercentage=$('.'+whom+'hrcommisionpercentage').val();
+kmpaymentpercentage=$('.'+whom+'kmpaymentpercentage').val();
+hrpaymentpercentage=$('.'+whom+'hrpaymentpercentage').val();
 
-if(totkmamount!='' && tothramount!='' && kmcommisionpercentage!='' && hrcommisionpercentage!=''){
+if(totkmamount!='' && tothramount!='' && kmpaymentpercentage!='' && hrpaymentpercentage!=''){
 
 
-kmcommsn=Number(totkmamount)*(Number(kmcommisionpercentage)/100);
-hrcommsn=Number(tothramount)*(Number(hrcommisionpercentage)/100);
+kmcommsn=(Number(totkmamount)*(Number(kmpaymentpercentage)/100)).toFixed(2);
+hrcommsn=(Number(tothramount)*(Number(hrpaymentpercentage)/100)).toFixed(2);
 
-$('.'+whom+'commisionkmamount').val(kmcommsn);
-$('.'+whom+'commisionhramount').val(hrcommsn);
+$('.'+whom+'paymentkmamount').val(kmcommsn);
+$('.'+whom+'paymenthramount').val(hrcommsn);
 
 }
 
