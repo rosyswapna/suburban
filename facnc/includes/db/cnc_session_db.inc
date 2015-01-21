@@ -103,11 +103,11 @@ function get_cnc_voucher($id = 0)
 		(voucher.end_km_reading-voucher.start_km_reading) AS total_km_reading,
 		voucher.total_trip_amount as amount,
 		voucher.no_of_days,
-		voucher.base_tarif,
-		voucher.base_amount,
-		voucher.adt_tarif,
-		voucher.adt_tarif_rate,
-		voucher.km_hr,
+		voucher.base_km_hr,
+		IF(base_km_hr = 'K' ,base_kilometer_amount ,base_hour_amount) as base_amount,
+		IF(voucher.base_km_hr = 'K',(voucher.end_km_reading-voucher.start_km_reading)-voucher.base_kilometers,0 )as adt_tarif , 
+		IF(base_km_hr = 'K' ,base_additional_kilometer_rate , base_additional_hour_rate) as adt_tarif_rate,
+		
 		vmodels.name as vehicle_model
 		";
 	$sql .="  FROM trip_vouchers voucher ";
