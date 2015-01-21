@@ -1,0 +1,1 @@
+ALTER TABLE `tariffs` CHANGE `customer_tariff` `customer_id` INT(11) NOT NULL;

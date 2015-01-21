@@ -196,6 +196,8 @@ $this->mysession->delete('post');
 if($customer_type==-1){
 $customer_type='';
 }
+$available_vehicles='';
+$available_vehicle='';
 ?>
 
 
