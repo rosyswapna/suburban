@@ -162,9 +162,9 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('id_proof_document_number','ID Proof Number','trim|xss_clean');
 	 $this->form_validation->set_rules('name_on_id_proof','ID Proof Holder','trim|xss_clean');
 		if($dr_id==gINVALID ){
-				$this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
-				$this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|matches[cpassword]|xss_clean');
-				$this->form_validation->set_rules('cpassword','Confirmation','trim|required|min_length[5]|max_length[12]|xss_clean');
+				$this->form_validation->set_rules('username','Username','trim|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
+				$this->form_validation->set_rules('password','Password','trim|min_length[5]|max_length[12]|matches[cpassword]|xss_clean');
+				$this->form_validation->set_rules('cpassword','Confirmation','trim|min_length[5]|max_length[12]|xss_clean');
 				}
 	
 	 

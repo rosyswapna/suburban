@@ -8,9 +8,9 @@ class Vehicle extends CI_Controller {
 		$this->load->model("vehicle_model");
 		$this->load->helper('my_helper');
 		no_cache();
-
+		
 		}
-	public function index($param1 ='',$param2='',$param3=''){
+	public function index($param1 ='',$param2='',$param3=''){ 
 
 	
 		if($this->session_check()==true) {
@@ -632,7 +632,7 @@ $err=True;
 
 
 	public function owner_validation(){	
-			if(isset($_REQUEST['owner-submit'])){
+			if(isset($_REQUEST['owner-submit'])){ 
 			$owner_id=$this->input->post('hidden_owner_id');
 			$vehicle_id=$this->mysession->get('vehicle_id');
 			$data['name']=$this->input->post('owner_name');
@@ -646,6 +646,8 @@ $err=True;
 			$hmail=$this->input->post('hmail_own');
 			$username=$this->input->post('username');
 			$password=$this->input->post('password');
+			$hpass=$this->input->post('h_pass');
+			
 			//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
 					$this->form_validation->set_rules('owner_name','Owner Name ','trim|required|xss_clean');
 					 $this->form_validation->set_rules('address','Address','trim|xss_clean');
@@ -672,8 +674,10 @@ $err=True;
 	
 	
 
-	  if($this->form_validation->run()==False){
+	  if($this->form_validation->run()==False ){
 		$this->mysession->set('owner_id',$owner_id);
+			$data['username']=$username;
+			$data['password']=$password;
 		$this->mysession->set('owner_post_all',$data);
 		$id=$this->mysession->get('vehicle_id');
 		if($this->mysession->get('Err_invalid_add')==null){
@@ -698,10 +702,18 @@ $err=True;
 		$current_id=$id;
 		}
 		 //database insertion for vehicle
+		 
+		$login['username']=$username;
+		if( $hpass==$password){
+			$flag=1;
+			$login['password']=$password;
+			}
+			else{
+			$login['password']=$password;
+			}
+		 
 		 if($owner_id==gINVALID ){ 
 			$id=$this->mysession->get('vehicle_id');
-			$login['username']=$username;
-			$login['password']=$password;
 			$dbdata['name']=$this->input->post('owner_name');
 			$dbdata['address']=$this->input->post('address');
 			$dbdata['mobile']=$this->input->post('mobile');
@@ -725,8 +737,8 @@ $err=True;
 		}
 		else{
 
-
-			$res=$this->vehicle_model->UpdateOwnerdetails($data,$owner_id); 
+			
+			$res=$this->vehicle_model->UpdateOwnerdetails($data,$owner_id,$login,$flag); 
 			if($res==true){
 				//edit vehicle owner enter as supplier in fa
 				$this->load->model('account_model');

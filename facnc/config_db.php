@@ -17,7 +17,7 @@ $def_coy - the default company that is pre-selected on login
 
 $def_coy = 0;
 
-$tb_pref_counter = 14;
+$tb_pref_counter = 2;
 
 $db_connections = array (
   0 => 
@@ -25,8 +25,8 @@ $db_connections = array (
     'name' => 'mastercompany',
     'host' => 'localhost',
     'dbuser' => 'root',
-    'dbpassword' => '',
-    'dbname' => 'taxi_local',
+    'dbpassword' => 'mysql@local',
+    'dbname' => 'taxi',
     'tbpref' => '0_',
   ),
   2 => 
@@ -34,18 +34,9 @@ $db_connections = array (
     'name' => 'CONNECTNCABS',
     'host' => 'localhost',
     'dbuser' => 'root',
-    'dbpassword' => '',
-    'dbname' => 'taxi_local',
+    'dbpassword' => 'mysql@local',
+    'dbname' => 'taxi',
     'tbpref' => '2_',
-  ),
-  4 => 
-  array (
-    'name' => 'Galaxy',
-    'host' => 'localhost',
-    'dbuser' => 'root',
-    'dbpassword' => '',
-    'dbname' => 'taxi_local',
-    'tbpref' => '4_',
   ),
 );
 ?>
