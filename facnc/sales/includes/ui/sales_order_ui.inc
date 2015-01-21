@@ -292,7 +292,7 @@ function display_trip_data($cnc_data, &$order)
 				//echo $cnc_data['from_city']." - ".$cnc_data['to_city'];
 				//echo "<br/>";
 //echo $cnc_data['state_tax'] ;exit;
-				
+				/*
 				if($cnc_data['km_hr'] == 2){//hrs tarif
 					$tarif .= "HR";
 				}else if($cnc_data['km_hr'] == 1 && $cnc_data['no_of_days'] > 2){
@@ -321,7 +321,8 @@ function display_trip_data($cnc_data, &$order)
 				}
 				
 
-				echo $particulars;
+				echo $particulars;*/
+				echo $cnc_data['trip_narration'];
 
 			echo "</td>";
 			
