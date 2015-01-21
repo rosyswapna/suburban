@@ -30,6 +30,7 @@ define('ORGANISATION_ADMINISTRATOR',2);
 define('FRONT_DESK',3);
 define('CUSTOMER',4);
 define('DRIVER',5);
+define('VEHICLE_OWNER',6);
 define('SYSTEM_EMAIL','cnc@cnc.com');
 
 define('USER_STATUS_ACTIVE',1);
