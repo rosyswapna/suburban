@@ -812,12 +812,12 @@ echo form_close();?></td>
 					<div class="div-with-5-percent-width-with-margin-10">
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label(nbs(5).'%'.nbs(2),'commperclabel'); ?>
-							<?php echo form_input(array('name'=>'driverkmpaymentpercentage','class'=>'form-control driverkmpaymentpercentage padding-2px-0-0-10-px voucher-text-box','placeholder'=>'','tabindex'=>"15")); 
+							<?php echo form_input(array('name'=>'driverkmpaymentpercentage','class'=>'form-control driverkmpaymentpercentage padding-2px-0-0-10-px voucher-text-box','placeholder'=>'','tabindex'=>"15",'readonly'=>'true')); 
 							?>
 						</div>
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label(nbs(5).'%'.nbs(2),'commperclabel'); ?>
-							<?php echo form_input(array('name'=>'driverhrpaymentpercentage','class'=>'form-control driverhrpaymentpercentage padding-2px-0-0-10-px voucher-text-box','placeholder'=>'','tabindex'=>"15")); 
+							<?php echo form_input(array('name'=>'driverhrpaymentpercentage','class'=>'form-control driverhrpaymentpercentage padding-2px-0-0-10-px voucher-text-box','placeholder'=>'','tabindex'=>"15",'readonly'=>'true')); 
 							?>
 						</div>
 						
@@ -967,12 +967,12 @@ echo form_close();?></td>
 					<div class="div-with-5-percent-width-with-margin-10">
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label(nbs(5).'%'.nbs(2),'commperclabel'); ?>
-							<?php echo form_input(array('name'=>'vehiclekmpaymentpercentage','class'=>'form-control vehiclekmpaymentpercentage padding-2px-0-0-10-px voucher-text-box','placeholder'=>'','tabindex'=>"15")); 
+							<?php echo form_input(array('name'=>'vehiclekmpaymentpercentage','class'=>'form-control vehiclekmpaymentpercentage padding-2px-0-0-10-px voucher-text-box','placeholder'=>'','tabindex'=>"15",'readonly'=>'true')); 
 							?>
 						</div>
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label(nbs(5).'%'.nbs(2),'commperclabel'); ?>
-							<?php echo form_input(array('name'=>'vehiclehrpaymentpercentage','class'=>'form-control vehiclehrpaymentpercentage padding-2px-0-0-10-px voucher-text-box','placeholder'=>'','tabindex'=>"15")); 
+							<?php echo form_input(array('name'=>'vehiclehrpaymentpercentage','class'=>'form-control vehiclehrpaymentpercentage padding-2px-0-0-10-px voucher-text-box','placeholder'=>'','tabindex'=>"15",'readonly'=>'true')); 
 							?>
 						</div>
 						

@@ -414,12 +414,12 @@
 </tr>
 <tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."vehicle/driver-bata-percentages");?>
-	<?php echo form_label('Driver Bata Percentages');?></td>
+	<?php echo form_open(base_url()."vehicle/vehicle_payment_percentages");?>
+	<?php echo form_label('Vehicle Payment Percentages');?></td>
 <td><?php  
 	$class="form-control";
-	$tbl="vehicle_driver_bata_percentages";
-	echo $this->form_functions->populate_editable_dropdown('select',$vehicle_driver_bata_percentages,$class,$tbl)?>
+	$tbl="vehicle_payment_percentages";
+	echo $this->form_functions->populate_editable_dropdown('select',$vehicle_payment_percentages,$class,$tbl)?>
 	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
 	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
 	</td>
@@ -450,6 +450,27 @@
     <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
+</tr>
+<tr>
+<td><div class="form-group">
+	<?php echo form_open(base_url()."vehicle/driver_payment_percentages");?>
+	<?php echo form_label('Driver Payment Percentages');?></td>
+<td><?php  
+	$class="form-control";
+	$tbl="driver_payment_percentages";
+	echo $this->form_functions->populate_editable_dropdown('select',$driver_payment_percentages,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
+<td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
+
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+    <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
+	<?php echo form_close();?>
+		<td><?php echo nbs(10);?></td>
 </tr>
 </table>
 
