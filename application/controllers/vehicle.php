@@ -14,7 +14,7 @@ class Vehicle extends CI_Controller {
 
 	
 		if($this->session_check()==true) {
-		$tbl=array('vehicle-ownership'=>'vehicle_ownership_types','vehicle-types'=>'vehicle_types','ac-types'=>'vehicle_ac_types','fuel-types'=>'vehicle_fuel_types','seating-capacity'=>'vehicle_seating_capacity','beacon-light-options'=>'vehicle_beacon_light_options ','vehicle-makes'=>'vehicle_makes','driver-bata-percentages'=>'vehicle_driver_bata_percentages ','permit-types'=>'vehicle_permit_types','vehicle-models'=>'vehicle_models');
+		$tbl=array('vehicle-ownership'=>'vehicle_ownership_types','vehicle-types'=>'vehicle_types','ac-types'=>'vehicle_ac_types','fuel-types'=>'vehicle_fuel_types','seating-capacity'=>'vehicle_seating_capacity','beacon-light-options'=>'vehicle_beacon_light_options ','vehicle-makes'=>'vehicle_makes','driver-bata-percentages'=>'vehicle_driver_bata_percentages ','permit-types'=>'vehicle_permit_types','vehicle-models'=>'vehicle_models','driver_payment_percentages'=>'driver_payment_percentages','vehicle_payment_percentages'=>'vehicle_payment_percentages');
             if($param1=='getDescription') {
             $this->getDescription();
             }
@@ -82,8 +82,11 @@ class Vehicle extends CI_Controller {
 			$err=true;
 			}
 			if(is_numeric($data['name'])){
+			$numeric_allowed_tabels=array('driver_payment_percentages','vehicle_payment_percentages');
+			if(!in_array($param1,$numeric_allowed_tabels)){
 			$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
 			$err=true;
+			}
 			}
 			if(is_numeric($data['description'])){
 			$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
@@ -121,8 +124,11 @@ class Vehicle extends CI_Controller {
 			$err=true;
 			}
 			if(is_numeric($data['name'])){
+			$numeric_allowed_tabels=array('driver_payment_percentages','vehicle_payment_percentages');
+			if(!in_array($param1,$numeric_allowed_tabels)){
 			$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
 			$err=true;
+			}
 			}
 			if(is_numeric($data['description'])){
 			$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));

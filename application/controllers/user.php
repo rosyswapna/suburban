@@ -135,9 +135,9 @@ class User extends CI_Controller {
 	
 	public function settings() {
 	if($this->session_check()==true) {
-	$tbl_arry=array('vehicle_ownership_types','vehicle_types','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','vehicle_makes','vehicle_driver_bata_percentages','vehicle_permit_types','languages','language_proficiency','driver_type','payment_type','customer_types','customer_groups','customer_registration_types','marital_statuses','bank_account_types','id_proof_types','trip_models','trip_statuses','booking_sources','trip_expense_type','vehicle_models');
+	$tbl_arry=array('vehicle_ownership_types','vehicle_types','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','vehicle_makes','vehicle_payment_percentages','driver_payment_percentages','vehicle_permit_types','languages','language_proficiency','driver_type','payment_type','customer_types','customer_groups','customer_registration_types','marital_statuses','bank_account_types','id_proof_types','trip_models','trip_statuses','booking_sources','trip_expense_type','vehicle_models');
 	
-	for ($i=0;$i<24;$i++){
+	for ($i=0;$i<count($tbl_arry);$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
 	if($result!=false){
 	$data[$tbl_arry[$i]]=$result;
@@ -145,7 +145,7 @@ class User extends CI_Controller {
 	else{
 	$data[$tbl_arry[$i]]='';
 	}
-	}
+	}//echo '<pre>';print_r($data);exit;
 	$data['title']="Settings | ".PRODUCT_NAME;  
 	$page='user-pages/settings';
 	$this->load_templates($page,$data);
