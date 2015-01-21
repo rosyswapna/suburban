@@ -217,11 +217,15 @@ class user_model extends CI_Model {
 	public function getOwner($id){
 	//newly added-to be organisation based
 	$org_id=$this->session->userdata('organisation_id');
-	$qry=$this->db->where('organisation_id', $org_id );
+	//$qry=$this->db->where('organisation_id', $org_id );
 	//---
-	$qry=$this->db->where('id',$id);
-	$qry=$this->db->get('vehicle_owners');
-	return $qry->row_array();
+	$this->db->select('vehicle_owners.*,users.username,users.password');
+	$this->db->from('vehicle_owners');
+	$this->db->join('users', 'vehicle_owners.login_id = users.id','left');
+	$this->db->where(array('vehicle_owners.id'=>$id,'vehicle_owners.organisation_id'=>$org_id));
+	//$qry=$this->db->where('id',$id);
+	//$qry=$this->db->get('vehicle_owners');
+	return $this->db->get()->row_array();
 	
 	}
 	public function getValues($tbl,$id){

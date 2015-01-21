@@ -46,7 +46,7 @@ class Admin extends CI_Controller {
 		    $phn = $this->input->post('phn');
 			$sms = $this->input->post('sms');
 			$sys_mail = $this->input->post('sys_mail');
-	        $this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean|is_unique[organisations.name]|alpha_numeric');
+	        $this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean|is_unique[organisations.name]');
 		$this->form_validation->set_rules('fname','First Name','trim|required|min_length[2]|xss_clean');
 		$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[2]|xss_clean');
 		$this->form_validation->set_rules('addr','Address','trim|required|min_length[10]|xss_clean');
@@ -55,8 +55,8 @@ class Admin extends CI_Controller {
 		$this->form_validation->set_rules('cpwd','Confirmation','trim|required|min_length[5]|max_length[12]|xss_clean');
 		$this->form_validation->set_rules('mail','Mail','trim|required|valid_email|is_unique[users.email]');
 		$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean|is_unique[users.phone]');
-		$this->form_validation->set_rules('sms','Sms Gateway','trim|required|min_length[10]|xss_clean');
-		$this->form_validation->set_rules('sys_mail','System Mail','trim|required|valid_email|is_unique[organisations.system_email]');
+		$this->form_validation->set_rules('sms','Sms Gateway','trim|min_length[10]|xss_clean');
+		$this->form_validation->set_rules('sys_mail','System Mail','trim|valid_email|is_unique[organisations.system_email]');
       if($this->form_validation->run()==False){
         $data=array('title'=>'Add New Organization | '.PRODUCT_NAME,'name'=>$name,'fname'=>$fname,'lname'=>$lname,'uname'=>$uname,'pwd'=>$pwd,'addr'=>$addr,'mail'=>$mail,'phn'=>$phn,'sms'=>$sms,'sys_mail'=>$sys_mail,'cpwd'=>'');
 	$this->showAddOrg($data);
@@ -185,8 +185,7 @@ class Admin extends CI_Controller {
 					$this->show_org_reset_password($data);
 		}
 	}else{
-		//if organization name comes what to do?
-		//newly added nijo
+		
 		$data['title']=$action.'\'s Profile Update |'.PRODUCT_NAME;
 		if(isset($_REQUEST['admin-org-profile-update'])){
 			$data['name'] = str_replace(' ','',($this->input->post('name')));
@@ -213,16 +212,16 @@ class Admin extends CI_Controller {
 		$this->form_validation->set_rules('fname','First Name','trim|required|min_length[2]|xss_clean');
 		$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[2]|xss_clean');
 		$this->form_validation->set_rules('addr','Address','trim|required|min_length[10]|xss_clean');
-		$this->form_validation->set_rules('sms','SMS Gateway','trim|required|min_length[10]|xss_clean');
+		$this->form_validation->set_rules('sms','SMS Gateway','trim|min_length[10]|xss_clean');
 		if($data['mail'] == $data['hmail']){
 			$this->form_validation->set_rules('mail','Mail','trim|required|valid_email');
 		}else{
 			$this->form_validation->set_rules('mail','Mail','trim|required|valid_email|is_unique[users.email]');
 		}
 		if($data['sys_mail'] == $data['hsys_mail']){ 
-			$this->form_validation->set_rules('sys_mail','System Mail','trim|required|valid_email');
+			$this->form_validation->set_rules('sys_mail','System Mail','trim|valid_email');
 		}else{ 
-			$this->form_validation->set_rules('sys_mail','System Mail','trim|required|valid_email|is_unique[organisations.system_email]');
+			$this->form_validation->set_rules('sys_mail','System Mail','trim|valid_email|is_unique[organisations.system_email]');
 		}
 		if($data['phn'] == $data['hphone']){
 			$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');

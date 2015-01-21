@@ -249,15 +249,37 @@ $this->db->update('vehicle_loans',$data);
 return true;
 
 }
-public function UpdateOwnerdetails($data,$id){
-$this->db->set('updated', 'NOW()', FALSE);
-//newly added-to be organisation based
+public function UpdateOwnerdetails($data,$id,$login='',$flag=''){ 
+	$username=$login['username'];
+	if($flag==1){
+	$password=$login['password'];
+	}else{
+	$password=md5($login['password']);
+	}
+	//to check whether vehicle_owner entry in user table or not..if an entry exists, update its account details
+	if(($username!='' && $password!='')){
+	$qry=$this->db->where('id',$id );
+	$qry=$this->db->get("vehicle_owners");
+		if(count($qry)>0){
+		$login=array('username'=>$username,'password'=>$password);
+		$login_id=$qry->row()->login_id;
+
+			if($login_id>0){
+			$this->db->set('updated', 'NOW()', FALSE);
+			$this->db->where('id',$login_id );
+			$this->db->update("users",$login);
+			}
+		}
+	
+	}
+	$this->db->set('updated', 'NOW()', FALSE);
+	//newly added-to be organisation based
 	$org_id=$this->session->userdata('organisation_id');
 	$this->db->where('organisation_id', $org_id );
 	//---
-$this->db->where('id',$id);
-$this->db->update('vehicle_owners',$data);  
-return true;
+	$this->db->where('id',$id);
+	$this->db->update('vehicle_owners',$data);  
+	return true;
 
 }
 }?>
