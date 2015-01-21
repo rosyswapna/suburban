@@ -1,5 +1,5 @@
 $(document).ready(function(){
-//var ORGANIZATION_NAME="Galaxy";
+var ORGANIZATION_NAME="Galaxy";
 
 var total_tarif = 0;// global total tariff
 var km_flag = 1;
