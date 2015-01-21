@@ -1141,11 +1141,11 @@ $('.statetax,.driverbata,.tollfee,.nighthalt,.parkingfee,.extrafuel').keyup(func
 
 $('.trip-voucher-save').on('click',function(){
 	var new_voucher=$(this).attr('new_voucher');
-	//var tax_group = $('.taxgroup').val();//tax calculating factor
+	var tax_group = $('.taxgroup').val();//tax calculating factor
     var error = 'false';
-   /* if(new_voucher == 1 && tax_group == ''){
+    if(new_voucher == 1 && tax_group == ''){
 	 error = true;
-	}*/
+	}
     var trip_id=$(this).attr('trip_id');
     var driver_id=$(this).attr('driver_id');
 
@@ -1275,7 +1275,7 @@ $('.trip-voucher-save').on('click',function(){
 	resetErrorFields(data);
 	error=isVarNull(data);
 
-	var tax_group='';
+	
     if(error=='false'){
          $.post(base_url+"/trip-booking/tripVoucher",
               {

@@ -322,7 +322,7 @@ function display_trip_data($cnc_data, &$order)
 				
 
 				echo $particulars;*/
-				$cnc_data['trip_narration'];
+				echo $cnc_data['trip_narration'];
 
 			echo "</td>";
 			
