@@ -542,6 +542,8 @@ class Trip_booking extends CI_Controller {
 				$data["driver_payment_amount"]				=	$_REQUEST["driver_payment_amount"];
 				$data["driver_base_hours"]					=	$_REQUEST["driver_base_hours"];
 				$data["driver_base_hours_amount"]			=	$_REQUEST["driver_base_hours_amount"];
+				$data["driver_trip_amount"]					=	$_REQUEST["driver_trip_amount"];
+				$data["vehicle_trip_amount"]				=	$_REQUEST["vehicle_trip_amount"];
 				$data["driver_additional_hour_rate"]		=	$_REQUEST["driver_additional_hour_rate"];
 				$data["vehicle_base_kilometers"]			=	$_REQUEST["vehicle_base_kilometers"];
 				$data["vehicle_base_kilometer_amount"]		=	$_REQUEST["vehicle_base_kilometer_amount"];
@@ -560,6 +562,7 @@ class Trip_booking extends CI_Controller {
 				$data["fuel_extra_charges"]					=	$_REQUEST["fuel_extra_charges"];
 				$data["driver_id"]							=	$_REQUEST["driver_id"];
 				$data["total_trip_amount"]					=	$_REQUEST["total_trip_amount"];
+				$data["trip_narration"]						=	$_REQUEST["trip_narration"];
 				//$data["tax_group"]							=	$_REQUEST["tax_group"];
 				
 				if($_REQUEST['tax_group']){

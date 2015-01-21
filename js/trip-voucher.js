@@ -1170,10 +1170,23 @@ $('.trip-voucher-save').on('click',function(){
     data['basekm']=basekm=$('.basekm').val();
     data['basekmamount']=basekmamount=$('.basekmamount').val();
     data['adtkmrate']=adtkmrate=$('.adtkmrate').val();
+	adtkm=$('.adtkm').val();
+
+	data['basehrs']=basehr=$('.basehrs').val();
+    data['basehrsamount']=basehramount=$('.basehrsamount').val();
+    data['adthrsrate']= adthrrate=$('.adthrsrate').val();
+	adthr=$('.adthrs').val();
+    
+
+	
+	 trip_narration="Minimum ";
 	if($('.totalamount').attr('amount-class-to-be-selected')=='totalhramount'){
     	var base_km_hr='H';
+		 trip_narration=trip_narration+basehr+' Hr @  Rs.'+basehramount+'+Additional '+adthr+' Hr @  Rs.'+adthrrate+'/Hr';
 	}else if($('.totalamount').attr('amount-class-to-be-selected')=='totalkmamount'){
  		var base_km_hr='K';
+		
+		 trip_narration=trip_narration+basekm+' KM @ Rs. '+basekmamount+'+Additional '+adtkm+' KM @  Rs.'+adtkmrate+'/KM';
 	}
     
 	data['basedriverkm']=driverbasekm=$('.basedriverkm').val();
@@ -1185,12 +1198,14 @@ $('.trip-voucher-save').on('click',function(){
     	 var driverbase_km_hr='H';
 		 data['driverpaymenthramount']=driverpaymentamount= $('.driverpaymenthramount').val();
 		 data['driverhrpaymentpercentage']=driverpaymentpercentage=$('.driverhrpaymentpercentage').val();
+		 data['totaldriverhramount']=totaldrivertripamount=$('.totaldriverhramount').val();
 		 data['driverpaymentkmamount']='NO_VALUE';
 		 data['driverkmpaymentpercentage']='NO_VALUE';
 	}else if($('.totaldriverkmamount').attr('amount-class-to-be-selected')=='totaldriverkmamount'){
  		 var driverbase_km_hr='K';
 		 data['driverpaymentkmamount']=driverpaymentamount= $('.driverpaymentkmamount').val();
 		 data['driverkmpaymentpercentage']=driverpaymentpercentage=$('.driverkmpaymentpercentage').val();
+		 data['totaldriverkmamount']=totaldrivertripamount=$('.totaldriverkmamount').val();
 		 data['driverpaymenthramount']='NO_VALUE';
 		 data['driverhrpaymentpercentage']='NO_VALUE';
 	}	
@@ -1203,21 +1218,21 @@ $('.trip-voucher-save').on('click',function(){
     if($('.totalvehiclekmamount').attr('amount-class-to-be-selected')=='totalvehiclehramount'){
     	 var vehiclebase_km_hr='H'; 
 		 data['vehiclepaymenthramount']=vehiclepaymentamount= $('.vehiclepaymenthramount').val();
-		 data['vehiclehrpaymentpercentage']=vehiclepaymentpercentage=$('.vehiclehrpaymentpercentage').val();	
+		 data['vehiclehrpaymentpercentage']=vehiclepaymentpercentage=$('.vehiclehrpaymentpercentage').val();
+		 data['totalvehiclehramount']=totalvehicletripamount=$('.totalvehiclehramount').val();
 		 data['vehiclepaymentkmamount']= 'NO_VALUE';
 		 data['vehiclekmpaymentpercentage']='NO_VALUE';
+		
 	}else if($('.totalvehiclekmamount').attr('amount-class-to-be-selected')=='totalvehiclekmamount'){
  		 var vehiclebase_km_hr='K'; 
 		 data['vehiclepaymentkmamount']=vehiclepaymentamount= $('.vehiclepaymentkmamount').val();
 		 data['vehiclekmpaymentpercentage']=vehiclepaymentpercentage=$('.vehiclekmpaymentpercentage').val();
+		 data['totalvehiclekmamount']=totalvehicletripamount=$('.totalvehiclekmamount').val();
 		 data['vehiclepaymenthramount']='NO_VALUE';
 		 data['vehiclehrpaymentpercentage']='NO_VALUE';
 	}	
    
-	data['basehrs']=basehr=$('.basehrs').val();
-    data['basehrsamount']=basehramount=$('.basehrsamount').val();
-    data['adthrsrate']= adthrrate=$('.adthrsrate').val();
-    
+
     
 	data['basedriverhrs']=driverbasehr=$('.basedriverhrs').val();
     data['basedriverhrsamount']=driverbasehramount=$('.basedriverhrsamount').val();
@@ -1231,11 +1246,29 @@ $('.trip-voucher-save').on('click',function(){
    
     //other charges
     parkingfee=$('.parkingfee').val();
+	if(parkingfee!='' || Number(parkingfee)>0){
+		trip_narration=trip_narration+'+ Parking Fee Rs.'+parkingfee;
+	}
     tollfee=$('.tollfee').val();
+	if(tollfee!='' || Number(tollfee)>0){
+		trip_narration=trip_narration+'+ Tollfee Rs.'+tollfee;
+	}
     statetax=$('.statetax').val();
+	if(statetax!='' || Number(statetax)>0){
+		trip_narration=trip_narration+'+ State tax Rs.'+statetax;
+	}
     nighthalt=$('.nighthalt').val();
+	if(nighthalt!='' || Number(nighthalt)>0){
+		trip_narration=trip_narration+'+ Night Halt Rs.'+nighthalt;
+	}
     driverbata=$('.driverbata').val();
+	if(driverbata!='' || Number(driverbata)>0){
+		trip_narration=trip_narration+'+ Driver Bata Rs.'+driverbata;
+	}
     fuel_extra_charges=$('.extrafuel').val();
+	if(fuel_extra_charges!='' || Number(fuel_extra_charges)>0){
+		trip_narration=trip_narration+'+ Fuel Extra Charges Rs.'+fuel_extra_charges;
+	}
 
     //total
     data['totalamount']=totalamount=$('.totalamount').val();
@@ -1263,6 +1296,9 @@ $('.trip-voucher-save').on('click',function(){
 				base_additional_kilometer_rate:adtkmrate,
 				base_km_hr:base_km_hr,
 				base_hours:basehr,
+				trip_narration:trip_narration,
+				driver_trip_amount:totaldrivertripamount,
+				vehicle_trip_amount:totalvehicletripamount,
 				base_hour_amount:basehramount,
 				base_additional_hour_rate:adthrrate,
 				driver_base_kilometers:driverbasekm,
