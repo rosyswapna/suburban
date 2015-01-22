@@ -10,7 +10,7 @@
     See the License here <http://www.gnu.org/licenses/gpl-3.0.html>.
 ***********************************************************************/
 function write_supp_payment($trans_no, $supplier_id, $bank_account,
-	$date_, $ref, $supp_amount, $supp_discount, $memo_, $bank_charge=0, $bank_amount=0)
+	$date_, $ref, $supp_amount, $supp_discount, $memo_, $bank_charge=0, $bank_amount=0,$account_code = null)
 {
 	global $Refs;
 
@@ -36,8 +36,14 @@ function write_supp_payment($trans_no, $supplier_id, $bank_account,
 
 	$total = 0;
     $supplier_accounts = get_supplier_accounts($supplier_id);
-	$total += add_gl_trans_supplier(ST_SUPPAYMENT, $payment_id, $date_, $supplier_accounts["payable_account"], 0, 0,
+	if($account_code != null){
+		$total += add_gl_trans_supplier(ST_SUPPAYMENT, $payment_id, $date_, $account_code, 0, 0,
 		$supp_amount + $supp_discount, $supplier_id);
+	}else{
+		$total += add_gl_trans_supplier(ST_SUPPAYMENT, $payment_id, $date_, $supplier_accounts["payable_account"], 0, 0,
+		$supp_amount + $supp_discount, $supplier_id);
+	}
+	
 
 	// Now credit discount received account with discounts
 	if ($supp_discount != 0)

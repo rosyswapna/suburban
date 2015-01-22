@@ -316,6 +316,7 @@ class account_model extends CI_Model {
 				'credit_limit'=> @$prefs['default_credit_limit'],		
  				'payable_account' => @$prefs['creditors_act'],
 				'payment_discount_account' => @$prefs['pyt_discount_act'],
+				'salary_account' => @$prefs['salary_act'],
 				'tax_group_id' => 1//static from tax group table
 				);
 		}else{

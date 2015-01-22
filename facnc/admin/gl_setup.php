@@ -74,7 +74,7 @@ if (isset($_POST['submit']) && can_process())
 		'past_due_days', 'default_workorder_required', 'default_dim_required',
 		'default_delivery_required', 'grn_clearing_act',
 		'allow_negative_stock'=> 0, 'accumulate_shipping'=> 0,
-		'po_over_receive' => 0.0, 'po_over_charge' => 0.0, 'default_credit_limit'=>0.0
+		'po_over_receive' => 0.0, 'po_over_charge' => 0.0, 'default_credit_limit'=>0.0,'salary_act'
 )));
 
 	display_notification(_("The general GL setup has been updated."));
@@ -102,6 +102,7 @@ $_POST['debtors_act']  = $myrow["debtors_act"];
 $_POST['creditors_act']  = $myrow["creditors_act"];
 $_POST['freight_act'] = $myrow["freight_act"];
 $_POST['pyt_discount_act']  = $myrow["pyt_discount_act"];
+$_POST['salary_act']  = $myrow["salary_act"];
 
 $_POST['exchange_diff_act'] = $myrow["exchange_diff_act"];
 $_POST['bank_charge_act'] = $myrow["bank_charge_act"];
@@ -195,6 +196,8 @@ gl_all_accounts_list_row(_("Payable Account:"), 'creditors_act', $_POST['credito
 gl_all_accounts_list_row(_("Purchase Discount Account:"), 'pyt_discount_act', $_POST['pyt_discount_act']);
 
 gl_all_accounts_list_row(_("GRN Clearing Account:"), 'grn_clearing_act', get_post('grn_clearing_act'), true, false, _("No postings on GRN"));
+
+gl_all_accounts_list_row(_("Wages Account:"), 'salary_act', $_POST['salary_act']);
 
 table_section_title(_("Inventory"));
 

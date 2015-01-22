@@ -243,7 +243,7 @@ function handle_add_payment()
 {
 	$payment_id = write_supp_payment(0, $_POST['supplier_id'], $_POST['bank_account'],
 		$_POST['DatePaid'], $_POST['ref'], input_num('amount'),	input_num('discount'), $_POST['memo_'], 
-		input_num('charge'), input_num('bank_amount', input_num('amount')));
+		input_num('charge'), input_num('bank_amount', input_num('amount')),$_POST['account_code']);
 	new_doc_date($_POST['DatePaid']);
 
 	$_SESSION['alloc']->trans_no = $payment_id;
@@ -335,6 +335,9 @@ start_form();
 	div_end();
 
 	start_table(TABLESTYLE, "width=80%");
+
+	$supp_ac = get_supplier_accounts($_POST['supplier_id']);
+	supplier_accounts_list_row("Select Account",$_POST['supplier_id'],"account_code",$supp_ac['payable_account'],false);
 	amount_row(_("Amount of Discount:"), 'discount', null, '', $supplier_currency);
 	amount_row(_("Amount of Payment:"), 'amount', null, '', $supplier_currency);
 	textarea_row(_("Memo:"), 'memo_', null, 22, 4);

@@ -214,6 +214,7 @@
 		                        <li><a href="<?php echo base_url().'account/front_desk/GlAccounts';?>"><i class="fa fa-angle-double-right"></i>GL Accounts</a></li>
 					<li><a href="<?php echo base_url().'account/front_desk/GlAccountGroups';?>"><i class="fa fa-angle-double-right"></i>GL Account Groups</a></li>
 					<li><a href="<?php echo base_url().'account/front_desk/GlAccountClasses';?>"><i class="fa fa-angle-double-right"></i>GL Account Classes</a></li>
+					<li><a href="<?php echo base_url().'account/front_desk/JournelEntry';?>"><i class="fa fa-angle-double-right"></i>Journel Entry</a></li>
 		                        
 		                    </ul>
                         	</li>
