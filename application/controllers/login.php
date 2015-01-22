@@ -137,7 +137,10 @@ class Login extends CI_Controller {
 			redirect(base_url().'customer/home');
 		}elseif($this->session->userdata('type')==DRIVER){
 			redirect(base_url().'driver/home');
-		}else{
+		}elseif($this->session->userdata('type')==VEHICLE_OWNER){
+			redirect(base_url().'vehicle/home');
+		}
+		else{
 			$this->notFound();
 		}
 	}

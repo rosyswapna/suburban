@@ -270,6 +270,16 @@
 				<li><a href="<?php echo base_url().'organization/front-desk/tripvouchers';?>"><i class="fa fa-angle-double-right"></i>Trip Vouchers</a></li>
                             </ul>
                         </li>
+			<?php } else if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==VEHICLE_OWNER){ ?>
+                        <li>
+                            <a href="<?php echo base_url().'vehicle/home';?>">
+                                <i class="fa fa-home"></i> <span> Dashboard </span>
+                            </a>
+                        </li>
+
+			
+
+			
 			<?php } ?>
                     </ul>
                 </section>
