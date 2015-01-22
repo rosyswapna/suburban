@@ -338,17 +338,26 @@ class Trip extends CI_Controller {
 	
 	$conditon = array('id'=>$trip_id);
 	$result=$this->trip_booking_model->getDetails($conditon); 
-	$result=$result[0]; 
+	$result=$result[0];  
 	$cust_arry['group_id']=$result->customer_group_id;
 	$cust_arry['cust_id']=$result->customer_id;
 	$cust_arry['guest_id']=$result->guest_id;
+	$data1['trip_id']=$result->id;
 	$data1['customer_details']=$this->trip_booking_model->getCustomer($cust_arry);
-	
+	if($result->booking_source_id>0){
 	$data1['booking_source']			=	$booking_sources[$result->booking_source_id];	
+	}
+	else{
+	$data1['booking_source']='';
+	}
 	$data1['source']					=	$result->source;
 	$data1['booking_date']				=	$result->booking_date;	
 	$data1['booking_time']				=	$result->booking_time;
+	if($result->trip_model_id>0){
 	$data1['trip_model']				=	$trip_models[$result->trip_model_id];
+	}else{
+	$data1['trip_model']='';
+	}
 	$data1['pick_up_city']		=	$result->pick_up_city;
 	$data1['drop_city']		=	$result->drop_city;
 	$data1['pickup_date']		=	$result->pick_up_date;
@@ -370,9 +379,16 @@ class Trip extends CI_Controller {
 	$data1['time_duration']=$no_of_days."days".nbs(3).$diff->h."hrs".nbs(3).$diff->i."mints";
 	$data1['pick_up_time']		=	$result->pick_up_time;
 	$data1['drop_time']		=	$result->drop_time;
-	
+	if($result->vehicle_type_id>0){
 	$data1['vehicle_type']			=	$vehicle_types[$result->vehicle_type_id];
+	}else{
+	$data1['vehicle_type']	='';
+	}
+	if($result->vehicle_ac_type_id>0){
 	$data1['vehicle_ac_type']		=	$vehicle_ac_types[$result->vehicle_ac_type_id];
+	}else{
+	$data1['vehicle_ac_type']='';
+	}
 	if($result->vehicle_seating_capacity_id!=gINVALID){
 	$data1['vehicle_seating_capacity']		=$vehicle_seating_capacity[$result->vehicle_seating_capacity_id];
 	}else{
