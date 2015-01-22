@@ -103,13 +103,13 @@ class Driver_model extends CI_Model {
 
 	}
 
-	public function UpdateDriverdetails($data,$id,$login='',$flag=''){
+	public function UpdateDriverdetails($data,$id,$login='',$flag=''){ 
 	$username=$login['username'];
 	if($flag==1){
 	$password=$login['password'];
 	}else{
 	$password=md5($login['password']);
-	}
+	} 
 	//to check whether driver entry in user table or not..if an entry exists, update its account details
 	if(($username!='' && $password!='')){
 	$qry=$this->db->where('id',$id );

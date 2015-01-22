@@ -32,7 +32,9 @@
 	$id_proof_document_number='';
 	$name_on_id_proof='';
 	$username =	''; 
-	$password =	''; 
+	$password =	'';
+	$salary= '';
+	$min_wrk_days= '';
 	
 
  if($this->mysession->get('post')!=null){ 
@@ -69,7 +71,9 @@
 	$id_proof_document_number=$data['id_proof_document_number'];
 	$name_on_id_proof=$data['name_on_id_proof'];
 	$username	=	$data['username']; 
-	$password	=	$data['password']; 
+	$password	=	$data['password'];
+	$salary		= 	$data['salary']; 
+	$min_wrk_days	= 	$data['minimum_working_days']; 
 $this->mysession->delete('post');
 }
  else if(isset($result)&&$result!=null){ 
@@ -105,7 +109,10 @@ $this->mysession->delete('post');
 	$id_proof_document_number=$result['id_proof_document_number'];
 	$name_on_id_proof=$result['name_on_id_proof'];
 	$username	=	$result['username'];
-	$password	=	$result['password'];	
+	$password	=	$result['password'];
+	$h_pass	=	$result['password'];
+	$salary		= 	$result['salary']; 
+	$min_wrk_days	= 	$result['minimum_working_days']; 	
 } 
 ?>
 <?php if($this->session->userdata('dbSuccess') != '') {?>
@@ -456,7 +463,7 @@ $this->mysession->delete('post');
         </div>
 	<div class="form-group">
 	<?php echo form_label('Salary','usernamelabel'); ?>
-           <?php $input = array('name'=>'salary','class'=>'form-control','id'=>'ifsc_code','placeholder'=>'Salary','value'=>'2500.00','readonly'=>'readonly');
+           <?php $input = array('name'=>'salary','class'=>'form-control','id'=>'salary','placeholder'=>'Salary','value'=>$salary);
 		if(!$edit_profile)					
 			$input['disabled'] ='';
 		echo form_input($input); ?>
@@ -464,7 +471,7 @@ $this->mysession->delete('post');
         </div>
 	<div class="form-group">
 	<?php echo form_label('Minimum Working Days','usernamelabel'); ?>
-           <?php $input = array('name'=>'minimum_working_days','class'=>'form-control','id'=>'minimum_working_days','placeholder'=>'Minimum Working Days','value'=>' 25','readonly'=>'readonly');
+           <?php $input = array('name'=>'minimum_working_days','class'=>'form-control','id'=>'minimum_working_days','placeholder'=>'Minimum Working Days','value'=>$min_wrk_days);
 		if(!$edit_profile)					
 			$input['disabled'] ='';
 		echo form_input($input); ?>
@@ -495,7 +502,7 @@ $this->mysession->delete('post');
 		   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'password','placeholder'=>'Enter Password','value'=>$password)); ?>			
 			<?php echo $this->form_functions->form_error_session('password', '<p class="text-red">', '</p>'); ?>
 		</div>
-		<div class="hide-me"><?php echo form_input(array('name'=>'h_pass','value'=>$password)); ?></div>
+		<div class="hide-me"><?php echo form_input(array('name'=>'h_pass','value'=>$h_pass)); ?></div>
 		<?php if($driver_id!='' && $driver_id>gINVALID){  echo '';}else{?>
 		<div class="form-group">
 		   <?php echo form_label('Confirm Password','cpasswordlabel'); ?>
@@ -627,10 +634,10 @@ $this->mysession->delete('post');
 						 $tto=  $tto+$trips[$trip_index]['vehicle_tarif'];
 						 $dbo=	$dbo+$trips[$trip_index]['driver_bata'];
 						}*/
-						if($trips[$trip_index]['v_type']!=''){
-						$tto=  $tto+$trips[$trip_index]['vehicle_tarif'];
+						
+						$tto=  $tto+$trips[$trip_index]['driver_payment_amount'];
 						$dbo=	$dbo+$trips[$trip_index]['driver_bata'];
-						}
+						
 						
 						
 						?>
@@ -659,14 +666,14 @@ $this->mysession->delete('post');
 							$tot_over_time=$tot_over_time+$over_time;
 						
 							?></td>
-							<td><?php  echo $trips[$trip_index]['driver_payment_amount']; ?></td>
-							<td><?php  echo $trips[$trip_index]['driver_payment_amount']; ?></td>
-							<td><?php  echo $trips[$trip_index]['toll_fees']; ?></td>
-							<td><?php  echo $trips[$trip_index]['night_halt_charges'];?></td>
-							<td><?php  echo $trips[$trip_index]['driver_bata']; ?></td>
-							<td><?php  echo $trips[$trip_index]['parking_fees']; ?></td>
-							<td><?php  echo $trips[$trip_index]['state_tax']; ?></td>
-							<td><?php  echo $trips[$trip_index]['fuel_extra_charges']; ?></td>
+							<td><?php  echo number_format($trips[$trip_index]['driver_trip_amount'],2); ?></td>
+							<td><?php  echo number_format($trips[$trip_index]['driver_payment_amount'],2); ?></td>
+							<td><?php  echo number_format($trips[$trip_index]['toll_fees'],2); ?></td>
+							<td><?php  echo number_format($trips[$trip_index]['night_halt_charges'],2);?></td>
+							<td><?php  echo number_format($trips[$trip_index]['driver_bata'],2); ?></td>
+							<td><?php  echo number_format($trips[$trip_index]['parking_fees'],2); ?></td>
+							<td><?php  echo number_format($trips[$trip_index]['state_tax'],2); ?></td>
+							<td><?php  echo number_format($trips[$trip_index]['fuel_extra_charges'],2); ?></td>
 												
 						</tr>
 						<?php } 
@@ -683,12 +690,12 @@ $this->mysession->delete('post');
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr style="background:#CCC">
-						<th></th>
-					    <th>Tariff</th>
-					    <th>Bata</th>
-						<th>Total</th>
+						<th style="width:70%;">Particulars</th>
+					    <th style="width:10%;">Tariff</th>
+					    <th style="width:10%;">Credit</th>
+						<th style="width:10%;">Outstanding</th>
 					</tr>
-					<tr><td>Total Trips</td><td><?php echo number_format($tto,2);?></td><td><?php echo  number_format($dbo,2);?></td><td><?php echo  number_format($tto+$dbo,2);?></td></tr>
+					<tr><td>Total Trips %</td><td><?php ?></td><td><?php ?></td><td><?php echo  number_format($tto,2);?></td></tr>
 					<!--<tr><td>Total Trips Others</td><td><?php echo  number_format($tto,2);?></td><td><?php echo  number_format($dbo,2);?></td><td><?php echo  number_format($tto+$dbo,2);?></td></tr>-->
 					<!--<tr><td>Total Trips Benz</td><td><?php echo  number_format($ttp,2);?></td><td><?php echo  number_format($dbp,2);?></td><td><?php echo  number_format($ttp+$dbp,2);?></td></tr>-->
 					<tr><td>Salary</td><td><?php  if($tot_nod>=20){
@@ -698,13 +705,14 @@ $this->mysession->delete('post');
 					}
 					echo number_format($sal,2);
 					?> </td><td></td><td><?php echo number_format($sal,2);?></td></tr>
-					<tr><td>Accommodation (-)</td><td><?php $acc=1500; echo  number_format($acc,2); ?></td><td></td><td><?php  echo  number_format($acc,2); ?></td></tr>
-					<tr><td>Extra Amount</td><td><?php $ea=0; echo  number_format($ea,2); ?></td><td></td><td><?php  echo  number_format($ea,2); ?></td></tr>
-					<tr><td>Over Time</td><td><?php echo  number_format($tot_over_time*25,2);?></td><td></td><td><?php echo  number_format($ot=$tot_over_time*25,2);?></td></tr>
-					<tr><td>Others</td><td><?php echo  number_format($tot_extra,2);?></td><td></td><td><?php echo  number_format($tot_extra,2);?></td></tr>
-					<tr><td>Advances (-)</td><td><?php $adv=0; echo  number_format($adv,2); ?></td><td></td><td><?php echo  number_format($adv,2); ?></td></tr>
-					<tr><td>Expenses (+)</td><td><?php $exp=0; echo  number_format($exp,2); ?></td><td></td><td><?php echo  number_format($exp,2); ?></td></tr>
-					<tr style="background:#CCC"><td>Total</td><td></td><td></td><td><?php $total=($tth+$dbh+$tto+$dbo+$ttp+$dbp+$sal+$ea+$ot+$tot_extra+$exp)-($acc+$adv);
+					
+					<tr><td>Total Toll</td><td></td><td></td><td><?php  echo  number_format($tot_toll,2); ?></td></tr>
+					<tr><td>Total Halt</td><td></td><td></td><td><?php echo  number_format($tot_night_halt,2);?></td></tr>
+					<tr><td>Total Bata</td><td></td><td></td><td><?php echo  number_format($dbo,2);?></td></tr>
+					<tr><td>Total Parking</td><td></td><td></td><td><?php echo  number_format($tot_parking,2); ?></td></tr>
+					<tr><td>Total Tax</td><td></td><td></td><td><?php echo  number_format($tot_state_tax,2); ?></td></tr>
+					<tr><td>Total Fuel</td><td></td><td></td><td><?php echo  number_format($tot_fuel_extra,2); ?></td></tr>
+					<tr style="background:#CCC"><td>Total</td><td></td><td></td><td><?php $total=$tth+$dbh+$tto+$dbo+$ttp+$dbp+$sal+$tot_toll+$tot_night_halt+$dbo+$tot_parking+$tot_state_tax+$tot_fuel_extra;
 								echo  number_format($total,2);
 					?></td></tr>
 				</tbody>

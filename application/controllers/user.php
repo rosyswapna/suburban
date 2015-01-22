@@ -1694,9 +1694,11 @@ if(isset($where_arry) || isset($like_arry)){
 				$result=$this->user_model->getDriverNameById($driver_id);
 				$data['select']['drivers'][$driver_id]=$result['name'];
 				//for device
+				if(isset($data['device']['device_id'])){
 				$device_id=$data['device']['device_id'];
 				$result=$this->user_model->getDeviceImeiById($device_id);
 				$data['select']['devices'][$device_id]=$result['imei'];
+				}
 				}
 			}
 			//sample ends
@@ -1926,6 +1928,7 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 	public function setup_dashboard(){
 	if(isset($_REQUEST['setup_dashboard']) ){
 	$data=$this->trip_booking_model->getTodaysTripsDriversDetails();
+	//$data['organisation_name']=$this->session->userdata('organisation_name');print_r($data);exit;
 	if($data!=false){
 	echo json_encode($data);
 	}else{

@@ -89,6 +89,8 @@ class Driver extends CI_Controller {
 	$data['id_proof_document_number']=$this->input->post('id_proof_document_number');
 	$data['name_on_id_proof']=$this->input->post('name_on_id_proof');
 	$dr_id=$this->input->post('hidden_id');
+	$data['salary']=$this->input->post('salary');
+	$data['minimum_working_days']=$this->input->post('minimum_working_days');
 	$data['organisation_id']=$this->session->userdata('organisation_id'); 
 	$data['user_id']=$this->session->userdata('id'); 
 	$hidden_pass=$this->input->post('h_pass');
@@ -125,7 +127,8 @@ class Driver extends CI_Controller {
 	 }*/
 	
 	
-	
+	 $this->form_validation->set_rules('salary','Salary','trim|xss_clean');
+	 $this->form_validation->set_rules('minimum_working_days','Minimum Working Days','trim|xss_clean');
 	 $this->form_validation->set_rules('driver_name','Name','trim|required|xss_clean');
 	 $this->form_validation->set_rules('place_of_birth','Place Of Birth','trim|required|xss_clean');
 	 $this->form_validation->set_rules('dob','Date of Birth ','trim|xss_clean');
