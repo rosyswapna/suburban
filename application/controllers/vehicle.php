@@ -13,12 +13,14 @@ class Vehicle extends CI_Controller {
 	public function index($param1 ='',$param2='',$param3=''){ 
 
 	
-		if($this->session_check()==true) {
+		if($this->session_check()==true || $this->owner_session_check()==true) {
 		$tbl=array('vehicle-ownership'=>'vehicle_ownership_types','vehicle-types'=>'vehicle_types','ac-types'=>'vehicle_ac_types','fuel-types'=>'vehicle_fuel_types','seating-capacity'=>'vehicle_seating_capacity','beacon-light-options'=>'vehicle_beacon_light_options ','vehicle-makes'=>'vehicle_makes','driver-bata-percentages'=>'vehicle_driver_bata_percentages ','permit-types'=>'vehicle_permit_types','vehicle-models'=>'vehicle_models','driver_payment_percentages'=>'driver_payment_percentages','vehicle_payment_percentages'=>'vehicle_payment_percentages');
             if($param1=='getDescription') {
             $this->getDescription();
             }
-			
+			if($param1=='' || $param1 == 'home'){
+				$this->Dashboard();
+			}
 			if($param1==''){ 
 				$this->vehicle_validation();
 				}
@@ -40,9 +42,6 @@ class Vehicle extends CI_Controller {
 					$this->edit($tbl,$param1);
 					}else if(isset($_REQUEST['delete'])){
 					$this->delete($tbl,$param1);
-					}else{
-					$this->notFound();
-
 					}
 				//if(isset($_REQUEST['submit-vehicle'])){
 				//$this->vehicle_validation();
@@ -55,9 +54,23 @@ class Vehicle extends CI_Controller {
 		
 	
 		}
-		else{
+		else{ 
 			$this->notAuthorized();
 			}
+	}
+	
+	public function Dashboard(){
+		$data['title']="Home | ".PRODUCT_NAME;    
+       		$page='vehicle-owner-pages/dashboard';
+		$this->load_templates($page,$data);
+	}
+	
+	public function owner_session_check() {
+		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==VEHICLE_OWNER)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 		
 	public function notFound(){
@@ -783,7 +796,7 @@ $err=True;
 	
 	}
 	public function load_templates($page='',$data=''){
-	if($this->session_check()==true) {
+	if($this->session_check()==true || $this->owner_session_check()==true) {
 		$this->load->view('admin-templates/header',$data);
 		$this->load->view('admin-templates/nav');
 		$this->load->view($page,$data);

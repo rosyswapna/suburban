@@ -114,6 +114,11 @@ class Login_model extends CI_Model {
         		$this->db->where('login_id', $this->details->id);
         		$driver = $this->db->get()->result();
 			$this->session->set_userdata('driver',$driver[0]);
+		}elseif($this->details->user_type_id == VEHICLE_OWNER){
+			$this->db->from('vehicle_owners');
+        		$this->db->where('login_id', $this->details->id);
+        		$v_owner = $this->db->get()->result();
+			$this->session->set_userdata('v_owner',$v_owner[0]);
 		}
 	}
 

@@ -292,6 +292,8 @@
 							$profile_url=base_url().'organization/front-desk/customer/'.$this->session->userdata('customer')->id;break;
 							case DRIVER:
 							$profile_url=base_url().'organization/front-desk/driver-profile/'.$this->session->userdata('driver')->id;break;
+							case VEHICLE_OWNER:
+							$profile_url=base_url().'organization/front-desk/vehicle/dashboard'.$this->session->userdata('v_owner')->id;break;
 						}
 					}
 				?>
