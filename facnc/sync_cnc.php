@@ -42,7 +42,9 @@
 	}
 	elseif(isset($_GET['GlAccount'])){
 		meta_forward('gl/manage/gl_accounts.php');
-		
+	}	
+	elseif(isset($_GET['JournelEntry'])){
+		meta_forward('gl/gl_journal.php','NewJournal=Yes');
 	}
 	elseif(isset($_GET['TaxType'])){
 		meta_forward('taxes/tax_types.php');

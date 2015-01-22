@@ -481,6 +481,70 @@ function supplier_list_row($label, $name, $selected_id=null, $all_option = false
 		$all, $editkey);
 	echo "</td></tr>\n";
 }
+
+function supplier_accounts_list($supplier_id, $name, $selected_id=null,
+	$spec_option = true, $enabled=true, $submit_on_change=false)
+{
+	global $all_items;
+
+	$sql = "SELECT payable_account,purchase_account,payment_discount_account,salary_account FROM ".TB_PREF."suppliers WHERE supplier_id=".db_escape($supplier_id);
+
+	$result = db_query($sql, "could not get supplier");
+
+	$acts =  db_fetch_row($result);
+	$data = array();
+	foreach($acts as $ac){
+		if($ac != ''){
+			$data[] = $ac;
+		}
+	}
+	
+	if($data){
+		$sql = "SELECT account_code, account_name FROM ".TB_PREF."chart_master";
+	
+		$sql .= " WHERE account_code IN(".implode($data,',').")";
+	}
+	
+	//echo $sql;exit;
+
+
+	$where = array();
+	$ret = combo_input($name, $selected_id, $sql, 'account_code', 'account_name',
+	array(
+		'where' => $where,
+		'order' => array('account_name'),
+		'spec_option' => $spec_option === true ? _('All Supplier Accounts') : $spec_option,
+		'spec_id' => $all_items,
+		'select_submit'=> $submit_on_change,
+		'sel_hint' => _('Select supplier account')
+	) );
+	if ($editkey)
+	{
+		$ret .= add_edit_combo('branch');
+	}	
+	return $ret;
+}
+
+
+function supplier_accounts_list_cells($label,$supplier_id, $name, $selected_id=null, 
+	$all_option = true, $enabled=true, $submit_on_change=false, $editkey = false)
+{
+	if ($label != null)
+		echo "<td>$label</td>\n";
+	echo "<td>";
+	echo supplier_accounts_list($supplier_id, $name, $selected_id, $all_option, $enabled, 
+		$submit_on_change, $editkey);
+	echo "</td>\n";
+}
+
+function supplier_accounts_list_row($label, $supplier_id, $name, $selected_id=null, 
+	$all_option = true, $enabled=true, $submit_on_change=false, $editkey = false)
+{
+	echo "<tr><td class='label'>$label</td>";
+	supplier_accounts_list_cells(null, $supplier_id, $name, $selected_id, 
+		$all_option, $enabled, $submit_on_change, $editkey);
+	echo "</tr>";
+}
 //----------------------------------------------------------------------------------------------
 function driver_list($name, $selected_id=null, $spec_option=false, $submit_on_change=false,
 	$all=false, $editkey = false)

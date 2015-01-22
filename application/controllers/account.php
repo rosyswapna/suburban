@@ -85,6 +85,9 @@ class Account extends CI_Controller {
 				$data['url'] = "facnc/sync_cnc.php?".$action."=".$value."&cnc_token=".$this->session->userdata('session_id');
 			else
 				$data['url'] = "facnc/sync_cnc.php?".$action."=Yes&cnc_token=".$this->session->userdata('session_id');
+
+			
+
 			
 			if(!is_null($this->mysession->get('tax_group'))){
 				$data['url'] .= "&TaxGroup=".$this->mysession->get('tax_group');
