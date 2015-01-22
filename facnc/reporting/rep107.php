@@ -76,7 +76,8 @@ function print_invoices()
 	$to = max($fno[0], $tno[0]);
 
 	//$cols = array(4, 60, 225, 300, 325, 385, 450, 515);
-	$cols = array(4, 30, 80, 140, 210, 270, 500, 535);
+	//$cols = array(4, 30, 80, 140, 210, 270, 500, 535);
+	$cols = array(4, 30, 80, 140, 210, 270, 480, 535);
 
 	// $headers in doctext.inc
 	$aligns = array('center','center','center', 'center', 'center', 'center', 'center');
@@ -198,11 +199,11 @@ function print_invoices()
 			$rep->NewLine();
 			$rep->Text($rep->words_column, "Rupees : ");
 			if ($words != "")
-				$rep->TextWrapLines($rep->words_column+50, $rep->words_column + 200, $words." Only", 'left');
+				$rep->TextWrapLines($rep->words_column+50, $rep->words_column +180, $words." Only", 'left');
 			
 
 			$rep->NewLine(3);
-			$rep->Text($rep->words_column+100,"Net Payable ".$DisplayBalance);
+			$rep->Text($rep->words_column+100,"Net Payable : Rs. ".$DisplayBalance);
 
 			$totals = array(
 					'Service Tax' => $DisplayTax,
