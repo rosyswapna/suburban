@@ -364,7 +364,9 @@ $qry='SELECT T.id,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.pick_u
 
 	$result=$this->db->query($qry);
 	$result=$result->result_array();
+	
 	if(count($result)>0){
+	//$result['organisation_name']=$this->session->userdata('organisation_name');
 	return $result;
 	}else{
 	return false;

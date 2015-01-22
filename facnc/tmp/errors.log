@@ -7198,3 +7198,170 @@
 [21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
 [21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
 [21-Jan-2015 08:23:34 Europe/Paris] 2:divya:connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:20:55 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:20:55 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[21-Jan-2015 10:20:55 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:20:55 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:20:55 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:20:55 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:20:55 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[21-Jan-2015 10:20:55 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[21-Jan-2015 10:21:48 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:21:48 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[21-Jan-2015 10:21:48 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:21:48 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:21:48 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:21:48 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:21:48 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[21-Jan-2015 10:21:48 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[21-Jan-2015 10:23:02 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:23:02 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[21-Jan-2015 10:23:02 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:23:02 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:23:02 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:23:02 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:23:02 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[21-Jan-2015 10:23:02 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[21-Jan-2015 10:26:18 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:26:18 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[21-Jan-2015 10:26:18 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:26:18 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:26:18 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:26:18 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:26:18 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[21-Jan-2015 10:26:18 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[21-Jan-2015 10:27:30 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:27:30 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[21-Jan-2015 10:27:30 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:27:30 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:27:30 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:27:30 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[21-Jan-2015 10:27:30 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[21-Jan-2015 10:27:30 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[21-Jan-2015 10:27:47 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:27:47 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:27:54 Europe/Paris] 0:admin:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:27:58 Europe/Paris] 0:admin:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:27:58 Europe/Paris] 0:admin:connect_db.inc:185: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:28:15 Europe/Paris] 0:admin:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:31:15 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:31:15 Europe/Paris] 1::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:31:19 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:31:42 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:31:43 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:32:06 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:32:07 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:32:14 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:32:30 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:32:36 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:32:37 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:32:50 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:32:51 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:33:00 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:33:00 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:33:07 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:33:14 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:33:14 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 10:33:23 Europe/Paris] 1:acube:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:04:12 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:04:12 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:04:12 Europe/Paris] 1::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:04:12 Europe/Paris] 1::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:04:12 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:04:12 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:05:14 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:05:14 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:05:15 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:05:15 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:19:11 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:19:11 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:19:11 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:19:12 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:20:16 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:20:17 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:20:17 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:20:17 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:25:11 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:25:11 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:25:11 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:25:11 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:25:38 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:25:38 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:25:38 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:25:38 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:25:52 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:25:52 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:25:52 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:25:52 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:26:40 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:26:41 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:26:41 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:26:41 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:28:19 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:28:19 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:28:20 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:28:20 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:32:54 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:32:55 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:32:55 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:32:55 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:34:48 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:34:49 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:34:49 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:34:49 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:37:03 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:37:03 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:37:04 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:37:04 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:37:45 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:37:45 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:37:45 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:37:45 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:38:11 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:38:11 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:38:12 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:38:12 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:41:14 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:41:14 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:41:14 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:41:15 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:42:44 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:42:44 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:42:45 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:42:45 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:44:35 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:44:35 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:44:36 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:44:36 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:44:46 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:44:46 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:44:46 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:44:46 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:45:46 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:45:46 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:45:46 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 11:45:46 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:09:00 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:09:01 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:09:01 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:09:01 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:09:34 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:09:34 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:09:34 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:09:34 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:10:03 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:10:03 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:10:04 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:10:04 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:57:26 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:57:27 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:57:27 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:57:27 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:58:28 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:58:28 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:58:28 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:58:28 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:59:17 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:59:17 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:59:17 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[21-Jan-2015 12:59:17 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead

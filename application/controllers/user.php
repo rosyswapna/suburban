@@ -1926,6 +1926,7 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 	public function setup_dashboard(){
 	if(isset($_REQUEST['setup_dashboard']) ){
 	$data=$this->trip_booking_model->getTodaysTripsDriversDetails();
+	//$data['organisation_name']=$this->session->userdata('organisation_name');print_r($data);exit;
 	if($data!=false){
 	echo json_encode($data);
 	}else{

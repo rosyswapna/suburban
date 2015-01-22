@@ -17,7 +17,7 @@ $def_coy - the default company that is pre-selected on login
 
 $def_coy = 0;
 
-$tb_pref_counter = 2;
+$tb_pref_counter = 3;
 
 $db_connections = array (
   0 => 
@@ -25,18 +25,18 @@ $db_connections = array (
     'name' => 'mastercompany',
     'host' => 'localhost',
     'dbuser' => 'root',
-    'dbpassword' => 'mysql@local',
-    'dbname' => 'taxi',
+    'dbpassword' => '',
+    'dbname' => 'taxi_local',
     'tbpref' => '0_',
   ),
-  2 => 
+  1 => 
   array (
-    'name' => 'CONNECTNCABS',
+    'name' => 'AcubeInnovations',
     'host' => 'localhost',
     'dbuser' => 'root',
-    'dbpassword' => 'mysql@local',
-    'dbname' => 'taxi',
-    'tbpref' => '2_',
+    'dbpassword' => '',
+    'dbname' => 'taxi_local',
+    'tbpref' => '1_',
   ),
 );
 ?>
