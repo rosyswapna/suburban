@@ -138,6 +138,14 @@ class Customers_model extends CI_Model {
 		}else{
 		$passwrd='';
 		}
+		if(isset($data['user_type_id'])){
+		$user_type=$data['user_type_id'];
+		}
+		else
+		{
+		$user_type=CUSTOMER;
+		}
+		
 			
 			//add customer/guest login details
 			$userdata=array(
@@ -147,9 +155,9 @@ class Customers_model extends CI_Model {
 				'phone'=>$data['mobile'],
 				'address'=>$data['address'],
 				'user_status_id'=>USER_STATUS_ACTIVE,
-				'user_type_id'=>CUSTOMER,
+				'user_type_id'=>$user_type,
 				'email'=>$data['email'],
-				'organisation_id'=>$org_id);
+				'organisation_id'=>$org_id); 
 			$this->db->set('created', 'NOW()', FALSE);
 			$this->db->insert('users',$userdata);
 			$login_id = $this->db->insert_id();

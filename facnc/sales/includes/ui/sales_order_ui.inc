@@ -304,7 +304,7 @@ function display_trip_data($cnc_data, &$order)
 		hidden('Disc',percent_format($order->default_discount * 100));
 		hidden('line_total',$line_total);
 		hidden('LineNo', 1);
-		hidden('Comments', $particulars, 31, 5);
+		hidden('Comments', $cnc_data['trip_narration'], 31, 5);
 		hidden('trip_voucher',$cnc_data['voucher_no']);
 
 		//----------------------------------end trip data----------------------------------------
