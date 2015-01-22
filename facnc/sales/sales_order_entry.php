@@ -19,7 +19,7 @@
 
 $path_to_root = "..";
 $page_security = 'SA_SALESORDER';
-
+//print_r($_GET);exit;
 
 include_once($path_to_root . "/sales/includes/cart_class.inc");
 include_once($path_to_root . "/includes/session.inc");

@@ -22,21 +22,13 @@ $tb_pref_counter = 3;
 $db_connections = array (
   0 => 
   array (
-    'name' => 'mastercompany',
-    'host' => 'localhost',
-    'dbuser' => 'root',
-    'dbpassword' => '',
-    'dbname' => 'taxi_local',
-    'tbpref' => '0_',
+    'name' => 'company',
+    'host' => 'host',
+    'dbuser' => 'dbuser',
+    'dbpassword' => 'password',
+    'dbname' => 'dbname',
+    'tbpref' => 'table_preference',
   ),
-  1 => 
-  array (
-    'name' => 'AcubeInnovations',
-    'host' => 'localhost',
-    'dbuser' => 'root',
-    'dbpassword' => '',
-    'dbname' => 'taxi_local',
-    'tbpref' => '1_',
-  ),
+  
 );
 ?>

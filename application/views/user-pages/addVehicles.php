@@ -152,8 +152,12 @@
 			$seat=$vehicle['vehicle_seating_capacity_id'];
 			$driver_id=$driver['driver_id'];
 			$from_date=$driver['from_date'];
+			if(isset($device['device_id'])){
 			$device_id=$device['device_id'];
+			}
+			if(isset($device['from_date'])){
 			$from_date_device=$device['from_date'];
+			}
 			$reg_number=$vehicle['registration_number'];
 			$reg_date=$vehicle['registration_date'];
 			$eng_num=$vehicle['engine_number'];
@@ -953,23 +957,27 @@ if($this->mysession->get('owner_post_all')!=null ){
 					<tr style="background:#CCC">
 						<th>Trip Id</th>
 						<th>Date</th>
-						<th>Voucher No</th>
-						<th>Username</th>
+						<th>Days</th>
 						<th>Total KM</th>
-						<th>Total Hrs</th>
-						<th>Tariff Amount</th>
-						<th>Extra</th>
+						<th>Trip Amount</th>
+						<th>Trip %</th>
+						<th>Toll</th>
+						<th>Parking</th>
+						<th>State Tax</th>
 					    
 					</tr>
 					<?php	
-						$full_tot_km=$total_trip_amount=$tot_hrs=$tariff_amt=$tot_extra=$tot_cash=0;
+						$full_tot_km=$total_trip_amount=$tot_hrs=$tot_vehicle_payment_amount=$tot_extra=$tot_vehicle_trip_amount=$tot_toll=$tot_parking=$tot_tax=0;
 					if(isset($trips) && $trips!=false){ 
 						for($trip_index=0;$trip_index<count($trips);$trip_index++){
 						$tot_km=$trips[$trip_index]['end_km_reading']-$trips[$trip_index]['start_km_reading'];
 						
 						$full_tot_km=$full_tot_km+$tot_km;
 						$total_trip_amount=$total_trip_amount+$trips[$trip_index]['total_trip_amount'];
-						$tariff_amt=$tariff_amt+$trips[$trip_index]['vehicle_tarif'];
+						$tot_toll=$tot_toll+$trips[$trip_index]['toll_fees'];
+						$tot_parking=$tot_parking+$trips[$trip_index]['parking_fees'];
+						$tot_tax=$tot_tax+$trips[$trip_index]['state_tax'];
+						$tot_vehicle_payment_amount=$tot_vehicle_payment_amount+$trips[$trip_index]['vehicle_payment_amount'];
 						$extra=$trips[$trip_index]['parking_fees']+$trips[$trip_index]['toll_fees']+$trips[$trip_index]['state_tax']+$trips[$trip_index]['night_halt_charges']+$trips[$trip_index]['fuel_extra_charges'];
 						$tot_extra=$tot_extra+$extra;
 						$date1 = date_create($trips[$trip_index]['pick_up_date'].' '.$trips[$trip_index]['pick_up_time']);
@@ -984,39 +992,28 @@ if($this->mysession->get('owner_post_all')!=null ){
 							$no_of_days.=' Days';
 							
 						}
-						if($trips[$trip_index]['company']==null){
-						$tot_cash=$tot_cash+$trips[$trip_index]['vehicle_tarif'];
-						}
+						
+						$tot_vehicle_trip_amount=$tot_vehicle_trip_amount+$trips[$trip_index]['vehicle_trip_amount'];
+						
 						?>
 						<tr>
 							<td><?php echo $trips[$trip_index]['id'];  ?></td>
 							<td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
-							<td><?php echo $trips[$trip_index]['voucher_no']; ?></td>
+							<td><?php echo $no_of_days; ?></td>
 							<td><?php  
-							if(isset($trips[$trip_index]['company'])){ echo $trips[$trip_index]['company'].",".nbs();}else{}
-							if(isset($trips[$trip_index]['customer'])){ echo $trips[$trip_index]['customer'];}else{}
+							echo $tot_km;
 									
 							 ?></td>
-							<td><?php echo $tot_km; ?></td>
-							<!--<td><?php //echo $trips[$trip_index]['releasing_place'];?></td>-->
+							
 							<td><?php 
-							if(($diff->d )==0){
-							$hrs=$diff->h.":".$diff->i;
-							echo $hrs;
-							}
-							else{
-							$h= $diff->d *24;
-							$hrs=($diff->h+$h).":".$diff->i;
-							echo $hrs;
-							}
-							//echo $trips[$trip_index]['pick_up_date'].' '.$trips[$trip_index]['pick_up_time'].br().$trips[$trip_index]['drop_date'].' '.$trips[$trip_index]['drop_time'].br().$diff->d.",".$diff->h.":".$diff->i; ?></td>
-							<td><?php 
-							echo number_format($trips[$trip_index]['vehicle_tarif'],2);
+							echo number_format($trips[$trip_index]['vehicle_trip_amount'],2);
 							?></td>
-						<td> <?php 
-						
-						echo number_format($extra,2);
-						?></td>
+						<td><?php 
+							echo number_format($trips[$trip_index]['vehicle_payment_amount'],2);
+							?></td>
+							<td><?php echo $trips[$trip_index]['toll_fees'];  ?></td>
+							<td><?php echo $trips[$trip_index]['parking_fees']; ?></td>
+							<td><?php echo $trips[$trip_index]['state_tax']; ?></td>
 						</tr>
 						<?php } 
 						}					
@@ -1025,11 +1022,12 @@ if($this->mysession->get('owner_post_all')!=null ){
 					<td>Total</td>
 					<td></td>
 					<td></td>
-					<td></td>
 					<td><?php echo $full_tot_km;?></td>
-					<td></td>
-					<td><?php echo number_format($tariff_amt,2);?></td>
-					<td><?php echo number_format($tot_extra,2);?></td>
+					<td><?php echo number_format($tot_vehicle_trip_amount,2);?></td>
+					<td><?php echo number_format($tot_vehicle_payment_amount,2);?></td>
+					<td><?php number_format($tot_toll,2); ?></td>
+					<td><?php echo number_format($tot_parking,2);?></td>
+					<td><?php echo number_format($tot_tax,2);?></td>
 					</tr>
 					<?php //endforeach;
 					//}
@@ -1041,22 +1039,22 @@ if($this->mysession->get('owner_post_all')!=null ){
 				<tbody>
 				
 					<tr style="background:#CCC">
-						<th>Particulars</th>
-						<th>Unit</th>
-						<th>Total</th>
-						
+						<th style="width:70%;">Particulars</th>
+						<th style="width:10%;">Tariff</th>
+						<th style="width:10%;">Credit</th>
+						<th style="width:10%;">Outstanding</th>
 					    
 					</tr>
-					<tr><td>Vehicle Tariff Total</td><td><?php echo number_format($tariff_amt,2);?></td><td><?php echo number_format($tariff_amt,2);?></td></tr>
-					<tr><td>Commision</td><td><?php  $commision=$tariff_amt*(8/100); echo number_format($commision,2);?></td><td><?php   echo number_format($commision,2);?></td></tr>
-					<tr><td>Less Cash Trip</td><td><?php echo number_format($tot_cash,2); ?></td><td><?php echo number_format($tot_cash,2); ?></td></tr>
-					<tr><td>Less Parking</td><td><?php echo number_format($parking=100,2); ?></td><td><?php echo number_format($parking=100,2); ?></td></tr>
-					<tr><td>Less Accommodation</td><td><?php echo number_format($acc=1500,2); ?></td><td><?php echo number_format($acc=1500,2); ?></td></tr>
-					<tr><td>Add extras</td><td><?php echo number_format($tot_extra,2);?></td><td><?php echo number_format($tot_extra,2);?></td></tr>
-					<tr><td>Less Advance</td><td><?php $adv=0;echo number_format($adv,2); ?></td><td><?php echo number_format($adv,2); ?></td></tr>
-					<tr><td>Balance Due</td><td><?php $bal=$tariff_amt+$tot_extra-($commision+$tot_cash+$acc+$parking+$adv); echo number_format($bal,2);?></td><td><?php  echo number_format($bal,2);?></td></tr>
-					<tr><td>TDS 1 %</td><td><?php $tds=$bal*(1/100); echo $tds;?></td><td><?php  echo $tds;?></td></tr>
-					<tr><td>NET Transfer</td><td><?php echo form_input(array('name'=>'transfer_date','class'=>'form-control','id'=>'transfer_date','size'=>'3')); ?></td><td><?php echo number_format($net=$bal-$tds,2);?></td></tr>
+					<tr><td>Total Trip Amount</td><td></td><td><?php ?></td><td><?php echo number_format($tot_vehicle_trip_amount,2);?></td></tr>
+					<tr><td>Less Cash Trip/Advance Amount</td><td></td><td><?php ?></td><td><?php ?></td></tr>
+					<tr><td>Toatal Trip Percentage</td><td></td><td><?php ?></td><td><?php echo number_format($tot_vehicle_payment_amount,2); ?></td></tr>
+					<tr><td>Less Cash Trip Percentage</td><td></td><td><?php ?></td><td><?php ?></td></tr>
+					<tr><td>Less Parking</td><td></td><td><?php echo number_format($tot_parking,2); ?></td><td></td></tr>
+					<tr><td>Less Toll</td><td></td><td><?php echo number_format($tot_toll,2);?></td><td></td></tr>
+					<tr><td>Less Stae Tax</td><td></td><td><?php echo number_format($tot_tax,2); ?></td><td></td></tr>
+					<tr><td>Balance Due</td><td></td><td><?php $bal_cr=$tot_parking+$tot_toll+$tot_tax; echo number_format($bal_cr,2);?></td><td><?php echo number_format($tot_vehicle_payment_amount,2)?></td></tr>
+					<tr><td>TDS 1 %</td><td></td><td><?php $tds=$bal_cr*(1/100); echo $tds;?></td><td></td></tr>
+					
 				</tbody>
 			</table>
 			<?php  }?>
