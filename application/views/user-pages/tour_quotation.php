@@ -73,7 +73,7 @@ Dear '.$customer_details['customer_name'].',</br>
 <p>We have pleasure in providing you with a quotation for your proposed travel requirement.</p>
 </div>
 <div>
-<h4>QUOTATION SUMMARY DETAILS</h4><hr>
+<h4>TRAVEL DETAILS</h4><hr>
 <p>From : '.$pick_up_city.'</p>
 <p>To : '.$drop_city.'</p>
 <p><Date of Journey : '.$pickup_date.'/p>
