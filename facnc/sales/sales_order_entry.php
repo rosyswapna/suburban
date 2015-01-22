@@ -772,10 +772,12 @@ if(isset($_GET['NewDelivery']) && $_GET['NewDelivery'] > 0){
 	$_SESSION['Items']->trip_voucher = $cnc_voucher['voucher_no'];
 	$amt = 0;
 	
-	$amt = $cnc_voucher['amount']+$cnc_voucher['driver_batta'];
+	$amt = $cnc_voucher['amount'];
 
 	add_to_order($_SESSION['Items'],101, 1,
 		$amt, 0 / 100,'',0,$cnc_voucher['voucher_no']);
+
+	//echo "<pre>";print_r($_SESSION['Items']);echo "</pre>";exit;
 
 	
 		
