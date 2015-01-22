@@ -1620,7 +1620,7 @@ function setCustomKM_Tariff(whom)
 							$('.aditional'+whom+'kmamount').val(adtamt);
 							$('.total'+whom+'kmamount').val(total_tarif);
 	
-							23
+							
 						}
 					}
 				}
