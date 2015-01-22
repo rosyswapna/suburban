@@ -64,6 +64,7 @@ function supplier_settings(&$supplier_id)
 		$_POST['payable_account']  = $myrow["payable_account"];
 		$_POST['purchase_account']  = $myrow["purchase_account"];
 		$_POST['payment_discount_account'] = $myrow["payment_discount_account"];
+		$_POST['salary_account'] = $myrow["salary_account"];
 		$_POST['notes']  = $myrow["notes"];
 	 	$_POST['inactive'] = $myrow["inactive"];
 	} 
@@ -84,6 +85,7 @@ function supplier_settings(&$supplier_id)
 		$_POST['payable_account'] = $company_record["creditors_act"];
 		$_POST['purchase_account'] = ''; // default/item's cogs account
 		$_POST['payment_discount_account'] = $company_record['pyt_discount_act'];
+		$_POST['salary_account'] = $company_record['salary_act'];
 	}
 
 	table_section_title(_("Basic Data"));
@@ -125,6 +127,7 @@ function supplier_settings(&$supplier_id)
 	gl_all_accounts_list_row(_("Purchase Account:"), 'purchase_account', $_POST['purchase_account'],
 		false, false, _("Use Item Inventory/COGS Account"));
 	gl_all_accounts_list_row(_("Purchase Discount Account:"), 'payment_discount_account', $_POST['payment_discount_account']);
+	gl_all_accounts_list_row(_("Salary Account:"), 'salary_account', $_POST['salary_account']);
 	if (!$supplier_id) {
 		table_section_title(_("Contact Data"));
 		text_row(_("Phone Number:"), 'phone', null, 32, 30);
@@ -215,7 +218,7 @@ if (isset($_POST['submit']))
 				$_POST['website'], $_POST['supp_account_no'], $_POST['bank_account'], 
 				input_num('credit_limit', 0), $_POST['dimension_id'], $_POST['dimension2_id'], $_POST['curr_code'],
 				$_POST['payment_terms'], $_POST['payable_account'], $_POST['purchase_account'], $_POST['payment_discount_account'],
-				$_POST['notes'], $_POST['tax_group_id'], get_post('tax_included', 0));
+				$_POST['notes'], $_POST['tax_group_id'], get_post('tax_included', 0),$_POST['salary_account']);
 			update_record_status($_POST['supplier_id'], $_POST['inactive'],
 				'suppliers', 'supplier_id');
 
@@ -228,7 +231,7 @@ if (isset($_POST['submit']))
 				$_POST['gst_no'], $_POST['website'], $_POST['supp_account_no'], $_POST['bank_account'], 
 				input_num('credit_limit',0), $_POST['dimension_id'], $_POST['dimension2_id'],
 				$_POST['curr_code'], $_POST['payment_terms'], $_POST['payable_account'], $_POST['purchase_account'],
-				$_POST['payment_discount_account'], $_POST['notes'], $_POST['tax_group_id'], check_value('tax_included'));
+				$_POST['payment_discount_account'], $_POST['notes'], $_POST['tax_group_id'], check_value('tax_included'),$_POST['salary_account']);
 
 			$supplier_id = $_POST['supplier_id'] = db_insert_id();
 
