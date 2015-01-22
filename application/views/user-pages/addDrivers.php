@@ -32,7 +32,9 @@
 	$id_proof_document_number='';
 	$name_on_id_proof='';
 	$username =	''; 
-	$password =	''; 
+	$password =	'';
+	$salary= '';
+	$min_wrk_days= '';
 	
 
  if($this->mysession->get('post')!=null){ 
@@ -69,7 +71,9 @@
 	$id_proof_document_number=$data['id_proof_document_number'];
 	$name_on_id_proof=$data['name_on_id_proof'];
 	$username	=	$data['username']; 
-	$password	=	$data['password']; 
+	$password	=	$data['password'];
+	$salary		= 	$data['salary']; 
+	$min_wrk_days	= 	$data['minimum_working_days']; 
 $this->mysession->delete('post');
 }
  else if(isset($result)&&$result!=null){ 
@@ -105,7 +109,10 @@ $this->mysession->delete('post');
 	$id_proof_document_number=$result['id_proof_document_number'];
 	$name_on_id_proof=$result['name_on_id_proof'];
 	$username	=	$result['username'];
-	$password	=	$result['password'];	
+	$password	=	$result['password'];
+	$h_pass	=	$result['password'];
+	$salary		= 	$result['salary']; 
+	$min_wrk_days	= 	$result['minimum_working_days']; 	
 } 
 ?>
 <?php if($this->session->userdata('dbSuccess') != '') {?>
@@ -456,7 +463,7 @@ $this->mysession->delete('post');
         </div>
 	<div class="form-group">
 	<?php echo form_label('Salary','usernamelabel'); ?>
-           <?php $input = array('name'=>'salary','class'=>'form-control','id'=>'ifsc_code','placeholder'=>'Salary','value'=>'2500.00','readonly'=>'readonly');
+           <?php $input = array('name'=>'salary','class'=>'form-control','id'=>'salary','placeholder'=>'Salary','value'=>$salary);
 		if(!$edit_profile)					
 			$input['disabled'] ='';
 		echo form_input($input); ?>
@@ -464,7 +471,7 @@ $this->mysession->delete('post');
         </div>
 	<div class="form-group">
 	<?php echo form_label('Minimum Working Days','usernamelabel'); ?>
-           <?php $input = array('name'=>'minimum_working_days','class'=>'form-control','id'=>'minimum_working_days','placeholder'=>'Minimum Working Days','value'=>' 25','readonly'=>'readonly');
+           <?php $input = array('name'=>'minimum_working_days','class'=>'form-control','id'=>'minimum_working_days','placeholder'=>'Minimum Working Days','value'=>$min_wrk_days);
 		if(!$edit_profile)					
 			$input['disabled'] ='';
 		echo form_input($input); ?>
@@ -495,7 +502,7 @@ $this->mysession->delete('post');
 		   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'password','placeholder'=>'Enter Password','value'=>$password)); ?>			
 			<?php echo $this->form_functions->form_error_session('password', '<p class="text-red">', '</p>'); ?>
 		</div>
-		<div class="hide-me"><?php echo form_input(array('name'=>'h_pass','value'=>$password)); ?></div>
+		<div class="hide-me"><?php echo form_input(array('name'=>'h_pass','value'=>$h_pass)); ?></div>
 		<?php if($driver_id!='' && $driver_id>gINVALID){  echo '';}else{?>
 		<div class="form-group">
 		   <?php echo form_label('Confirm Password','cpasswordlabel'); ?>

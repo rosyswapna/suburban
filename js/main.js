@@ -1,6 +1,6 @@
 $(document).ready(function(){
 var ORGANIZATION_NAME="Galaxy";
-
+//var ORGANIZATION_NAME= '<?php echo $_SESSION['organisation_name']; ?>';
 var total_tarif = 0;// global total tariff
 var km_flag = 1;
 var hr_flag = 2;
