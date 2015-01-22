@@ -284,51 +284,16 @@ function display_trip_data($cnc_data, &$order)
 				echo $cnc_data['vehicle_model'];
 				br();
 				echo $cnc_data['vehicle_no'];
-				
 			echo "</td>";
+
 			label_cell($cnc_data['no_of_days'],'width=10%');
 			
 			echo "<td>";
-				//echo $cnc_data['from_city']." - ".$cnc_data['to_city'];
-				//echo "<br/>";
-//echo $cnc_data['state_tax'] ;exit;
-				/*
-				if($cnc_data['km_hr'] == 2){//hrs tarif
-					$tarif .= "HR";
-				}else if($cnc_data['km_hr'] == 1 && $cnc_data['no_of_days'] > 2){
-					$tarif .= "Per Day";
-				}else{
-					$tarif .= "KM";
-				}
-				$particulars = "Minimum ".$cnc_data['base_tarif']." ".$tarif."@ Rs ".$cnc_data['base_amount'];
-				if($cnc_data['base_amount'] != ''){
-					$particulars .= " + Additional  ".$cnc_data['adt_tarif']." ".$tarif."@".$cnc_data['adt_tarif_rate']."/".$tarif;
-				}
-				if($cnc_data['parking_fees'] >0){
-					$particulars .= " + Parking fees Rs. "	.$cnc_data['parking_fees'];
-				}
-				if($cnc_data['toll_fees'] >0){
-					$particulars .= " + Toll Rs. "	.$cnc_data['toll_fees'];
-				}
-				if($cnc_data['night_halt_charges'] >0){
-					$particulars .= " + Night halt charges Rs.".$cnc_data['night_halt_charges'];
-				}
-				if($cnc_data['driver_bata'] >0){
-					$particulars .= " + Driver Batta ".$cnc_data['driver_bata'];
-				}
-				if($cnc_data['state_tax'] >0){
-					$particulars .= " + State Tax Rs. "	.$cnc_data['state_tax'];
-				}
-				
-
-				echo $particulars;*/
 				echo $cnc_data['trip_narration'];
-
 			echo "</td>";
 			
 			label_cell(price_format($line_total),'width=10%');
 	
-
 		end_row();
 
 		$qty = @$cnc_data['total_km_reading'];
@@ -355,7 +320,7 @@ function display_trip_data($cnc_data, &$order)
 		label_row(_("Sub-total"), $display_sub_total, "colspan=$colspan align=right","align=right");
 		$taxes = $order->get_taxes(input_num('freight_cost'));
 
-	//print_r($taxes);exit;
+		//print_r($taxes);exit;
 		
 		$tax_total = display_edit_tax_items($taxes, $colspan, $order->tax_included, 2);
 

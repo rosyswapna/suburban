@@ -23,9 +23,11 @@ class Account extends CI_Controller {
 		$res = $this->account_model->get_tax_group_rates($tax_group);
 		$tax = 0;
 		foreach($res as $row){
-			$tax += ($amount*$row['rate']/100);
+
+			$taxable_amount = $amount*40/100;
+			$tax += ($taxable_amount*$row['rate']/100);
 		}
-		echo $tax;
+		echo round($tax,2);
 		
 		
 	}
