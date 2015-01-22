@@ -1053,8 +1053,12 @@ checkTotAmount();
 function checkTotAmount(){
 	var totalhramount=$('.totalhramount').val();
 	var totalkmamount=$('.totalkmamount').val();
-	if(totalhramount!='' && totalkmamount!=''){
-	setTotalAmount();
+	var noofdays=$('.daysno').val();
+	
+	if(totalhramount!='' && totalkmamount!='' && Number(noofdays)==1){
+		setTotalAmount();
+	}else if(totalkmamount!='' && Number(noofdays)>1){
+		setTotalAmount();
 	}
 }
 //calculate amount with time string and hourly rate
