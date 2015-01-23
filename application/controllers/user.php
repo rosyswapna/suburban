@@ -1366,7 +1366,7 @@ if(isset($where_arry) || isset($like_arry)){
 	
 	$drivers=$this->vehicle_model->getDriversInfo();
 	if($drivers!=false){
-	$data['drivers']=$drivers; //print_r($data['drivers'][1]);exit;
+	$data['drivers']=$drivers;// print_r($data['drivers']);exit;
 	}else{
 	$data['drivers']='';
 	}

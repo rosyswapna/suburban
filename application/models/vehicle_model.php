@@ -36,7 +36,7 @@ public function getVehicles(){
 	
 public function getDriversInfo(){ 
 	
-	$qry='select id,name,phone,mobile,present_address,district,license_renewal_date,badge_renewal_date,place_of_birth from drivers where organisation_id = '.$this->session->userdata('organisation_id');
+	$qry='select id,name,phone,mobile,present_address,district,license_renewal_date,badge_renewal_date,place_of_birth,salary from drivers where organisation_id = '.$this->session->userdata('organisation_id');
 	$qry=$this->db->query($qry);
 	$results=$qry->result_array();
 	if(count($results)>0){
@@ -49,6 +49,7 @@ public function getDriversInfo(){
 		$drivers[$results[$i]['id']]['license_renewal_date']=$results[$i]['license_renewal_date'];
 		$drivers[$results[$i]['id']]['badge_renewal_date']=$results[$i]['badge_renewal_date'];
 		$drivers[$results[$i]['id']]['place_of_birth']=$results[$i]['place_of_birth'];
+		$drivers[$results[$i]['id']]['salary']=$results[$i]['salary'];
 		} 
 		return $drivers;
 	}else{
