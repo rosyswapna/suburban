@@ -712,7 +712,7 @@ $this->mysession->delete('post');
 					<tr><td>Total Parking</td><td></td><td></td><td><?php echo  number_format($tot_parking,2); ?></td></tr>
 					<tr><td>Total Tax</td><td></td><td></td><td><?php echo  number_format($tot_state_tax,2); ?></td></tr>
 					<tr><td>Total Fuel</td><td></td><td></td><td><?php echo  number_format($tot_fuel_extra,2); ?></td></tr>
-					<tr style="background:#CCC"><td>Total</td><td></td><td></td><td><?php $total=$tth+$dbh+$tto+$dbo+$ttp+$dbp+$sal+$tot_toll+$tot_night_halt+$dbo+$tot_parking+$tot_state_tax+$tot_fuel_extra;
+					<tr style="background:#CCC"><td>Total</td><td></td><td></td><td><?php $total=$tto+$dbo+$tot_toll+$tot_night_halt+$sal+$tot_parking+$tot_state_tax+$tot_fuel_extra;
 								echo  number_format($total,2);
 					?></td></tr>
 				</tbody>
