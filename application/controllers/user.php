@@ -1386,6 +1386,8 @@ if(isset($where_arry) || isset($like_arry)){
 	$data['vehicles']='';
 	}
 
+	$data['trip_info']=$this->user_model->getTotTripInfo();
+
 	$data['page_links']=$p_res['page_links']; 
 	$data['title']='List Driver| '.PRODUCT_NAME;
 	$page='user-pages/driverList';
