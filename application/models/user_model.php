@@ -143,7 +143,7 @@ class user_model extends CI_Model {
 	return $qry->row_array();
 	}
 	public function getTotTripInfo(){
-	$qry="SELECT D.id as driver_id,count(T.id) as tot_no_of_trips,sum(TV.driver_trip_amount+TV.driver_payment_amount+TV.parking_fees+TV.toll_fees+TV.state_tax+TV.fuel_extra_charges) as outstanding from trip_vouchers as TV left join drivers as D on D.id>0  left join trips as T on T.driver_id=D.id where TV.organisation_id=".$this->session->userdata('organisation_id')." and T.organisation_id=".$this->session->userdata('organisation_id')." and T.trip_status_id=".TRIP_STATUS_TRIP_BILLED." and TV.trip_id =T.id  group by D.id";
+	$qry="SELECT D.id as driver_id,count(T.id) as tot_no_of_trips,sum(TV.driver_bata+TV.night_halt_charges+TV.driver_payment_amount+TV.parking_fees+TV.toll_fees+TV.state_tax+TV.fuel_extra_charges) as outstanding from trip_vouchers as TV left join drivers as D on D.id>0  left join trips as T on T.driver_id=D.id where TV.organisation_id=".$this->session->userdata('organisation_id')." and T.organisation_id=".$this->session->userdata('organisation_id')." and T.trip_status_id=".TRIP_STATUS_TRIP_BILLED." and TV.trip_id =T.id  group by D.id";
 //echo $qry;exit; 
 	$results=$this->db->query($qry);
 	$results=$results->result_array();
