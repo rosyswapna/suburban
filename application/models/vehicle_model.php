@@ -73,7 +73,7 @@ public function getOwners(){
 	}
 	}
 	public function getListVehicles(){ 
-	$qry='select V.id,V.registration_number,V.vehicle_permit_renewal_date,V.tax_renewal_date, VMA.id as make_id,VMO.id as model_id from vehicles V LEFT JOIN vehicle_models as VMO ON V.vehicle_model_id=VMO.id LEFT JOIN vehicle_makes as VMA ON V.vehicle_make_id=VMA.id where V.organisation_id='.$this->session->userdata('organisation_id');
+	$qry='select V.id,V.registration_number,V.vehicle_permit_renewal_date,V.tax_renewal_date,VI.insurance_renewal_date,VMA.id as make_id,VMO.id as model_id from vehicles V LEFT JOIN vehicle_models as VMO ON V.vehicle_model_id=VMO.id LEFT JOIN vehicle_makes as VMA ON V.vehicle_make_id=VMA.id LEFT JOIN vehicles_insurance as VI ON VI.vehicle_id=V.id where V.organisation_id='.$this->session->userdata('organisation_id');//echo $qry;exit;
 	$results=$this->db->query($qry);
 	$results=$results->result_array();
 	if(count($results)>0){
@@ -84,6 +84,7 @@ public function getOwners(){
 		$vehicles[$results[$i]['id']]['model_id']=$results[$i]['model_id'];
 		$vehicles[$results[$i]['id']]['vehicle_permit_renewal_date']=$results[$i]['vehicle_permit_renewal_date'];
 		$vehicles[$results[$i]['id']]['tax_renewal_date']=$results[$i]['tax_renewal_date'];
+		$vehicles[$results[$i]['id']]['insurance_renewal_date']=$results[$i]['insurance_renewal_date'];
 		} 
 		return $vehicles;
 	}else{
