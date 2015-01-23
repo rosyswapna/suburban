@@ -1930,7 +1930,9 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 	$data=$this->trip_booking_model->getTodaysTripsDriversDetails();
 	//$data['organisation_name']=$this->session->userdata('organisation_name');print_r($data);exit;
 	if($data!=false){
-	echo json_encode($data);
+	$json_data['organisation']=$this->session->userdata('organisation_name');
+	$json_data['graph']=$data;
+	echo json_encode($json_data);
 	}else{
 		echo 'false';
 	}

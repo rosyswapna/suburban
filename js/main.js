@@ -1,6 +1,7 @@
 $(document).ready(function(){
-var ORGANIZATION_NAME="Galaxy";
+//var ORGANIZATION_NAME="Galaxy";
 //var ORGANIZATION_NAME= '<?php echo $_SESSION['organisation_name']; ?>';
+
 var total_tarif = 0;// global total tariff
 var km_flag = 1;
 var hr_flag = 2;
@@ -48,29 +49,29 @@ function drawChart() {
 	var D_time=[];
 	var json_obj=[];
 	json_obj.push([
-  	'All Drivers','Trips Time-Sheet of '+ ORGANIZATION_NAME,new Date(0,0,0,0,0,0),new Date(0,0,0,24,0,0)
+  	'All Drivers','Trips Time-Sheet of '+ data.organisation,new Date(0,0,0,0,0,0),new Date(0,0,0,24,0,0)
 	]);
 	
-	for(var i=0;i<data.length;i++){
-		P_date=data[i].pick_up_date.split('-');
-		D_date=data[i].drop_date.split('-');
-		if(data[i].pick_up_date==currentDate){
-			P_time=data[i].pick_up_time.split(':');
+	for(var i=0;i<data.graph.length;i++){
+		P_date=data.graph[i].pick_up_date.split('-');
+		D_date=data.graph[i].drop_date.split('-');
+		if(data.graph[i].pick_up_date==currentDate){
+			P_time=data.graph[i].pick_up_time.split(':');
 			
 		}else{
 			P_time[0]='00';
 			P_time[1]='00';
 		}
-		if(data[i].drop_date==currentDate){
-			D_time=data[i].drop_time.split(':');
+		if(data.graph[i].drop_date==currentDate){
+			D_time=data.graph[i].drop_time.split(':');
 		}else{
 			D_time[0]='23';
 			D_time[1]='59';
 		}
 		var pickdate=new Date(0,0,0,P_time[0],P_time[1],00);
 		var dropdate=new Date(0,0,0,D_time[0],D_time[1],00);
-		if(data[i].pick_up_city!='' && data[i].drop_city!=''){
-			travel_city=data[i].pick_up_city+' to '+data[i].drop_city+',';
+		if(data.graph[i].pick_up_city!='' && data.graph[i].drop_city!=''){
+			travel_city=data.graph[i].pick_up_city+' to '+data.graph[i].drop_city+',';
 			
 		}else{
 			travel_city='';
@@ -82,7 +83,7 @@ function drawChart() {
 	  	data[i].name,travel_city+'Driver Mobile '+data[i].mobile,pickdate,dropdate
 		]);*/
 		json_obj.push([
-	  	data[i].name,travel_city,pickdate,dropdate
+	  	data.graph[i].name,travel_city,pickdate,dropdate
 		]);
 		
 	}
