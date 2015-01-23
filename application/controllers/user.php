@@ -684,7 +684,7 @@ class User extends CI_Controller {
 			$data['drivers']='';
 			$data['customer']='';
 			$data['trip_status_id']='';
-			$qry='SELECT ORG.name as company_name ,VO.name as ownership,T.customer_id,T.customer_group_id,T.remarks,T.vehicle_model_id,T.vehicle_ac_type_id,T.driver_id,T.vehicle_id,T.guest_id,V.vehicle_ownership_types_id,T.tariff_id,T.trip_status_id,T.id as trip_id,T.booking_date,T.drop_date,T.drop_time,T.pick_up_date,T.pick_up_time,VM.name as model,V.registration_number,T.pick_up_city,T.pick_up_area,G.name as guest_name,G.mobile as guest_info,T.drop_city,T.drop_area,C.name as customer_name,C.mobile as customer_mobile,CG.name as customer_group,D.name as driver,D.mobile as driver_info FROM trips T LEFT JOIN vehicle_models VM ON VM.id=T.vehicle_model_id LEFT JOIN vehicles V ON V.id=T.vehicle_id LEFT JOIN customers G ON G.id=T.guest_id LEFT JOIN customers C ON C.id=T.customer_id LEFT JOIN customer_groups CG ON CG.id=T.customer_group_id LEFT JOIN drivers D ON D.id=T.driver_id LEFT JOIN vehicle_ownership_types VO ON V.vehicle_ownership_types_id=VO.id LEFT JOIN organisations ORG ON ORG.id = T.organisation_id where T.organisation_id='.$this->session->userdata('organisation_id');
+			$qry='SELECT TV.payment_type_id as payment_type_id,ORG.name as company_name ,VO.name as ownership,T.customer_id,T.customer_group_id,T.remarks,T.vehicle_model_id,T.vehicle_ac_type_id,T.driver_id,T.vehicle_id,T.guest_id,V.vehicle_ownership_types_id,T.tariff_id,T.trip_status_id,T.id as trip_id,T.booking_date,T.drop_date,T.drop_time,T.pick_up_date,T.pick_up_time,VM.name as model,V.registration_number,T.pick_up_city,T.pick_up_area,G.name as guest_name,G.mobile as guest_info,T.drop_city,T.drop_area,C.name as customer_name,C.mobile as customer_mobile,CG.name as customer_group,D.name as driver,D.mobile as driver_info FROM trips T LEFT JOIN vehicle_models VM ON VM.id=T.vehicle_model_id LEFT JOIN vehicles V ON V.id=T.vehicle_id LEFT JOIN customers G ON G.id=T.guest_id LEFT JOIN customers C ON C.id=T.customer_id LEFT JOIN customer_groups CG ON CG.id=T.customer_group_id LEFT JOIN drivers D ON D.id=T.driver_id LEFT JOIN vehicle_ownership_types VO ON V.vehicle_ownership_types_id=VO.id  LEFT JOIN trip_vouchers TV ON TV.trip_id=T.id LEFT JOIN organisations ORG ON ORG.id = T.organisation_id where T.organisation_id='.$this->session->userdata('organisation_id');
 			//customer session check
 			if($this->session->userdata('customer')){
 				$qry .= ' AND T.customer_id='.$this->session->userdata('customer')->id;
@@ -804,7 +804,7 @@ class User extends CI_Controller {
 			//$qry.=' order by T.id desc';
 			$qry.=' order by CONCAT( T.pick_up_date, " ", T.pick_up_time ) ASC';
 			
-			$tbl_arry=array('trip_statuses','customer_groups');
+			$tbl_arry=array('trip_statuses','customer_groups','payment_type');
 	
 			for ($i=0;$i<count($tbl_arry);$i++){
 			$result=$this->user_model->getArray($tbl_arry[$i]);

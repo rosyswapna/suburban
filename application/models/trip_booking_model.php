@@ -105,10 +105,10 @@ class Trip_booking_model extends CI_Model {
 	
 
 	//generate new voucher for a trip
-	function  generateTripVoucher($data,$tariff_id=-1,$trip_data=array()) {
+	function  generateTripVoucher($data,$tariff_id=-1,$trip_data=array()) { 
 		$data['organisation_id']=$this->session->userdata('organisation_id');
 		$this->db->set('created', 'NOW()', FALSE);
-		$this->db->insert('trip_vouchers',$data);
+		$this->db->insert('trip_vouchers',$data); 
 		$trip_voucher_id = $this->db->insert_id();
 		
 		//update trip

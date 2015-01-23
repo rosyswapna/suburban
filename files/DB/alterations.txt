@@ -31,9 +31,11 @@ CREATE TABLE IF NOT EXISTS `driver_payment_percentages` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
-//need to b updated
+
 
 ALTER TABLE `trip_vouchers` ADD `driver_trip_amount` DOUBLE NOT NULL AFTER `remarks` ,
 ADD `vehicle_trip_amount` DOUBLE NOT NULL AFTER `driver_trip_amount` ,
 ADD `trip_narration` TEXT NOT NULL AFTER `vehicle_trip_amount` ;
+//need to b updated
 
+ALTER TABLE `trip_vouchers` ADD `payment_type_id` INT NOT NULL AFTER `invoice_no`;
