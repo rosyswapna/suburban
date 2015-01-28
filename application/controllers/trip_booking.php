@@ -564,7 +564,7 @@ class Trip_booking extends CI_Controller {
 				$data["total_trip_amount"]					=	$_REQUEST["total_trip_amount"];
 				$data["trip_narration"]						=	$_REQUEST["trip_narration"];
 				//$data["tax_group"]							=	$_REQUEST["tax_group"];
-				
+				$data["payment_type_id"]						=	$_REQUEST["payment_type_id"];
 				if($_REQUEST['tax_group']){
 					$this->mysession->set('tax_group',$_REQUEST['tax_group']);
 				}else{

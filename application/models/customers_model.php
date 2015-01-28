@@ -131,7 +131,7 @@ class Customers_model extends CI_Model {
 	
 		public function insertUser($data,$login=false){
 		
-		$org_id=$this->session->userdata('organisation_id');
+		$org_id=$this->session->userdata('organisation_id'); 
 		if($org_id && $login){
 		if(is_array($login)){
 		$passwrd=md5($login['password']);

@@ -111,6 +111,7 @@
 						<td><?php if($vehicle_statuses[$det['id']]!='Available'){ echo '<span class="label label-info">'.$vehicle_statuses[$det['id']].'</span>'.br(); }else{ echo '<span class="label label-success">'.$vehicle_statuses[$det['id']].'</span>'.br(); } if($vehicle_trips[$det['id']]!=gINVALID){ echo anchor(base_url().'organization/front-desk/trip-booking/'.$vehicle_trips[$det['id']],'Trip ID :'.$vehicle_trips[$det['id']]); } else{ echo ''; } ?>
 						<?php echo br().form_label('Permit','permit',$attributes).nbs(2);?>: <span><?php if( !isset($vehicles[$det['id']]['vehicle_permit_renewal_date']) || $vehicles[$det['id']]['vehicle_permit_renewal_date']==''){ echo '';}else{echo $vehicles[$det['id']]['vehicle_permit_renewal_date'];}?></span>
 						<?php echo br().form_label('Tax','tax',$attributes).nbs(2);?>: <span><?php if( !isset($vehicles[$det['id']]['tax_renewal_date']) || $vehicles[$det['id']]['tax_renewal_date']==''){ echo '';}else{echo $vehicles[$det['id']]['tax_renewal_date'];}?></span>
+						<?php echo br().form_label('Insurance','insurance',$attributes).nbs(2);?>: <span><?php if( !isset($vehicles[$det['id']]['insurance_renewal_date']) || $vehicles[$det['id']]['insurance_renewal_date']==''){ echo '';}else{echo $vehicles[$det['id']]['insurance_renewal_date'];}?></span>
 						</td>
 						<td><div>
 						<?php echo form_label('Total Trips','total_trips',$attributes).nbs(2);?> :

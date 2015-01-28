@@ -46,7 +46,7 @@ $('.voucher').on('click',function(){
 	var vehicle_model_id=$(this).attr('vehicle_model_id');
 	var vehicle_ac_type_id=$(this).attr('vehicle_ac_type_id');
 
-
+	var payment_type_id=$(this).attr('payment_type_id');
 	var pick_up_date=$(this).attr('pick_up_date');
 	var drop_date=$(this).attr('drop_date');
 	
@@ -151,7 +151,7 @@ $('.voucher').on('click',function(){
 				$('.enddt').val(formatDate_d_m_Y(data[0].trip_end_date));
 				$('.startkm').val(data[0].start_km_reading);
 				$('.endkm').val(data[0].end_km_reading);
-				
+				$('#payment').val(data[0].payment_type_id);
 
 				$('.description').val(data[0].remarks);
 				$('.releasingplace').val(data[0].releasing_place);
@@ -1154,7 +1154,7 @@ $('.statetax,.driverbata,.tollfee,.nighthalt,.parkingfee,.extrafuel').keyup(func
 
 
 
-$('.trip-voucher-save').on('click',function(){
+$('.trip-voucher-save').on('click',function(){ 
 	var new_voucher=$(this).attr('new_voucher');
 	var tax_group = $('.taxgroup').val();//tax calculating factor
     var error = 'false';
@@ -1163,7 +1163,8 @@ $('.trip-voucher-save').on('click',function(){
 	}
     var trip_id=$(this).attr('trip_id');
     var driver_id=$(this).attr('driver_id');
-
+	
+    payment_type_id= $('#payment').val(); 
 	var data={};
     data['voucherno']= voucherno = $('.voucherno').val();
     remarks = $('.description').val();	
@@ -1342,7 +1343,8 @@ $('.trip-voucher-save').on('click',function(){
 				fuel_extra_charges:fuel_extra_charges,
 				driver_id:driver_id,
 				total_trip_amount:totalamount,
-				tax_group:tax_group
+				tax_group:tax_group,
+				payment_type_id:payment_type_id
                
             },function(data){
               if(data!='false'){
