@@ -450,8 +450,9 @@ class account_model extends CI_Model {
 				$fa_driver = $this->fa_supplier_get($ref,$fa_supplier_table);
 
 				$fa_supplier_id = $fa_driver['supplier_id'];
+				$type= 22;//supplier payment
 
-				 $next_ref = $this->get_gl_next_trans_no(0,$this->session->userdata('organisation_id')."_");
+				 $next_ref = $this->get_gl_next_trans_no($type,$this->session->userdata('organisation_id')."_");
 
 			
 				$sql = "INSERT INTO ".$fa_gl_trans_table."(type, type_no, tran_date,
@@ -460,8 +461,8 @@ class account_model extends CI_Model {
 		
 
 
-				$sql .= "VALUES ('0','".$next_ref."', NOW(),'5410', '0', '0', 'test', '".$amount."', '".PT_DRIVER."', '".$fa_supplier_id."'),";
-				$sql .= "('0','".$next_ref."', NOW(),'2100', '0', '0', 'test', '".-$amount."', '".PT_DRIVER."', '".$fa_supplier_id."')";
+				$sql .= "VALUES ('".$type."','".$next_ref."', NOW(),'5410', '0', '0', 'test', '".$amount."', '".PT_DRIVER."', '".$fa_supplier_id."'),";
+				$sql .= "('".$type."','".$next_ref."', NOW(),'2100', '0', '0', 'test', '".-$amount."', '".PT_DRIVER."', '".$fa_supplier_id."')";
 			}else{
 				echo "no supplier";exit;
 			}
