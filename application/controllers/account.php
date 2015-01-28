@@ -11,7 +11,7 @@ class Account extends CI_Controller {
 
 	public function index($param1 ='')
 	{
-		
+
 	}
 
 
@@ -121,6 +121,22 @@ class Account extends CI_Controller {
 		}
 	}
 
+	//save driver trip to account
+	public function driver_trip_save()
+	{
+		if($this->org_user_session_check() == true) {
+			
+			$data['url'] = "facnc/gl/gl_bank.php?NewPayment=Yes&cnc_token=".$this->session->userdata('session_id');
+			
+			$page='fa-modules/module';
+			$this->load->view($page,$data);
+
+		}else{
+			$this->notAuthorized();
+		}
+	}
+
+
 	//admin templates
 	public function load_admin_templates($page='',$data=''){
 	
@@ -186,6 +202,8 @@ class Account extends CI_Controller {
 			return false;
 		}
 	}
+
+
 
 }
 ?>

@@ -425,6 +425,29 @@ class account_model extends CI_Model {
 	}
 
 
+	function add_gl_trans()
+	{
+
+
+		$fa_gl_trans_table = $this->session->userdata('organisation_id')."_gl_trans";
+		
+		if($this->check_fa_table_exists($fa_gl_trans_table))
+		{
+			
+		}
+
+		$sql = "INSERT INTO ".$fa_gl_trans_table."(type, type_no, tran_date,
+		account, dimension_id, dimension2_id, memo_, amount, person_type_id, person_id) ";
+
+		$sql .= "VALUES (".db_escape($type).", ".db_escape($trans_id).", '$date',
+		".db_escape($account).", ".db_escape($dimension).", "
+		.db_escape($dimension2).", ".db_escape($memo_).", "
+		.db_escape($amount_in_home_currency .", ".db_escape($person_type_id).", ". db_escape($person_id);
+
+	$sql .= ") ";
+	}
+
+
 
 }
 ?>
