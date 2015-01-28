@@ -21,6 +21,9 @@ class Vehicle extends CI_Controller {
 			if($param1=='' || $param1 == 'home'){
 				$this->Dashboard();
 			}
+			if($param1!='' && $param1 == 'service'){
+				$this->service_manage();
+			}
 			if($param1==''){ 
 				$this->vehicle_validation();
 				}
@@ -81,6 +84,24 @@ class Vehicle extends CI_Controller {
          $this->load_templates($page,$data);
 		}else{
 			$this->notAuthorized();
+	}
+	}
+	public function service_manage(){
+	if(isset($_REQUEST['service-submit'])){
+	$s_data['service_date']=$this->input->post('service_date');
+	$s_data['service_km']=$this->input->post('service_km');
+	$s_data['particulars']=$this->input->post('particulars');
+		$this->form_validation->set_rules('service_date','Date','trim|required|xss_clean');
+		$this->form_validation->set_rules('service_km','Kilometer','trim|required|xss_clean');
+		$this->form_validation->set_rules('particulars','Particular','trim|required|min_length[5]|xss_clean');
+		if($this->form_validation->run()==False){
+		 $this->mysession->set('service_post',$s_data);
+		 redirect(base_url().'organization/front-desk/vehicle/service');
+		 }
+		 else{
+		 echo "oops";exit;
+		 }
+	echo "ok";exit;
 	}
 	}
 	public function add($tbl,$param1){

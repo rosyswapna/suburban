@@ -93,7 +93,7 @@
 						<div>
 
 						<?php echo form_label('Total Trips','total_trips',$attributes).nbs(2);?> :<?php if( !isset($trip_info[$det['id']]['no_of_trips']) || $trip_info[$det['id']]['no_of_trips']==''){ echo '';}else{echo nbs(2).$trip_info[$det['id']]['no_of_trips'];}?>
-						<?php echo br().form_label('Outstanding','outstanding',$attributes).nbs(2);?> :<?php if( !isset($trip_info[$det['id']]['outstanding']) || $trip_info[$det['id']]['outstanding']==''){ echo '';}else{ echo nbs(2).$trip_info[$det['id']]['outstanding']+$drivers[$det['id']]['salary'];}?>
+						<?php echo br().form_label('Outstanding','outstanding',$attributes).nbs(2);?> :<?php if( !isset($trip_info[$det['id']]['outstanding']) || $trip_info[$det['id']]['outstanding']==''){ echo '';}else{ echo nbs(2).number_format($trip_info[$det['id']]['outstanding']+$drivers[$det['id']]['salary'],2);}?>
 
 						<?php echo  br().form_label('Trip Advance','trip_advance',$attributes).nbs(2);?> :
 						<?php echo br().form_label('Current Balance','current_balance',$attributes).nbs(2);?> :

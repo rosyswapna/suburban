@@ -83,6 +83,7 @@
         <li class="<?php echo $trip_class;?>"><a href="#tab_5" data-toggle="tab">Trip </a></li>
 		 <li class="<?php echo $pay_class='';?>"><a href="#tab_6" data-toggle="tab">Payments </a></li>
 		  <li class="<?php echo $acc_class='';?>"><a href="#tab_7" data-toggle="tab">Accounts</a></li>
+		   <li class="<?php echo $service_class='';?>"><a href="#tab_8" data-toggle="tab">Service</a></li>
 		  <?php }?>
     </ul>
     <div class="tab-content">
@@ -1108,6 +1109,67 @@ if($this->mysession->get('owner_post_all')!=null ){
 						<iframe src="<?php echo base_url().'account/front_desk/OwnerPaymentInquiry/VW'.$owner_id.'/true';?>" height="600px" width="100%">
 						<p>Browser not Support</p>
 						</iframe>
+						</div>
+				</div>
+				<div class="tab-pane" id="tab_8">
+				<?php 
+				$service_id=gINVALID;
+				$s_date='';
+				$s_km='';
+				$particular='';
+				if($this->mysession->get('service_post')!=null){
+				
+				$sdata=$this->mysession->get('service_post');
+				$s_date=$sdata['service_date'];
+				$s_km=$sdata['service_km'];
+				$particular=$sdata['particulars'];
+				$this->mysession->delete('service_post');
+				}
+				?>
+						<div class="page-outer">
+						<fieldset class="body-border border-style" >
+						<legend class="body-head">Service Info</legend>
+						<div class="form-group">
+						<?php echo form_open(base_url()."vehicle/service");?>
+					<table>
+					<tr>
+					<td><?php //echo form_label('Service Date','s_date').br(1); ?>
+					<?php  echo form_input(array('name'=>'service_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'Service Date','value'=>$s_date)).br(1); ?></td>
+					</tr>
+					<tr>
+					<td><?php //echo form_label('Service Kilometers','s_km'); ?>
+					<?php echo form_input(array('name'=>'service_km','class'=>'form-control','id'=>'service_km','placeholder'=>'Service Kilometers','value'=>$s_km)).br(1); ?></td>
+					</tr>
+					<tr>
+					<td><?php //echo form_label('Particulars','particular'); ?>
+					<?php echo form_textarea(array('name'=>'particulars','class'=>'form-control','id'=>'particulars','placeholder'=>'Particulars','value'=>$particular,'rows'=>'2')).br(1); ?></td>
+					<!--<td><div  class="service-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=service-add-id","class=btn");?></div>
+					</td>-->
+					</tr>
+					<tr>
+					<td><?php
+					if($service_id==gINVALID){
+					$btn_name='Save';
+					}else {
+					$btn_name='Update';
+					}
+					echo form_submit("service-submit",$btn_name,"class='btn btn-primary'");
+					?></td>	
+					</tr>
+					</table><?php echo form_close();?>
+						</fieldset>
+						
+					<fieldset class="body-border border-style">
+					<legend class="body-head">Manage</legend>
+					<?php echo br();?>
+					<table>
+					<tr>
+					<td><?php echo form_label('Service Date ','master_Title'); ?></td>
+					
+					</tr>
+					
+					</table>
+					</fieldset>
 						</div>
 				</div>
     </div>
