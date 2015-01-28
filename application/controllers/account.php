@@ -6,6 +6,7 @@ class Account extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper('my_helper');
+		$this->load->model('account_model');
 		no_cache();
 	}
 
@@ -19,7 +20,7 @@ class Account extends CI_Controller {
 	{
 		$tax_group = $_REQUEST['id'];
 		$amount = $_REQUEST['amt'];
-		$this->load->model('account_model');
+		
 		$res = $this->account_model->get_tax_group_rates($tax_group);
 		$tax = 0;
 		foreach($res as $row){
@@ -126,10 +127,9 @@ class Account extends CI_Controller {
 	{
 		if($this->org_user_session_check() == true) {
 			
-			$data['url'] = "facnc/gl/gl_bank.php?NewPayment=Yes&cnc_token=".$this->session->userdata('session_id');
-			
-			$page='fa-modules/module';
-			$this->load->view($page,$data);
+			//print_r($_REQUEST);exit;
+			$this->account_model->add_gl_trans($_REQUEST['driver_id'],$_REQUEST['amount']);
+			echo "ok";exit;
 
 		}else{
 			$this->notAuthorized();

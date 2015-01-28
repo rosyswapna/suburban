@@ -14,6 +14,18 @@
 |
 */
 
+//<<<<<<<<<<<<<<<<<fa constants-------
+define('PT_MISC', 0);
+define('PT_WORKORDER', 1);
+define('PT_CUSTOMER', 2);
+define('PT_SUPPLIER', 3);
+define('PT_QUICKENTRY', 4);
+define('PT_DIMESION', 5);
+define('PT_DRIVER', 6);
+define('PT_OWNER', 7);
+//>>>>>>>>>>>>>>>>fa constants-------
+
+
 define('PRODUCTION_MODE',1);
 define('DEVELOPMENT_MODE',2);
 define('PROJECT_MODE',DEVELOPMENT_MODE);
