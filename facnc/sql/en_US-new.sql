@@ -1481,6 +1481,7 @@ CREATE TABLE IF NOT EXISTS `0_suppliers` (
   `purchase_account` varchar(15) NOT NULL DEFAULT '',
   `payable_account` varchar(15) NOT NULL DEFAULT '',
   `payment_discount_account` varchar(15) NOT NULL DEFAULT '',
+  `salary_account` varchar(15) NOT NULL DEFAULT '',
   `notes` tinytext NOT NULL,
   `inactive` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`supplier_id`),

@@ -337,7 +337,9 @@ start_form();
 	start_table(TABLESTYLE, "width=80%");
 
 	$supp_ac = get_supplier_accounts($_POST['supplier_id']);
-	supplier_accounts_list_row("Select Account",$_POST['supplier_id'],"account_code",$supp_ac['payable_account'],false);
+	//supplier_accounts_list_row("Select Account",$_POST['supplier_id'],"account_code",$supp_ac['payable_account'],false);
+	gl_all_accounts_list_row("Select Account","account_code",$supp_ac['payable_account']);
+
 	amount_row(_("Amount of Discount:"), 'discount', null, '', $supplier_currency);
 	amount_row(_("Amount of Payment:"), 'amount', null, '', $supplier_currency);
 	textarea_row(_("Memo:"), 'memo_', null, 22, 4);
