@@ -1092,14 +1092,16 @@ function calculateHrsAmount(time_str,hrsrate){
 //calculate total 
 
 function setTotalAmount()
-{
+{	
 	var statetax = $('.statetax').val();
 	var driverbata = $('.driverbata').val();
 	var tollfee = $('.tollfee').val();
 	var nighthalt = $('.nighthalt').val();
 	var parkingfee = $('.parkingfee').val();
 	var extrafuel=$('.extrafuel').val();
+	resetTax();
 	if($('.totalamount').attr('amount-class-to-be-selected')!=''){
+		
 		var total_tarif=$('.'+$('.totalamount').attr('amount-class-to-be-selected')).val();
 		var total = Number(total_tarif)+Number(statetax)+Number(driverbata)+Number(tollfee)+Number(nighthalt)+Number(parkingfee)+Number(extrafuel);
 		$('.totalamount').val(total);
