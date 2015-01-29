@@ -565,10 +565,13 @@ class Trip_booking extends CI_Controller {
 				$data["trip_narration"]						=	$_REQUEST["trip_narration"];
 				//$data["tax_group"]							=	$_REQUEST["tax_group"];
 				$data["payment_type_id"]						=	$_REQUEST["payment_type_id"];
+
+
+				$this->mysession->delete('tax_group');
+				$this->mysession->delete('payment_type');
 				if($_REQUEST['tax_group']){
 					$this->mysession->set('tax_group',$_REQUEST['tax_group']);
-				}else{
-					$this->mysession->delete('tax_group');
+					$this->mysession->set('payment_type',$_REQUEST['payment_type_id']);
 				}
 			
 			$voucher=$this->getVouchers($data['trip_id'],$ajax='NO');

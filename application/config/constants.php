@@ -25,6 +25,10 @@ define('PT_DRIVER', 6);
 define('PT_OWNER', 7);
 //>>>>>>>>>>>>>>>>fa constants-------
 
+//payment types
+define('CASH',1);
+define('CREDIT',2);
+
 
 define('PRODUCTION_MODE',1);
 define('DEVELOPMENT_MODE',2);

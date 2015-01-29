@@ -93,6 +93,10 @@ class Account extends CI_Controller {
 			if(!is_null($this->mysession->get('tax_group'))){
 				$data['url'] .= "&TaxGroup=".$this->mysession->get('tax_group');
 			}
+			if(!is_null($this->mysession->get('payment_type'))){
+				$data['url'] .= "&PayType=".$this->mysession->get('payment_type');
+			}
+
 			$page='fa-modules/module';
 			
 			if($tab)

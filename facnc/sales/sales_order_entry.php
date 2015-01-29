@@ -448,7 +448,7 @@ if (isset($_POST['update'])) {
 
 if (isset($_POST['ProcessOrder']) && can_process()) {
 	
-	
+	echo "<pre>";print_r($_SESSION['Items']);echo "</pre>";exit;
 	
 	copy_to_cart();
 	$modified = ($_SESSION['Items']->trans_no != 0);

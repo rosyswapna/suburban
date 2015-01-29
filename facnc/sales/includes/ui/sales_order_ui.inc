@@ -739,7 +739,23 @@ function display_order_header(&$order, $editable, $date_text,$cnc_voucher=false)
 		label_cells(_('Payment:'), $order->payment_terms['terms']);
 	}*/
 
-	hidden('paument',0);
+	//echo $order->payment_terms;exit;
+
+	if(isset($_GET['PayType'])){
+		if($_GET['PayType'] == PM_CASH){
+			hidden('payment',4);
+		}elseif($_GET['PayType'] == PM_CREDIT){
+			hidden('payment',3);
+		}else{
+			hidden('payment',0);
+		}
+	}else{
+		hidden('payment',0);
+	}
+	
+	
+
+	
 
 	
 
