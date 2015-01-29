@@ -731,7 +731,8 @@ $this->mysession->delete('post');
 		
 		echo form_submit("save_trip_account","Process Trips","class='btn btn-primary'");
 		echo form_close();
-	?><a href="#trip_save">Process Trips</a>
+	?>
+		
 		</div>
 </div>
 </fieldset>
@@ -765,16 +766,18 @@ $this->mysession->delete('post');
 
 	
 
-        <div class="" id="trip_save"> 
-		<iframe src="<?php echo base_url().'account/driver_trip_save';?>" height="600px" width="100%">
-		<p>Browser not Support</p>
-		</iframe>
-        </div>
+        
+		
+        
 	
 
     </div>
 </div>	
 
 
+
+
 </fieldset>
 </div>
+
+

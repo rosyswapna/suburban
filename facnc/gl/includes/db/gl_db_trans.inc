@@ -637,7 +637,7 @@ function get_sql_for_journal_inquiry($filter, $from, $to, $ref='', $memo='', $al
 	if (!$alsoclosed) {
 		$sql .= " AND gl_seq=0";
 	}
-	$sql .= " GROUP BY gl.tran_date, a.gl_seq, gl.type, gl.type_no";
+	$sql .= " GROUP BY gl.tran_date, a.gl_seq, gl.type, gl.type_no";//echo $sql;exit;
 	return $sql;
 }
 ?>

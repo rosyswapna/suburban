@@ -49,7 +49,7 @@ check_edit_conflicts();
 
 if (isset($_GET['AddedID'])) {
 
-	$invoice_no = $_GET['AddedID'];
+	/*$invoice_no = $_GET['AddedID'];
 	$trans_type = ST_SALESINVOICE;
 
 	display_notification(_("Selected deliveries has been processed"), true);
@@ -74,7 +74,8 @@ if (isset($_GET['AddedID'])) {
 
 	//hyperlink_params("$path_to_root/admin/attachments.php", _("Add an Attachment"), "filterType=$trans_type&trans_no=$invoice_no");
 
-	display_footer_exit();
+	display_footer_exit();*/
+	meta_forward($path_to_root.'/purchasing/supplier_payment.php','SupplierPayment='.$_GET['SupplierPayment']);
 
 } elseif (isset($_GET['UpdatedID']))  {
 
@@ -91,6 +92,7 @@ if (isset($_GET['AddedID'])) {
 	hyperlink_no_params($path_to_root . "/sales/inquiry/customer_inquiry.php", _("Select Another &Invoice to Modify"));
 
 	display_footer_exit();
+	
 
 } elseif (isset($_GET['RemoveDN'])) {
 
