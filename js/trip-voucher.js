@@ -537,6 +537,7 @@ $(document).keydown(function(e) {
   if (e.keyCode == 27) { 
 	clearErrorLabels();
 	clearAllFields();
+	resetTax();
  }   // esc
 
 });
@@ -1127,8 +1128,10 @@ $obj.parent().find('#totaltax').show();
 });
 function resetTax()
 {
+
 $('#totaltax').val('');
-$(".taxgroup").val('');
+$(".taxgroup option:selected").val('');
+$(".taxgroup option:selected").text('');
 $('#totaltax').hide();
 $(".taxgroup").show();
 }
