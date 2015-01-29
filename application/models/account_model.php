@@ -305,10 +305,12 @@ class account_model extends CI_Model {
 			$cnc_data = $this->get_cnc_driver($id);
 			$address = $cnc_data['present_address'];
 			$ac = $cnc_data['bank_account_number'];
+			$purchase_act = $prefs['default_driver_cogs_act'];
 		}elseif($type == 'VW'){
 			$cnc_data = $this->get_cnc_vehicle_owner($id);
 			$address = $cnc_data['address'];
 			$ac = "";
+			$purchase_act = $prefs['default_vehicle_cogs_act'];
 		}
 		else{
 			$cnc_data = false;
@@ -325,6 +327,7 @@ class account_model extends CI_Model {
 				'credit_limit'=> @$prefs['default_credit_limit'],		
  				'payable_account' => @$prefs['creditors_act'],
 				'payment_discount_account' => @$prefs['pyt_discount_act'],
+				'purchase_account' => $purchase_act,
 				'salary_account' => @$prefs['salary_act'],
 				'tax_group_id' => 1//static from tax group table
 				);
