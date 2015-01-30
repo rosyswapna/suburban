@@ -738,21 +738,18 @@ function display_order_header(&$order, $editable, $date_text,$cnc_voucher=false)
 	} else {
 		label_cells(_('Payment:'), $order->payment_terms['terms']);
 	}*/
+	
 
-	//echo $order->payment_terms;exit;
-
-	if(isset($_GET['PayType'])){
-		if($_GET['PayType'] == PM_CASH){
-			hidden('payment',4);
-		}elseif($_GET['PayType'] == PM_CREDIT){
-			hidden('payment',3);
-		}else{
-			hidden('payment',0);
-		}
-	}else{
-		hidden('payment',0);
+	
+	$_POST['payment'] = 0;
+	
+	if($cnc_voucher['payment_type_id'] == PM_CASH){
+		$_POST['payment'] = 4;
+	}elseif($cnc_voucher['payment_type_id'] == PM_CREDIT){
+		$_POST['payment'] = 3;
 	}
 	
+	hidden('payment');
 	
 
 	
@@ -768,7 +765,8 @@ function display_order_header(&$order, $editable, $date_text,$cnc_voucher=false)
 
 		date_row($date_text, 'OrderDate', _('Date of order receive'),
 			$order->trans_no==0, 0, 0, 0, null, true);
-		if (isset($_POST['_OrderDate_changed']) || list_updated('payment')) {
+		//if (isset($_POST['_OrderDate_changed']) || list_updated('payment')) {
+		if (isset($_POST['_OrderDate_changed'])) {
 			if (!is_company_currency($order->customer_currency) 
 				&& (get_base_sales_type()>0)) {
 					$change_prices = 1;

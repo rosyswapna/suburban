@@ -35,14 +35,47 @@ if(isset($_GET['SupplierPayment'])){//get supplier reference
 	//supplier id
 	$_POST['supplier_id'] = get_cnc_supplier_id($_GET['SupplierPayment']);
 	$supplier = get_supplier($_POST['supplier_id']);
-	page(_($help_context = "Payment Entry"), false, false, "", $js);	
+	page(_($help_context = "Payment Entry"), false, false, "", $js);
+	
+}elseif(isset($_GET['DriverPayment']) && isset($_GET['INV'])){
+
+	$_POST['payment_via'] = 'DR';
+	$_POST['INV'] = $_GET['INV'];
+
+	$voucher = get_voucher_with_invoice($_GET['INV']);
+
+	$_POST['amount'] = $voucher['driver_trip_amount'];
+
+	$_POST['supplier_id'] = get_cnc_supplier_id("DR".$voucher['driver_id']);
+
+	$supplier = get_supplier($_POST['supplier_id']);
+	
+	//echo "<pre>";print_r($voucher);echo "</pre>";exit;
+	page(_($help_context = "Driver Payment"), false, false, "", $js);
+
+}elseif(isset($_GET['OwnerPayment']) && isset($_GET['INV'])){
+
+	$_POST['payment_via'] = 'VW';
+	$_POST['INV'] = $_GET['INV'];
+
+	$voucher = get_voucher_with_invoice($_GET['INV']);
+
+	$_POST['amount'] = $voucher['vehicle_trip_amount'];
+
+	$_POST['supplier_id'] = get_cnc_supplier_id("VW".$voucher['vehicle_owner_id']);
+
+	$supplier = get_supplier($_POST['supplier_id']);
+	
+	//echo "<pre>";print_r($voucher);echo "</pre>";exit;
+	page(_($help_context = "Vehicle Owner Payment"), false, false, "", $js);
+
 }
 elseif (isset($_GET['supplier_id']))
 {
 	$_POST['supplier_id'] = $_GET['supplier_id'];
 	page(_($help_context = "Supplier Payment Entry"), false, false, "", $js);
 }else{
-page(_($help_context = "Supplier Payment Entry"), false, false, "", $js);
+	page(_($help_context = "Supplier Payment Entry"), false, false, "", $js);
 }
 
 //----------------------------------------------------------------------------------------
@@ -120,7 +153,25 @@ if (isset($_GET['AddedID'])) {
 	submenu_option(_("Bank Account &Transfer"), "/gl/bank_transfer.php");
 */
 	display_footer_exit();
+}else if (isset($_GET['AddedDrID'])) {
+	$payment_id = $_GET['AddedDrID'];
+	if(isset($_GET['INV'])){
+		$voucher = get_voucher_with_invoice($_GET['INV']);
+		if($voucher['vehicle_owner_id'] > 0){
+			meta_forward($_SERVER['PHP_SELF'],'OwnerPayment=Yes&INV='.$_GET['INV']);
+		}
+
+	}
+   	display_notification_centered( _("Trip Invoice Processed"));
+	display_footer_exit();
+
+}else if (isset($_GET['AddedVwID'])) {
+	$payment_id = $_GET['AddedVwID'];
+	
+   	display_notification_centered( _("Trip Invoice Processed"));
+	display_footer_exit();
 }
+
 
 //----------------------------------------------------------------------------------------
 
@@ -258,7 +309,22 @@ function handle_add_payment()
    	unset($_POST['discount']);
    	unset($_POST['ProcessSuppPayment']);
 
-	meta_forward($_SERVER['PHP_SELF'], "AddedID=$payment_id&supplier_id=".$_POST['supplier_id']);
+	
+
+	if($_POST['payment_via']=='DR'){
+
+		//if vehicle then add vehicle payment
+
+		meta_forward($_SERVER['PHP_SELF'], "AddedDrID=$payment_id&INV=".$_POST['INV']);
+
+	}elseif($_POST['payment_via']=='VW'){
+
+		meta_forward($_SERVER['PHP_SELF'], "AddedVwID=$payment_id&INV=".$_POST['INV']);
+
+	}else{
+
+		meta_forward($_SERVER['PHP_SELF'], "AddedID=$payment_id&supplier_id=".$_POST['supplier_id']);
+	}
 }
 
 //----------------------------------------------------------------------------------------
@@ -277,6 +343,9 @@ if (isset($_POST['ProcessSuppPayment']))
 //----------------------------------------------------------------------------------------
 
 start_form();
+	
+	hidden('payment_via');//driver payment or vehicle owner payment from sales invoice
+	hidden('INV');//sales invoice number from invoice entry
 
 	start_outer_table(TABLESTYLE2, "width=100%", 5);
 

@@ -75,7 +75,15 @@ if (isset($_GET['AddedID'])) {
 	//hyperlink_params("$path_to_root/admin/attachments.php", _("Add an Attachment"), "filterType=$trans_type&trans_no=$invoice_no");
 
 	display_footer_exit();*/
-	meta_forward($path_to_root.'/purchasing/supplier_payment.php','SupplierPayment='.$_GET['SupplierPayment']);
+
+	$voucher = get_voucher_with_invoice($_GET['INV']);
+	if($voucher['driver_id'] > 0){
+		meta_forward($path_to_root.'/purchasing/supplier_payment.php','DriverPayment=Yes&INV='.$_GET['AddedID']);
+	}else if($voucher['vehicle_owner_id'] > 0){
+		meta_forward($path_to_root.'/purchasing/supplier_payment.php','OwnerPayment=Yes&INV='.$_GET['AddedID']);
+	}
+
+	
 
 } elseif (isset($_GET['UpdatedID']))  {
 

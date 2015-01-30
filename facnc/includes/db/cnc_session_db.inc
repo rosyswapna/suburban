@@ -127,6 +127,7 @@ function get_cnc_voucher($id = 0)
 		voucher.total_trip_amount as amount,
 		voucher.no_of_days,
 		voucher.trip_narration,
+		voucher.payment_type_id,
 		vmodels.name as vehicle_model
 		";
 	$sql .="  FROM trip_vouchers voucher ";
@@ -187,6 +188,18 @@ function get_trip_voucher_id_with_delivery_no($delivery_no){
 	$row = db_fetch_row($result);
 
 	return $row[0];
+}
+
+function get_voucher_with_invoice($inv_no){
+	$sql = "SELECT v.*,vh.vehicle_owner_id FROM trip_vouchers v
+		LEFT JOIN trips tr ON tr.id = v.trip_id
+		LEFT JOIN vehicles vh ON vh.id = tr.vehicle_id
+		WHERE v.invoice_no = ".db_escape($inv_no);
+	
+	$result = db_query($sql, "could not get voucher");
+	$row = db_fetch_assoc($result);
+
+	return $row;
 }
 
 
