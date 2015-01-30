@@ -1129,9 +1129,11 @@ $obj.parent().find('#totaltax').show();
 function resetTax()
 {
 
-$('#totaltax').val('');
-$(".taxgroup option:selected").val('');
-$(".taxgroup option:selected").text('');
+
+//$('#totaltax').text('');
+ $('.taxgroup').prop('selectedIndex',0);
+//$(".taxgroup option:selected").val('');
+//$(".taxgroup option:selected").text('');
 $('#totaltax').hide();
 $(".taxgroup").show();
 }
