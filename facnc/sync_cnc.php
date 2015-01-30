@@ -79,7 +79,6 @@
 		if(isset($_GET['TaxGroup'])){
 			$param.= "&TaxGroup=".$_GET['TaxGroup'];
 		}
-		
 		meta_forward('sales/sales_order_entry.php',$param);
 		
 	}elseif(isset($_GET['ModifyDelivery'])){

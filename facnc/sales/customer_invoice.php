@@ -78,9 +78,9 @@ if (isset($_GET['AddedID'])) {
 
 	$voucher = get_voucher_with_invoice($_GET['INV']);
 	if($voucher['driver_id'] > 0){
-		meta_forward($path_to_root.'/purchasing/supplier_payment.php','DriverPayment=Yes&INV='.$_GET['AddedID']);
+		meta_forward($path_to_root.'/purchasing/po_entry_items.php','DriverInvoice=Yes&INV='.$_GET['AddedID']);
 	}else if($voucher['vehicle_owner_id'] > 0){
-		meta_forward($path_to_root.'/purchasing/supplier_payment.php','OwnerPayment=Yes&INV='.$_GET['AddedID']);
+		meta_forward($path_to_root.'/purchasing/po_entry_items.php','OwnerInvoice=Yes&INV='.$_GET['AddedID']);
 	}
 
 	
@@ -536,16 +536,16 @@ foreach ($_SESSION['Items']->line_items as $line=>$ln_itm) {
 		continue; // this line was fully invoiced
 	}
 	alt_table_row_color($k);
-	label_cell($slno);
-	label_cell($ln_itm->voucher_no);
-	label_cell($ln_itm->pickup_date);
-	echo "<td>";
+	label_cell($slno,'width="5%"');
+	label_cell($ln_itm->voucher_no,'width="10%"');
+	label_cell($ln_itm->pickup_date,'width="10%"');
+	echo "<td width='10%'>";
 		echo $ln_itm->vehicle_model;
 		br();
 		echo $ln_itm->vehicle_no;
 	echo "</td>";
-	label_cell($ln_itm->username);
-	label_cell($ln_itm->particulars);
+	label_cell($ln_itm->username,'width="15%"');
+	label_cell($ln_itm->particulars,'width="40%"');
 	
 
 	//text_cells(null, 'Line'.$line.'Desc', $ln_itm->item_description, 30, 50);

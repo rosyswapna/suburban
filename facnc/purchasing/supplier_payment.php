@@ -29,7 +29,7 @@ if ($use_date_picker)
 
 add_js_file('payalloc.js');
 
-
+$_POST['payment_via']='';
 
 if(isset($_GET['SupplierPayment'])){//get supplier reference
 	//supplier id
