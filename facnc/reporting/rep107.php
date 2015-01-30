@@ -37,9 +37,10 @@ function get_delivery_no($src_id){
 
 function get_trip($voucher = 0)
 {
-	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount,voucher.voucher_no AS voucher_str";
+	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount,voucher.voucher_no AS voucher_str,CONCAT(user.first_name,' ',user.last_name) AS username";
 	$sql .= " FROM trip_vouchers voucher";
 	$sql .= " LEFT JOIN trips trip ON trip.id = voucher.trip_id";
+	$sql .= " LEFT JOIN users user ON user.id = trip.user_id";
 	$sql .= " LEFT JOIN vehicles vehicle ON trip.vehicle_id = vehicle.id";
 	$sql .= " WHERE voucher.id = ".db_escape($voucher);
 
@@ -143,7 +144,7 @@ function print_invoices()
 				$rep->TextCol(1, 2,  @$trip['voucher_str']);
 				$rep->TextCol(2, 3,  @$trip['trip_date']);
 				$rep->TextCol(3, 4,  @$trip['vehicle_no']);
-				$rep->TextCol(4, 5,  "OFFICER");
+				$rep->TextCol(4, 5,  @$trip['username']);
 				$rep->TextColLines(5, 6,  $memo);
 
 				$Net = round2($sign * ((1 - $myrow2["discount_percent"]) * $myrow2["unit_price"] * $myrow2["quantity"]), user_price_dec());
