@@ -190,6 +190,7 @@ function get_trip_voucher_id_with_delivery_no($delivery_no){
 	return $row[0];
 }
 
+//get single voucher with invoice number
 function get_voucher_with_invoice($inv_no){
 	$sql = "SELECT v.*,vh.vehicle_owner_id FROM trip_vouchers v
 		LEFT JOIN trips tr ON tr.id = v.trip_id
@@ -200,6 +201,23 @@ function get_voucher_with_invoice($inv_no){
 	$row = db_fetch_assoc($result);
 
 	return $row;
+}
+
+
+
+//get invoiced trip vouchers
+function get_vouchers_with_invoice($inv_no){
+	$sql = "SELECT voucher.*
+		FROM trip_vouchers voucher
+		WHERE voucher.id IN(SELECT trip_voucher FROM ".TB_PREF."debtor_trans_details WHERE debtor_trans_no =".db_escape($inv_no)." AND debtor_trans_type = ".ST_SALESINVOICE.")";
+	
+	$result = db_query($sql, "could not get vouchers");
+	$data = array();
+	while($row = db_fetch_assoc($result)){
+		$data[] = $row;
+	}
+
+	return $data;
 }
 
 
