@@ -1420,13 +1420,15 @@ if(isset($where_arry) || isset($like_arry)){
 				//$data['result']=$this->user_model->getDriverDetails($arry);
 				$data['result']=$this->user_model->getDriverUser($param2); 
 			}   
-			//trip details
-			$active_tab = 'd_tab';//default profile tab
-			if($param2!=''){
-				$tdate=date('Y-m-d');
+
+			$tdate=date('Y-m-d');
 				$date=explode("-",$tdate);
 				$fdate=$date[0].'-'.$date[1].'-01';
 				$todate=$date[0].'-'.$date[1].'-31';
+			//trip details
+			$active_tab = 'd_tab';//default profile tab
+			if($param2!=''){
+				
 				//echo $fdate.",".$todate;exit;
 				if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['date_search'])){
 					if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
