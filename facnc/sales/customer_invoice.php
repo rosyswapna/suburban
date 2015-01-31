@@ -76,11 +76,16 @@ if (isset($_GET['AddedID'])) {
 
 	display_footer_exit();*/
 
-	$voucher = get_voucher_with_invoice($_GET['INV']);
+	
+
+	$voucher = get_voucher_with_invoice($_GET['AddedID']);
+	
 	if($voucher['driver_id'] > 0){
 		meta_forward($path_to_root.'/purchasing/po_entry_items.php','DriverInvoice=Yes&INV='.$_GET['AddedID']);
 	}else if($voucher['vehicle_owner_id'] > 0){
 		meta_forward($path_to_root.'/purchasing/po_entry_items.php','OwnerInvoice=Yes&INV='.$_GET['AddedID']);
+	}else{
+	
 	}
 
 	
