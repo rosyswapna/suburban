@@ -72,24 +72,31 @@ if (isset($_GET['ModifyOrderNumber']) && is_numeric($_GET['ModifyOrderNumber']))
 	copy_from_cart();
 	
 	
-	$voucher = get_voucher_with_invoice($_GET['INV']);
+	$vouchers = get_vouchers_with_invoice($_GET['INV']);
+	
 	$_POST['supplier_id'] = get_cnc_supplier_id("DR".$voucher['driver_id']);
 	$_POST['invoice_via'] = 'DR';
 	$_POST['INV'] = $_GET['INV'];
 
 	
 	$item = get_item(102);//get trip details in fa as item record
-	//echo "<pre>";print_r($item);echo "</pre>";exit;
-	$_SESSION['PO']->voucher = $voucher;
-	//$_SESSION['PO']->supplier_id = $_POST['supplier_id'];
-
-	$_SESSION['PO']->add_to_order (count($_SESSION['PO']->line_items), $item['stock_id'], 1, 
+	//echo "<pre>";print_r($vouchers);echo "</pre>";exit;
+	$trip_ids = array();
+	foreach($vouchers as $voucher){
+		$_SESSION['PO']->add_to_order (count($_SESSION['PO']->line_items), $item['stock_id'], 1, 
 					$item['description'], //$myrow["description"], 
 					$voucher['driver_payment_amount'], '', // $myrow["units"], (retrived in cart)
-					'', 0, 0);
+					'', 0, 0, $voucher['trip_id'],$voucher['no_of_days']);
+		$trip_ids[] = $voucher['trip_id'];
+	}
+
+	
 	//echo "<pre>";print_r($_SESSION['PO']->line_items);echo "</pre>";exit;
 
-	$comments .= "Driver Commission for the trip, ID:". $voucher['trip_id'];
+
+	$comments .= "Vehicle Commission for the trip, IDs:". implode(",",$trip_ids);
+
+	$_SESSION['PO']->voucher =$vouchers;
 
 
 }elseif(isset($_GET['VehicleInvoice']) && isset($_GET['INV'])){
@@ -98,24 +105,31 @@ if (isset($_GET['ModifyOrderNumber']) && is_numeric($_GET['ModifyOrderNumber']))
 	create_new_po(ST_SUPPINVOICE, 0);
 	copy_from_cart();
 
-	$voucher = get_voucher_with_invoice($_GET['INV']);
+	$vouchers = get_vouchers_with_invoice($_GET['INV']);
+
 	$_POST['supplier_id'] = get_cnc_supplier_id("VW".$voucher['vehicle_owner_id']);
 	$_POST['invoice_via'] = 'VW';
 	$_POST['INV'] = $_GET['INV'];
 
 	$item = get_item(101);//get trip details in fa as item record
-	//print_r($voucher);exit;
-	$_SESSION['PO']->voucher = $voucher;
+	
+	//$_SESSION['PO']->voucher = $voucher;
+	
 	$_SESSION['PO']->supplier_id = $_POST['supplier_id'];
 
-	$_SESSION['PO']->add_to_order (count($_SESSION['PO']->line_items), $item['stock_id'], 1, 
+	$trip_ids = array();
+	
+	foreach($vouchers as $voucher){
+		$_SESSION['PO']->add_to_order(count($_SESSION['PO']->line_items), $item['stock_id'], 1, 
 					$item['description'], //$myrow["description"], 
 					$voucher['vehicle_payment_amount'], '', // $myrow["units"], (retrived in cart)
-					'', 0, 0);
+					'', 0, 0, $voucher['trip_id'],$voucher['no_of_days']);
+		$trip_ids[] = $voucher['trip_id'];
+	}
 
-	$_SESSION['PO']->voucher = $voucher;
+	$_SESSION['PO']->voucher =$vouchers;
 
-	$comments .= "Vehicle Commission for the trip, ID:". $voucher['trip_id'];
+	$comments .= "Vehicle Commission for the trip, IDs:". implode(",",$trip_ids);
 }
 
 page($_SESSION['page_title'], false, false, "", $js);

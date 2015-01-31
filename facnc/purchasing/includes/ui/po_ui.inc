@@ -340,8 +340,8 @@ function display_po_items(&$order, $editable=true)
 	    		$line_total =	round($po_line->quantity * $po_line->price,  user_price_dec());
 	    	
 	    		alt_table_row_color($k);
-				label_cell($order->voucher['trip_id']);
-				label_cell($order->voucher['no_of_days']);
+				label_cell($po_line->trip_id);
+				label_cell($po_line->no_of_days);
 		    		amount_cell($line_total);	
 			end_row();
 			$total += $line_total;

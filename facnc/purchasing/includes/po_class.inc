@@ -57,12 +57,12 @@ class purch_order
 		$this->tax_group_array = get_tax_group_items_as_array($tax_group_id);
 	}
 	
-	function add_to_order($line_no, $stock_id, $qty, $item_descr, $price, $uom, $req_del_date, $qty_inv, $qty_recd)
+	function add_to_order($line_no, $stock_id, $qty, $item_descr, $price, $uom, $req_del_date, $qty_inv, $qty_recd,$trip_id,$no_of_days)
 	{
 		if (isset($qty) && $qty != 0)
 		{
 			$this->line_items[$line_no] = new po_line_details($line_no, $stock_id, $item_descr, $qty, $price, $uom, 
-				$req_del_date, $qty_inv, $qty_recd);
+				$req_del_date, $qty_inv, $qty_recd,0,$trip_id,$no_of_days);
 			$this->lines_on_order++;
 			return 1;
 		}
@@ -209,8 +209,11 @@ class po_line_details
 	var $standard_cost;
 	var $descr_editable;
 
+	var $trip_id;
+	var $no_of_days;
+
 	function po_line_details($line_no, $stock_item, $item_descr, $qty, $prc, $uom, $req_del_date, 
-		$qty_inv, $qty_recd, $grn_item_id=0)
+		$qty_inv, $qty_recd, $grn_item_id=0,$trip_id,$no_of_days)
 	{
 
 		/* Constructor function to add a new LineDetail object with passed params */
@@ -237,6 +240,9 @@ class po_line_details
 		$this->receive_qty = 0;	/*initialise these last two only */
 		$this->standard_cost =0;
 		$this->grn_item_id = $grn_item_id;
+
+		$this->trip_id = $trip_id;
+		$this->no_of_days = $no_of_days;
 	}
 	
 	function taxfree_charge_price($po)

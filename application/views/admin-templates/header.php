@@ -57,7 +57,7 @@
         <header class="header">
             <a href="<?php echo base_url();?>" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
-              <?php echo PRODUCT_NAME; ?>
+		<img src="<?php echo base_url();?>img/logo.png" width="190px" alt="<?php echo PRODUCT_NAME; ?>"/>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
