@@ -736,6 +736,12 @@ $available_vehicle='';
 		                                        <td><div class="additional-km"></div>
 												<div class="hide-me"><?php echo form_input(array('name'=>'additional-km','class'=>'form-control ','id'=>'additional-km'));?></div></td>
 		                                        
+		                                    </tr>		
+											<tr>
+		                                        <td>Additional KM Rate<span class="float-right"> : </span></td>
+		                                        <td><div class="additional-rate-per-km"></div>
+												<!--<div class="hide-me"><?php //echo form_input(array('name'=>'additional-charge','class'=>'form-control ','id'=>'additional-charge'));?></div>--></td>
+		                                        
 		                                    </tr>
 											
 											<tr>

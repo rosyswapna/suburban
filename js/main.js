@@ -328,7 +328,7 @@ function Trim(strInput) {
 	
 }
 
-var API_KEY='AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
+var API_KEY='AIzaSyD3Fog2G5asD5NI4iJJZDsfJHjW-gPhevA';
 
 
 //trip_bookig page-js start
@@ -1228,6 +1228,7 @@ var total=Number(tax)+Number(amount);
 
 $('.additional-km').html(extra_distance+' Km');
 $('#additional-km').val(extra_distance+' Km');
+$('.additional-rate-per-km').html('RS . '+additional_kilometer_rate);
 $('.additional-charge-per-km').html('RS . '+extra_charge);
 $('#additional-charge').val('Rs . '+extra_charge);
 $('.mini-km').html(minimum_kilometers+' Km');
