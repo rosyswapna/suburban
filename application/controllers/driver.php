@@ -130,7 +130,7 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('salary','Salary','trim|xss_clean');
 	 $this->form_validation->set_rules('minimum_working_days','Minimum Working Days','trim|xss_clean');
 	 $this->form_validation->set_rules('driver_name','Name','trim|required|xss_clean');
-	 $this->form_validation->set_rules('place_of_birth','Place Of Birth','trim|required|xss_clean');
+	 $this->form_validation->set_rules('place_of_birth','Place Of Birth','trim|xss_clean');
 	 $this->form_validation->set_rules('dob','Date of Birth ','trim|xss_clean');
 	 $this->form_validation->set_rules('children','children','trim|xss_clean|numeric');
 	 $this->form_validation->set_rules('present_address','Present Address','trim|required|xss_clean');
@@ -139,13 +139,13 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('state','State','trim|xss_clean');
 	 $this->form_validation->set_rules('pin_code','Pin Code','trim|xss_clean|regex_match[/^[0-9]{6}$/]');
 	 $this->form_validation->set_rules('license_number','License Number','trim|xss_clean');
-	 $this->form_validation->set_rules('phone','Phone Number','trim|required|xss_clean|numeric]');
+	 $this->form_validation->set_rules('phone','Phone Number','trim|xss_clean|numeric]');
 		if($data['mobile']==$hmob){
 		$this->form_validation->set_rules('mobile','10 digit Mobile Number','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
 	 }else{
 	 $this->form_validation->set_rules('mobile','10 digit Mobile Number ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[drivers.mobile]');
 	 }if($data['email']==$hmail){
-	 $this->form_validation->set_rules('email','Email','trim|required|xss_clean|valid_email');
+	 $this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email');
 	 }
 	 else{
 	 $this->form_validation->set_rules('email','Email','trim|required|xss_clean|valid_email|is_unique[drivers.email]');
