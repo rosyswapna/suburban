@@ -24,7 +24,7 @@ header("Pragma: public");
 		<tr>
 		<td><?php  echo $drivers[$det['id']]['name'].nbs(3); ?></td>
 		<td><?php if( !isset($drivers[$det['id']]['phone']) || $drivers[$det['id']]['phone']==''){ echo '';}else{echo $drivers[$det['id']]['phone'].br();} ?></td>
-		<td><?phpif( !isset($drivers[$det['id']]['mobile']) || $drivers[$det['id']]['mobile']==''){ echo '';}else{echo $drivers[$det['id']]['mobile'].br();} ?></td>
+		<td><?php if( !isset($drivers[$det['id']]['mobile']) || $drivers[$det['id']]['mobile']==''){ echo '';}else{echo $drivers[$det['id']]['mobile'].br();} ?></td>
 		<td><?php if( !isset($drivers[$det['id']]['present_address']) || $drivers[$det['id']]['present_address']==''){ echo '';}else{echo $drivers[$det['id']]['present_address'].br();}?></td>
 		<td><?php if( !isset($drivers[$det['id']]['district']) || $drivers[$det['id']]['district']==''){ echo '';}else{echo $drivers[$det['id']]['district'].br();}?></td>
 		</tr>
