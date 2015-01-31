@@ -1419,6 +1419,7 @@ if(isset($where_arry) || isset($like_arry)){
 				$arry=array('id'=>$param2,'organisation_id'=>$org_id);
 				//$data['result']=$this->user_model->getDriverDetails($arry);
 				$data['result']=$this->user_model->getDriverUser($param2); 
+				//echo "<pre>";print_r($data['result']);echo "</pre>";exit;
 			}   
 
 			$tdate=date('Y-m-d');

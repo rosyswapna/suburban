@@ -88,7 +88,7 @@ $this->mysession->delete('post');
 	$permanent_address=$result['permanent_address'];
 	$district=$result['district'];
 	$state=$result['state'];
-	$pin_code=$result['pin_code'];
+	$pin_code=($result['pin_code']>0)?$result['pin_code']:'';
 	$phone=$result['phone'];
 	$mobile=$result['mobile'];
 	$email=$result['email'];
