@@ -119,12 +119,16 @@ class account_model extends CI_Model {
 					if($this->check_fa_table_exists($fa_branch_table))
 					{
 						$data = array(
-							'debtor_no'=>$this->db->insert_id(),
-							'branch_ref'=>$ref,
-							'br_name'=>$cnc_cust['name'],
-							'tax_group_id' =>1,
-							'default_location' =>'DEF'
-							);
+						'debtor_no'=>$this->db->insert_id(),
+						'branch_ref'=>$ref,
+						'br_name'=>$cnc_cust['name'],
+						'tax_group_id' =>1,
+						'default_location' =>'DEF',
+						'sales_account'=>'', 
+						'receivables_account'=>@$prefs['debtors_act'],
+						'payment_discount_account'=>@$prefs['default_prompt_payment_act'], 
+						'sales_discount_account'=>@$prefs['default_sales_discount_act']
+						);
 						$this->db->insert($fa_branch_table,$data);
 					}	
 				}

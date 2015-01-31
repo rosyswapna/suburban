@@ -59,7 +59,7 @@ if (!isset($path_to_root) || isset($_GET['path_to_root']) || isset($_POST['path_
 		ini_set("log_errors", "On");
 	}		
 	// Main Title
-	$app_title = "FrontAccounting";
+	$app_title = "Taxi";
 
 	$cnc_url = "http://taxi.local/";
 
