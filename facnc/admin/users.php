@@ -133,7 +133,7 @@ start_table(TABLESTYLE);
 $th = array(_("User login"), _("Full Name"), _("Phone"),
 	_("E-mail"), _("Last Visit"), _("Access Level"));
 
-inactive_control_column($th);
+//inactive_control_column($th);
 table_header($th);	
 
 $k = 0; //row colour counter
