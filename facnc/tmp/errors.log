@@ -1,0 +1,139 @@
+[31-Jan-2015 07:11:05 Europe/Paris] 0::renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 07:11:05 Europe/Paris] 0::renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 07:11:05 Europe/Paris] 0::renderer.php:56: Invalid argument supplied for foreach()
+[31-Jan-2015 07:20:28 Europe/Paris] 0::renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 07:20:28 Europe/Paris] 0::renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 07:20:28 Europe/Paris] 0::renderer.php:56: Invalid argument supplied for foreach()
+[31-Jan-2015 09:06:43 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:06:43 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:06:43 Europe/Paris] 1::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:06:43 Europe/Paris] 1::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:06:44 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:06:44 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:06:44 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:06:44 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:06:44 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:06:44 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:07:32 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:07:32 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:07:33 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:07:33 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:07:33 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:07:33 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:07:33 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:07:33 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:16 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:16 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:16 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:16 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:16 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:17 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:17 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:17 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:21 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:21 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:21 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:21 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:21 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:21 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:21 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:21 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:29 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:29 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:30 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:30 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:30 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:30 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:30 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:30 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:36 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:36 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:36 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:36 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:36 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:36 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:36 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:36 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:41 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:41 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:42 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:42 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:42 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:42 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:42 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:42 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:49 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:49 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:49 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:49 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:49 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:49 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:11:49 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:11:49 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:12:04 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:12:04 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:12:04 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:12:04 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:12:04 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:12:04 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:12:04 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:12:04 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:28:54 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:28:54 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:28:55 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:28:55 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:28:55 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:28:55 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:28:55 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:28:55 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:30:04 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:30:04 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:30:04 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:30:04 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:30:04 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:30:05 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:30:05 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:30:05 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:30:44 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:30:44 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:30:44 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:30:44 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:30:44 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:30:44 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:30:44 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:30:44 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:33:51 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:33:51 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:33:51 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:33:51 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:33:51 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:33:52 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:33:52 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:33:52 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:34:20 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:34:20 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:34:20 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:34:20 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:34:20 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:34:20 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:34:20 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:34:20 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:36:11 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:36:11 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:36:11 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:36:11 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:36:11 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:36:11 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[31-Jan-2015 09:36:11 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 09:36:11 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 10:20:24 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 10:20:24 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 10:20:42 Europe/Paris] 0::renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 10:20:42 Europe/Paris] 0::renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 10:20:42 Europe/Paris] 0::renderer.php:56: Invalid argument supplied for foreach()
+[31-Jan-2015 10:22:25 Europe/Paris] 0::renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 10:22:25 Europe/Paris] 0::renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 10:22:25 Europe/Paris] 0::renderer.php:56: Invalid argument supplied for foreach()
+[31-Jan-2015 10:31:19 Europe/Paris] 0::renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 10:31:19 Europe/Paris] 0::renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[31-Jan-2015 10:31:19 Europe/Paris] 0::renderer.php:56: Invalid argument supplied for foreach()

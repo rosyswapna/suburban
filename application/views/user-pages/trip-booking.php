@@ -197,7 +197,7 @@ if($customer_type==-1){
 $customer_type='';
 }
 $available_vehicles='';
-$available_vehicle='';
+//$available_vehicle='';
 ?>
 
 

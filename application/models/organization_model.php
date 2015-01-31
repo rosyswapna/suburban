@@ -15,10 +15,14 @@ class Organization_model extends CI_Model {
        
         if ( is_array($login) && count($login) == 1 ) {
 			
-            $this->details = $login[0];
+            $this->details = $login[0];echo '<pre>';
+			//print_r($login[0]);//exit;
 			if($this->details->user_type_id==ORGANISATION_ADMINISTRATOR || $this->details->user_type_id==FRONT_DESK){
 				if($this->details->user_status_id==USER_STATUS_ACTIVE){
-					$this->set_session();
+					$orgname=$this->getOrgName($this->details->organisation_id);
+					$this->set_session();	
+					$this->session->set_userdata('organisation_name',$orgname);
+					
           			  return true;
 				}else{
 				 $this->mysession->set('user_status_error','User is Not Active.');
@@ -46,6 +50,16 @@ class Organization_model extends CI_Model {
 		return false;
 		}
     }
+	function getOrgName($id){
+	$query=$this->db->get_where('organisations',array('id'=>$id));
+	if($query->num_rows()>0){
+		$org_res=$query->row_array(); 
+		return $org_res['name'];
+	}else{
+		return false;
+	}
+	
+	}
 	function changePassword($data) {
 		$this->db->from('users');
         $this->db->where('id',$this->session->userdata('id'));

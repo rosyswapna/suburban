@@ -704,3 +704,9 @@ margin-right:5px;
   font-style: normal;
   font-weight: normal !important;
 }
+.clock{
+margin-top: 8px;
+font-size: 23px;
+color: #fff;
+font-weight:bold;
+}

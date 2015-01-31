@@ -358,11 +358,11 @@ $err=True;
 	 $err=False;
 	 $this->mysession->set('model','Choose Model Type');
 	 }
-	 /* if($driver_data['driver_id'] ==-1){
+	  if($driver_data['driver_id'] ==-1){
 	 $driver_data['driver_id'] ='';
 	 $err=False;
 	 $this->mysession->set('Driver','Choose Any Driver');
-	 } */
+	 } 
 	 /* if($device_data['device_id'] ==-1){
 	 $device_data['device_id'] ='';
 	 $err=False;

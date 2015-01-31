@@ -1201,7 +1201,7 @@ extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
 amount=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 
 }else{
-amount=Math.round((Number(minimum_kilometers)*Number(no_of_days))*Number(rate)).toFixed(2);
+amount=Math.round(Number(no_of_days)*Number(rate)).toFixed(2);
 
 }
 
@@ -1216,7 +1216,7 @@ extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
 amount=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 
 }else{
-amount=Math.round(Number(minimum_kilometers)*Number(rate)).toFixed(2);
+amount=Math.round(Number(rate)).toFixed(2);
 
 }
 
