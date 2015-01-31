@@ -22,7 +22,7 @@ if (!isset($path_to_root) || isset($_GET['path_to_root']) || isset($_POST['path_
 	die("Restricted access");
 
 	if (!ini_get('date.timezone'))
-       ini_set('date.timezone', 'Europe/Berlin');
+       ini_set('date.timezone', 'Asia/Kolkata');
 
 	// Log file for error/warning messages. Should be set to any location
 	// writable by www server. When set to empty string logging is switched off. 
@@ -69,6 +69,8 @@ if (!isset($path_to_root) || isset($_GET['path_to_root']) || isset($_POST['path_
 	// Powered by
 	$power_by 		= "Accounts";
 	$power_url 		= $cnc_url;
+
+	putenv("TZ=Asia/Kolkata");
 
 	/* No check on edit conflicts. Maybe needed to be set to 1 in certains Windows Servers */
 	$no_check_edit_conflicts = 0;
