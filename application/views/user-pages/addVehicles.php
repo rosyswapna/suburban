@@ -83,7 +83,7 @@
         <li class="<?php echo $trip_class;?>"><a href="#tab_5" data-toggle="tab">Trip </a></li>
 		 <li class="<?php echo $pay_class='';?>"><a href="#tab_6" data-toggle="tab">Payments </a></li>
 		  <li class="<?php echo $acc_class='';?>"><a href="#tab_7" data-toggle="tab">Accounts</a></li>
-		   <li class="<?php echo $service_class='';?>"><a href="#tab_8" data-toggle="tab">Service</a></li>
+		   <!--<li class="<?php echo $service_class='';?>"><a href="#tab_8" data-toggle="tab">Service</a></li> commented by nijo-->
 		  <?php }?>
     </ul>
     <div class="tab-content">
