@@ -65,7 +65,10 @@ class User extends CI_Controller {
 
 		$this->Customer($param2);
 
-		}elseif($param1=='customers'){
+		}elseif($param1=='service'){
+		$this->ShowService();
+		}
+		elseif($param1=='customers'){
 
 		$this->Customers($param2);
 
@@ -132,7 +135,15 @@ class User extends CI_Controller {
 		}
 	
     }
-	
+	public function ShowService(){
+	if($this->session_check()==true) {
+	$data['title']="Service | ".PRODUCT_NAME;  
+	$page='user-pages/addVehicles';
+	$this->load_templates($page,$data);
+	}else{
+	$this->notAuthorized();
+	}
+	}
 	public function settings() {
 	if($this->session_check()==true) {
 	$tbl_arry=array('vehicle_ownership_types','vehicle_types','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','vehicle_makes','vehicle_payment_percentages','driver_payment_percentages','vehicle_permit_types','languages','language_proficiency','driver_type','payment_type','customer_types','customer_groups','customer_registration_types','marital_statuses','bank_account_types','id_proof_types','trip_models','trip_statuses','booking_sources','trip_expense_type','vehicle_models');

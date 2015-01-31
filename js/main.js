@@ -306,9 +306,12 @@ $('.tarrif-delete').click(function(){
 $(this).siblings().find(':submit').trigger('click');
 
 });
+//************service tab********
+$('.service-add').click(function(){ 
+$('#service-add-id').trigger('click');
+});
 
-
-
+//***************
 function Trim(strInput) {
 	
     while (true) {

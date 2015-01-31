@@ -576,7 +576,7 @@ $this->mysession->delete('post');
 						<th>Tax</th>
 						<th>Fuel</th>
 					</tr>
-					<?php 
+					<?php // print_r($trips[0]);exit;
 						$repeated_dates=array();					
 						$tot_nod=$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_over_time=$tot_night_halt=$tot_extra=$tot_fuel_extra=$tot_trip_amount= $tth=$ttp=$tto=$dbh=$dbp=$dbo=$i=0;
 					if(isset($trips) && $trips!=false){
@@ -640,7 +640,7 @@ $this->mysession->delete('post');
 						
 						$tto=  $tto+$trips[$trip_index]['driver_payment_amount'];
 						$dbo=	$dbo+$trips[$trip_index]['driver_bata'];
-						
+						$sal= $trips[$trip_index]['salary'];
 						
 						
 						?>
@@ -701,11 +701,11 @@ $this->mysession->delete('post');
 					<tr><td>Total Trips %</td><td><?php ?></td><td><?php ?></td><td><?php echo  number_format($tto,2);?></td></tr>
 					<!--<tr><td>Total Trips Others</td><td><?php echo  number_format($tto,2);?></td><td><?php echo  number_format($dbo,2);?></td><td><?php echo  number_format($tto+$dbo,2);?></td></tr>-->
 					<!--<tr><td>Total Trips Benz</td><td><?php echo  number_format($ttp,2);?></td><td><?php echo  number_format($dbp,2);?></td><td><?php echo  number_format($ttp+$dbp,2);?></td></tr>-->
-					<tr><td>Salary</td><td><?php  if($tot_nod>=20){
+					<tr><td>Salary</td><td><?php /* if($tot_nod>=20){
 					$sal=2500;
 					}else{
 					$sal=2000;
-					}
+					}*/
 					echo number_format($sal,2);
 					?> </td><td></td><td><?php echo number_format($sal,2);?></td></tr>
 					

@@ -115,8 +115,8 @@
 						</td>
 						<td><div>
 						<?php echo form_label('Total Trips','total_trips',$attributes).nbs(2);?> :
-						<?php echo  br().form_label('Trip Advance','trip_advance',$attributes).nbs(2);?> :
 						<?php echo br().form_label('Outstanding','outstanding',$attributes).nbs(2);?> :
+						<?php echo  br().form_label('Trip Advance','trip_advance',$attributes).nbs(2);?> :
 						<?php echo br().form_label('Current Balance','current_balance',$attributes).nbs(2);?> :
 						</div></td>
 					
