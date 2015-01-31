@@ -548,13 +548,16 @@ $this->mysession->delete('post');
 	
 				<?php  echo form_open(base_url()."organization/front-desk/driver-profile/".$d_id); ?>
 	<table>
-	<td><?php echo form_input(array('name'=>'from_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'From Date','value'=>'')); ?></td>
-	<td><?php echo form_input(array('name'=>'to_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'To Date','value'=>'')); ?></td>
+	<td><?php echo form_input(array('name'=>'from_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'From Date','value'=>$fdate)); ?></td>
+	<td><?php echo form_input(array('name'=>'to_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'To Date','value'=>$todate)); ?></td>
 	<td><?php echo form_submit("date_search","Search","class='btn btn-primary'");
 				echo form_close();?></td>
-	</table>
+
+	
+
+	</table><br/>
 			
-			
+		<?php  echo form_open(base_url()."account/driver_trip_save"); ?>
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr style="background:#CCC">
@@ -714,10 +717,22 @@ $this->mysession->delete('post');
 					<tr><td>Total Fuel</td><td></td><td></td><td><?php echo  number_format($tot_fuel_extra,2); ?></td></tr>
 					<tr style="background:#CCC"><td>Total</td><td></td><td></td><td><?php $total=$tto+$dbo+$tot_toll+$tot_night_halt+$sal+$tot_parking+$tot_state_tax+$tot_fuel_extra;
 								echo  number_format($total,2);
+
+					echo form_hidden('driver_id',$driver_id);
+					echo form_hidden('amount',$total);
+
+	
 					?></td></tr>
 				</tbody>
 			</table>
 			<?php }?>
+
+	<?php 
+		
+		echo form_submit("save_trip_account","Process Trips","class='btn btn-primary'");
+		echo form_close();
+	?>
+		
 		</div>
 </div>
 </fieldset>
@@ -747,9 +762,22 @@ $this->mysession->delete('post');
 		</div>
 
 	<?php }?>
+
+
+	
+
+        
+		
+        
+	
+
     </div>
 </div>	
 
 
+
+
 </fieldset>
 </div>
+
+

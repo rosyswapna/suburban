@@ -119,18 +119,36 @@ function display_po_header(&$order)
 	start_outer_table(TABLESTYLE2, 'width=80%');
 
 	table_section(1);
-    if ($editable)
-    {
-        if (!isset($_POST['supplier_id']) && (get_global_supplier() != ALL_TEXT))
-        	$_POST['supplier_id'] = get_global_supplier();
 
-    	supplier_list_row(_("Supplier:"), 'supplier_id', null, false, true, false, true);
+	if ($editable)
+	{
+	if (!isset($_POST['supplier_id']) && (get_global_supplier() != ALL_TEXT))
+		$_POST['supplier_id'] = get_global_supplier();
+
+	//echo "<pre>";print_r($order);echo "</pre>";exit;
+
+
+		if($_POST['invoice_via'] == 'DR'){
+			//supplier_list_row(_("Driver:"), 'supplier_id', null, false, true, false, true);
+			get_supplier_details_to_order($order, $_POST['supplier_id']); 
+			label_row(_("Driver:"),$order->supplier_name);
+			hidden('supplier_id');
+		}else if($_POST['invoice_via'] == 'VW'){
+			//supplier_list_row(_("Vehicle Owner:"), 'supplier_id', null, false, true, false, true);
+			get_supplier_details_to_order($order, $_POST['supplier_id']); 
+			label_row(_("Vehicle Owner:"),$order->supplier_name);
+			hidden('supplier_id');
+		}else{
+			supplier_list_row(_("Supplier:"), 'supplier_id', null, false, true, false, true);
+		}
+		
+		
 	}
 	else
 	{
 		hidden('supplier_id', $order->supplier_id);
 		label_row(_("Supplier:"), $order->supplier_name);
-    }
+	}
 
 	if ($order->supplier_id != get_post('supplier_id',-1)) {
 		$old_supp = $order->supplier_id;
@@ -223,6 +241,8 @@ function display_po_header(&$order)
 
 //---------------------------------------------------------------------------------------------------
 
+/* 
+//This function is modified below for taxi
 function display_po_items(&$order, $editable=true)
 {
     display_heading(_("Order Items"));
@@ -299,6 +319,52 @@ function display_po_items(&$order, $editable=true)
 
 	end_table(1);
 	div_end();
+}
+*/
+function display_po_items(&$order, $editable=true)
+{
+	//echo "<pre>";print_r($order);echo "</pre>";exit;
+    display_heading(_("Driver Trip Details"));
+
+    div_start('items_table');
+    	start_table(TABLESTYLE, "width=80%");
+
+	   	$th = array(_("Trip Id"), _("No Of Days"), _("Amount"));
+		
+	   	table_header($th);
+
+		$total = 0;
+		$k = 0;
+	   	foreach ($order->line_items as $line_no => $po_line)
+	   	{
+	    		$line_total =	round($po_line->quantity * $po_line->price,  user_price_dec());
+	    	
+	    		alt_table_row_color($k);
+				label_cell($order->voucher['trip_id']);
+				label_cell($order->voucher['no_of_days']);
+		    		amount_cell($line_total);	
+			end_row();
+			$total += $line_total;
+	       	}
+
+		$colspan = 2;
+
+		$display_sub_total = price_format($total);
+		label_row(_("Sub-total"), $display_sub_total, "colspan=$colspan align=right","align=right");
+
+		$taxes = $order->get_taxes(input_num('freight_cost'));
+		//echo "<pre>";print_r($taxes);echo "</pre>";exit;
+	
+		$tax_total = display_edit_tax_items($taxes, $colspan, $order->tax_included, 2, $order->trans_type==ST_SUPPINVOICE);
+
+		$display_total = price_format(($total + input_num('freight_cost') + $tax_total));
+
+		start_row();
+		label_cells(_("Amount Total"), $display_total, "colspan=$colspan align='right'","align='right'");
+		end_row();
+
+	end_table(1);
+   div_end();
 }
 
 //---------------------------------------------------------------------------------------------------

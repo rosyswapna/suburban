@@ -1411,35 +1411,36 @@ if(isset($where_arry) || isset($like_arry)){
 	}
 	}
 		
-		public function ShowDriverProfile($param1,$param2){ 
-			if($this->session_check()==true || $this->driver_session_check()==true) { 
+	public function ShowDriverProfile($param1,$param2){ 
+		if($this->session_check()==true || $this->driver_session_check()==true) { 
 			$data['mode']=$param2;
 			if($param2!=null&& $param2!=gINVALID){
-			$org_id=$this->session->userdata('organisation_id');
-			$arry=array('id'=>$param2,'organisation_id'=>$org_id);
-			//$data['result']=$this->user_model->getDriverDetails($arry);
-			$data['result']=$this->user_model->getDriverUser($param2); 
+				$org_id=$this->session->userdata('organisation_id');
+				$arry=array('id'=>$param2,'organisation_id'=>$org_id);
+				//$data['result']=$this->user_model->getDriverDetails($arry);
+				$data['result']=$this->user_model->getDriverUser($param2); 
 			}   
 			//trip details
 			$active_tab = 'd_tab';//default profile tab
 			if($param2!=''){
-			$tdate=date('Y-m-d');
-			$date=explode("-",$tdate);
-			$fdate=$date[0].'-'.$date[1].'-01';
-			$todate=$date[0].'-'.$date[1].'-31';
-			//echo $fdate.",".$todate;exit;
-			if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['date_search'])){
-			if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
-			$fdate=$date[0].'-'.$date[1].'-01';
-			$todate=$date[0].'-'.$date[1].'-31';
-			} else{
-			$fdate=$_REQUEST['from_pick_date'];
-			$todate=$_REQUEST['to_pick_date']; }
-			$data['trip_tab']='active';
-			$active_tab = 't_tab';//trip tab
-			} 
-			$data['trips']=$this->trip_booking_model->getDriverVouchers($param2,$fdate,$todate); 
-			//$this->mysession->set('trips',$data['trips']);
+				$tdate=date('Y-m-d');
+				$date=explode("-",$tdate);
+				$fdate=$date[0].'-'.$date[1].'-01';
+				$todate=$date[0].'-'.$date[1].'-31';
+				//echo $fdate.",".$todate;exit;
+				if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['date_search'])){
+					if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
+						$fdate=$date[0].'-'.$date[1].'-01';
+						$todate=$date[0].'-'.$date[1].'-31';
+					} else{
+						$fdate=$_REQUEST['from_pick_date'];
+						$todate=$_REQUEST['to_pick_date']; 	
+					}
+					$data['trip_tab']='active';
+					$active_tab = 't_tab';//trip tab
+				} 
+				$data['trips']=$this->trip_booking_model->getDriverVouchers($param2,$fdate,$todate); 
+				//$this->mysession->set('trips',$data['trips']);
 			} 
 			$data['tabs'] = $this->set_up_driver_tabs($active_tab,$param2);
 			if($this->session->userdata('type') == DRIVER){
@@ -1447,6 +1448,8 @@ if(isset($where_arry) || isset($like_arry)){
 			}else{
 				$data['edit_profile'] = true;
 			}
+			$data['fdate'] = $fdate;
+			$data['todate'] = $todate;
 			$data['driver_tab']='active';
 			//print_r($data['trips']);exit;
 			$data['title']='Driver Profile| '.PRODUCT_NAME;
@@ -1455,10 +1458,9 @@ if(isset($where_arry) || isset($like_arry)){
 			$data['select']=$this->select_Box_Values();
 			$this->load_templates($page,$data);
 		
-			}
-			else{
-					$this->notAuthorized();
-			}
+		}else{
+			$this->notAuthorized();
+		}
 	}
 
 	/*driver page tab setting ,

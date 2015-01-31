@@ -450,7 +450,7 @@ if (isset($_POST['ProcessOrder']) && can_process()) {
 	
 	
 	
-	copy_to_cart();
+	copy_to_cart();//echo "<pre>";print_r($_SESSION['Items']);echo "</pre>";exit;
 	$modified = ($_SESSION['Items']->trans_no != 0);
 	$so_type = $_SESSION['Items']->so_type;
 

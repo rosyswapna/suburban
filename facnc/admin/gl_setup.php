@@ -112,6 +112,11 @@ $_POST['default_prompt_payment_act']  = $myrow["default_prompt_payment_act"];
 
 $_POST['default_inventory_act'] = $myrow["default_inventory_act"];
 $_POST['default_cogs_act'] = $myrow["default_cogs_act"];
+
+$_POST['default_driver_cogs_act'] = $myrow["default_driver_cogs_act"];
+$_POST['default_vehicle_cogs_act'] = $myrow["default_vehicle_cogs_act"];
+
+
 $_POST['default_adj_act'] = $myrow["default_adj_act"];
 $_POST['default_inv_sales_act'] = $myrow['default_inv_sales_act'];
 $_POST['default_assembly_act'] = $myrow['default_assembly_act'];
@@ -210,6 +215,9 @@ gl_all_accounts_list_row(_("Sales Account:"), 'default_inv_sales_act', $_POST['d
 gl_all_accounts_list_row(_("Inventory Account:"), 'default_inventory_act', $_POST['default_inventory_act']);
 // this one is default for items and suppliers (purchase account)
 gl_all_accounts_list_row(_("C.O.G.S. Account:"), 'default_cogs_act', $_POST['default_cogs_act']);
+
+gl_all_accounts_list_row(_("C.O.G.S. Account for Driver:"), 'default_driver_cogs_act', $_POST['default_driver_cogs_act']);
+gl_all_accounts_list_row(_("C.O.G.S. Account for Vehicle:"), 'default_vehicle_cogs_act', $_POST['default_vehicle_cogs_act']);
 
 gl_all_accounts_list_row(_("Inventory Adjustments Account:"), 'default_adj_act', $_POST['default_adj_act']);
 

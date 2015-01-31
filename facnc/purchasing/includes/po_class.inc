@@ -37,6 +37,8 @@ class purch_order
 
 	var $reference;
 	var $tax_overrides = array();		// array of taxes manually inserted during sales invoice entry (direct invoice)
+
+	var $voucher = array();
 	
 	function purch_order()
 	{

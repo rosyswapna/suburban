@@ -223,12 +223,21 @@ class account_model extends CI_Model {
 	{
 		$this->db->from($table);
 		$this->db->where('supp_ref',$ref);
-		if($num = $this->db->get()->num_rows() == 1){
+		$num = $this->db->get()->num_rows();
+		
+		if($num== 1){
 			return true;//supplier exists in fa
 		}else{
 			return false;//supplier not exists in fa
 		}
 	}
+	function fa_supplier_get($ref,$table)
+	{
+		$this->db->from($table);
+		$this->db->where('supp_ref',$ref);
+		return $this->db->get()->row_array();
+	}
+
 
 	function add_fa_supplier($id,$type='')
 	{
@@ -296,10 +305,12 @@ class account_model extends CI_Model {
 			$cnc_data = $this->get_cnc_driver($id);
 			$address = $cnc_data['present_address'];
 			$ac = $cnc_data['bank_account_number'];
+			$purchase_act = $prefs['default_driver_cogs_act'];
 		}elseif($type == 'VW'){
 			$cnc_data = $this->get_cnc_vehicle_owner($id);
 			$address = $cnc_data['address'];
 			$ac = "";
+			$purchase_act = $prefs['default_vehicle_cogs_act'];
 		}
 		else{
 			$cnc_data = false;
@@ -316,6 +327,7 @@ class account_model extends CI_Model {
 				'credit_limit'=> @$prefs['default_credit_limit'],		
  				'payable_account' => @$prefs['creditors_act'],
 				'payment_discount_account' => @$prefs['pyt_discount_act'],
+				'purchase_account' => $purchase_act,
 				'salary_account' => @$prefs['salary_act'],
 				'tax_group_id' => 1//static from tax group table
 				);
@@ -422,6 +434,76 @@ class account_model extends CI_Model {
 		return $this->db->query($sql)->result_array();
 
 		
+	}
+
+
+	function add_gl_trans($driver_id,$amount)
+	{
+
+
+		$fa_gl_trans_table = $this->session->userdata('organisation_id')."_gl_trans";
+		$sql = "";
+		
+		if($this->check_fa_table_exists($fa_gl_trans_table))
+		{
+			$fa_supplier_table = $this->session->userdata('organisation_id')."_suppliers";
+			$ref= "DR".$driver_id;
+			if($this->fa_supplier_exists($ref,$fa_supplier_table)){
+
+				$fa_driver = $this->fa_supplier_get($ref,$fa_supplier_table);
+
+				$fa_supplier_id = $fa_driver['supplier_id'];
+				$type= 22;//supplier payment
+
+				 $next_ref = $this->get_gl_next_trans_no($type,$this->session->userdata('organisation_id')."_");
+
+			
+				$sql = "INSERT INTO ".$fa_gl_trans_table."(type, type_no, tran_date,
+			account, dimension_id, dimension2_id, memo_, amount, person_type_id, person_id) ";
+
+		
+
+
+				$sql .= "VALUES ('".$type."','".$next_ref."', NOW(),'5410', '0', '0', 'test', '".$amount."', '".PT_DRIVER."', '".$fa_supplier_id."'),";
+				$sql .= "('".$type."','".$next_ref."', NOW(),'2100', '0', '0', 'test', '".-$amount."', '".PT_DRIVER."', '".$fa_supplier_id."')";
+			}else{
+				echo "no supplier";exit;
+			}
+
+			
+		}
+
+		if($sql != ""){
+			$this->db->query($sql);
+			return true;
+		}else{
+			return false;
+		}
+			
+		
+	}
+
+
+	function get_gl_next_trans_no($type,$pref)
+	{
+
+		//$this->db->select('MAX(type_no) as last_no');
+		//$this->db->from($pref.'gl_trans');
+		//$this->db->where('type',$type);
+		//$row = $this->db->get()->row();
+
+
+		$sql1 = "SELECT MAX(type_no) as last_no FROM ".$pref."gl_trans WHERE type ='".$type."'";
+
+		// check also in voided transactions (some transactions like location transfer are removed completely)
+		$sql2 = "SELECT MAX(id) as last_no FROM ".$pref."voided WHERE type='".$type."'";
+
+		$sql = "SELECT max(last_no) last_no FROM ($sql1 UNION $sql2) a";
+
+		$row = $this->db->query($sql)->row();
+
+	   
+	    	return $row->last_no+1;
 	}
 
 

@@ -17,6 +17,10 @@ include_once($path_to_root . "/purchasing/includes/purchasing_ui.inc");
 include_once($path_to_root . "/purchasing/includes/db/suppliers_db.inc");
 include_once($path_to_root . "/reporting/includes/reporting.inc");
 
+include_once($path_to_root . "/includes/db/cnc_session_db.inc");
+
+$voucher = array();
+
 set_page_security( @$_SESSION['PO']->trans_type,
 	array(	ST_PURCHORDER => 'SA_PURCHASEORDER',
 			ST_SUPPRECEIVE => 'SA_GRN',
@@ -35,6 +39,10 @@ if ($use_popup_windows)
 	$js .= get_js_open_window(900, 500);
 if ($use_date_picker)
 	$js .= get_js_date_picker();
+
+
+$comments = "";
+
 
 if (isset($_GET['ModifyOrderNumber']) && is_numeric($_GET['ModifyOrderNumber'])) {
 
@@ -56,6 +64,58 @@ if (isset($_GET['ModifyOrderNumber']) && is_numeric($_GET['ModifyOrderNumber']))
 	$_SESSION['page_title'] = _($help_context = "Direct Purchase Invoice Entry");
 	create_new_po(ST_SUPPINVOICE, 0);
 	copy_from_cart();
+
+}elseif(isset($_GET['DriverInvoice']) && isset($_GET['INV'])){
+
+	$_SESSION['page_title'] = _($help_context = "Driver Invoice");
+	create_new_po(ST_SUPPINVOICE, 0);
+	copy_from_cart();
+	
+	
+	$voucher = get_voucher_with_invoice($_GET['INV']);
+	$_POST['supplier_id'] = get_cnc_supplier_id("DR".$voucher['driver_id']);
+	$_POST['invoice_via'] = 'DR';
+	$_POST['INV'] = $_GET['INV'];
+
+	
+	$item = get_item(102);//get trip details in fa as item record
+	//echo "<pre>";print_r($item);echo "</pre>";exit;
+	$_SESSION['PO']->voucher = $voucher;
+	//$_SESSION['PO']->supplier_id = $_POST['supplier_id'];
+
+	$_SESSION['PO']->add_to_order (count($_SESSION['PO']->line_items), $item['stock_id'], 1, 
+					$item['description'], //$myrow["description"], 
+					$voucher['driver_payment_amount'], '', // $myrow["units"], (retrived in cart)
+					'', 0, 0);
+	//echo "<pre>";print_r($_SESSION['PO']->line_items);echo "</pre>";exit;
+
+	$comments .= "Driver Commission for the trip, ID:". $voucher['trip_id'];
+
+
+}elseif(isset($_GET['VehicleInvoice']) && isset($_GET['INV'])){
+
+	$_SESSION['page_title'] = _($help_context = "Vehicle Invoice");
+	create_new_po(ST_SUPPINVOICE, 0);
+	copy_from_cart();
+
+	$voucher = get_voucher_with_invoice($_GET['INV']);
+	$_POST['supplier_id'] = get_cnc_supplier_id("VW".$voucher['vehicle_owner_id']);
+	$_POST['invoice_via'] = 'VW';
+	$_POST['INV'] = $_GET['INV'];
+
+	$item = get_item(101);//get trip details in fa as item record
+	//print_r($voucher);exit;
+	$_SESSION['PO']->voucher = $voucher;
+	$_SESSION['PO']->supplier_id = $_POST['supplier_id'];
+
+	$_SESSION['PO']->add_to_order (count($_SESSION['PO']->line_items), $item['stock_id'], 1, 
+					$item['description'], //$myrow["description"], 
+					$voucher['vehicle_payment_amount'], '', // $myrow["units"], (retrived in cart)
+					'', 0, 0);
+
+	$_SESSION['PO']->voucher = $voucher;
+
+	$comments .= "Vehicle Commission for the trip, ID:". $voucher['trip_id'];
 }
 
 page($_SESSION['page_title'], false, false, "", $js);
@@ -139,6 +199,31 @@ if (isset($_GET['AddedID']))
 	hyperlink_params($_SERVER['PHP_SELF'], _("Enter &Another Direct Invoice"), "NewInvoice=Yes");
 	
 	display_footer_exit();	
+} elseif (isset($_GET['AddedDPI'])) {
+
+	if(isset($_GET['INV'])){
+		$voucher = get_voucher_with_invoice($_GET['INV']);
+		if($voucher['vehicle_owner_id'] > 0){
+			meta_forward($_SERVER['PHP_SELF'],'VehicleInvoice=Yes&INV='.$_GET['INV']);
+		}
+
+	}
+   	display_notification_centered( _("Trip Invoice Processed"));
+
+	display_note(print_document_link($invoice_no."-".$trans_type, _("&Print This Invoice"), true, ST_SALESINVOICE));
+
+	display_footer_exit();
+
+} elseif (isset($_GET['AddedVPI'])) {
+
+	display_notification_centered( _("Trip Invoice Processed"));
+
+	if(isset($_GET['INV'])){
+		display_note(print_document_link($_GET['INV']."-". ST_SALESINVOICE, _("&Print This Invoice"), true, ST_SALESINVOICE));
+	}
+
+	display_footer_exit();
+
 }
 //--------------------------------------------------------------------------------------------------
 
@@ -481,7 +566,23 @@ function handle_commit_order()
 			commit_transaction(); // save PO+GRN+PI
 			// FIXME payment for cash terms. (Needs cash account selection)
 			unset($_SESSION['PO']);
-       		meta_forward($_SERVER['PHP_SELF'], "AddedPI=$inv_no");
+			
+			if($_POST['invoice_via']=='DR'){
+
+				//if vehicle then add vehicle payment
+
+				meta_forward($_SERVER['PHP_SELF'], "AddedDPI=$inv_no&INV=".$_POST['INV']);
+
+			}elseif($_POST['invoice_via']=='VW'){
+
+				meta_forward($_SERVER['PHP_SELF'], "AddedVPI=$inv_no&INV=".$_POST['INV']);
+
+			}else{
+
+				meta_forward($_SERVER['PHP_SELF'], "AddedPI=$inv_no");
+			}
+
+       			
 		}
 		else { // order modification
 
@@ -520,13 +621,18 @@ if (isset($_POST['CancelUpdate']) || isset($_POST['UpdateLine'])) {
 
 start_form();
 
+hidden('invoice_via');//driver invoice or vehicle owner invoice from sales invoice
+hidden('INV');//sales invoice number from invoice entry
+
 display_po_header($_SESSION['PO']);
 echo "<br>";
 
 display_po_items($_SESSION['PO']);
 
 start_table(TABLESTYLE2);
-textarea_row(_("Memo:"), 'Comments', null, 70, 4);
+
+	
+textarea_row(_("Memo:"), 'Comments', $comments, 70, 4);
 
 end_table(1);
 

@@ -49,7 +49,7 @@ check_edit_conflicts();
 
 if (isset($_GET['AddedID'])) {
 
-	$invoice_no = $_GET['AddedID'];
+	/*$invoice_no = $_GET['AddedID'];
 	$trans_type = ST_SALESINVOICE;
 
 	display_notification(_("Selected deliveries has been processed"), true);
@@ -74,7 +74,16 @@ if (isset($_GET['AddedID'])) {
 
 	//hyperlink_params("$path_to_root/admin/attachments.php", _("Add an Attachment"), "filterType=$trans_type&trans_no=$invoice_no");
 
-	display_footer_exit();
+	display_footer_exit();*/
+
+	$voucher = get_voucher_with_invoice($_GET['INV']);
+	if($voucher['driver_id'] > 0){
+		meta_forward($path_to_root.'/purchasing/po_entry_items.php','DriverInvoice=Yes&INV='.$_GET['AddedID']);
+	}else if($voucher['vehicle_owner_id'] > 0){
+		meta_forward($path_to_root.'/purchasing/po_entry_items.php','OwnerInvoice=Yes&INV='.$_GET['AddedID']);
+	}
+
+	
 
 } elseif (isset($_GET['UpdatedID']))  {
 
@@ -91,6 +100,7 @@ if (isset($_GET['AddedID'])) {
 	hyperlink_no_params($path_to_root . "/sales/inquiry/customer_inquiry.php", _("Select Another &Invoice to Modify"));
 
 	display_footer_exit();
+	
 
 } elseif (isset($_GET['RemoveDN'])) {
 
@@ -526,16 +536,16 @@ foreach ($_SESSION['Items']->line_items as $line=>$ln_itm) {
 		continue; // this line was fully invoiced
 	}
 	alt_table_row_color($k);
-	label_cell($slno);
-	label_cell($ln_itm->voucher_no);
-	label_cell($ln_itm->pickup_date);
-	echo "<td>";
+	label_cell($slno,'width="5%"');
+	label_cell($ln_itm->voucher_no,'width="10%"');
+	label_cell($ln_itm->pickup_date,'width="10%"');
+	echo "<td width='10%'>";
 		echo $ln_itm->vehicle_model;
 		br();
 		echo $ln_itm->vehicle_no;
 	echo "</td>";
-	label_cell($ln_itm->username);
-	label_cell($ln_itm->particulars);
+	label_cell($ln_itm->username,'width="15%"');
+	label_cell($ln_itm->particulars,'width="40%"');
 	
 
 	//text_cells(null, 'Line'.$line.'Desc', $ln_itm->item_description, 30, 50);

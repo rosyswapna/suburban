@@ -6,12 +6,13 @@ class Account extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper('my_helper');
+		$this->load->model('account_model');
 		no_cache();
 	}
 
 	public function index($param1 ='')
 	{
-		
+
 	}
 
 
@@ -19,7 +20,7 @@ class Account extends CI_Controller {
 	{
 		$tax_group = $_REQUEST['id'];
 		$amount = $_REQUEST['amt'];
-		$this->load->model('account_model');
+		
 		$res = $this->account_model->get_tax_group_rates($tax_group);
 		$tax = 0;
 		foreach($res as $row){
@@ -92,6 +93,8 @@ class Account extends CI_Controller {
 			if(!is_null($this->mysession->get('tax_group'))){
 				$data['url'] .= "&TaxGroup=".$this->mysession->get('tax_group');
 			}
+			
+
 			$page='fa-modules/module';
 			
 			if($tab)
@@ -120,6 +123,21 @@ class Account extends CI_Controller {
 			$this->notAuthorized();
 		}
 	}
+
+	//save driver trip to account
+	public function driver_trip_save()
+	{
+		if($this->org_user_session_check() == true) {
+			
+			//print_r($_REQUEST);exit;
+			$this->account_model->add_gl_trans($_REQUEST['driver_id'],$_REQUEST['amount']);
+			echo "ok";exit;
+
+		}else{
+			$this->notAuthorized();
+		}
+	}
+
 
 	//admin templates
 	public function load_admin_templates($page='',$data=''){
@@ -186,6 +204,8 @@ class Account extends CI_Controller {
 			return false;
 		}
 	}
+
+
 
 }
 ?>
