@@ -207,8 +207,10 @@ function get_voucher_with_invoice($inv_no){
 
 //get invoiced trip vouchers
 function get_vouchers_with_invoice($inv_no){
-	$sql = "SELECT voucher.*
+	$sql = "SELECT voucher.*,vh.vehicle_owner_id
 		FROM trip_vouchers voucher
+		LEFT JOIN trips tr ON tr.id = voucher.trip_id
+		LEFT JOIN vehicles vh ON vh.id = tr.vehicle_id
 		WHERE voucher.id IN(SELECT trip_voucher FROM ".TB_PREF."debtor_trans_details WHERE debtor_trans_no =".db_escape($inv_no)." AND debtor_trans_type = ".ST_SALESINVOICE.")";
 	
 	$result = db_query($sql, "could not get vouchers");

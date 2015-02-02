@@ -207,10 +207,15 @@ function get_sql_for_supplier_inquiry($filter, $after_date, $to_date, $supplier_
    	if ($supplier_id != ALL_TEXT) {
    		$sql .= " AND trans.supplier_id = ".db_escape($supplier_id);
    		$sql2 .= " AND trans.supplier_id = ".db_escape($supplier_id);
+	}else{
+		if($supp_type!=''){
+			$sql .= " AND supplier.supp_ref LIKE '".$supp_type."%'";
+			$sql2 .= " AND supplier.supp_ref LIKE '".$supp_type."%'";
+		}
+			
+		
 	}
-	if($supp_type){
-		$sql .= " AND supplier.supp_ref LIKE '".$supp_type."%'";
-	}
+	
 	if (($filter == '6')) 
 	{
 			$sql = $sql2;
