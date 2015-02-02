@@ -47,6 +47,8 @@ if(isset($_GET['CustomerPayment'])){
 {
 	$_POST['customer_id'] = $_GET['customer_id'];
 	page(_($help_context = "Customer Payment Entry"), false, false, "", $js);
+}else{
+	page(_($help_context = "Payment Entry"), false, false, "", $js);
 }
 
 if (!isset($_POST['bank_account'])) { // first page call
