@@ -113,13 +113,13 @@ class account_model extends CI_Model {
 				$this->db->insert($fa_customer_table,$data);
 		
 				//insert branch
-				if($this->db->insert_id()){
+				if($debtor_no=$this->db->insert_id()){
 					$fa_branch_table = $this->session->userdata('organisation_id')."_cust_branch";
 
 					if($this->check_fa_table_exists($fa_branch_table))
 					{
 						$data = array(
-						'debtor_no'=>$this->db->insert_id(),
+						'debtor_no'=>$debtor_no,
 						'branch_ref'=>$ref,
 						'br_name'=>$cnc_cust['name'],
 						'tax_group_id' =>1,
