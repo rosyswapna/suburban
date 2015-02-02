@@ -1172,7 +1172,14 @@ $('.trip-voucher-save').on('click',function(){
     var driver_id=$(this).attr('driver_id');
 	
     payment_type_id= $('#payment').val(); 
+	var combo_data={};
+	combo_data['trip-tariff']=$('#trip-tariff').val();
+	combo_data['payment']=$('#payment').val();
+	
 	var data={};
+
+   
+    data['taxgroup']=$('.taxgroup').val();
     data['voucherno']= voucherno = $('.voucherno').val();
     remarks = $('.description').val();	
 	releasing_place=$('.releasingplace').val();
@@ -1296,10 +1303,11 @@ $('.trip-voucher-save').on('click',function(){
     //total
     data['totalamount']=totalamount=$('.totalamount').val();
 	resetErrorFields(data);
+	resetComboErrorFields(combo_data);
 	error=isVarNull(data);
-
+	error_combo=isVarNullCombo(combo_data);
 	
-    if(error=='false'){
+    if(error=='false' && error_combo=='false'){
          $.post(base_url+"/trip-booking/tripVoucher",
               {
                 trip_id:trip_id,
@@ -1388,6 +1396,16 @@ $.each(data, function(key, value) {
 });
 return error;
 }
+function isVarNullCombo(data){
+var error='false';
+$.each(data, function(key, value) {
+      if(value== -1){
+		error='true';
+		$('#'+key).css('border','1px solid red');
+	  }
+});
+return error;
+}
 
 function resetErrorFields(data){
 
@@ -1398,6 +1416,16 @@ $.each(data, function(key, value) {
 });
 
 }
+function resetComboErrorFields(data){
+
+$.each(data, function(key, value) {
+      
+		$('#'+key).css('border','1px solid #CCC');
+	  
+});
+
+}
+
 
 
 function generateTariffs(vehicle_model,vehicle_ac_type,tarif_id='',id,customer_id,newvoucher='yes'){
