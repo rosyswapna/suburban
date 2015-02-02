@@ -269,7 +269,7 @@ class Vehicle extends CI_Controller {
 			
 					
 					$this->form_validation->set_rules('year','Year','trim|required|xss_clean');
-					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean');
+					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean|regex_match[/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/]');
 					 $this->form_validation->set_rules('from_date','From Date ','trim|xss_clean');
 					 $this->form_validation->set_rules('from_date_device','From Date ','trim|xss_clean');
 					 $this->form_validation->set_rules('reg_date','Registration Date','trim|required|xss_clean');
