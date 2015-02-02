@@ -1713,7 +1713,7 @@ public function profile() {
 				
 				if(is_numeric($param2)|| ($this->mysession->get("error")=='true')){
 				
-				$driver_id=$data['driver']['driver_id'];
+				$driver_id=@$data['driver']['driver_id'];
 				$result=$this->user_model->getDriverNameById($driver_id);
 				$data['select']['drivers'][$driver_id]=$result['name'];
 				//for device

@@ -151,8 +151,8 @@
 			$ac=$vehicle['vehicle_ac_type_id'];
 			$fuel=$vehicle['vehicle_fuel_type_id'];
 			$seat=$vehicle['vehicle_seating_capacity_id'];
-			$driver_id=$driver['driver_id'];
-			$from_date=$driver['from_date'];
+			$driver_id=@$driver['driver_id'];
+			$from_date=@$driver['from_date'];
 			if(isset($device['device_id'])){
 			$device_id=$device['device_id'];
 			}
