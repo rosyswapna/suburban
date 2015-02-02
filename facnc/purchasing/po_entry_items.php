@@ -74,7 +74,7 @@ if (isset($_GET['ModifyOrderNumber']) && is_numeric($_GET['ModifyOrderNumber']))
 	
 	$vouchers = get_vouchers_with_invoice($_GET['INV']);
 	
-	$_POST['supplier_id'] = get_cnc_supplier_id("DR".$voucher['driver_id']);
+	$_POST['supplier_id'] = get_cnc_supplier_id("DR".$vouchers[0]['driver_id']);
 	$_POST['invoice_via'] = 'DR';
 	$_POST['INV'] = $_GET['INV'];
 
@@ -107,7 +107,7 @@ if (isset($_GET['ModifyOrderNumber']) && is_numeric($_GET['ModifyOrderNumber']))
 
 	$vouchers = get_vouchers_with_invoice($_GET['INV']);
 
-	$_POST['supplier_id'] = get_cnc_supplier_id("VW".$voucher['vehicle_owner_id']);
+	$_POST['supplier_id'] = get_cnc_supplier_id("VW".$vouchers[0]['vehicle_owner_id']);
 	$_POST['invoice_via'] = 'VW';
 	$_POST['INV'] = $_GET['INV'];
 
