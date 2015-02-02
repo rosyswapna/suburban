@@ -492,15 +492,15 @@ $this->mysession->delete('post');
 		<div class="form-group">
 		   <?php echo form_label('Username','usernamelabel');
 			
-			echo form_input(array('name'=>'d_username','class'=>'form-control','id'=>'d_username','placeholder'=>'Enter Username','value'=>$username));
+			echo form_input(array('name'=>'username','class'=>'form-control','id'=>'username','placeholder'=>'Enter Username','value'=>$username));
 		   ?>			
-		   <?php echo $this->form_functions->form_error_session('d_username', '<p class="text-red">', '</p>'); ?>
+		   <?php echo $this->form_functions->form_error_session('username', '<p class="text-red">', '</p>'); ?>
 		</div>
 
 		<div class="form-group">
 		   <?php echo form_label('Password','passwordlabel');  ?>
-		   <?php echo form_password(array('name'=>'d_password','class'=>'form-control','id'=>'d_password','placeholder'=>'Enter Password','value'=>$password)); ?>			
-			<?php echo $this->form_functions->form_error_session('d_password', '<p class="text-red">', '</p>'); ?>
+		   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'password','placeholder'=>'Enter Password','value'=>$password)); ?>			
+			<?php echo $this->form_functions->form_error_session('password', '<p class="text-red">', '</p>'); ?>
 		</div>
 		<div class="hide-me"><?php echo form_input(array('name'=>'h_pass','value'=>$h_pass)); ?></div>
 		<?php if($driver_id!='' && $driver_id>gINVALID){  echo '';}else{?>
