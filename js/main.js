@@ -1445,7 +1445,7 @@ function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehic
 				var selected="";
 				}
 			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' "+selected+"></option>").text(data.data[i].registration_number));
-				i=Number(i)+1;
+				//i=Number(i)+1;
 			}
 		
 			}else{
