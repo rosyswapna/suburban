@@ -400,8 +400,8 @@ class Trip extends CI_Controller {
 	$data1['vehicle_beacon_light']		='';
 	}
 
-	$data1['vehicle']				=	$vehicles[$result->vehicle_id];
-	$data1['driver']				=	$drivers[$result->driver_id];
+	$data1['vehicle']				=($result->vehicle_id > 0)?$vehicles[$result->vehicle_id]:'';
+	$data1['driver']				=($result->driver_id > 0)?$drivers[$result->driver_id]:'';
 	$trip_id = array('trip_id'=>$trip_id);
 	$tariff_details=$this->trip_booking_model->getRoughEstimate($trip_id);
 	$tariff_details=$tariff_details[0];
