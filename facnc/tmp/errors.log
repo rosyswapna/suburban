@@ -137,3 +137,13 @@
 [31-Jan-2015 10:31:19 Europe/Paris] 0::renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
 [31-Jan-2015 10:31:19 Europe/Paris] 0::renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
 [31-Jan-2015 10:31:19 Europe/Paris] 0::renderer.php:56: Invalid argument supplied for foreach()
+[02-Feb-2015 05:22:25 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[02-Feb-2015 05:22:25 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[02-Feb-2015 05:22:25 Europe/Paris] 1::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[02-Feb-2015 05:22:25 Europe/Paris] 1::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[02-Feb-2015 05:22:26 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[02-Feb-2015 05:22:26 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[02-Feb-2015 05:22:26 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[02-Feb-2015 05:22:26 Europe/Paris] 1:divyamanoj:connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[02-Feb-2015 05:22:26 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 2 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
+[02-Feb-2015 05:22:26 Europe/Paris] 1:divyamanoj:renderer.php:36: Missing argument 3 for renderer::menu_header(), called in C:\wamp\www\Taxi_local\source\facnc\includes\page\header.inc on line 146 and defined
