@@ -1077,6 +1077,11 @@ class CI_Form_validation {
 		return TRUE;
 	}
 
+/*
+	vehicle registration number format Eg:KL 01 BG 6319
+	/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/
+*/
+
 	// --------------------------------------------------------------------
 
 	/**
