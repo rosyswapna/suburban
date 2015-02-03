@@ -78,7 +78,7 @@ if (isset($_GET['ModifyOrderNumber']) && is_numeric($_GET['ModifyOrderNumber']))
 	$_POST['invoice_via'] = 'DR';
 	$_POST['INV'] = $_GET['INV'];
 
-	
+	//echo $_POST['supplier_id'];exit;	
 	$item = get_item(102);//get trip details in fa as item record
 	//echo "<pre>";print_r($vouchers);echo "</pre>";exit;
 	$trip_ids = array();
@@ -106,7 +106,7 @@ if (isset($_GET['ModifyOrderNumber']) && is_numeric($_GET['ModifyOrderNumber']))
 	copy_from_cart();
 
 	$vouchers = get_vouchers_with_invoice($_GET['INV']);
-
+	
 	$_POST['supplier_id'] = get_cnc_supplier_id("VW".$vouchers[0]['vehicle_owner_id']);
 	$_POST['invoice_via'] = 'VW';
 	$_POST['INV'] = $_GET['INV'];
