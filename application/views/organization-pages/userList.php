@@ -47,7 +47,7 @@
 						<th>Name</th>
 					    <th>Address</th>
 					    <th>Status</th>
-					    <th>Role</th>
+					    <!--<th>Role</th>-->
 					    <th>Action</th>
 					</tr>
 					<?php
@@ -68,7 +68,7 @@
 
 					   </td>
 
-					   <td><?php echo $user_roles[$row['user_type_id']];?></td>
+					   <!--<td><?php echo $user_roles[$row['user_type_id']];?></td>-->
 
 					   <td>
 							<?php echo anchor(base_url().'organization/admin/front-desk/'.$row['username'],'Edit','class="btn btn-primary"').nbs(3).anchor(base_url().'organization/admin/front-desk/'.$row['username'].'/password-reset','Change Password','class="btn btn-primary"'); ?>
