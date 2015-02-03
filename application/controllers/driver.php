@@ -94,17 +94,17 @@ class Driver extends CI_Controller {
 	$data['organisation_id']=$this->session->userdata('organisation_id'); 
 	$data['user_id']=$this->session->userdata('id'); 
 	$hidden_pass=$this->input->post('h_pass');
-	$password=$this->input->post('d_password');
+	$password=$this->input->post('password');
 	$err=True;
-	if(($this->input->post('d_username')!='') && ($password=='')){
-			$this->form_validation->set_rules('d_password','Password','trim|required|min_length[5]|max_length[12]|xss_clean');
+	if(($this->input->post('username')!='') && ($password=='')){
+			$this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|xss_clean');
 			$err=False;
 			}
-	if(($this->input->post('d_username')=='') && ($password!='')){
-			$this->form_validation->set_rules('d_username','Username','trim|required|min_length[5]|max_length[12]|xss_clean');
+	if(($this->input->post('username')=='') && ($password!='')){
+			$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[12]|xss_clean');
 			$err=False;
 			}
-		
+	
 	/*if($data['blood_group'] ==-1){
 	$data['blood_group'] ='';
 	 $err=False;
@@ -130,7 +130,7 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('salary','Salary','trim|xss_clean');
 	 $this->form_validation->set_rules('minimum_working_days','Minimum Working Days','trim|xss_clean');
 	 $this->form_validation->set_rules('driver_name','Name','trim|required|xss_clean');
-	 $this->form_validation->set_rules('place_of_birth','Place Of Birth','trim|xss_clean');
+	 $this->form_validation->set_rules('place_of_birth','Place Of Birth','trim|required|xss_clean');
 	 $this->form_validation->set_rules('dob','Date of Birth ','trim|xss_clean');
 	 $this->form_validation->set_rules('children','children','trim|xss_clean|numeric');
 	 $this->form_validation->set_rules('present_address','Present Address','trim|required|xss_clean');
@@ -165,23 +165,23 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('id_proof_document_number','ID Proof Number','trim|xss_clean');
 	 $this->form_validation->set_rules('name_on_id_proof','ID Proof Holder','trim|xss_clean');
 		if($dr_id==gINVALID ){
-				$this->form_validation->set_rules('d_username','Username','trim|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
-				$this->form_validation->set_rules('d_password','Password','trim|min_length[5]|max_length[12]|matches[cpassword]|xss_clean');
+				$this->form_validation->set_rules('username','Username','trim|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
+				$this->form_validation->set_rules('password','Password','trim|min_length[5]|max_length[12]|matches[cpassword]|xss_clean');
 				$this->form_validation->set_rules('cpassword','Confirmation','trim|min_length[5]|max_length[12]|xss_clean');
 				}
 	
 	 
 		
-	 if($this->form_validation->run()==False|| $err==False){
+	 if($this->form_validation->run()==False|| $err==False){ 
 		$this->mysession->set('driver_id',$dr_id);
-		$data['username']  = trim($this->input->post('d_username'));  
-		$data['password'] = $this->input->post('d_password'); 
+		$data['username']  = trim($this->input->post('username'));  
+		$data['password'] = $this->input->post('password'); 
 		$this->mysession->set('post',$data); 
 		redirect(base_url().'organization/front-desk/driver-profile',$data);	
 	 } 
-	 else{
-			$login['username']  = trim($this->input->post('d_username')); 
-			if(  $hidden_pass==$password){
+	 else{ 
+			$login['username']  = trim($this->input->post('username')); 
+			if( $hidden_pass==$password){
 			$flag=1;
 			$login['password']=$password;
 			}
@@ -205,7 +205,7 @@ class Driver extends CI_Controller {
 			}
 		}
 		else{ 
-		if(($this->input->post('d_username')=='') && ($password=='')){
+		if(($this->input->post('username')=='') && ($password=='')){
 		$login['username']='';
 		$login['password']='';
 		
