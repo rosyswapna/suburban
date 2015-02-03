@@ -287,6 +287,7 @@ public function __construct()
 	$this->load->model('organization_model');
 	$this->load->model('account_model');
 	$data['user_status']=$this->organization_model->getUserStatus();//print_r($user_status);
+	$data['user_roles']=$this->organization_model->getUserRoles();//print_r($user_status);
 	$condition='';
 	$per_page=5;
 	$like_arry='';
@@ -296,30 +297,32 @@ public function __construct()
 	//	$this->mysession->set('condition',array('where'=>$where_arry));
 	//}
 	//for search
-    if((isset($_REQUEST['sname'])|| isset($_REQUEST['status']))&& isset($_REQUEST['search'])){
-	if($secondaction==''){
-		$secondaction='0';
-	}
-	$this->mysession->delete('condition');
-	if($_REQUEST['sname']!=null&& $_REQUEST['status']!=-1){
-	$like_arry['name']= $_REQUEST['sname'];
-	$where_arry['status_id']=$_REQUEST['status'];
-	}
-	if($_REQUEST['sname']==null&& $_REQUEST['status']!=-1){
-	$where_arry['user_status_id']=$_REQUEST['status'];
-	}
-	if($_REQUEST['sname']!=null&& $_REQUEST['status']==-1){
-	$like_arry['username']= $_REQUEST['sname'];
-	}
+	
+   	if((isset($_REQUEST['sname'])|| isset($_REQUEST['status']))&& isset($_REQUEST['search'])){
+		if($secondaction==''){
+			$secondaction='0';
+		}
+		$this->mysession->delete('condition');
+		if($_REQUEST['sname']!=null&& $_REQUEST['status']!=-1){
+			$like_arry['name']= $_REQUEST['sname'];
+			$where_arry['status_id']=$_REQUEST['status'];
+		}
+		if($_REQUEST['sname']==null&& $_REQUEST['status']!=-1){
+			$where_arry['user_status_id']=$_REQUEST['status'];
+		}
+		if($_REQUEST['sname']!=null&& $_REQUEST['status']==-1){
+			$like_arry['username']= $_REQUEST['sname'];
+		}
 		$this->mysession->set('condition',array('like'=>$like_arry,'where'=>$where_arry));
 	}
+
 	if(is_null($this->mysession->get('condition'))){
 	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	}
 	$tbl='users';
 	$baseurl=base_url().'organization/admin/front-desk/list/';
 	$uriseg ='5';
-    $p_res=$this->mypage->paging($tbl,$per_page,$secondaction,$baseurl,$uriseg);
+        $p_res=$this->mypage->paging($tbl,$per_page,$secondaction,$baseurl,$uriseg);
 	if($secondaction==''){
 		$this->mysession->delete('condition');
 	}

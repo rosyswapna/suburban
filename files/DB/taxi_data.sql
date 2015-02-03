@@ -169,7 +169,11 @@ INSERT INTO `user_statuses` (`id`, `name`, `description`) VALUES
 INSERT INTO `user_types` (`id`, `name`, `description`) VALUES
 (1, 'System Administrator', 'System Administrator'),
 (2, 'Organisation Administrator', 'Organisation Administrator'),
-(3, 'Front Desk', 'Front Desk');
+(3, 'Front Desk', 'Front Desk'),
+(4, 'Customer', 'Customer'),
+(5, 'Driver', 'Driver'),
+(6, 'Vehicle Owner', 'Vehicle Owner');
+
 
 --
 -- Dumping data for table `vehicle_ac_types`
