@@ -194,6 +194,20 @@ class Organization_model extends CI_Model {
 			}
 			return $status;
 	}
+
+	function getUserRoles(){
+		
+		$qry=$this->db->get('user_types');
+		$count=$qry->num_rows();
+		$s= $qry->result_array();
+		
+		for($i=0;$i<$count;$i++){
+			
+			$roles[$s[$i]['id']]=$s[$i]['name'];
+		}
+			return $roles;
+	}
+
 	function updateUser($data){
 		
 		$userdbdata = array('first_name'=>$data['firstname'],'last_name'=>$data['lastname'],'address'=>$data['address'],'email'=>$data['email'],'phone'=>$data['phone'],'user_status_id'=>$data['status']);

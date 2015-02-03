@@ -206,28 +206,28 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 			
 		$qry='SELECT TV.trip_id,D.salary,TV.driver_bata,TV.driver_payment_amount,TV.vehicle_payment_amount,TV.driver_trip_amount,TV.vehicle_trip_amount,TV.voucher_no,V.registration_number,VT.name as v_type,TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON  TV.trip_id =T.id LEFT JOIN vehicles As V on T.vehicle_id=V.id LEFT JOIN vehicle_types As VT on T.vehicle_type_id=VT.id LEFT JOIN drivers As D on TV.driver_id=D.id WHERE TV.organisation_id = '.$this->session->userdata('organisation_id').' AND T.driver_id='.$driver_id;
 		if($fpdate!=null && $tpdate!=null){ 
-		$qry.=' AND T.pick_up_date BETWEEN "'.$fpdate.'" AND "'.$tpdate .'"';
-				}
+			$qry.=' AND T.pick_up_date BETWEEN "'.$fpdate.'" AND "'.$tpdate .'"';
+		}
 		if($fpdate!=null && $tpdate==null){
-		$qry.=' AND T.pick_up_date= "'.$fpdate.'"';
-				}
+			$qry.=' AND T.pick_up_date= "'.$fpdate.'"';
+		}
 		if($fpdate==null && $tpdate!=null){
-		$qry.=' AND T.drop_date= "'.$tpdate.'"';
-				} 
-	$result=$this->db->query($qry); //echo $this->db->last_query();exit;
-	$result=$result->result_array();
-	if(count($result)>0){
-	return $result; 
-	}else{
-	$qry2='SELECT TV.trip_id,TV.driver_bata,TV.driver_payment_amount,TV. vehicle_payment_amount,TV.driver_trip_amount,TV.vehicle_trip_amount,TV.voucher_no,V.registration_number,VT.name as v_type,TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON  TV.trip_id =T.id LEFT JOIN vehicles As V on T.vehicle_id=V.id LEFT JOIN vehicle_types As VT on T.vehicle_type_id=VT.id WHERE TV.organisation_id = '.$this->session->userdata('organisation_id').' AND T.driver_id='.$driver_id;
-	$result2=$this->db->query($qry2);
-	$result2=$result2->result_array();
-	if(count($result2)>0){ 
-	return $result2; 
-	}
-	else{
-	return false;
-	}
+			$qry.=' AND T.drop_date= "'.$tpdate.'"';
+		} 
+		$result=$this->db->query($qry); //echo $this->db->last_query();exit;
+		$result=$result->result_array();
+
+		if(count($result)>0){
+			return $result; 
+		}else{
+			$qry2='SELECT TV.trip_id,D.salary,TV.driver_bata,TV.driver_payment_amount,TV. vehicle_payment_amount,TV.driver_trip_amount,TV.vehicle_trip_amount,TV.voucher_no,V.registration_number,VT.name as v_type,TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON  TV.trip_id =T.id LEFT JOIN vehicles As V on T.vehicle_id=V.id LEFT JOIN vehicle_types As VT on T.vehicle_type_id=VT.id LEFT JOIN drivers As D on TV.driver_id=D.id WHERE TV.organisation_id = '.$this->session->userdata('organisation_id').' AND T.driver_id='.$driver_id;
+			$result2=$this->db->query($qry2);
+			$result2=$result2->result_array();
+			if(count($result2)>0){ 
+				return $result2; 
+			}else{
+				return false;
+			}
 	}
 
 	}

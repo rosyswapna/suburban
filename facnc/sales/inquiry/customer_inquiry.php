@@ -145,6 +145,8 @@ function trip_ids($row){
 	}
 }
 function vouchers($row){
+
+	//echo "<pre>";print_r($row);echo "</pre>";exit;
 	$result = get_cnc_trans_details($row['trans_no'],$row['type']);
 
 	if(db_num_rows($result) > 0){
@@ -279,7 +281,7 @@ db_query("set @bal:=0");
 
 
 if($_POST['filterType'] == 1){
-	$sql = get_sql_for_trip_invoices();
+	$sql = get_sql_for_trip_invoices();//echo $sql;exit;
 	$cols = array(
 	_("Invoice ID"),
 	_("Company"),

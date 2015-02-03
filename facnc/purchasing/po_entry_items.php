@@ -224,7 +224,7 @@ if (isset($_GET['AddedID']))
 	}
    	display_notification_centered( _("Trip Invoice Processed"));
 
-	display_note(print_document_link($invoice_no."-".$trans_type, _("&Print This Invoice"), true, ST_SALESINVOICE));
+	display_note(print_document_link($_GET['INV']."-". ST_SALESINVOICE, _("&Print Trip Invoice"), true, ST_SALESINVOICE));
 
 	display_footer_exit();
 
@@ -233,7 +233,7 @@ if (isset($_GET['AddedID']))
 	display_notification_centered( _("Trip Invoice Processed"));
 
 	if(isset($_GET['INV'])){
-		display_note(print_document_link($_GET['INV']."-". ST_SALESINVOICE, _("&Print This Invoice"), true, ST_SALESINVOICE));
+		display_note(print_document_link($_GET['INV']."-". ST_SALESINVOICE, _("&Print Trip Invoice"), true, ST_SALESINVOICE));
 	}
 
 	display_footer_exit();
