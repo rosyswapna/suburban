@@ -6,89 +6,18 @@
 		<?php  echo form_open(base_url()."vehicle/");?>
 		<div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-	<?php 
-	if(isset($insurance_tab)){
-	$ins_class=$insurance_tab;
-	$i_tab="tab-pane active";
-	}
-	else{
-	$ins_class='';
-	$i_tab="tab-pane ";
-	}
-	if(isset($trip_tab)){
-	$trip_class=$trip_tab;
-	$t_tab="tab-pane active";
-	}
-	else{
-	$trip_class='';
-	$t_tab="tab-pane ";
-	}
-	if(isset($vehicle_tab)){
-	$vehicle_class=$vehicle_tab;
-	$v_tab="tab-pane active";
-	}
-	else{
-	$vehicle_class='';
-	$v_tab="tab-pane";
-	}
-	if(isset($loan_tab)){
-	$loan_class=$loan_tab;
-	$l_tab="tab-pane active";
-	}
-	else{
-	$loan_class='';
-	$l_tab="tab-pane ";
-	}
-	if(isset($owner_tab)){
-	$owner_class=$owner_tab;
-	$o_tab="tab-pane active";
-	}
-	else{
-	$owner_class='';
-	$o_tab="tab-pane ";
-	}
-	if(isset($trip_tab)){
-	$trip_class=$trip_tab;
-	$t_tab="tab-pane active";
-	$v_tab="tab-pane";
-	$vehicle_class='';
-	}
-	else{
-	$trip_class='';
-	$t_tab="tab-pane ";
-	}
-	if(isset($pay_tab)){
-	$pay_class=$pay_tab;
-	$p_tab="tab-pane active";
-	}
-	else{
-	$pay_class='';
-	$p_tab="tab-pane ";
-	}
-	if(isset($acc_tab)){
-	$acc_class=$acc_tab;
-	$a_tab="tab-pane active";
-	}
-	else{
-	$acc_class='';
-	$a_tab="tab-pane ";
+ <?php 
+
+	foreach($tabs as $tab=>$attr){
+	echo '<li class="'.$attr['class'].'">
+		<a href="#'.$attr['tab_id'].'" data-toggle="tab">'.$attr['text'].'</a>
+	      </li>';
 	}
 	?>
-	
-        <li class="<?php echo $vehicle_class;?>"><a href="#tab_1" data-toggle="tab">Vehicle </a></li>
-        <li class="<?php echo $ins_class;?>"><a href="#tab_2" data-toggle="tab">Insurance </a></li>
-         <li class="<?php echo $loan_class;?>"><a href="#tab_3" data-toggle="tab">Loan </a></li>
-		  <li class="<?php echo $owner_class;?>"><a href="#tab_4" data-toggle="tab">Owner </a></li>
-		  <?php if(isset($mode)&& $mode!='' ){?>
-        <li class="<?php echo $trip_class;?>"><a href="#tab_5" data-toggle="tab">Trip </a></li>
-		 <li class="<?php echo $pay_class='';?>"><a href="#tab_6" data-toggle="tab">Payments </a></li>
-		  <li class="<?php echo $acc_class='';?>"><a href="#tab_7" data-toggle="tab">Accounts</a></li>
-		   <!--<li class="<?php echo $service_class='';?>"><a href="#tab_8" data-toggle="tab">Service</a></li> commented by nijo-->
-		  <?php }?>
     </ul>
     <div class="tab-content">
-
-        <div class="<?php echo $v_tab;?>" id="tab_1">
+  <?php if (array_key_exists('v_tab', $tabs)) {?>
+         <div class="<?php echo $tabs['v_tab']['content_class'];?>" id="<?php echo $tabs['v_tab']['tab_id'];?>">
 	<?php 
 			$vehicle_id=gINVALID;
 			$ownership ="";
@@ -510,7 +439,10 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 
 </div>
         </div>
-        <div class="<?php echo $i_tab;?>" id="tab_2">
+	<?php } ?>
+	
+	<?php if (array_key_exists('i_tab', $tabs)) {?>
+		<div class="<?php echo $tabs['i_tab']['content_class'];?>" id="<?php echo $tabs['i_tab']['tab_id'];?>">
 		
 	<?php
 
@@ -664,7 +596,10 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 			
 			</div>
         </div>
-        <div class="<?php echo $l_tab;?>" id="tab_3">
+	<?php } ?>
+	
+	<?php if (array_key_exists('l_tab', $tabs)) {?>
+        <div class="<?php echo $tabs['l_tab']['content_class'];?>" id="<?php echo $tabs['l_tab']['tab_id'];?>">
 				<?php
 		
 				
@@ -837,7 +772,10 @@ if($this->mysession->get('loan_post_all')!=null ){
 			
 			</div>
         </div>
-		<div class="<?php echo $o_tab;?>" id="tab_4">
+	<?php } ?>
+	
+	<?php if (array_key_exists('o_tab', $tabs)) {?>
+		<div class="<?php echo $tabs['o_tab']['content_class'];?>" id="<?php echo $tabs['o_tab']['tab_id'];?>">
 	
 		<?php 
 			$owner_id=gINVALID;
@@ -970,8 +908,11 @@ if($this->mysession->get('owner_post_all')!=null ){
 			
 			</div>
 		</div>
-			<?php echo form_close();?>	
-				<div class="<?php echo $t_tab;?>" id="tab_5">
+			<?php echo form_close();?>
+			<?php } ?>
+			
+			<?php if (array_key_exists('t_tab', $tabs)) {?>
+				<div class="<?php echo $tabs['t_tab']['content_class'];?>" id="<?php echo $tabs['t_tab']['tab_id'];?>">
 					<?php //trip in vehicles ?>
 						            <div class="page-outer">
 	   <fieldset class="body-border">
@@ -1095,23 +1036,28 @@ if($this->mysession->get('owner_post_all')!=null ){
 </fieldset>
 </div>
 				</div>
-			        
-				<div class="tab-pane" id="tab_6">
+			        <?php } ?>
+			<?php if (array_key_exists('p_tab', $tabs)) {?>
+				<div class="<?php echo $tabs['p_tab']['content_class'];?>" id="<?php echo $tabs['p_tab']['tab_id'];?>">
 						<div class="page-outer">
 						<iframe src="<?php echo base_url().'account/front_desk/SupplierPayment/VW'.$owner_id.'/true';?>" height="600px" width="100%">
 						<p>Browser not Support</p>
 						</iframe>
 						</div>
 				</div>
+			<?php } ?>
 			
-				<div class="tab-pane" id="tab_7">
+			<?php if (array_key_exists('a_tab', $tabs)) {?>
+				<div class="<?php echo $tabs['a_tab']['content_class'];?>" id="<?php echo $tabs['a_tab']['tab_id'];?>">
 						<div class="page-outer">
 						<iframe src="<?php echo base_url().'account/front_desk/OwnerPaymentInquiry/VW'.$owner_id.'/true';?>" height="600px" width="100%">
 						<p>Browser not Support</p>
 						</iframe>
 						</div>
 				</div>
-				<div class="tab-pane" id="tab_8">
+				<?php } ?>
+			<?php if (array_key_exists('s_tab', $tabs)) {?>	
+				<div class="<?php echo $tabs['s_tab']['content_class'];?>" id="<?php echo $tabs['s_tab']['tab_id'];?>">
 				<?php 
 				$service_id=gINVALID;
 				$s_date='';
@@ -1127,51 +1073,84 @@ if($this->mysession->get('owner_post_all')!=null ){
 				}
 				?>
 						<div class="page-outer">
+						
+	<?php if($this->session->userdata('dbSuccess') != '') {?>
+        <div class="success-message">
+			
+            <div class="alert alert-success alert-dismissable">
+                <i class="fa fa-check"></i>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <?php 
+                echo $this->session->userdata('dbSuccess');
+                $this->session->set_userdata(array('dbSuccess'=>''));
+                ?>
+           </div>
+       </div>
+       <?php    } ?>
+       
+       <?php if(isset($s_edit)){
+      $service_id=$s_edit[0]['id'];
+      $s_date=$s_edit[0]['service_date'];
+      $s_km=$s_edit[0]['service_km'];
+      $particular=$s_edit[0]['particulars'];
+       }
+       
+       ?>
 						<fieldset class="body-border border-style" >
 						<legend class="body-head">Service Info</legend>
 						<div class="form-group">
-						<?php echo form_open(base_url()."vehicle/service");?>
+						<?php 
+						echo form_open(base_url()."vehicle");?>
 					<table>
 					<tr>
-					<td><?php //echo form_label('Service Date','s_date').br(1); ?>
-					<?php  echo form_input(array('name'=>'service_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'Service Date','value'=>$s_date)).br(1); ?></td>
+					<td>
+					<?php  echo form_input(array('name'=>'service_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'Service Date','value'=>$s_date)).br(1); 
+					echo $this->form_functions->form_error_session('service_date', '<p class="text-red">', '</p>'); ?></td>
+					
 					</tr>
 					<tr>
 					<td><?php //echo form_label('Service Kilometers','s_km'); ?>
-					<?php echo form_input(array('name'=>'service_km','class'=>'form-control','id'=>'service_km','placeholder'=>'Service Kilometers','value'=>$s_km)).br(1); ?></td>
+					<?php echo form_input(array('name'=>'service_km','class'=>'form-control','id'=>'service_km','placeholder'=>'Service Kilometers','value'=>$s_km)).br(1);
+					 echo $this->form_functions->form_error_session('service_km', '<p class="text-red">', '</p>'); ?></td>
+					
 					</tr>
 					<tr>
 					<td><?php //echo form_label('Particulars','particular'); ?>
-					<?php echo form_textarea(array('name'=>'particulars','class'=>'form-control','id'=>'particulars','placeholder'=>'Particulars','value'=>$particular,'rows'=>'2')).br(1); ?></td>
+					<?php echo form_textarea(array('name'=>'particulars','class'=>'form-control','id'=>'particulars','placeholder'=>'Particulars','value'=>$particular,'rows'=>'2')).br(1); 
+					echo $this->form_functions->form_error_session('particulars', '<p class="text-red">', '</p>'); ?> </td>
 					<!--<td><div  class="service-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=service-add-id","class=btn");?></div>
 					</td>-->
 					</tr>
 					<tr>
 					<td><?php
-					if($service_id==gINVALID){
-					$btn_name='Save';
-					}else {
+					if(isset($s_edit)){
 					$btn_name='Update';
+					$this->mysession->set('s_id',$s_edit[0]['id']);
+					}else {
+					$btn_name='Save';
+					$this->mysession->set('s_id',gINVALID);
 					}
 					echo form_submit("service-submit",$btn_name,"class='btn btn-primary'");
 					?></td>	
 					</tr>
 					</table><?php echo form_close();?>
 						</fieldset>
+						<?php if(isset($s_list)){ ?>
+						<fieldset class="body-border border-style" >
+						<legend class="body-head">Manage Sevice Info</legend>
+						<table>
+						<tr><td><?php echo form_label('Service Date','sr_dt').nbs(3); ?></td>
+						<td><?php echo form_label('Service Kilometers','sr_km').nbs(3); ?></td></tr>
+						<?php foreach ($s_list as $s_val): ?>
 						
-					<fieldset class="body-border border-style">
-					<legend class="body-head">Manage</legend>
-					<?php echo br();?>
-					<table>
-					<tr>
-					<td><?php echo form_label('Service Date ','master_Title'); ?></td>
-					
-					</tr>
-					
-					</table>
-					</fieldset>
+						<tr><td><?php  echo anchor(base_url().'organization/front-desk/vehicle/'.$this->mysession->get('vehicle_id').'/service/'.$s_val['id'],$s_val['service_date']).nbs(3); ?></td><td><?php echo $s_val['service_km']; ?></td></tr>
+						<?php endforeach;?>
+						</table>
+						</fieldset>
+					<?php }?>
 						</div>
 				</div>
+				<?php }?>
     </div>
 </div>	
 	

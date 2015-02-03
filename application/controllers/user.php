@@ -43,6 +43,7 @@ class User extends CI_Controller {
 		$param1=$this->uri->segment(3);
 		$param2=$this->uri->segment(4);
 		$param3=$this->uri->segment(5);
+		$param4=$this->uri->segment(6);
         if($this->session_check()==true) {
 		if($param1==''){
 			$data['title']="Home | ".PRODUCT_NAME;    
@@ -65,9 +66,9 @@ class User extends CI_Controller {
 
 		$this->Customer($param2);
 
-		}elseif($param1=='service'){
+		}/*elseif($param1=='service'){
 		$this->ShowService();
-		}
+		}*/
 		elseif($param1=='customers'){
 
 		$this->Customers($param2);
@@ -100,10 +101,11 @@ class User extends CI_Controller {
 		}elseif($param1=='driver-profile'&&($param2== ''|| is_numeric($param2))){
 		$this->ShowDriverProfile($param1,$param2);
 		}
-		elseif($param1=='vehicle' && ($param2!= ''|| is_numeric($param2)||$param2== '') &&($param3== ''|| is_numeric($param3))){
-
-		$this->ShowVehicleView($param1,$param2,$param3);
+		//elseif($param1=='vehicle' && ($param2!= ''|| is_numeric($param2)||$param2== '') &&($param3== ''|| is_numeric($param3))){
+		elseif($param1=='vehicle'){
+		$this->ShowVehicleView($param1,$param2,$param3,$param4);
 		}
+		
 		
 		elseif($param1=='list-vehicle'&&($param2== ''|| is_numeric($param2)) && ($param3== ''|| is_numeric($param3))){
 		$this->ShowVehicleList($param1,$param2,$param3);
@@ -135,7 +137,7 @@ class User extends CI_Controller {
 		}
 	
     }
-	public function ShowService(){
+	/*public function ShowService(){
 	if($this->session_check()==true) {
 	$data['title']="Service | ".PRODUCT_NAME;  
 	$page='user-pages/addVehicles';
@@ -143,7 +145,7 @@ class User extends CI_Controller {
 	}else{
 	$this->notAuthorized();
 	}
-	}
+	}*/
 	public function settings() {
 	if($this->session_check()==true) {
 	$tbl_arry=array('vehicle_ownership_types','vehicle_types','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','vehicle_makes','vehicle_payment_percentages','driver_payment_percentages','vehicle_permit_types','languages','language_proficiency','driver_type','payment_type','customer_types','customer_groups','customer_registration_types','marital_statuses','bank_account_types','id_proof_types','trip_models','trip_statuses','booking_sources','trip_expense_type','vehicle_models');
@@ -1504,6 +1506,42 @@ public function profile() {
 
 		return $tabs;
 	}
+	function set_up_vehicle_tabs($tab_active='v_tab',$vehicle_id=''){
+			
+		$tabs['v_tab'] = array('class'=>'','tab_id'=>'tab_1','text'=>'Vehicle',
+						'content_class'=>'tab-pane');
+
+		if($vehicle_id!='' && $vehicle_id > 0){
+
+			$tabs['i_tab'] = array('class'=>'','tab_id'=>'tab_2','text'=>'Insurance',
+						'content_class'=>'tab-pane');
+			
+			$tabs['l_tab'] = array('class'=>'','tab_id'=>'tab_3','text'=>'Loan',
+						'content_class'=>'tab-pane');
+					
+			$tabs['o_tab'] = array('class'=>'','tab_id'=>'tab_4','text'=>'Owner',
+						'content_class'=>'tab-pane');
+			$tabs['s_tab'] = array('class'=>'','tab_id'=>'tab_5','text'=>'Service',
+						'content_class'=>'tab-pane');
+			$tabs['t_tab'] = array('class'=>'','tab_id'=>'tab_6','text'=>'Trip',
+						'content_class'=>'tab-pane');	
+			$tabs['p_tab'] = array('class'=>'','tab_id'=>'tab_7','text'=>'Payments',
+						'content_class'=>'tab-pane');
+			$tabs['a_tab'] = array('class'=>'','tab_id'=>'tab_8','text'=>'Accounts',
+						'content_class'=>'tab-pane');
+		}
+
+		if (array_key_exists($tab_active, $tabs)) {
+			$tabs[$tab_active]['class'] = 'active';
+			$tabs[$tab_active]['content_class'] = 'tab-pane active';
+		}else{
+			$tabs['v_tab']['class'] = 'active';
+			$tabs['v_tab']['content_class'] = 'tab-pane active';
+		}
+
+
+		return $tabs;
+	}
 	
 	public function tripVouchers($param2){
 			if($this->session_check()==true || $this->driver_session_check()==true) { 
@@ -1626,13 +1664,33 @@ public function profile() {
 		return $data;
 	}
 	
-	public function ShowVehicleView($param1,$param2,$param3) {
+	public function ShowVehicleView($param1,$param2,$param3,$param4) {
 	
 		if($this->session_check()==true) {
 		$data['mode']=$param2;
 		if($param1=='vehicle'&& $param2==''){
 		$this->mysession->delete('vehicle_id');
 		} 
+		$active_tab = 'v_tab';
+		if($param1=='vehicle'&& is_numeric($param2)){
+		
+			switch ($param3){
+				case 'insurance':$active_tab = 'i_tab';break;
+				case 'loan':$active_tab = 'l_tab';break;
+				case 'owner':$active_tab = 'o_tab';break;
+				case 'trip':$active_tab = 't_tab';break;
+				case 'service':$active_tab = 's_tab';break;
+			}
+		
+				if($param3=='service'&& is_numeric($param4) ){
+				$active_tab = 's_tab';
+				$sid=$param4; 
+				$data['s_edit']=$this->vehicle_model->get_Service($sid);
+				}
+				$vid=$this->mysession->get('vehicle_id'); 
+				$data['s_list']=$this->vehicle_model->get_listService($vid);
+			
+		}
 		
 			
 			
@@ -1672,18 +1730,24 @@ public function profile() {
 					}
 				
 				if($param2=='insurance' ){ 
-				$data['insurance_tab']='active';
+				$active_tab = 'i_tab';
 				}
+				
 				if($param2=='loan'&&($param3== ''|| is_numeric($param3))){
-				$data['loan_tab']='active';
+				$active_tab = 'l_tab';
 				$tbl='vehicle_loans';
 				$id=$param3;
 				}
 				if($param2=='owner'&&($param3== ''|| is_numeric($param3))) {
-				$data['owner_tab']='active';
+				$active_tab = 'o_tab';
 				$tbl='vehicle_owners';
 				$id=$param3;
 				}
+				/*if($param2=='service'&&($param3== ''|| is_numeric($param3))) {
+				$data['service_tab']='active';
+				$tbl='service';
+				$id=$param3;
+				}*/
 				$org_id=$this->session->userdata('organisation_id');
 				//$arry=array('id'=>$id,'organisation_id'=>$org_id);
 				
@@ -1724,7 +1788,9 @@ public function profile() {
 				}
 				}
 			}
-			//sample ends
+			
+				$data['tabs'] = $this->set_up_vehicle_tabs($active_tab,$param2);
+				
 				$data['title']="Vehicle Details | ".PRODUCT_NAME;  
 				$page='user-pages/addVehicles';
 				 $this->load_templates($page,$data);
