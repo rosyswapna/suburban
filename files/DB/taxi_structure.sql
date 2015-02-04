@@ -784,7 +784,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `fa_account` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `fa_account` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_status_id` (`user_status_id`),
   KEY `organisation_id` (`organisation_id`),
