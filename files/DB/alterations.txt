@@ -41,3 +41,4 @@ ADD `trip_narration` TEXT NOT NULL AFTER `vehicle_trip_amount` ;
 ALTER TABLE `trip_vouchers` ADD `payment_type_id` INT NOT NULL AFTER `invoice_no`;
 
 Create Service table
+ALTER TABLE `service` ADD `vehicle_id` INT NOT NULL ;

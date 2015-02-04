@@ -284,4 +284,56 @@ public function UpdateOwnerdetails($data,$id,$login='',$flag=''){
 	return true;
 
 }
+
+
+  public function insert_service($data){
+	$org_id=$this->session->userdata('organisation_id');
+	$data['organisation_id']=$org_id;
+	$result=$this->db->insert('service',$data);
+	if(count($result)>0){
+	return true;
+	}
+	else {
+	return false;
+	}
+	}
+  public function get_listService($vid){
+	$array=array('organisation_id'=>$this->session->userdata('organisation_id'),'vehicle_id'=>$vid);
+	
+	$query=$this->db->where($array);
+	$query=$this->db->get('service');
+	if(count($query)>0){
+	return $query->result_array();
+	}
+	else
+	{
+	return false;
+	}
+	}
+ public function get_Service($sid){
+	$array=array('organisation_id'=>$this->session->userdata('organisation_id'),'id'=>$sid);
+	
+	$query=$this->db->where($array);
+	$query=$this->db->get('service');
+	if(count($query)>0){
+	return $query->result_array();
+	}
+	else
+	{
+	return false;
+	}
+  }
+  
+ public function update_service($data,$id){
+	$org_id=$this->session->userdata('organisation_id');
+	$array=array('organisation_id'=>$org_id,'id'=>$id);
+	$query=$this->db->where($array);
+	$query=$this->db->update('service',$data);
+	if(count($query)>0){
+	return true;
+	}
+	else {
+	return false;
+	}
+	}
 }?>
