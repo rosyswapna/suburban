@@ -918,7 +918,7 @@ if($this->mysession->get('owner_post_all')!=null ){
 	   <fieldset class="body-border">
 		<legend class="body-head">Trip</legend><div class="form-group">
 	<div class="box-body table-responsive no-padding"> 
-	<?php  echo form_open(base_url()."organization/front-desk/vehicle/".$ve_id); ?>
+	<?php  echo form_open(base_url().'organization/front-desk/vehicle/'.$ve_id.'/trip'); ?>
 	<table>
 	<td><?php echo form_input(array('name'=>'from_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'From Date','value'=>'')); ?></td>
 	<td><?php echo form_input(array('name'=>'to_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'To Date','value'=>'')); ?></td>

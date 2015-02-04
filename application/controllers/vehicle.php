@@ -492,7 +492,7 @@ $err=True;
 		else{
 		$current_id=$id;
 		}
-		redirect(base_url().'organization/front-desk/vehicle/'.$current_id,$data);	
+		redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/insurance',$data);	
 	 }
 	 
 	  else{ 
@@ -509,9 +509,9 @@ $err=True;
 		$res=$this->vehicle_model->insertInsurance($data);
 		//$ins_id=$this->mysession->get('vehicle_id');
 		if( $res==true ) {
-			$this->mysession->set('dbSuccess',' Insurance Details Added Succesfully..!');
-				    $this->mysession->set('dbError','');
-				    redirect(base_url().'organization/front-desk/vehicle/'.$current_id);
+			$this->mysession->set('ins_Success',' Insurance Details Added Succesfully..!');
+				    $this->mysession->set('ins_Error','');
+				    redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/insurance');
 		}
 		}
 		else{
@@ -519,9 +519,9 @@ $err=True;
 		$res=$this->vehicle_model->UpdateInsurancedetails($data,$ins_id); 
 		if($res==true){
 		$id=$this->mysession->get('vehicle_id');
-		$this->mysession->set('dbSuccess','Insurance Details Updated Succesfully..!');
-	    $this->mysession->set('dbError','');
-	    redirect(base_url().'organization/front-desk/vehicle/'.$current_id);
+		$this->mysession->set('ins_Success','Insurance Details Updated Succesfully..!');
+	    $this->mysession->set('ins_Error','');
+	    redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/insurance');
 		}
 		}
 
@@ -547,7 +547,7 @@ $err=True;
 		$this->form_validation->set_rules('particulars','Particular','trim|required|min_length[5]|xss_clean');
 		if($this->form_validation->run()==False){
 		 $this->mysession->set('service_post',$s_data);
-		 redirect(base_url().'organization/front-desk/vehicle/'.$vid,$s_data);
+		 redirect(base_url().'organization/front-desk/vehicle/'.$vid.'/service',$s_data);
 		 }
 		 else{
 		 if($this->mysession->get('s_id')==gINVALID){
@@ -556,7 +556,7 @@ $err=True;
 				$this->session->set_userdata(array('dbSuccess'=>'Details Added Succesfully..!'));
 				$this->session->set_userdata(array('dbError'=>''));
 				
-				redirect(base_url().'organization/front-desk/vehicle/'.$vid);
+				redirect(base_url().'organization/front-desk/vehicle/'.$vid.'/service');
 						}
 						
 		}else{
@@ -567,7 +567,7 @@ $err=True;
 				$this->session->set_userdata(array('dbSuccess'=>'Details Updated Succesfully..!'));
 				$this->session->set_userdata(array('dbError'=>''));
 				$this->mysession->delete('s_id');
-				redirect(base_url().'organization/front-desk/vehicle/'.$vid);
+				redirect(base_url().'organization/front-desk/vehicle/'.$vid.'/service');
 						}
 		}
 		 }
@@ -655,7 +655,7 @@ $err=True;
 		else{
 		$current_id=$id;
 		}
-		redirect(base_url().'organization/front-desk/vehicle/'.$current_id,$data);	
+		redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/loan',$data);	
 	 }
 	 
 	  else{ 
@@ -672,18 +672,18 @@ $err=True;
 		$res=$this->vehicle_model->insertLoan($data);
 		//$ins_id=$this->mysession->get('vehicle_id');
 		if( $res==true ) {
-			$this->mysession->set('dbSuccess',' Loan Details Added Succesfully..!');
-				    $this->mysession->set('dbError','');
-				    redirect(base_url().'organization/front-desk/vehicle/'.$current_id);
+			$this->mysession->set('loan_Success',' Loan Details Added Succesfully..!');
+				    $this->mysession->set('loan_Error','');
+				    redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/loan');
 		}
 		}
 		else{
 	
 		$res=$this->vehicle_model->UpdateLoandetails($data,$loan_id); 
 		if($res==true){
-		$this->mysession->set('dbSuccess',' Loan Details Updated Succesfully..!');
-	    $this->mysession->set('dbError','');
-	    redirect(base_url().'organization/front-desk/vehicle/'.$current_id);
+		$this->mysession->set('loan_Success',' Loan Details Updated Succesfully..!');
+	    $this->mysession->set('loan_Error','');
+	    redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/loan');
 		}
 		}
 
@@ -758,7 +758,7 @@ $err=True;
 		else{
 		$current_id=$id;
 		}
-		redirect(base_url().'organization/front-desk/vehicle/'.$current_id,$data);	
+		redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/owner',$data);	
 	 }
 	  else{ 
 		$id=$this->mysession->get('vehicle_id'); 
@@ -797,10 +797,10 @@ $err=True;
 				$this->load->model('account_model');
 				$this->account_model->add_fa_supplier($res,"VW");
 
-				$this->mysession->set('dbSuccess',' Owner Details Added Succesfully..!');
-				$this->mysession->set('dbError','');
+				$this->mysession->set('owner_Success',' Owner Details Added Succesfully..!');
+				$this->mysession->set('owner_Error','');
 				
-				redirect(base_url().'organization/front-desk/vehicle/'.$current_id);
+				redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/owner');
 			}
 		}
 		else{
@@ -812,9 +812,9 @@ $err=True;
 				$this->load->model('account_model');
 				$this->account_model->edit_fa_supplier($owner_id,"VW");
 				$id=$this->mysession->get('vehicle_id');
-				$this->mysession->set('dbSuccess',' Owner Details Updated Succesfully..!');
-		    		$this->mysession->set('dbError','');
-		    		redirect(base_url().'organization/front-desk/vehicle/'.$current_id);
+				$this->mysession->set('owner_Success',' Owner Details Updated Succesfully..!');
+		    		$this->mysession->set('owner_Error','');
+		    		redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/owner');
 			}
 
 		}
