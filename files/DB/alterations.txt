@@ -36,9 +36,18 @@ CREATE TABLE IF NOT EXISTS `driver_payment_percentages` (
 ALTER TABLE `trip_vouchers` ADD `driver_trip_amount` DOUBLE NOT NULL AFTER `remarks` ,
 ADD `vehicle_trip_amount` DOUBLE NOT NULL AFTER `driver_trip_amount` ,
 ADD `trip_narration` TEXT NOT NULL AFTER `vehicle_trip_amount` ;
+
 //need to b updated
 
 ALTER TABLE `trip_vouchers` ADD `payment_type_id` INT NOT NULL AFTER `invoice_no`;
 
-Create Service table
-ALTER TABLE `service` ADD `vehicle_id` INT NOT NULL ;
+CREATE TABLE IF NOT EXISTS `service` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_date` date NOT NULL,
+  `service_km` text NOT NULL,
+  `particulars` text NOT NULL,
+  `organisation_id` int(11) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+
