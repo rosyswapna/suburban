@@ -271,7 +271,7 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img src="<?php echo base_url();?>img/avatar3.png" class="img-circle" alt="User Image" />
+                                    <img src="<?php echo base_url();?>img/avatar5.png" class="img-circle" alt="User Image" />
                                     <p>
                                        <?php echo $this->session->userdata('name'); ?>
                                         

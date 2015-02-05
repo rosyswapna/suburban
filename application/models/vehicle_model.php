@@ -136,50 +136,27 @@ return true;
 
 }
 
-
-	//-----INSERT VEHICLE OWNER AS USER----------------------------------------------
-	public function insertUser($data,$login=false){ //print_r($login);exit;
-
-		$org_id=$this->session->userdata('organisation_id'); 
-		if($login['username'] != '' && $login['password'] != ''){
-
-			$passwrd=md5($login['password']);
-			
-			if(isset($data['user_type_id'])){
-				$user_type=$data['user_type_id'];
-			}else{
-				$user_type = VEHICLE_OWNER;
-			}
-		
-			//add customer/guest login details
-			$userdata=array(
-				'username'=>$login['username'],
-				'password'=>$passwrd,
-				'first_name'=>$data['name'],
-				'phone'=>$data['mobile'],
-				'address'=>$data['address'],
-				'user_status_id'=>USER_STATUS_ACTIVE,
-				'user_type_id'=>$user_type,
-				'email'=>$data['email'],
-				'organisation_id'=>$org_id); 
-			$this->db->set('created', 'NOW()', FALSE);
-			$this->db->insert('users',$userdata);
-			$login_id = $this->db->insert_id();
-			return $login_id;
-		}else{ 
-			return false;
+	public function getLoginId($data,$login)
+	{
+		$this->load->model('organization_model');
+		if($login['username']!='' && $login['password'] != ''){
+			$login_id = $this->organization_model->insertUser($data['name'],
+							'',$data['address'],$login['username'],
+							$login['password'],$data['email'],
+							$data['mobile'],VEHICLE_OWNER);
+		}else{
+			$login_id = 0;
 		}
-		
+		return $login_id;
 	}
-	//------------------------------------------------------------------
+
+	
 
 	//----------insert owner--------------------------------------------
 	public function insertOwner($data,$login){
 		
-		$login_id = $this->insertUser($data,$login);
-		if($login_id > 0)
-			$data['login_id'] = $login_id;
-
+		$login_id = $this->getLoginId($data,$login);
+		$data['login_id'] = $login_id;
 		$qry=$this->db->set('created', 'NOW()', FALSE);
 		$v_id=$this->mysession->get('vehicle_id');
 		$qry=$this->db->set('vehicle_id', $v_id);
@@ -197,12 +174,45 @@ return true;
 			return $o_id;
 		}else{
 			return false;
+		}
 	}
 	//------------------------------------------------------------------
-	
-	
 
-}
+	//-----update owner details and user details ----------------------------
+	public function UpdateOwnerdetails($data,$id,$login='',$flag=''){ 
+
+		$qry=$this->db->where('id',$id );
+		$qry=$this->db->get("vehicle_owners");
+		if(count($qry)>0){
+			$login_id=$qry->row()->login_id;
+		}else{
+			$login_id = 0;
+		}
+
+		if($login_id > 0){//user exists
+			if($flag==0)
+				$login['password'] = md5($login['password']);
+			$this->db->set('updated', 'NOW()', FALSE);
+			$this->db->where('id',$login_id );
+			$this->db->update("users",$login);
+		}else{//new user
+			$login_id = $this->getLoginId($data,$login);
+		}
+
+		$this->db->set('updated', 'NOW()', FALSE);
+		$this->db->set('login_id', $login_id);
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where('organisation_id', $org_id );
+		//---
+		$this->db->where('id',$id);
+		$this->db->update('vehicle_owners',$data);  
+		return true;
+
+	}
+	//-----------------------------------------------------------
+	
+	
 public function  UpdateVehicledetails($data,$v_id){
 	
 	$this->db->where('id',$v_id );
@@ -294,42 +304,7 @@ $this->db->update('vehicle_loans',$data);
 return true;
 
 }
-	//-----update owner details and user details ----------------------------
-	public function UpdateOwnerdetails($data,$id,$login='',$flag=''){ 
-
-		if($flag==0){
-			$login['password']=md5($login['password']);
-		}
-
-		//to check whether vehicle_owner in user table or not..if an entry exists, update its account details
-		if(($login['username']!='' && $login['password']!='')){
-			$qry=$this->db->where('id',$id );
-			$qry=$this->db->get("vehicle_owners");
-			if(count($qry)>0){
-				$login_id=$qry->row()->login_id;
-				if($login_id > 0){//user exists
-					$this->db->set('updated', 'NOW()', FALSE);
-					$this->db->where('id',$login_id );
-					$this->db->update("users",$login);
-				}else{
-					$login_id = $this->insertUser($data,$login);
-				}
-			}
 	
-		}
-
-		$this->db->set('updated', 'NOW()', FALSE);
-		$this->db->set('login_id', $login_id);
-		//newly added-to be organisation based
-		$org_id=$this->session->userdata('organisation_id');
-		$this->db->where('organisation_id', $org_id );
-		//---
-		$this->db->where('id',$id);
-		$this->db->update('vehicle_owners',$data);  
-		return true;
-
-	}
-	//-----------------------------------------------------------
 
 
   public function insert_service($data){
