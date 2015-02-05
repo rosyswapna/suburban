@@ -89,7 +89,7 @@ class Customers_model extends CI_Model {
 		$data['organisation_id']=$this->session->userdata('organisation_id');
 		$data['user_id']=$this->session->userdata('id');
 		
-		$login_id = $this->insertUser($data,$login);
+		$login_id = $this->getLoginId($data,$login);
 		if($login_id >0){
 		$data['login_id']=$login_id;
  		if($data['mobile']!=''){
@@ -129,7 +129,7 @@ class Customers_model extends CI_Model {
 	}
 	}
 	
-	public function getLoginId()
+	public function getLoginId($data,$login)
 	{
 		$this->load->model('organization_model');
 		if($login['username']!='' && $login['password'] != ''){
