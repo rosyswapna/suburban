@@ -96,6 +96,7 @@ class Driver extends CI_Controller {
 	$hidden_pass=$this->input->post('h_pass');
 	$password=$this->input->post('password');
 	$err=True;
+	$flag=0;
 	if(($this->input->post('username')!='') && ($password=='')){
 			$this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|xss_clean');
 			$err=False;
@@ -186,6 +187,7 @@ class Driver extends CI_Controller {
 			$login['password']=$password;
 			}
 			else{
+			$flag=0;
 			$login['password']=$password;
 			}
 		    	

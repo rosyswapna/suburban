@@ -2,39 +2,14 @@
 class Driver_model extends CI_Model {
 
 	public function addDriverdetails($data,$login=false){
-	
-	
-	$org_id=$this->session->userdata('organisation_id');
-	if($org_id && $login){
-		//add driver login details
-		if(trim($login['username']) != '' && trim($login['password']) != ''){
 		
-			$userdata=array(
-					'username'	=> $login['username'],
-					'password'	=> md5($login['password']),
-					'first_name'	=> $data['name'],
-					'phone'		=> $data['mobile'],
-					'address'	=> $data['address'],
-					'user_status_id'=> USER_STATUS_ACTIVE,
-					'user_type_id'	=> DRIVER,
-					'email'		=> $data['email'],
-					'organisation_id'=> $org_id);
-
-	
-
-			$this->db->set('created', 'NOW()', FALSE);
-			$this->db->insert('users',$userdata);
-			$login_id = $this->db->insert_id();
-		}else{
-			$login_id = 0;
-		}
-		
-		$data['login_id'] = $login_id; //echo $data['login_id'];exit;
-		//$this->db->set('salary', '2500');
-		//$this->db->set('minimum_working_days', '25');
-		$this->db->set('created', 'NOW()', FALSE);
-		$this->db->insert('drivers',$data);
-		$driver = $this->db->insert_id();
+		$org_id=$this->session->userdata('organisation_id');
+			if($org_id){ 
+				$login_id = $this->getLoginId($data,$login);
+				$data['login_id'] = $login_id;
+				$this->db->set('created', 'NOW()', FALSE);
+				$this->db->insert('drivers',$data);
+				$driver = $this->db->insert_id();
 		if($driver > 0){ //echo "inserted";exit;
 			return $driver;
 		}else{
@@ -47,6 +22,19 @@ class Driver_model extends CI_Model {
 		return false;
 	}
 }
+	
+	
+	
+	public function getLoginId($data,$login)
+	{
+		$this->load->model('organization_model');
+			if($login['username']!='' && $login['password'] != ''){
+				$login_id = $this->organization_model->insertUser($data['name'],'',$data['present_address'],$login['username'],$login['password'],$data['email'],$data['mobile'],DRIVER);
+			}else{
+				$login_id = 0;
+			}
+		return $login_id;
+	}
 
 	public function getDriverDetails($data){ 
 		
@@ -107,29 +95,30 @@ class Driver_model extends CI_Model {
 	}
 
 	public function UpdateDriverdetails($data,$id,$login='',$flag=''){ 
-	$username=$login['username'];
-	if($flag==1){
-	$password=$login['password'];
-	}else{
-	$password=md5($login['password']);
-	} 
-	//to check whether driver entry in user table or not..if an entry exists, update its account details
-	if(($username!='' && $password!='')){
-	$qry=$this->db->where('id',$id );
-	$qry=$this->db->get("drivers");
+		
+		$qry=$this->db->where('id',$id );
+		$qry=$this->db->get("drivers");
+		
 		if(count($qry)>0){
-		$login=array('username'=>$username,'password'=>$password);
-		$login_id=$qry->row()->login_id;
-
-			if($login_id>0){
-			$this->db->set('updated', 'NOW()', FALSE);
-			$this->db->where('id',$login_id );
-			$this->db->update("users",$login);
-			}
+					
+			$login_id=$qry->row()->login_id; 
+		}else{
+			$login_id=0;
 		}
+				
+		if($login_id > 0){//user exists
+			if($flag==0){
+				$login['password'] = md5($login['password']);
+			}
+				$this->db->set('updated', 'NOW()', FALSE);
+				$this->db->where('id',$login_id );
+				$this->db->update("users",$login);
+		}else{//new user
+				$login_id = $this->getLoginId($data,$login);
+		}		
 	
-	}
 	$arry=array('id'=>$id,'organisation_id'=>$data['organisation_id']);
+	$this->db->set('login_id', $login_id);
 	$this->db->set('updated', 'NOW()', FALSE);
 	$qry=$this->db->where($arry);
 	$qry=$this->db->update("drivers",$data);

@@ -263,7 +263,7 @@ public function __construct()
 		  
 		   //inserting values to db
 		    $res	=	$this->organization_model->insertUser($firstname,$lastname,$address,$username,$password,$email,$phone);
-		       if($res==true){ 
+		       if($res>0){ 
 			    //sending email to user
 					$to = $email;
 					$message='Hi..'.$firstname.' '.$lastname.'</br> Your profile is created.Your </br> username :'.$username.'Password :'.$password.'Thanks & Regards</br> Acube Innovations';
