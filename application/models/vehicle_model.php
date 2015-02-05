@@ -138,27 +138,19 @@ return true;
 
 
 	//-----INSERT VEHICLE OWNER AS USER----------------------------------------------
-	public function insertUser($data,$login=false,$flag=''){ //print_r($login);exit;
+	public function insertUser($data,$login=false){ //print_r($login);exit;
 
 		$org_id=$this->session->userdata('organisation_id'); 
 		if($login['username'] != '' && $login['password'] != ''){
 
-			if($flag == 0){
-				$passwrd=$login['password'];
-			}else{
-				$passwrd=md5($login['password']);
-			}
-		
-		
+			$passwrd=md5($login['password']);
+			
 			if(isset($data['user_type_id'])){
 				$user_type=$data['user_type_id'];
-			}
-			else
-			{
+			}else{
 				$user_type = VEHICLE_OWNER;
 			}
 		
-			
 			//add customer/guest login details
 			$userdata=array(
 				'username'=>$login['username'],
@@ -183,7 +175,7 @@ return true;
 
 	//----------insert owner--------------------------------------------
 	public function insertOwner($data,$login){
-
+		
 		$login_id = $this->insertUser($data,$login);
 		if($login_id > 0)
 			$data['login_id'] = $login_id;
@@ -304,16 +296,13 @@ return true;
 }
 	//-----update owner details and user details ----------------------------
 	public function UpdateOwnerdetails($data,$id,$login='',$flag=''){ 
-		$username=$login['username'];
-		if($flag==1){
-			$password=$login['password'];
-		}else{
-			$password=md5($login['password']);
+
+		if($flag==0){
+			$login['password']=md5($login['password']);
 		}
-		//to check whether vehicle_owner entry in user table or not..if an entry exists, update its account details
-		
-		if(($username!='' && $password!='')){
-			$login=array('username'=>$username,'password'=>$password);
+
+		//to check whether vehicle_owner in user table or not..if an entry exists, update its account details
+		if(($login['username']!='' && $login['password']!='')){
 			$qry=$this->db->where('id',$id );
 			$qry=$this->db->get("vehicle_owners");
 			if(count($qry)>0){
@@ -323,7 +312,7 @@ return true;
 					$this->db->where('id',$login_id );
 					$this->db->update("users",$login);
 				}else{
-					$login_id = $this->insertUser($data,$login,$flag);
+					$login_id = $this->insertUser($data,$login);
 				}
 			}
 	

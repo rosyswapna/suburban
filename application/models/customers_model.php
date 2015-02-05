@@ -129,26 +129,21 @@ class Customers_model extends CI_Model {
 	}
 	}
 	
-		public function insertUser($data,$login=false,$flag=''){ //print_r($login);exit;
+	//insert customer ad user
+	public function insertUser($data,$login=false){ //print_r($login);exit;
 		$org_id=$this->session->userdata('organisation_id'); 
 		if($login['username'] != '' && $login['password'] != ''){
+			$passwrd=md5($login['password']);
 		
-			if($flag==0){
-				$passwrd=$login['password'];
-			}else{
-				$passwrd=md5($login['password']);
+		
+			if(isset($data['user_type_id'])){
+				$user_type=$data['user_type_id'];
+			}
+			else
+			{
+				$user_type=CUSTOMER;
 			}
 		
-		
-		if(isset($data['user_type_id'])){
-		$user_type=$data['user_type_id'];
-		}
-		else
-		{
-		$user_type=CUSTOMER;
-		}
-		
-			
 			//add customer/guest login details
 			$userdata=array(
 				'username'=>$login['username'],
@@ -164,12 +159,11 @@ class Customers_model extends CI_Model {
 			$this->db->insert('users',$userdata);
 			$login_id = $this->db->insert_id();
 			return $login_id;
-			}
-		else{ 
-		return false;
+		}else{ 
+			return false;
 		}
 		
-		}
+	}
 	
 		public function addCustomer($data,$login=false){
 			
@@ -238,54 +232,30 @@ class Customers_model extends CI_Model {
 	
 	function  updateCustomers($data,$id,$login='',$flag='') {
 		$username=$login['username'];
-		if($flag==1){
-		$flag=1;
-		$password=$login['password'];
-		}else{
-		$flag=0;
-		$password=md5($login['password']);
+		if($flag==0){
+			$login['password'] = md5($login['password']);
 		}
 		
+		if(($login['username']!='' && $login['password']!='')){
 			$qry=$this->db->where('id',$id );
 			$qry=$this->db->get("customers");
-			
-				if(count($qry)>0){ 
-					$login=array('username'=>$username,'password'=>$password);
-					$login_id=$qry->row()->login_id; 
-						if($login_id>0){
-							$this->db->set('updated', 'NOW()', FALSE);
-							$this->db->where('id',$login_id );
-							$this->db->update("users",$login);
-						}
-				elseif($login_id==0){
-				
-					$login_id = $this->insertUser($data,$login,$flag);
+			if(count($qry)>0){ 	
+				$login_id=$qry->row()->login_id; 
+				if($login_id>0){
+					$this->db->set('updated', 'NOW()', FALSE);
+					$this->db->where('id',$login_id );
+					$this->db->update("users",$login);
 				}
-				}else{
-				return false;
+				else{
+					$login_id = $this->insertUser($data,$login);
 				}
-	//to check whether a customer entry in user table or not..if an entry exists, update its account details
-	/*if($username!='' && $password!=''){
-	$qry=$this->db->where('id',$id );
-	$qry=$this->db->get("customers");
-		if(count($qry)>0){
-		$login=array('username'=>$username,'password'=>$password);
-		$login_id=$qry->row()->login_id;
-
-			if($login_id>0){
-			$this->db->set('updated', 'NOW()', FALSE);
-			$this->db->where('id',$login_id );
-			$this->db->update("users",$login);
 			}
-		}
-	
-	}*/
-	
-	$this->db->where('id',$id );
-	$this->db->set('login_id', $login_id);
-	$this->db->set('updated', 'NOW()', FALSE);
-	$this->db->update("customers",$data);
-	return true;
+		}	
+		$this->db->where('id',$id );
+		$this->db->set('login_id', $login_id);
+		$this->db->set('updated', 'NOW()', FALSE);
+		$this->db->update("customers",$data);
+		return true;
 	}
 	
 	public function getArray(){
