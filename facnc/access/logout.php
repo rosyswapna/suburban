@@ -53,7 +53,7 @@ session_unset();
 if(isset($_GET['ret'])){
 	switch($_GET['ret']){
 		case 1:$url = $cnc_url.'syslogin';break;
-		case 2:$url = $cnc_url.'organization/login';break;
+		case 2:$url = $cnc_url;break;
 		default:$url = $cnc_url;break;
 	}
 	header('Location:'.$url);
