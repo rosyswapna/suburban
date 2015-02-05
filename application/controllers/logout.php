@@ -20,21 +20,22 @@ class Logout extends CI_Controller {
 	
 
 	function index() 
-	{ $this->load->helper('url');
-	  if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==SYSTEM_ADMINISTRATOR){
+	{ 
+		$this->load->helper('url');
+		if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==SYSTEM_ADMINISTRATOR){
 			$logout_redirect_url=base_url().'syslogin';
-		$ret = 1;
-	  }else if($this->session->userdata('isLoggedIn')==true && ($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR ||$this->session->userdata('type')==FRONT_DESK)){
-			$logout_redirect_url=base_url().'organization/login';
-		$ret = 2;
-	  }
-	  //ob_start();
-      $this->session->sess_destroy();
+			$ret = 1;
+	  	}else if($this->session->userdata('isLoggedIn')==true && ($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR ||$this->session->userdata('type')==FRONT_DESK)){
+			$logout_redirect_url=base_url();
+			$ret = 2;
+	  	}
+	  	//ob_start();
+      		$this->session->sess_destroy();
 	  
-	  $this->mysession->destroy();
+	  	$this->mysession->destroy();
 	  
-	redirect(base_url()."facnc/access/logout.php?ret=".$ret);
-	///ob_end_clean();
-     // redirect($logout_redirect_url);
-    }
+		redirect(base_url()."facnc/access/logout.php?ret=".$ret);
+		///ob_end_clean();
+	     // redirect($logout_redirect_url);
+    	}
 }

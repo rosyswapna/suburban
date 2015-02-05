@@ -157,16 +157,18 @@ class Organization_model extends CI_Model {
 		}
 		}
 	}
-	function  insertUser($fname,$lname,$addr,$uname,$pwd,$mail,$phn) {
-	$org_id=$this->session->userdata('organisation_id');
-	if($org_id){
-	$data=array('username'=>$uname,'password'=>md5($pwd),'first_name'=>$fname,'last_name'=>$lname,'phone'=>$phn,'address'=>$addr,'user_status_id'=>USER_STATUS_ACTIVE,'user_type_id'=>FRONT_DESK,'email'=>$mail,'organisation_id'=>$org_id);
+	function  insertUser($fname,$lname,$addr,$uname,$pwd,$mail,$phn, $user_type = FRONT_DESK) { 
 
-	$this->db->set('created', 'NOW()', FALSE);
-	$this->db->insert('users',$data);
-	return true;
-	  }
-    }
+		$org_id=$this->session->userdata('organisation_id');
+		if($org_id){
+			$data=array('username'=>$uname,'password'=>md5($pwd),'first_name'=>$fname,'last_name'=>$lname,'phone'=>$phn,'address'=>$addr,'user_status_id'=>USER_STATUS_ACTIVE,'user_type_id'=>$user_type,'email'=>$mail,'organisation_id'=>$org_id);
+
+			$this->db->set('created', 'NOW()', FALSE);
+			$this->db->insert('users',$data);
+			//return true;
+			return $this->db->insert_id();
+	  	}
+    	}	
 	function checkUser($username){
 		
 		$qry=$this->db->get_where('users',array('username'=>$username,'organisation_id'=>$this->session->userdata('organisation_id')));

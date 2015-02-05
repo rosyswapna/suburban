@@ -699,7 +699,7 @@ $err=True;
 	
 
 	public function owner_validation(){	
-			if(isset($_REQUEST['owner-submit'])){ 
+		if(isset($_REQUEST['owner-submit'])){ 
 			$owner_id=$this->input->post('hidden_owner_id');
 			$vehicle_id=$this->mysession->get('vehicle_id');
 			$data['name']=$this->input->post('owner_name');
@@ -716,117 +716,104 @@ $err=True;
 			$hpass=$this->input->post('h_pass');
 			
 			//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
-					$this->form_validation->set_rules('owner_name','Owner Name ','trim|required|xss_clean');
-					 $this->form_validation->set_rules('address','Address','trim|xss_clean');
-					 $this->form_validation->set_rules('dob','Date of Birth','trim|xss_clean');
-					// if($hphone==$data['mobile']){
-					 $this->form_validation->set_rules('mobile','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
-					/* }
-					 else{
-					 $this->form_validation->set_rules('mobile','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[vehicle_owners.mobile]');
-					 }*/
-					 //if($hmail==$data['email']){
-					 $this->form_validation->set_rules('mail','Mail ID','trim|xss_clean|valid_email');
-					 /*}else{
-					 $this->form_validation->set_rules('mail','Mail ID','trim|required|xss_clean|valid_email|is_unique[vehicle_owners.email]');
-					 }*/
-					
-					 
-					 //for insurance
-		if($this->mysession->get('vehicle_id')==null)
-	{
-	$this->mysession->set('Err_invalid_add','Invalid Attempt!  Please Add Vehicle Details !');
-	$err=False;
-	}
+			$this->form_validation->set_rules('owner_name','Owner Name ','trim|required|xss_clean');
+			 $this->form_validation->set_rules('address','Address','trim|xss_clean');
+			 $this->form_validation->set_rules('dob','Date of Birth','trim|xss_clean');
+			// if($hphone==$data['mobile']){
+			 $this->form_validation->set_rules('mobile','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
+			/* }
+			 else{
+			 $this->form_validation->set_rules('mobile','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[vehicle_owners.mobile]');
+			 }*/
+			 //if($hmail==$data['email']){
+			 $this->form_validation->set_rules('mail','Mail ID','trim|xss_clean|valid_email');
+			 /*}else{
+			 $this->form_validation->set_rules('mail','Mail ID','trim|required|xss_clean|valid_email|is_unique[vehicle_owners.email]');
+			 }*/
+			
+			 
+			 //for insurance
+			if($this->mysession->get('vehicle_id')==null)
+			{
+				$this->mysession->set('Err_invalid_add','Invalid Attempt!  Please Add Vehicle Details !');
+				$err=False;
+			}
 	
 	
 
-	  if($this->form_validation->run()==False ){
-		$this->mysession->set('owner_id',$owner_id);
-			$data['username']=$username;
-			$data['password']=$password;
-		$this->mysession->set('owner_post_all',$data);
-		$id=$this->mysession->get('vehicle_id');
-		if($this->mysession->get('Err_invalid_add')==null){
-		$this->mysession->set('Err_tab','Missing Data in Owner Tab');}
-		else{
-		
-		}
-		if($id==''){
-		$current_id='';
-		}
-		else{
-		$current_id=$id;
-		}
-		redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/owner',$data);	
-	 }
-	  else{ 
-		$id=$this->mysession->get('vehicle_id'); 
-		if($id==''){
-		$current_id='';
-		}
-		else{
-		$current_id=$id;
-		}
-		 //database insertion for vehicle
-		 
-		$login['username']=$username;
-		if( $hpass==$password){
-			$flag=1;
-			$login['password']=$password;
-			}
-			else{
-			$login['password']=$password;
-			}
-		 
-		 if($owner_id==gINVALID ){ 
-			$id=$this->mysession->get('vehicle_id');
-			$dbdata['name']=$this->input->post('owner_name');
-			$dbdata['address']=$this->input->post('address');
-			$dbdata['mobile']=$this->input->post('mobile');
-			$dbdata['email']=$this->input->post('mail');
-			$dbdata['user_type_id']=VEHICLE_OWNER; 
-			$login_id=$this->customers_model->insertUser($dbdata,$login); 
-			if($login_id>0){
-			$data['login_id']=$login_id;
-			$res=$this->vehicle_model->insertOwner($data,$login_id);
-			}
-			if($res) {
-			
-				//vehicle owner enter as supplier in fa 
-				$this->load->model('account_model');
-				$this->account_model->add_fa_supplier($res,"VW");
-
-				$this->mysession->set('owner_Success',' Owner Details Added Succesfully..!');
-				$this->mysession->set('owner_Error','');
-				
-				redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/owner');
-			}
-		}
-		else{
-
-			
-			$res=$this->vehicle_model->UpdateOwnerdetails($data,$owner_id,$login,$flag); 
-			if($res==true){
-				//edit vehicle owner enter as supplier in fa
-				$this->load->model('account_model');
-				$this->account_model->edit_fa_supplier($owner_id,"VW");
+			if($this->form_validation->run()==False ){
+				$this->mysession->set('owner_id',$owner_id);
+					$data['username']=$username;
+					$data['password']=$password;
+				$this->mysession->set('owner_post_all',$data);
 				$id=$this->mysession->get('vehicle_id');
-				$this->mysession->set('owner_Success',' Owner Details Updated Succesfully..!');
-		    		$this->mysession->set('owner_Error','');
-		    		redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/owner');
+				if($this->mysession->get('Err_invalid_add')==null){
+				$this->mysession->set('Err_tab','Missing Data in Owner Tab');}
+				else{
+		
+				}
+				if($id==''){
+				$current_id='';
+				}
+				else{
+				$current_id=$id;
+				}
+				redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/owner',$data);	
+			}else{ 
+				$id=$this->mysession->get('vehicle_id'); 
+				if($id==''){
+					$current_id='';
+				}else{
+					$current_id=$id;
+				}
+				 //database insertion for vehicle 
+				$login['username']=$username;
+				if( $hpass==$password){
+					$flag=1;
+					$login['password']=$password;
+				}else{
+					$flag=0;
+					$login['password']=$password;
+				}
+				 
+				if($owner_id==gINVALID ){ 
+		
+					$id=$this->mysession->get('vehicle_id');
+					$res=$this->vehicle_model->insertOwner($data,$login);
+
+					if($res) {
+	
+						//vehicle owner enter as supplier in fa 
+						$this->load->model('account_model');
+						$this->account_model->add_fa_supplier($res,"VW");
+
+						$this->mysession->set('owner_Success',' Owner Details Added Succesfully..!');
+						$this->mysession->set('owner_Error','');
+		
+						redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/owner');
+					}
+				}else{
+
+					$res=$this->vehicle_model->UpdateOwnerdetails($data,$owner_id,$login,$flag); 
+					if($res==true){
+						//edit vehicle owner enter as supplier in fa
+						$this->load->model('account_model');
+						$this->account_model->edit_fa_supplier($owner_id,"VW");
+						$id=$this->mysession->get('vehicle_id');
+						$this->mysession->set('owner_Success',' Owner Details Updated Succesfully..!');
+				    		$this->mysession->set('owner_Error','');
+				    		redirect(base_url().'organization/front-desk/vehicle/'.$current_id.'/owner');
+					}
+
+				}
+
 			}
-
-		}
-
-	  }
 		
-		}
-		
-		else{
+		}else{
 			$this->notAuthorized();
-			}
 		}
+	}
+	//------------------------------------------------------------------
 		
 	public function date_check($date){
 	if( strtotime($date) >= strtotime(date('Y-m-d')) ){
