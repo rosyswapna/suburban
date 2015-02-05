@@ -143,8 +143,10 @@ class Customers extends CI_Controller {
 			$data['customer_group_id']=$this->input->post('customer_group_id');
 			$data['customer_type_id']=$this->input->post('customer_type_id');
 			$hidden_pass=$this->input->post('h_pass');
-			$login['username']  = trim($this->input->post('username'));
+			$login['username']  = $this->input->post('username');
 			$password = $this->input->post('password');
+			$err=false;
+			$flag=0;
 			if( $hidden_pass!=''&& $password!='' && $hidden_pass==$password){
 			$flag=1;
 			$login['password']=$password;

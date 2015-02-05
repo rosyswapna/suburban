@@ -129,15 +129,17 @@ class Customers_model extends CI_Model {
 	}
 	}
 	
-		public function insertUser($data,$login=false){
-		
+		public function insertUser($data,$login=false,$flag=''){ //print_r($login);exit;
 		$org_id=$this->session->userdata('organisation_id'); 
-		if($org_id && $login){
-		if(is_array($login)){
-		$passwrd=md5($login['password']);
-		}else{
-		$passwrd='';
-		}
+		if($login['username'] != '' && $login['password'] != ''){
+		
+			if($flag==0){
+				$passwrd=$login['password'];
+			}else{
+				$passwrd=md5($login['password']);
+			}
+		
+		
 		if(isset($data['user_type_id'])){
 		$user_type=$data['user_type_id'];
 		}
@@ -163,58 +165,60 @@ class Customers_model extends CI_Model {
 			$login_id = $this->db->insert_id();
 			return $login_id;
 			}
-		else{
+		else{ 
 		return false;
 		}
+		
 		}
 	
 		public function addCustomer($data,$login=false){
-
+			
 		$org_id=$this->session->userdata('organisation_id');
-		if($org_id && $login){
+		if($org_id){
 			
-	
-			$login_id = $this->insertUser($data,$login);
 			
-			//insert customer
-			if($login_id > 0){
-				$data['organisation_id'] = $org_id;
-				$data['user_id']=$this->session->userdata('id');
-				$data['login_id'] = $login_id;
+				$login_id = $this->insertUser($data,$login);
 				
-				//mobile validation for customer
-				$insert_customer = true;
-		 		if($data['mobile']!=''){
-					$res=$this->getCustomerDetails(array('mobile'=>$data['mobile'],'organisation_id'=>$org_id));
-					if(count($res)==0){
-						$insert_customer = true;
-					}else{
-						$insert_customer = false;
-					}
-	
-				}else{
-					$insert_customer = true;
-				}
-
-				//validation true insert data and return insert customer id
-				if($insert_customer){
-					$this->db->set('created', 'NOW()', FALSE);
-					$this->db->insert('customers',$data);
-					$customer_id=$this->db->insert_id();
-
-					if($customer_id > 0)
-						return $customer_id;
+				
+				//insert customer
+				
+					$data['organisation_id'] = $org_id;
+					$data['user_id']=$this->session->userdata('id');
+					$data['login_id'] = $login_id;
 					
-				}
-
-				// customer not inserted , delete user
-				$this->db->delete('users', array('id' => $login_id));
-				return false;
+					//mobile validation for customer
+					$insert_customer = true;
+					if($data['mobile']!=''){
+						$res=$this->getCustomerDetails(array('mobile'=>$data['mobile'],'organisation_id'=>$org_id));
+						if(count($res)==0){
+							$insert_customer = true;
+						}else{
+							$insert_customer = false;
+						}
 		
-			}else{//user not added
-				return false;
-			}
+					}else{
+						$insert_customer = true;
+					}
 
+					//validation true insert data and return insert customer id
+					if($insert_customer){
+						$this->db->set('created', 'NOW()', FALSE);
+						$this->db->insert('customers',$data);
+						$customer_id=$this->db->insert_id();
+
+						if($customer_id > 0)
+							return $customer_id;
+						
+					}
+
+					// customer not inserted , delete user
+					$this->db->delete('users', array('id' => $login_id));
+					return false;
+			
+				//}else{//user not added
+					//return false;
+				//}
+			//}
 		}else{//organisation id not in session and customer login details not found
 			return false;
 		}
@@ -233,14 +237,35 @@ class Customers_model extends CI_Model {
 	}
 	
 	function  updateCustomers($data,$id,$login='',$flag='') {
-	$username=$login['username'];
-	if($flag==1){
-	$password=$login['password'];
-	}else{
-	$password=md5($login['password']);
-	}
+		$username=$login['username'];
+		if($flag==1){
+		$flag=1;
+		$password=$login['password'];
+		}else{
+		$flag=0;
+		$password=md5($login['password']);
+		}
+		
+			$qry=$this->db->where('id',$id );
+			$qry=$this->db->get("customers");
+			
+				if(count($qry)>0){ 
+					$login=array('username'=>$username,'password'=>$password);
+					$login_id=$qry->row()->login_id; 
+						if($login_id>0){
+							$this->db->set('updated', 'NOW()', FALSE);
+							$this->db->where('id',$login_id );
+							$this->db->update("users",$login);
+						}
+				elseif($login_id==0){
+				
+					$login_id = $this->insertUser($data,$login,$flag);
+				}
+				}else{
+				return false;
+				}
 	//to check whether a customer entry in user table or not..if an entry exists, update its account details
-	if($username!='' && $password!=''){
+	/*if($username!='' && $password!=''){
 	$qry=$this->db->where('id',$id );
 	$qry=$this->db->get("customers");
 		if(count($qry)>0){
@@ -254,9 +279,10 @@ class Customers_model extends CI_Model {
 			}
 		}
 	
-	}
+	}*/
 	
 	$this->db->where('id',$id );
+	$this->db->set('login_id', $login_id);
 	$this->db->set('updated', 'NOW()', FALSE);
 	$this->db->update("customers",$data);
 	return true;

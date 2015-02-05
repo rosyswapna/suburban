@@ -30,8 +30,8 @@ class Driver_model extends CI_Model {
 		}
 		
 		$data['login_id'] = $login_id; //echo $data['login_id'];exit;
-		$this->db->set('salary', '2500');
-		$this->db->set('minimum_working_days', '25');
+		//$this->db->set('salary', '2500');
+		//$this->db->set('minimum_working_days', '25');
 		$this->db->set('created', 'NOW()', FALSE);
 		$this->db->insert('drivers',$data);
 		$driver = $this->db->insert_id();
