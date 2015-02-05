@@ -328,7 +328,7 @@
                     <div class="user-panel">
                         <?php if($this->session->userdata('isLoggedIn')!=null || $this->session->userdata('isLoggedIn')==true) {?>
                         <div class="pull-left image">
-                            <img src="<?php echo base_url();?>img/avatar3.png" class="img-circle" alt="User Image" />
+                            <img src="<?php echo base_url();?>img/avatar5.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
                             <p>Hi, <?php echo $this->session->userdata('name'); ?></p>
