@@ -35,6 +35,8 @@ var r = confirm("Please Select Vehicle Model To Complete The Trip..Click OK to C
 	
 			//ends function		
 
+
+var nighthalt_flag = false;//night halt flag variable
 $('.voucher').on('click',function(){ 
 	clearAllFields();
 	var new_voucher = $(this).attr('new_voucher');
@@ -137,6 +139,8 @@ $('.voucher').on('click',function(){
 				
 					time_diff = time_diff.split('-');
 					$('.triptime').val(time_diff[1]+':'+time_diff[2]);
+
+					
 				
 				
 				}
@@ -165,8 +169,13 @@ $('.voucher').on('click',function(){
 				$('.parkingfee').val(data[0].parking_fees);
 				$('.tollfee').val(data[0].toll_fees);
 				$('.statetax').val(data[0].state_tax);
+				
 				$('.nighthalt').val(data[0].night_halt_charges);
 				$('.nighthalt').attr('night_halt',data[0].night_halt_charges);
+				
+				
+				
+
 				$('.extrafuel').val(data[0].fuel_extra_charges);
 				$('.driverbata').val(data[0].driver_bata);
 				$('.driverbata').attr('driver_bata',data[0].driver_bata);
@@ -261,6 +270,45 @@ $('.voucher').on('click',function(){
 			
 });
 
+//set night halt
+function setNighthalt(trip_duration,start_actual_time,end_actual_time)
+{
+	var _time = trip_duration.split('-');
+	
+	
+	if(_time[1] < 8){//hour less than 8 no night halt
+		return false;
+	}else if(_time[1] > 24){
+		return true;
+	}else if($('.startdt').val() != $('.enddt').val()){
+		return true;
+	}else{
+
+		var start_hr = start_actual_time.getHours();
+		var start_min = start_actual_time.getMinutes();
+		var end_hr = end_actual_time.getHours();
+		var end_min = end_actual_time.getMinutes();
+		if(end_hr > 23 || end_hr == 0 || (end_hr == 23 && end_min >= 30)){
+			return true;
+		}else{
+			return false;
+		}
+
+		//alert(end_hr);
+		/*if((start_hr > 15) || (start_hr == 15 && start_min >= 30) || (start_hr < 15  && (end_hr == 23 && end_min >= 30)) || (start_hr < 15  && end_hr == 0)){
+			return true;
+			
+		}else if((end_hr > 23) || (end_hr > 0) || (end_hr == 23 && end_min >= 30)){
+			
+			return true;
+		}else{
+			return false;
+		}*/
+	}
+	
+
+}
+
 
 
 //formatting date
@@ -350,6 +398,8 @@ function timeDifference(fromdate,fromtime,todate,totime){
  	result+='1'+'-'+HH+'-'+MM;
 	
 	}
+
+	nighthalt_flag = setNighthalt(result,start_actual_time,end_actual_time);
 	return result;
 }
 
@@ -1522,6 +1572,7 @@ return true;
 			$('.nighthalt').attr('night_halt',night_halt);
 			$('.adthrsrate').val(additional_hour_rate);
 			$('.adtkmrate').val(additional_kilometer_rate);
+			
 			setBataandHalt();
 			//driver km
 			if($('.totaldriverkmamount').attr('totamountset')=='false'){
@@ -1565,11 +1616,22 @@ function setBataandHalt(){
 	}else{
 		$('.driverbata').val(driverbata);
 	}
-	if(nighthalt!='' && Number(noofdays)>1 && new_voucher==1){
-		tot_nighthalt=Number(nighthalt)*Number(noofdays);
-		$('.nighthalt').val(tot_nighthalt);
+
+	if(nighthalt_flag == true){
+		$('.nighthalt').removeAttr('disabled');
+		nighthalt = $('#trip-tariff option:selected').attr('night_halt');
+		//if(nighthalt!='' && Number(noofdays)>1 && new_voucher==1){
+		//alert(nighthalt);
+		//alert(noofdays);
+		//if(nighthalt!='' && Number(noofdays)>1){
+			tot_nighthalt=Number(nighthalt)*Number(noofdays);
+			$('.nighthalt').val(tot_nighthalt);
+		//}else{
+		//	$('.nighthalt').val(nighthalt);	
+		//}
 	}else{
-		$('.nighthalt').val(nighthalt);
+		$('.nighthalt').val('');
+		$('.nighthalt').attr('disabled',true);
 	}
 	
 
