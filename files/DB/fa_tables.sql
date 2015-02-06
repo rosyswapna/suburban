@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 04, 2015 at 04:59 PM
--- Server version: 5.5.40
--- PHP Version: 5.3.10-1ubuntu3.15
+-- Generation Time: Oct 01, 2014 at 10:48 AM
+-- Server version: 5.5.38
+-- PHP Version: 5.3.10-1ubuntu3.13
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `taxi`
+-- Database: `facnc`
 --
 
 -- --------------------------------------------------------
@@ -106,6 +106,14 @@ CREATE TABLE IF NOT EXISTS `0_bank_accounts` (
   KEY `bank_account_number` (`bank_account_number`),
   KEY `account_code` (`account_code`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `0_bank_accounts`
+--
+
+INSERT INTO `0_bank_accounts` (`account_code`, `account_type`, `bank_account_name`, `bank_account_number`, `bank_name`, `bank_address`, `bank_curr_code`, `dflt_curr_act`, `id`, `last_reconciled_date`, `ending_reconcile_balance`, `inactive`) VALUES
+('1060', 0, 'Current account', 'N/A', 'N/A', '', 'INR', 1, 1, '0000-00-00 00:00:00', 0, 0),
+('1065', 3, 'Petty Cash account', 'N/A', 'N/A', '', 'INR', 0, 2, '0000-00-00 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -583,7 +591,6 @@ CREATE TABLE IF NOT EXISTS `0_debtor_trans` (
   `dimension_id` int(11) NOT NULL DEFAULT '0',
   `dimension2_id` int(11) NOT NULL DEFAULT '0',
   `payment_terms` int(11) DEFAULT NULL,
-  `tax_group_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`type`,`trans_no`),
   KEY `debtor_no` (`debtor_no`,`branch_code`),
   KEY `tran_date` (`tran_date`),
@@ -614,7 +621,7 @@ CREATE TABLE IF NOT EXISTS `0_debtor_trans_details` (
   PRIMARY KEY (`id`),
   KEY `Transaction` (`debtor_trans_type`,`debtor_trans_no`),
   KEY `src_id` (`src_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -667,14 +674,19 @@ CREATE TABLE IF NOT EXISTS `0_fiscal_year` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `begin` (`begin`),
   UNIQUE KEY `end` (`end`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `0_fiscal_year`
 --
 
 INSERT INTO `0_fiscal_year` (`id`, `begin`, `end`, `closed`) VALUES
-(1, '2014-04-01', '2015-03-31', 0);
+(1, '2008-01-01', '2008-12-31', 0),
+(2, '2009-01-01', '2009-12-31', 0),
+(3, '2010-01-01', '2010-12-31', 0),
+(4, '2011-01-01', '2011-12-31', 0),
+(5, '2012-01-01', '2012-12-31', 0),
+(6, '2013-01-01', '2013-12-31', 0);
 
 -- --------------------------------------------------------
 
@@ -781,6 +793,13 @@ CREATE TABLE IF NOT EXISTS `0_item_codes` (
   KEY `item_code` (`item_code`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
+--
+-- Dumping data for table `0_item_codes`
+--
+
+INSERT INTO `0_item_codes` (`id`, `item_code`, `stock_id`, `description`, `category_id`, `quantity`, `is_foreign`, `inactive`) VALUES
+(1, '101', '101', 'Trip', 1, 1, 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -876,6 +895,13 @@ CREATE TABLE IF NOT EXISTS `0_loc_stock` (
   PRIMARY KEY (`loc_code`,`stock_id`),
   KEY `stock_id` (`stock_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `0_loc_stock`
+--
+
+INSERT INTO `0_loc_stock` (`loc_code`, `stock_id`, `reorder_level`) VALUES
+('DEF', '101', 0);
 
 -- --------------------------------------------------------
 
@@ -1296,17 +1322,16 @@ CREATE TABLE IF NOT EXISTS `0_security_roles` (
 -- Dumping data for table `0_security_roles`
 --
 
-INSERT INTO `0_security_roles` (`id`, `role`, `description`, `sections`, `areas`, `inactive`) VALUES
-(1, 'Inquiries', 'Inquiries', '768;2816;3072;3328;5632;5888;8192;8448;10752;11008;13312;15872;16128', '257;258;259;260;513;514;515;516;517;518;519;520;521;522;523;524;525;773;774;2822;3073;3075;3076;3077;3329;3330;3331;3332;3333;3334;3335;5377;5633;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8450;8451;10497;10753;11009;11010;11012;13313;13315;15617;15618;15619;15620;15621;15622;15623;15624;15625;15626;15873;15882;16129;16130;16131;16132', 1),
-(2, 'System Administrator', 'System Administrator', '256;512;768;2816;3072;3328;5376;5632;5888;7936;8192;8448;10496;10752;11008;13056;13312;15616;15872;16128', '257;258;259;260;513;514;515;516;517;518;519;520;521;522;523;524;525;526;769;770;771;772;773;774;2817;2818;2819;2820;2821;2822;2823;3073;3074;3082;3075;3076;3077;3078;3079;3080;3081;3329;3330;3331;3332;3333;3334;3335;5377;5633;5634;5635;5636;5637;5641;5638;5639;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8195;8196;8197;8449;8450;8451;10497;10753;10754;10755;10756;10757;11009;11010;11011;11012;13057;13313;13314;13315;15617;15618;15619;15620;15621;15622;15623;15624;15628;15625;15626;15627;15873;15874;15875;15876;15877;15878;15879;15880;15883;15881;15882;16129;16130;16131;16132', 0),
-(3, 'Salesman', 'Salesman', '768;3072;5632;8192;15872', '773;774;3073;3075;3081;5633;8194;15873', 0),
-(4, 'Stock Manager', 'Stock Manager', '2816;3072;3328;5632;5888;8192;8448;10752;11008;13312;15872;16128', '2818;2822;3073;3076;3077;3329;3330;3330;3330;3331;3331;3332;3333;3334;3335;5633;5640;5889;5890;5891;8193;8194;8450;8451;10753;11009;11010;11012;13313;13315;15882;16129;16130;16131;16132', 1),
-(5, 'Production Manager', 'Production Manager', '512;2816;3072;3328;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128', '521;523;524;2818;2819;2820;2821;2822;2823;3073;3074;3076;3077;3078;3079;3080;3081;3329;3330;3330;3330;3331;3331;3332;3333;3334;3335;5633;5640;5640;5889;5890;5891;8193;8194;8196;8197;8450;8451;10753;10755;11009;11010;11012;13313;13315;15617;15619;15620;15621;15624;15624;15876;15877;15880;15882;16129;16130;16131;16132', 1),
-(6, 'Purchase Officer', 'Purchase Officer', '512;2816;3072;3328;5376;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128', '521;523;524;2818;2819;2820;2821;2822;2823;3073;3074;3076;3077;3078;3079;3080;3081;3329;3330;3330;3330;3331;3331;3332;3333;3334;3335;5377;5633;5635;5640;5640;5889;5890;5891;8193;8194;8196;8197;8449;8450;8451;10753;10755;11009;11010;11012;13313;13315;15617;15619;15620;15621;15624;15624;15876;15877;15880;15882;16129;16130;16131;16132', 1),
-(7, 'AR Officer', 'AR Officer', '512;768;2816;3072;3328;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128', '521;523;524;771;773;774;2818;2819;2820;2821;2822;2823;3073;3073;3074;3075;3076;3077;3078;3079;3080;3081;3081;3329;3330;3330;3330;3331;3331;3332;3333;3334;3335;5633;5633;5634;5637;5638;5639;5640;5640;5889;5890;5891;8193;8194;8194;8196;8197;8450;8451;10753;10755;11009;11010;11012;13313;13315;15617;15619;15620;15621;15624;15624;15873;15876;15877;15878;15880;15882;16129;16130;16131;16132', 1),
-(8, 'AP Officer', 'AP Officer', '512;2816;3072;3328;5376;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128', '257;258;259;260;521;523;524;769;770;771;772;773;774;2818;2819;2820;2821;2822;2823;3073;3074;3082;3076;3077;3078;3079;3080;3081;3329;3330;3331;3332;3333;3334;3335;5377;5633;5635;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8196;8197;8449;8450;8451;10497;10753;10755;11009;11010;11012;13057;13313;13315;15617;15619;15620;15621;15624;15876;15877;15880;15882;16129;16130;16131;16132', 1),
-(9, 'Accountant', 'New Accountant', '512;768;2816;3072;3328;5376;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128', '257;258;259;260;521;523;524;771;772;773;774;2818;2819;2820;2821;2822;2823;3073;3074;3075;3076;3077;3078;3079;3080;3081;3329;3330;3331;3332;3333;3334;3335;5377;5633;5634;5635;5637;5638;5639;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8196;8197;8449;8450;8451;10497;10753;10755;11009;11010;11012;13313;13315;15617;15618;15619;15620;15621;15624;15873;15876;15877;15878;15880;15882;16129;16130;16131;16132', 1),
-(10, 'Frontdesk', 'Frontdesk', '512;768;2816;3072;3328;5376;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128', '257;258;259;260;521;523;524;771;772;773;774;2818;2819;2820;2821;2822;2823;3073;3074;3082;3075;3076;3077;3078;3079;3080;3081;3329;3330;3331;3332;3333;3334;3335;5377;5633;5634;5635;5637;5638;5639;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8196;8197;8449;8450;8451;10497;10753;10755;11009;11010;11012;13057;13313;13315;15617;15619;15620;15621;15624;15873;15874;15876;15877;15878;15879;15880;15882;16129;16130;16131;16132', 0);
+INSERT INTO `0_security_roles` VALUES(1, 'Inquiries', 'Inquiries', '768;2816;3072;3328;5632;5888;8192;8448;10752;11008;13312;15872;16128', '257;258;259;260;513;514;515;516;517;518;519;520;521;522;523;524;525;773;774;2822;3073;3075;3076;3077;3329;3330;3331;3332;3333;3334;3335;5377;5633;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8450;8451;10497;10753;11009;11010;11012;13313;13315;15617;15618;15619;15620;15621;15622;15623;15624;15625;15626;15873;15882;16129;16130;16131;16132', 1);
+INSERT INTO `0_security_roles` VALUES(2, 'System Administrator', 'System Administrator', '256;512;768;2816;3072;3328;5376;5632;5888;7936;8192;8448;10496;10752;11008;13056;13312;15616;15872;16128', '257;258;259;260;513;514;515;516;517;518;519;520;521;522;523;524;525;526;769;770;771;772;773;774;2817;2818;2819;2820;2821;2822;2823;3073;3074;3082;3075;3076;3077;3078;3079;3080;3081;3329;3330;3331;3332;3333;3334;3335;5377;5633;5634;5635;5636;5637;5641;5638;5639;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8195;8196;8197;8449;8450;8451;10497;10753;10754;10755;10756;10757;11009;11010;11011;11012;13057;13313;13314;13315;15617;15618;15619;15620;15621;15622;15623;15624;15628;15625;15626;15627;15873;15874;15875;15876;15877;15878;15879;15880;15883;15881;15882;16129;16130;16131;16132', 0);
+INSERT INTO `0_security_roles` VALUES(3, 'Salesman', 'Salesman', '768;3072;5632;8192;15872', '773;774;3073;3075;3081;5633;8194;15873', 0);
+INSERT INTO `0_security_roles` VALUES(4, 'Stock Manager', 'Stock Manager', '2816;3072;3328;5632;5888;8192;8448;10752;11008;13312;15872;16128', '2818;2822;3073;3076;3077;3329;3330;3330;3330;3331;3331;3332;3333;3334;3335;5633;5640;5889;5890;5891;8193;8194;8450;8451;10753;11009;11010;11012;13313;13315;15882;16129;16130;16131;16132', 1);
+INSERT INTO `0_security_roles` VALUES(5, 'Production Manager', 'Production Manager', '512;2816;3072;3328;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128', '521;523;524;2818;2819;2820;2821;2822;2823;3073;3074;3076;3077;3078;3079;3080;3081;3329;3330;3330;3330;3331;3331;3332;3333;3334;3335;5633;5640;5640;5889;5890;5891;8193;8194;8196;8197;8450;8451;10753;10755;11009;11010;11012;13313;13315;15617;15619;15620;15621;15624;15624;15876;15877;15880;15882;16129;16130;16131;16132', 1);
+INSERT INTO `0_security_roles` VALUES(6, 'Purchase Officer', 'Purchase Officer', '512;2816;3072;3328;5376;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128', '521;523;524;2818;2819;2820;2821;2822;2823;3073;3074;3076;3077;3078;3079;3080;3081;3329;3330;3330;3330;3331;3331;3332;3333;3334;3335;5377;5633;5635;5640;5640;5889;5890;5891;8193;8194;8196;8197;8449;8450;8451;10753;10755;11009;11010;11012;13313;13315;15617;15619;15620;15621;15624;15624;15876;15877;15880;15882;16129;16130;16131;16132', 1);
+INSERT INTO `0_security_roles` VALUES(7, 'AR Officer', 'AR Officer', '512;768;2816;3072;3328;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128', '521;523;524;771;773;774;2818;2819;2820;2821;2822;2823;3073;3073;3074;3075;3076;3077;3078;3079;3080;3081;3081;3329;3330;3330;3330;3331;3331;3332;3333;3334;3335;5633;5633;5634;5637;5638;5639;5640;5640;5889;5890;5891;8193;8194;8194;8196;8197;8450;8451;10753;10755;11009;11010;11012;13313;13315;15617;15619;15620;15621;15624;15624;15873;15876;15877;15878;15880;15882;16129;16130;16131;16132', 1);
+INSERT INTO `0_security_roles` VALUES(8, 'AP Officer', 'AP Officer', '512;2816;3072;3328;5376;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128', '257;258;259;260;521;523;524;769;770;771;772;773;774;2818;2819;2820;2821;2822;2823;3073;3074;3082;3076;3077;3078;3079;3080;3081;3329;3330;3331;3332;3333;3334;3335;5377;5633;5635;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8196;8197;8449;8450;8451;10497;10753;10755;11009;11010;11012;13057;13313;13315;15617;15619;15620;15621;15624;15876;15877;15880;15882;16129;16130;16131;16132', 1);
+INSERT INTO `0_security_roles` VALUES(9, 'Accountant', 'New Accountant', '512;768;2816;3072;3328;5376;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128', '257;258;259;260;521;523;524;771;772;773;774;2818;2819;2820;2821;2822;2823;3073;3074;3075;3076;3077;3078;3079;3080;3081;3329;3330;3331;3332;3333;3334;3335;5377;5633;5634;5635;5637;5638;5639;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8196;8197;8449;8450;8451;10497;10753;10755;11009;11010;11012;13313;13315;15617;15618;15619;15620;15621;15624;15873;15876;15877;15878;15880;15882;16129;16130;16131;16132', 1);
+INSERT INTO `0_security_roles` VALUES(10, 'Frontdesk', 'Frontdesk', '512;768;2816;3072;3328;5376;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128', '257;258;259;260;521;523;524;771;772;773;774;2818;2819;2820;2821;2822;2823;3073;3074;3082;3075;3076;3077;3078;3079;3080;3081;3329;3330;3331;3332;3333;3334;3335;5377;5633;5634;5635;5637;5638;5639;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8196;8197;8449;8450;8451;10497;10753;10755;11009;11010;11012;13057;13313;13315;15617;15619;15620;15621;15624;15873;15874;15876;15877;15878;15879;15880;15882;16129;16130;16131;16132', 0);
 
 -- --------------------------------------------------------
 
@@ -1410,6 +1435,13 @@ CREATE TABLE IF NOT EXISTS `0_stock_master` (
   `editable` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`stock_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `0_stock_master`
+--
+
+INSERT INTO `0_stock_master` (`stock_id`, `category_id`, `tax_type_id`, `description`, `long_description`, `units`, `mb_flag`, `sales_account`, `cogs_account`, `inventory_account`, `adjustment_account`, `assembly_account`, `dimension_id`, `dimension2_id`, `actual_cost`, `last_cost`, `material_cost`, `labour_cost`, `overhead_cost`, `inactive`, `no_sale`, `editable`) VALUES
+('101', 1, 1, 'Trip', '', 'km', 'D', '4010', '5010', '1510', '5040', '1530', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1558,62 +1590,61 @@ CREATE TABLE IF NOT EXISTS `0_sys_prefs` (
 -- Dumping data for table `0_sys_prefs`
 --
 
-INSERT INTO `0_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
-('coy_name', 'setup.company', 'varchar', 60, 'Company name'),
-('gst_no', 'setup.company', 'varchar', 25, ''),
-('coy_no', 'setup.company', 'varchar', 25, ''),
-('tax_prd', 'setup.company', 'int', 11, '1'),
-('tax_last', 'setup.company', 'int', 11, '1'),
-('postal_address', 'setup.company', 'tinytext', 0, 'N/A'),
-('phone', 'setup.company', 'varchar', 30, ''),
-('fax', 'setup.company', 'varchar', 30, ''),
-('email', 'setup.company', 'varchar', 100, ''),
-('coy_logo', 'setup.company', 'varchar', 100, ''),
-('domicile', 'setup.company', 'varchar', 55, ''),
-('curr_default', 'setup.company', 'char', 3, 'INR'),
-('use_dimension', 'setup.company', 'tinyint', 1, '1'),
-('f_year', 'setup.company', 'int', 11, '6'),
-('no_item_list', 'setup.company', 'tinyint', 1, '0'),
-('no_customer_list', 'setup.company', 'tinyint', 1, '0'),
-('no_supplier_list', 'setup.company', 'tinyint', 1, '0'),
-('base_sales', 'setup.company', 'int', 11, '1'),
-('time_zone', 'setup.company', 'tinyint', 1, '0'),
-('add_pct', 'setup.company', 'int', 5, '-1'),
-('round_to', 'setup.company', 'int', 5, '1'),
-('login_tout', 'setup.company', 'smallint', 6, '7200'),
-('past_due_days', 'glsetup.general', 'int', 11, '30'),
-('profit_loss_year_act', 'glsetup.general', 'varchar', 15, '9990'),
-('retained_earnings_act', 'glsetup.general', 'varchar', 15, '3590'),
-('bank_charge_act', 'glsetup.general', 'varchar', 15, '5690'),
-('exchange_diff_act', 'glsetup.general', 'varchar', 15, '4450'),
-('default_credit_limit', 'glsetup.customer', 'int', 11, '1000'),
-('accumulate_shipping', 'glsetup.customer', 'tinyint', 1, '0'),
-('legal_text', 'glsetup.customer', 'tinytext', 0, ''),
-('freight_act', 'glsetup.customer', 'varchar', 15, '4430'),
-('debtors_act', 'glsetup.sales', 'varchar', 15, '1200'),
-('default_sales_act', 'glsetup.sales', 'varchar', 15, '4010'),
-('default_sales_discount_act', 'glsetup.sales', 'varchar', 15, '4510'),
-('default_prompt_payment_act', 'glsetup.sales', 'varchar', 15, '4500'),
-('default_delivery_required', 'glsetup.sales', 'smallint', 6, '1'),
-('default_dim_required', 'glsetup.dims', 'int', 11, '20'),
-('pyt_discount_act', 'glsetup.purchase', 'varchar', 15, '5060'),
-('creditors_act', 'glsetup.purchase', 'varchar', 15, '2100'),
-('po_over_receive', 'glsetup.purchase', 'int', 11, '10'),
-('po_over_charge', 'glsetup.purchase', 'int', 11, '10'),
-('allow_negative_stock', 'glsetup.inventory', 'tinyint', 1, '0'),
-('default_inventory_act', 'glsetup.items', 'varchar', 15, '1510'),
-('default_cogs_act', 'glsetup.items', 'varchar', 15, '5010'),
-('default_adj_act', 'glsetup.items', 'varchar', 15, '5040'),
-('default_inv_sales_act', 'glsetup.items', 'varchar', 15, '4010'),
-('default_assembly_act', 'glsetup.items', 'varchar', 15, '1530'),
-('default_workorder_required', 'glsetup.manuf', 'int', 11, '20'),
-('version_id', 'system', 'varchar', 11, '2.3rc'),
-('auto_curr_reval', 'setup.company', 'smallint', 6, '1'),
-('grn_clearing_act', 'glsetup.purchase', 'varchar', 15, '1550'),
-('bcc_email', 'setup.company', 'varchar', 100, ''),
-('default_payment_terms', 'setup.company', 'int', 11, '4'),
-('default_driver_cogs_act', 'glsetup.items', 'varchar', 15, '5011'),
-('default_vehicle_cogs_act', 'glsetup.items', 'varchar', 15, '5012');
+INSERT INTO `0_sys_prefs` VALUES('coy_name', 'setup.company', 'varchar', 60, 'Company name');
+INSERT INTO `0_sys_prefs` VALUES('gst_no', 'setup.company', 'varchar', 25, '');
+INSERT INTO `0_sys_prefs` VALUES('coy_no', 'setup.company', 'varchar', 25, '');
+INSERT INTO `0_sys_prefs` VALUES('tax_prd', 'setup.company', 'int', 11, '1');
+INSERT INTO `0_sys_prefs` VALUES('tax_last', 'setup.company', 'int', 11, '1');
+INSERT INTO `0_sys_prefs` VALUES('postal_address', 'setup.company', 'tinytext', 0, 'N/A');
+INSERT INTO `0_sys_prefs` VALUES('phone', 'setup.company', 'varchar', 30, '');
+INSERT INTO `0_sys_prefs` VALUES('fax', 'setup.company', 'varchar', 30, '');
+INSERT INTO `0_sys_prefs` VALUES('email', 'setup.company', 'varchar', 100, '');
+INSERT INTO `0_sys_prefs` VALUES('coy_logo', 'setup.company', 'varchar', 100, '');
+INSERT INTO `0_sys_prefs` VALUES('domicile', 'setup.company', 'varchar', 55, '');
+INSERT INTO `0_sys_prefs` VALUES('curr_default', 'setup.company', 'char', 3, 'INR');
+INSERT INTO `0_sys_prefs` VALUES('use_dimension', 'setup.company', 'tinyint', 1, '1');
+INSERT INTO `0_sys_prefs` VALUES('f_year', 'setup.company', 'int', 11, '6');
+INSERT INTO `0_sys_prefs` VALUES('no_item_list', 'setup.company', 'tinyint', 1, '0');
+INSERT INTO `0_sys_prefs` VALUES('no_customer_list', 'setup.company', 'tinyint', 1, '0');
+INSERT INTO `0_sys_prefs` VALUES('no_supplier_list', 'setup.company', 'tinyint', 1, '0');
+INSERT INTO `0_sys_prefs` VALUES('base_sales', 'setup.company', 'int', 11, '1');
+INSERT INTO `0_sys_prefs` VALUES('time_zone', 'setup.company', 'tinyint', 1, '0');
+INSERT INTO `0_sys_prefs` VALUES('add_pct', 'setup.company', 'int', 5, '-1');
+INSERT INTO `0_sys_prefs` VALUES('round_to', 'setup.company', 'int', 5, '1');
+INSERT INTO `0_sys_prefs` VALUES('login_tout', 'setup.company', 'smallint', 6, '7200');
+INSERT INTO `0_sys_prefs` VALUES('past_due_days', 'glsetup.general', 'int', 11, '30');
+INSERT INTO `0_sys_prefs` VALUES('profit_loss_year_act', 'glsetup.general', 'varchar', 15, '9990');
+INSERT INTO `0_sys_prefs` VALUES('retained_earnings_act', 'glsetup.general', 'varchar', 15, '3590');
+INSERT INTO `0_sys_prefs` VALUES('bank_charge_act', 'glsetup.general', 'varchar', 15, '5690');
+INSERT INTO `0_sys_prefs` VALUES('exchange_diff_act', 'glsetup.general', 'varchar', 15, '4450');
+INSERT INTO `0_sys_prefs` VALUES('default_credit_limit', 'glsetup.customer', 'int', 11, '1000');
+INSERT INTO `0_sys_prefs` VALUES('accumulate_shipping', 'glsetup.customer', 'tinyint', 1, '0');
+INSERT INTO `0_sys_prefs` VALUES('legal_text', 'glsetup.customer', 'tinytext', 0, '');
+INSERT INTO `0_sys_prefs` VALUES('freight_act', 'glsetup.customer', 'varchar', 15, '4430');
+INSERT INTO `0_sys_prefs` VALUES('debtors_act', 'glsetup.sales', 'varchar', 15, '1200');
+INSERT INTO `0_sys_prefs` VALUES('default_sales_act', 'glsetup.sales', 'varchar', 15, '4010');
+INSERT INTO `0_sys_prefs` VALUES('default_sales_discount_act', 'glsetup.sales', 'varchar', 15, '4510');
+INSERT INTO `0_sys_prefs` VALUES('default_prompt_payment_act', 'glsetup.sales', 'varchar', 15, '4500');
+INSERT INTO `0_sys_prefs` VALUES('default_delivery_required', 'glsetup.sales', 'smallint', 6, '1');
+INSERT INTO `0_sys_prefs` VALUES('default_dim_required', 'glsetup.dims', 'int', 11, '20');
+INSERT INTO `0_sys_prefs` VALUES('pyt_discount_act', 'glsetup.purchase', 'varchar', 15, '5060');
+INSERT INTO `0_sys_prefs` VALUES('creditors_act', 'glsetup.purchase', 'varchar', 15, '2100');
+INSERT INTO `0_sys_prefs` VALUES('po_over_receive', 'glsetup.purchase', 'int', 11, '10');
+INSERT INTO `0_sys_prefs` VALUES('po_over_charge', 'glsetup.purchase', 'int', 11, '10');
+INSERT INTO `0_sys_prefs` VALUES('allow_negative_stock', 'glsetup.inventory', 'tinyint', 1, '0');
+INSERT INTO `0_sys_prefs` VALUES('default_inventory_act', 'glsetup.items', 'varchar', 15, '1510');
+INSERT INTO `0_sys_prefs` VALUES('default_cogs_act', 'glsetup.items', 'varchar', 15, '5010');
+INSERT INTO `0_sys_prefs` VALUES('default_adj_act', 'glsetup.items', 'varchar', 15, '5040');
+INSERT INTO `0_sys_prefs` VALUES('default_inv_sales_act', 'glsetup.items', 'varchar', 15, '4010');
+INSERT INTO `0_sys_prefs` VALUES('default_assembly_act', 'glsetup.items', 'varchar', 15, '1530');
+INSERT INTO `0_sys_prefs` VALUES('default_workorder_required', 'glsetup.manuf', 'int', 11, '20');
+INSERT INTO `0_sys_prefs` VALUES('version_id', 'system', 'varchar', 11, '2.3rc');
+INSERT INTO `0_sys_prefs` VALUES('auto_curr_reval', 'setup.company', 'smallint', 6, '1');
+INSERT INTO `0_sys_prefs` VALUES('grn_clearing_act', 'glsetup.purchase', 'varchar', 15, '1550');
+INSERT INTO `0_sys_prefs` VALUES('bcc_email', 'setup.company', 'varchar', 100, '');
+INSERT INTO `0_sys_prefs` VALUES('default_payment_terms', 'setup.company', 'int', 11, 4);
+
+
 
 -- --------------------------------------------------------
 
@@ -1834,8 +1865,11 @@ CREATE TABLE IF NOT EXISTS `0_users` (
 -- Dumping data for table `0_users`
 --
 
-INSERT INTO `0_users` (`id`, `user_id`, `password`, `real_name`, `role_id`, `phone`, `email`, `language`, `date_format`, `date_sep`, `tho_sep`, `dec_sep`, `theme`, `page_size`, `prices_dec`, `qty_dec`, `rates_dec`, `percent_dec`, `show_gl`, `show_codes`, `show_hints`, `last_visit_date`, `query_size`, `graphic_links`, `pos`, `print_profile`, `rep_popup`, `sticky_doc_date`, `startup_tab`, `inactive`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 2, '', 'adm@adm.com', 'en_US', 0, 0, 0, 0, 'default', 'Letter', 2, 2, 4, 1, 1, 0, 0, '2015-01-21 05:31:42', 10, 1, 1, '1', 1, 0, 'orders', 0);
+--
+-- Dumping data for table `0_users`
+--
+
+INSERT INTO `0_users` VALUES(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 2, '', 'adm@adm.com', 'en_US', 0, 0, 0, 0, 'default', 'Letter', 2, 2, 4, 1, 1, 0, 0, '2008-04-04 12:34:29', 10, 1, 1, '1', 1, 0, 'orders', 0);
 
 -- --------------------------------------------------------
 

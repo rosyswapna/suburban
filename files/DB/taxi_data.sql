@@ -218,6 +218,22 @@ INSERT INTO `vehicle_makes` (`id`, `name`, `description`, `value`, `organisation
 (4, 'tatasumo', 'tatasumo', NULL, 1, 5, '2014-09-25 06:06:55', '0000-00-00 00:00:00');
 
 --
+-- Dumping data for table `vehicle_models`
+--
+
+INSERT INTO `vehicle_models` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
+(1, 'Indica', 'Indica', NULL, 1, 4, '2015-01-21 06:31:12', '2015-01-21 06:34:43'),
+(2, 'Indigo', 'Indigo', NULL, 1, 4, '2015-01-21 06:36:22', '0000-00-00 00:00:00'),
+(3, 'Verito', 'Verito', NULL, 1, 4, '2015-01-21 06:37:21', '0000-00-00 00:00:00'),
+(4, 'Xylo', 'Xylo', NULL, 1, 4, '2015-01-21 06:37:37', '0000-00-00 00:00:00'),
+(5, 'Innova', 'Innova', NULL, 1, 4, '2015-01-21 06:37:55', '0000-00-00 00:00:00'),
+(6, 'Liva', 'Etios Liva', NULL, 1, 19, '2015-01-31 07:30:18', '0000-00-00 00:00:00'),
+(7, 'Logan', 'Logan', NULL, 1, 19, '2015-01-31 07:32:13', '0000-00-00 00:00:00'),
+(8, 'Ertiga', 'Ertiga', NULL, 1, 19, '2015-01-31 07:34:01', '2015-01-31 07:34:36'),
+(9, 'Swift', 'Swift', NULL, 1, 6, '2015-01-31 09:38:38', '0000-00-00 00:00:00'),
+(10, 'Dezire', 'Dezire', NULL, 1, 6, '2015-01-31 09:38:51', '0000-00-00 00:00:00');
+
+--
 -- Dumping data for table `vehicle_ownership_types`
 --
 
