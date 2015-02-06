@@ -878,10 +878,12 @@ if($this->mysession->get('owner_post_all')!=null ){
 			echo form_input(array('name'=>'username','class'=>'form-control','id'=>'username','placeholder'=>'Enter Username','value'=>$own_user));
 		   ?>			
 		  <?php echo $this->form_functions->form_error_session('username', '<p class="text-red">', '</p>'); ?>
+	<div class="hide-me"><?php echo form_input(array('name'=>'h_user','value'=>$own_user));?></div>		
 	</div>
 	<div class="form-group">
 		   <?php echo form_label('Password','passwordlabel');  ?>
 		   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'password','placeholder'=>'Enter Password','value'=>$own_pas)); ?>			
+			<?php echo '<p class="text-red">'.$this->mysession->get('v_pwd_err').'</p>'; ?>
 			<?php echo $this->form_functions->form_error_session('password', '<p class="text-red">', '</p>'); ?>
 	</div>
 	<div class="hide-me"><?php echo form_input(array('name'=>'h_pass','value'=>$h_pass)); ?></div>

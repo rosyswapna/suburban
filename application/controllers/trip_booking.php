@@ -57,6 +57,10 @@ class Trip_booking extends CI_Controller {
 			$this->getVouchers();
 		}else if($param2=='tripVoucher'){
 			$this->tripVoucher();
+		}else if($param2=='getVehicleDriverPercentages') {
+		
+			$this->getVehicleDriverPercentages();
+			
 		}
 		}
 	else{

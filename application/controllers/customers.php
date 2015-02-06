@@ -164,7 +164,7 @@ class Customers extends CI_Controller {
 				}
 				else{
 			
-					if($dr_id==gINVALID ){ // insertion
+					if($customer_id==gINVALID ){ // insertion
 						$this->form_validation->set_rules('password','Password','trim|min_length[5]|matches[cpassword]|xss_clean');
 						$this->form_validation->set_rules('cpassword','Confirmation','trim|min_length[5]|xss_clean');
 					}else{ //updation
@@ -173,10 +173,10 @@ class Customers extends CI_Controller {
 				}
 		
 				if($hidden_user!=$this->input->post('username')){
-					$this->form_validation->set_rules('username','Username','trim|min_length[5]|max_length[12]|xss_clean|is_unique[users.username]');
+					$this->form_validation->set_rules('username','Username','trim|min_length[4]|xss_clean|is_unique[users.username]');
 				}
 				if($hidden_user==$this->input->post('username')){
-					$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[12]|xss_clean');
+					$this->form_validation->set_rules('username','Username','trim|required|min_length[4]|xss_clean');
 				}
 			}
 			
@@ -189,10 +189,10 @@ class Customers extends CI_Controller {
 				$hmail='';
 				$hphone='';
 
-				$this->form_validation->set_rules('username','Username','trim|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
+				/*$this->form_validation->set_rules('username','Username','trim|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
 				$this->form_validation->set_rules('password','Password','trim|min_length[5]|max_length[12]|matches[cpassword]|xss_clean');
 				$this->form_validation->set_rules('cpassword','Confirmation','trim|min_length[5]|max_length[12]|xss_clean');
-
+				*/
 			}
 			$this->form_validation->set_rules('name','Name','trim|required|min_length[2]|xss_clean');
 			

@@ -502,9 +502,7 @@ $this->mysession->delete('post');
 		   <?php echo form_label('Password','passwordlabel');  ?>
 		   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'d_password','placeholder'=>'Enter Password','value'=>$password)); ?>			
 			<?php echo $this->form_functions->form_error_session('password', '<p class="text-red">', '</p>'); ?>
-			<?php echo '<p class="text-red">'.$this->mysession->get('pwd_err').'</p>'; 
-			
-			?>
+			<?php echo '<p class="text-red">'.$this->mysession->get('pwd_err').'</p>'; ?>
 		</div>
 		<div class="hide-me"><?php echo form_input(array('name'=>'h_pass','value'=>$h_pass)); ?></div>
 		<?php if($driver_id!='' && $driver_id>gINVALID){  echo '';}else{?>

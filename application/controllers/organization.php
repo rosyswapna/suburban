@@ -52,13 +52,13 @@ public function __construct()
 			 $username=$this->input->post('username');
 			 $this->organization_model->LoginAttemptsChecks($username);
 			 if( $this->session->userdata('isloginAttemptexceeded')==false){
-			 $this->form_validation->set_rules('username','Username','trim|required|min_length[3]|max_length[20]|xss_clean');
-			 $this->form_validation->set_rules('password','Password','trim|required|min_length[3]|max_length[20]|xss_clean');
+			 $this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[20]|xss_clean');
+			 $this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[20]|xss_clean');
 			 } else {
 			 $captcha = $this->input->post('captcha');
 			 $this->form_validation->set_rules('captcha', 'Captcha', 'trim|required|callback_captcha_check');
-			 $this->form_validation->set_rules('username','Username','trim|required|min_length[3]|max_length[20]|xss_clean');
-			 $this->form_validation->set_rules('password','Password','trim|required|min_length[3]|max_length[20]|xss_clean');
+			 $this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[20]|xss_clean');
+			 $this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[20]|xss_clean');
 			}
 			 if($this->form_validation->run()!=False){
 			 $username = $this->input->post('username');
