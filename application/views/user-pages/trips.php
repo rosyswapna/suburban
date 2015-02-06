@@ -224,7 +224,10 @@ echo form_close();?></td>
 						  'drop_city'=>$trips[$trip_index]['drop_city']); 
 			$dbcustomer=array( 'name'=>$trips[$trip_index]['customer_name'],
 						  'mob'=>$trips[$trip_index]['customer_mobile']);				
-			echo nbs(5) ."<a href=".base_url().'trip_booking/SendTripConfirmation/'.urlencode(serialize($dbdata))."/".$trips[$trip_index]['trip_id']."/".urlencode(serialize($dbcustomer))."/1 title='Send SMS' class='fa fa-mobile '></a>"; 
+			$this->mysession->set('d_data',$dbdata);	
+			$this->mysession->set('c_data',$dbcustomer);
+			$this->mysession->set('flag',1);	
+			echo nbs(5) ."<a href=".base_url().'trip_booking/SendTripConfirmation/'.$trips[$trip_index]['trip_id']." title='Send SMS' class='fa fa-mobile '></a>"; 
 			//----ends 
 			}
 			
@@ -325,10 +328,14 @@ echo form_close();?></td>
 						  'pick_up_date'=>$trips[$trip_index]['pick_up_date'],	
 						  'pick_up_time'=>$trips[$trip_index]['pick_up_time'],
 						  'pick_up_city'=>$trips[$trip_index]['pick_up_city'],
-						  'drop_city'=>$trips[$trip_index]['drop_city']); 
+						  'drop_city'=>$trips[$trip_index]['drop_city'],
+						  'vehicle_id'=>$trips[$trip_index]['vehicle_id']); 
 			$dbcustomer=array( 'name'=>$trips[$trip_index]['customer_name'],
-						  'mob'=>$trips[$trip_index]['customer_mobile']);				
-			echo nbs(5) ."<a href=".base_url().'trip_booking/SendTripConfirmation/'.urlencode(serialize($dbdata))."/".$trips[$trip_index]['trip_id']."/".urlencode(serialize($dbcustomer))."/1 title='Send SMS' class='fa fa-mobile '></a>"; 
+						  'mob'=>$trips[$trip_index]['customer_mobile']);
+			$this->mysession->set('d_data',$dbdata);	
+			$this->mysession->set('c_data',$dbcustomer);
+			$this->mysession->set('flag',1);	
+			echo nbs(5) ."<a href=".base_url().'trip_booking/SendTripConfirmation/'.$trips[$trip_index]['trip_id']." title='Send SMS' class='fa fa-mobile '></a>"; 
 			}
 			//----ends 
 			
