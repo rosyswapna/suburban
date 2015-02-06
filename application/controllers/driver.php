@@ -107,10 +107,10 @@ class Driver extends CI_Controller {
 		else{
 			
 			if($dr_id==gINVALID ){
-				$this->form_validation->set_rules('password','Password','trim|min_length[5]|max_length[12]|matches[cpassword]|xss_clean');
-				$this->form_validation->set_rules('cpassword','Confirmation','trim|min_length[5]|max_length[12]|xss_clean');
+				$this->form_validation->set_rules('password','Password','trim|min_length[5]|matches[cpassword]|xss_clean');
+				$this->form_validation->set_rules('cpassword','Confirmation','trim|min_length[5]|xss_clean');
 			}else{
-				$this->form_validation->set_rules('password','Password','trim|min_length[5]|max_length[12]|xss_clean');
+				$this->form_validation->set_rules('password','Password','trim|min_length[5]|xss_clean');
 			}
 		}
 		

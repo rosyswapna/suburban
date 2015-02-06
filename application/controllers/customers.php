@@ -143,22 +143,45 @@ class Customers extends CI_Controller {
 			$data['customer_group_id']=$this->input->post('customer_group_id');
 			$data['customer_type_id']=$this->input->post('customer_type_id');
 			$hidden_pass=$this->input->post('h_pass');
+			$hidden_user=$this->input->post('h_user');
 			$login['username']  = $this->input->post('username');
 			$password = $this->input->post('password');
-			$err=false;
+			$this->mysession->delete('c_pwd_err');
+			$err=False;
 			$flag=0;
 			if( $hidden_pass!=''&& $password!='' && $hidden_pass==$password){
-			$flag=1;
-			$login['password']=$password;
+				$flag=1;
+				$login['password']=$password;
 			}
 			else{
-			$login['password']=$password;
+				$login['password']=$password;
 			}
-			if($login['username']!='' && $password==''){
-			$this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|xss_clean');
-			$err=true;
+		if($this->input->post('username')!='') {
+	
+				if($this->input->post('password')==''){
+					$err=True;
+					$this->mysession->set('c_pwd_err','Password Field Required');
+				}
+				else{
+			
+					if($dr_id==gINVALID ){ // insertion
+						$this->form_validation->set_rules('password','Password','trim|min_length[5]|matches[cpassword]|xss_clean');
+						$this->form_validation->set_rules('cpassword','Confirmation','trim|min_length[5]|xss_clean');
+					}else{ //updation
+				$this->form_validation->set_rules('password','Password','trim|min_length[5]|xss_clean');
+					}
+				}
+		
+				if($hidden_user!=$this->input->post('username')){
+					$this->form_validation->set_rules('username','Username','trim|min_length[5]|max_length[12]|xss_clean|is_unique[users.username]');
+				}
+				if($hidden_user==$this->input->post('username')){
+					$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[12]|xss_clean');
+				}
 			}
-			if($customer_id!=gINVALID){ 
+			
+			
+		if($customer_id!=gINVALID){ 
 				$hmail=$this->input->post('h_email');
 				$hphone=$this->input->post('h_phone');
 

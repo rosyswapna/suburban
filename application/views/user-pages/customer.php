@@ -143,7 +143,10 @@
 				   <?php echo form_label('Username','usernamelabel');
 					
 					echo form_input(array('name'=>'username','class'=>'form-control','id'=>'username','placeholder'=>'Enter Username','value'=>$username,'readonly'=>'readonly'));
-				   ?>			
+				   ?>
+					<div class="hide-me"><?php echo form_input(array('name'=>'h_user','value'=>$username)); ?>
+				   
+				   </div>
 				  <?php echo $this->form_functions->form_error_session('username', '<p class="text-red">', '</p>'); ?>
 				</div>
 					
@@ -153,7 +156,9 @@
 				   <?php echo form_label('Username','usernamelabel');
 					
 					echo form_input(array('name'=>'username','class'=>'form-control','id'=>'username','placeholder'=>'Enter Username','value'=>$username));
-				   ?>			
+				   ?>	<div class="hide-me"><?php echo form_input(array('name'=>'h_user','value'=>$username)); ?>
+				   
+				   </div>		
 				   <?php echo $this->form_functions->form_error_session('username', '<p class="text-red">', '</p>'); ?>
 				</div>
 
@@ -161,8 +166,10 @@
 				   <?php 
 				   echo form_label('Password','passwordlabel'); ?>
 				   <?php echo form_password(array('name'=>'password','class'=>'form-control','id'=>'password','placeholder'=>'Enter Password','value'=>$password)); 
-				   ?><div class="hide-me"><?php echo form_input(array('name'=>'h_pass','value'=>$password)); ?></div>
-				  			
+				   ?><div class="hide-me"><?php echo form_input(array('name'=>'h_pass','value'=>$password)); ?>
+				   
+				   </div>
+				  	<?php echo '<p class="text-red">'.$this->mysession->get('c_pwd_err').'</p>'; ?> 		
 					<?php echo $this->form_functions->form_error_session('password', '<p class="text-red">', '</p>'); ?>
 				</div>
 				<?php if($customer_id!='' && $customer_id>gINVALID){  echo '';}else{?>
