@@ -94,40 +94,37 @@ class Driver extends CI_Controller {
 	$data['organisation_id']=$this->session->userdata('organisation_id'); 
 	$data['user_id']=$this->session->userdata('id'); 
 	$hidden_pass=$this->input->post('h_pass');
-	$password=$this->input->post('password');
+	$hidden_user=$this->input->post('h_user');
 	$err=True;
-	$flag=0;
-	if(($this->input->post('username')!='') && ($password=='')){
-			$this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|xss_clean');
+	$this->mysession->delete('pwd_err');
+	
+	if($this->input->post('username')!='') { 
+	
+		if($this->input->post('password')==''){
 			$err=False;
+			$this->mysession->set('pwd_err','Password Field Required');
+		}
+		else{
+			
+			if($dr_id==gINVALID ){
+				$this->form_validation->set_rules('password','Password','trim|min_length[5]|max_length[12]|matches[cpassword]|xss_clean');
+				$this->form_validation->set_rules('cpassword','Confirmation','trim|min_length[5]|max_length[12]|xss_clean');
+			}else{
+				$this->form_validation->set_rules('password','Password','trim|min_length[5]|max_length[12]|xss_clean');
 			}
-	if(($this->input->post('username')=='') && ($password!='')){
+		}
+		
+		if($hidden_user!=$this->input->post('username')){
+			$this->form_validation->set_rules('username','Username','trim|min_length[5]|max_length[12]|xss_clean|is_unique[users.username]');
+		}
+		if($hidden_user==$this->input->post('username')){
 			$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[12]|xss_clean');
-			$err=False;
-			}
+		}
+		}
+	$password=$this->input->post('password');
 	
-	/*if($data['blood_group'] ==-1){
-	$data['blood_group'] ='';
-	 $err=False;
-	 $this->session->set_userdata('blood group','Choose Blood Group');
-	 }*/
-	/*if($data['marital_status_id'] ==-1){
-	 $data['marital_status_id'] ='';
-	 $err=False;
-	 $this->session->set_userdata('marital_status_id','Choose Marital Status');
-	 }
-	 if($data['bank_account_type_id'] ==-1){
-	 $data['bank_account_type_id'] ='';
-	 $err=False;
-	 $this->session->set_userdata('bank_account_type_id','Choose Bank Account Type');
-	 }
-	 if($data['id_proof_type_id'] ==-1){
-	 $data['id_proof_type_id'] ='';
-	 $err=False;
-	 $this->session->set_userdata('id_proof_type_id','Choose Identity Proof');
-	 }*/
-	
-	
+	$flag=0;
+
 	 $this->form_validation->set_rules('salary','Salary','trim|xss_clean');
 	 $this->form_validation->set_rules('minimum_working_days','Minimum Working Days','trim|xss_clean');
 	 $this->form_validation->set_rules('driver_name','Name','trim|required|xss_clean');
@@ -165,11 +162,11 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('id_proof_type_id','ID Proof','trim|xss_clean');
 	 $this->form_validation->set_rules('id_proof_document_number','ID Proof Number','trim|xss_clean');
 	 $this->form_validation->set_rules('name_on_id_proof','ID Proof Holder','trim|xss_clean');
-		if($dr_id==gINVALID ){
+		/*if($dr_id==gINVALID ){
 				$this->form_validation->set_rules('username','Username','trim|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
 				$this->form_validation->set_rules('password','Password','trim|min_length[5]|max_length[12]|matches[cpassword]|xss_clean');
 				$this->form_validation->set_rules('cpassword','Confirmation','trim|min_length[5]|max_length[12]|xss_clean');
-				}
+				}*/
 	
 	 
 		
