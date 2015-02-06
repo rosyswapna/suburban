@@ -263,7 +263,7 @@ INSERT INTO `0_chart_master` (`account_code`, `account_code2`, `account_name`, `
 ('2680', '', 'Loans from Shareholders', '5', 0),
 ('3350', '', 'Common Shares', '6', 0),
 ('3590', '', 'Retained Earnings - prior years', '7', 0),
-('4010', '', 'Sales', '8', 0),
+('4010', '', 'Sales Trip', '8', 0),
 ('4430', '', 'Shipping &amp; Handling', '9', 0),
 ('4440', '', 'Interest', '9', 0),
 ('4450', '', 'Foreign Exchange Gain', '9', 0),
@@ -304,7 +304,14 @@ INSERT INTO `0_chart_master` (`account_code`, `account_code2`, `account_name`, `
 ('5795', '', 'Registrations', '12', 0),
 ('5800', '', 'Licenses', '12', 0),
 ('5810', '', 'Foreign Exchange Loss', '12', 0),
-('9990', '', 'Year Profit/Loss', '12', 0);
+('9990', '', 'Year Profit/Loss', '12', 0),
+('5011', '', 'Cost of Trip - Driver', '10', 0),
+('5012', '', 'Cost of Trip - Vehicle', '10', 0),
+('1206', '', 'Bank Account', '1', 0),
+('1207', '', 'Cash Account', '1', 0),
+('2051', '', 'Servie Tax', '4', 0),
+('2052', '', 'Education Cess', '4', 0),
+('2053', '', 'Higher Education Cess', '4', 0);
 
 -- --------------------------------------------------------
 
@@ -789,6 +796,10 @@ CREATE TABLE IF NOT EXISTS `0_item_codes` (
 -- Dumping data for table `0_item_codes`
 --
 
+INSERT INTO `0_item_codes` (`id`, `item_code`, `stock_id`, `description`, `category_id`, `quantity`, `is_foreign`, `inactive`) VALUES
+(2, '101', '101', 'Trip', 1, 1, 0, 0),
+(3, '102', '102', 'Driver Commission', 1, 1, 0, 0),
+(4, '103', '103', 'Vehicle Commission', 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -810,7 +821,8 @@ CREATE TABLE IF NOT EXISTS `0_item_tax_types` (
 --
 
 INSERT INTO `0_item_tax_types` (`id`, `name`, `exempt`, `inactive`) VALUES
-(1, 'Regular', 0, 0);
+(1, 'Regular', 0, 0),
+(2, 'No Tax', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -890,6 +902,10 @@ CREATE TABLE IF NOT EXISTS `0_loc_stock` (
 -- Dumping data for table `0_loc_stock`
 --
 
+INSERT INTO `0_loc_stock` (`loc_code`, `stock_id`, `reorder_level`) VALUES
+('DEF', '101', 0),
+('DEF', '102', 0),
+('DEF', '103', 0);
 
 -- --------------------------------------------------------
 
@@ -1428,6 +1444,10 @@ CREATE TABLE IF NOT EXISTS `0_stock_master` (
 -- Dumping data for table `0_stock_master`
 --
 
+INSERT INTO `0_stock_master` (`stock_id`, `category_id`, `tax_type_id`, `description`, `long_description`, `units`, `mb_flag`, `sales_account`, `cogs_account`, `inventory_account`, `adjustment_account`, `assembly_account`, `dimension_id`, `dimension2_id`, `actual_cost`, `last_cost`, `material_cost`, `labour_cost`, `overhead_cost`, `inactive`, `no_sale`, `editable`) VALUES
+('101', 1, 1, 'Trip', 'Trip data', 'km', 'D', '4010', '5010', '1510', '5040', '1530', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('102', 1, 2, 'Driver Commission', 'Driver commission for a trip data', 'km', 'D', '4010', '5010', '1510', '5040', '1530', 0, 0, 0, 0, 0, 0, 0, 0, 1, 0),
+('103', 1, 2, 'Vehicle Commission', 'Vehicle Commission for a trip data', 'km', 'D', '4010', '5010', '1510', '5040', '1530', 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1577,64 +1597,63 @@ CREATE TABLE IF NOT EXISTS `0_sys_prefs` (
 -- Dumping data for table `0_sys_prefs`
 --
 
-INSERT INTO `0_sys_prefs` VALUES('coy_name', 'setup.company', 'varchar', 60, 'Company name');
-INSERT INTO `0_sys_prefs` VALUES('gst_no', 'setup.company', 'varchar', 25, '');
-INSERT INTO `0_sys_prefs` VALUES('coy_no', 'setup.company', 'varchar', 25, '');
-INSERT INTO `0_sys_prefs` VALUES('tax_prd', 'setup.company', 'int', 11, '1');
-INSERT INTO `0_sys_prefs` VALUES('tax_last', 'setup.company', 'int', 11, '1');
-INSERT INTO `0_sys_prefs` VALUES('postal_address', 'setup.company', 'tinytext', 0, 'N/A');
-INSERT INTO `0_sys_prefs` VALUES('phone', 'setup.company', 'varchar', 30, '');
-INSERT INTO `0_sys_prefs` VALUES('fax', 'setup.company', 'varchar', 30, '');
-INSERT INTO `0_sys_prefs` VALUES('email', 'setup.company', 'varchar', 100, '');
-INSERT INTO `0_sys_prefs` VALUES('coy_logo', 'setup.company', 'varchar', 100, '');
-INSERT INTO `0_sys_prefs` VALUES('domicile', 'setup.company', 'varchar', 55, '');
-INSERT INTO `0_sys_prefs` VALUES('curr_default', 'setup.company', 'char', 3, 'INR');
-INSERT INTO `0_sys_prefs` VALUES('use_dimension', 'setup.company', 'tinyint', 1, '1');
-INSERT INTO `0_sys_prefs` VALUES('f_year', 'setup.company', 'int', 11, '6');
-INSERT INTO `0_sys_prefs` VALUES('no_item_list', 'setup.company', 'tinyint', 1, '0');
-INSERT INTO `0_sys_prefs` VALUES('no_customer_list', 'setup.company', 'tinyint', 1, '0');
-INSERT INTO `0_sys_prefs` VALUES('no_supplier_list', 'setup.company', 'tinyint', 1, '0');
-INSERT INTO `0_sys_prefs` VALUES('base_sales', 'setup.company', 'int', 11, '1');
-INSERT INTO `0_sys_prefs` VALUES('time_zone', 'setup.company', 'tinyint', 1, '0');
-INSERT INTO `0_sys_prefs` VALUES('add_pct', 'setup.company', 'int', 5, '-1');
-INSERT INTO `0_sys_prefs` VALUES('round_to', 'setup.company', 'int', 5, '1');
-INSERT INTO `0_sys_prefs` VALUES('login_tout', 'setup.company', 'smallint', 6, '7200');
-INSERT INTO `0_sys_prefs` VALUES('past_due_days', 'glsetup.general', 'int', 11, '30');
-INSERT INTO `0_sys_prefs` VALUES('profit_loss_year_act', 'glsetup.general', 'varchar', 15, '9990');
-INSERT INTO `0_sys_prefs` VALUES('retained_earnings_act', 'glsetup.general', 'varchar', 15, '3590');
-INSERT INTO `0_sys_prefs` VALUES('bank_charge_act', 'glsetup.general', 'varchar', 15, '5690');
-INSERT INTO `0_sys_prefs` VALUES('exchange_diff_act', 'glsetup.general', 'varchar', 15, '4450');
-INSERT INTO `0_sys_prefs` VALUES('default_credit_limit', 'glsetup.customer', 'int', 11, '1000');
-INSERT INTO `0_sys_prefs` VALUES('accumulate_shipping', 'glsetup.customer', 'tinyint', 1, '0');
-INSERT INTO `0_sys_prefs` VALUES('legal_text', 'glsetup.customer', 'tinytext', 0, '');
-INSERT INTO `0_sys_prefs` VALUES('freight_act', 'glsetup.customer', 'varchar', 15, '4430');
-INSERT INTO `0_sys_prefs` VALUES('debtors_act', 'glsetup.sales', 'varchar', 15, '1200');
-INSERT INTO `0_sys_prefs` VALUES('default_sales_act', 'glsetup.sales', 'varchar', 15, '4010');
-INSERT INTO `0_sys_prefs` VALUES('default_sales_discount_act', 'glsetup.sales', 'varchar', 15, '4510');
-INSERT INTO `0_sys_prefs` VALUES('default_prompt_payment_act', 'glsetup.sales', 'varchar', 15, '4500');
-INSERT INTO `0_sys_prefs` VALUES('default_delivery_required', 'glsetup.sales', 'smallint', 6, '1');
-INSERT INTO `0_sys_prefs` VALUES('default_dim_required', 'glsetup.dims', 'int', 11, '20');
-INSERT INTO `0_sys_prefs` VALUES('pyt_discount_act', 'glsetup.purchase', 'varchar', 15, '5060');
-INSERT INTO `0_sys_prefs` VALUES('salary_act', 'glsetup.purchase', 'varchar', 15, '5410');
-INSERT INTO `0_sys_prefs` VALUES('creditors_act', 'glsetup.purchase', 'varchar', 15, '2100');
-INSERT INTO `0_sys_prefs` VALUES('po_over_receive', 'glsetup.purchase', 'int', 11, '10');
-INSERT INTO `0_sys_prefs` VALUES('po_over_charge', 'glsetup.purchase', 'int', 11, '10');
-INSERT INTO `0_sys_prefs` VALUES('allow_negative_stock', 'glsetup.inventory', 'tinyint', 1, '0');
-INSERT INTO `0_sys_prefs` VALUES('default_inventory_act', 'glsetup.items', 'varchar', 15, '1510');
-INSERT INTO `0_sys_prefs` VALUES('default_cogs_act', 'glsetup.items', 'varchar', 15, '5010');
-INSERT INTO `0_sys_prefs` VALUES('default_driver_cogs_act', 'glsetup.items', 'varchar', 15, '5011');
-INSERT INTO `0_sys_prefs` VALUES('default_vehicle_cogs_act', 'glsetup.items', 'varchar', 15, '5012');
-INSERT INTO `0_sys_prefs` VALUES('default_adj_act', 'glsetup.items', 'varchar', 15, '5040');
-INSERT INTO `0_sys_prefs` VALUES('default_inv_sales_act', 'glsetup.items', 'varchar', 15, '4010');
-INSERT INTO `0_sys_prefs` VALUES('default_assembly_act', 'glsetup.items', 'varchar', 15, '1530');
-INSERT INTO `0_sys_prefs` VALUES('default_workorder_required', 'glsetup.manuf', 'int', 11, '20');
-INSERT INTO `0_sys_prefs` VALUES('version_id', 'system', 'varchar', 11, '2.3rc');
-INSERT INTO `0_sys_prefs` VALUES('auto_curr_reval', 'setup.company', 'smallint', 6, '1');
-INSERT INTO `0_sys_prefs` VALUES('grn_clearing_act', 'glsetup.purchase', 'varchar', 15, '1550');
-INSERT INTO `0_sys_prefs` VALUES('bcc_email', 'setup.company', 'varchar', 100, '');
-INSERT INTO `0_sys_prefs` VALUES('default_payment_terms', 'setup.company', 'int', 11, 4);
-
-
+INSERT INTO `0_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
+('coy_name', 'setup.company', 'varchar', 60, 'Company name'),
+('gst_no', 'setup.company', 'varchar', 25, ''),
+('coy_no', 'setup.company', 'varchar', 25, ''),
+('tax_prd', 'setup.company', 'int', 11, '1'),
+('tax_last', 'setup.company', 'int', 11, '1'),
+('postal_address', 'setup.company', 'tinytext', 0, 'N/A'),
+('phone', 'setup.company', 'varchar', 30, ''),
+('fax', 'setup.company', 'varchar', 30, ''),
+('email', 'setup.company', 'varchar', 100, ''),
+('coy_logo', 'setup.company', 'varchar', 100, ''),
+('domicile', 'setup.company', 'varchar', 55, ''),
+('curr_default', 'setup.company', 'char', 3, 'INR'),
+('use_dimension', 'setup.company', 'tinyint', 1, '1'),
+('f_year', 'setup.company', 'int', 11, '1'),
+('no_item_list', 'setup.company', 'tinyint', 1, '0'),
+('no_customer_list', 'setup.company', 'tinyint', 1, '0'),
+('no_supplier_list', 'setup.company', 'tinyint', 1, '0'),
+('base_sales', 'setup.company', 'int', 11, '1'),
+('time_zone', 'setup.company', 'tinyint', 1, '0'),
+('add_pct', 'setup.company', 'int', 5, '-1'),
+('round_to', 'setup.company', 'int', 5, '1'),
+('login_tout', 'setup.company', 'smallint', 6, '7200'),
+('past_due_days', 'glsetup.general', 'int', 11, '30'),
+('profit_loss_year_act', 'glsetup.general', 'varchar', 15, '9990'),
+('retained_earnings_act', 'glsetup.general', 'varchar', 15, '3590'),
+('bank_charge_act', 'glsetup.general', 'varchar', 15, '5690'),
+('exchange_diff_act', 'glsetup.general', 'varchar', 15, '4450'),
+('default_credit_limit', 'glsetup.customer', 'int', 11, '1000'),
+('accumulate_shipping', 'glsetup.customer', 'tinyint', 1, '0'),
+('legal_text', 'glsetup.customer', 'tinytext', 0, ''),
+('freight_act', 'glsetup.customer', 'varchar', 15, '4430'),
+('debtors_act', 'glsetup.sales', 'varchar', 15, '1200'),
+('default_sales_act', 'glsetup.sales', 'varchar', 15, '4010'),
+('default_sales_discount_act', 'glsetup.sales', 'varchar', 15, '4510'),
+('default_prompt_payment_act', 'glsetup.sales', 'varchar', 15, '4500'),
+('default_delivery_required', 'glsetup.sales', 'smallint', 6, '1'),
+('default_dim_required', 'glsetup.dims', 'int', 11, '20'),
+('pyt_discount_act', 'glsetup.purchase', 'varchar', 15, '5060'),
+('salary_act', 'glsetup.purchase', 'varchar', 15, '5410'),
+('creditors_act', 'glsetup.purchase', 'varchar', 15, '2100'),
+('po_over_receive', 'glsetup.purchase', 'int', 11, '10'),
+('po_over_charge', 'glsetup.purchase', 'int', 11, '10'),
+('allow_negative_stock', 'glsetup.inventory', 'tinyint', 1, '0'),
+('default_inventory_act', 'glsetup.items', 'varchar', 15, '1510'),
+('default_cogs_act', 'glsetup.items', 'varchar', 15, '5010'),
+('default_driver_cogs_act', 'glsetup.items', 'varchar', 15, '5011'),
+('default_vehicle_cogs_act', 'glsetup.items', 'varchar', 15, '5012'),
+('default_adj_act', 'glsetup.items', 'varchar', 15, '5040'),
+('default_inv_sales_act', 'glsetup.items', 'varchar', 15, '4010'),
+('default_assembly_act', 'glsetup.items', 'varchar', 15, '1530'),
+('default_workorder_required', 'glsetup.manuf', 'int', 11, '20'),
+('version_id', 'system', 'varchar', 11, '2.3rc'),
+('auto_curr_reval', 'setup.company', 'smallint', 6, '1'),
+('grn_clearing_act', 'glsetup.purchase', 'varchar', 15, '1550'),
+('bcc_email', 'setup.company', 'varchar', 100, ''),
+('default_payment_terms', 'setup.company', 'int', 11, '4');
 
 -- --------------------------------------------------------
 
@@ -1725,8 +1744,8 @@ CREATE TABLE IF NOT EXISTS `0_tax_groups` (
 --
 
 INSERT INTO `0_tax_groups` (`id`, `name`, `tax_shipping`, `inactive`) VALUES
-(1, 'Tax', 0, 0),
-(2, 'Tax Exempt', 0, 0);
+(1, 'Inclusive', 0, 0),
+(2, 'Excluvie', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1746,7 +1765,9 @@ CREATE TABLE IF NOT EXISTS `0_tax_group_items` (
 --
 
 INSERT INTO `0_tax_group_items` (`tax_group_id`, `tax_type_id`, `rate`) VALUES
-(1, 1, 5);
+(2, 2, 12),
+(2, 3, 0.24),
+(2, 4, 0.12);
 
 -- --------------------------------------------------------
 
@@ -1769,7 +1790,10 @@ CREATE TABLE IF NOT EXISTS `0_tax_types` (
 --
 
 INSERT INTO `0_tax_types` (`id`, `rate`, `sales_gl_code`, `purchasing_gl_code`, `name`, `inactive`) VALUES
-(1, 5, '2150', '2150', 'Tax', 0);
+(1, 5, '2150', '2150', 'Tax', 1),
+(2, 12, '2051', '2051', 'Service Tax', 0),
+(3, 0.24, '2052', '2052', 'Educational Cess', 0),
+(4, 0.12, '2053', '2053', 'Higher Educational Cess', 0);
 
 -- --------------------------------------------------------
 

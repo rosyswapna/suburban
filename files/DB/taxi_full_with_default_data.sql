@@ -2458,8 +2458,7 @@ CREATE TABLE IF NOT EXISTS `payment_type` (
 
 INSERT INTO `payment_type` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
 (1, 'Cash', 'Cash', NULL, 1, 5, '2014-09-09 06:29:13', '0000-00-00 00:00:00'),
-(2, 'Account', 'Account', NULL, 1, 5, '2014-09-09 06:29:25', '0000-00-00 00:00:00'),
-(3, 'Credit', 'Credit', NULL, 1, 5, '2014-09-09 06:29:34', '0000-00-00 00:00:00');
+(2, 'Credit', 'Credit', NULL, 1, 5, '2014-09-09 06:29:34', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -3384,6 +3383,28 @@ INSERT INTO `vehicle_ownership_types` (`id`, `name`, `description`, `value`, `or
 (3, 'Attached', 'Attached', NULL, 1, 5, '2014-09-09 06:20:04', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `vehicle_ownership_types`
+--
+
+CREATE TABLE IF NOT EXISTS `vehicle_payment_percentages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `description` text,
+  `value` int(11) DEFAULT NULL,
+  `organisation_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`),
+  KEY `organisation_id` (`organisation_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+-- --------------------------------------------------------
+
 
 --
 -- Table structure for table `vehicle_permit_types`

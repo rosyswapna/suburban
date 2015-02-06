@@ -100,8 +100,7 @@ INSERT INTO `marital_statuses` (`id`, `name`, `description`, `value`, `organisat
 
 INSERT INTO `payment_type` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
 (1, 'Cash', 'Cash', NULL, 1, 5, '2014-09-09 06:29:13', '0000-00-00 00:00:00'),
-(2, 'Account', 'Account', NULL, 1, 5, '2014-09-09 06:29:25', '0000-00-00 00:00:00'),
-(3, 'Credit', 'Credit', NULL, 1, 5, '2014-09-09 06:29:34', '0000-00-00 00:00:00');
+(2, 'Credit', 'Credit', NULL, 1, 5, '2014-09-09 06:29:34', '0000-00-00 00:00:00');
 
 --
 -- Dumping data for table `statuses`
