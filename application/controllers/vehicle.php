@@ -265,42 +265,7 @@ class Vehicle extends CI_Controller {
 					 //for insurance
 $err=True;
 
-	/*if($hid_driver!=$driver_data['driver_id']){
-		if(!$this->date_check($driver_data['driver_id'])){
-		
-	$err=False;
-	$this->mysession->set('Err_driver_name','Invalid From Date for Driver!');
-	}
-	}
-	
-		if($h_fdate_driver!=$driver_data['from_date']){
-		if(!$this->date_check($driver_data['from_date'])){
-	$err=False;
-	$this->mysession->set('Err_driver_fdate','Invalid From Date for Driver!');
-	}
-	}
-	if($hid_device!=$device_data['device_id']){
-	if(!$this->date_check($device_data['device_id'])){
-	$err=False;
-	$this->mysession->set('Err_device_name','Invalid From Date for Device!');
-	}
-	}
-	if($h_fdate_device!=$device_data['from_date_device']){
-	if(!$this->date_check($device_data['from_date_device'])){
-	$err=False;
-	$this->mysession->set('Err_device_fdate','Invalid From Date for Device!');
-	}
-	}
-	*/
-	
-	/*if(preg_match('#[^0-9\.]#', $data['vehicle_permit_renewal_amount'])){
-			$this->mysession->set('Err_permit_amt','Invalid Characters on Permit Amount field!');
-			$err=False;
-			}
-	if(preg_match('#[^0-9\.]#', $data['tax_renewal_amount'])){
-			$this->mysession->set('Err_tax_amt','Invalid Characters on Tax Amount field!');
-			$err=False;
-			}*/
+
 	if($data['vehicle_ownership_types_id'] ==-1){
 	 $data['vehicle_ownership_types_id'] ='';
 	 $err=False;
@@ -331,11 +296,6 @@ $err=True;
 	 $err=False;
 	 $this->mysession->set('seat','Choose Seat Capacity');
 	 }
-	/*  if($data['vehicle_permit_type_id'] ==-1){
-	 $data['vehicle_permit_type_id'] ='';
-	 $err=False;
-	 $this->mysession->set('permit','Choose Permit Type');
-	 }*/
 	   if($data['vehicle_model_id'] ==-1){
 	 $data['vehicle_model_id'] ='-1';
 	 $err=False;
@@ -346,11 +306,7 @@ $err=True;
 	 $err=False;
 	 $this->mysession->set('Driver','Choose Any Driver');
 	 } 
-	 /* if($device_data['device_id'] ==-1){
-	 $device_data['device_id'] ='';
-	 $err=False;
-	 $this->mysession->set('Device','Choose Any Device');
-	 } */
+
 	 if($this->form_validation->run()==False|| $err==False){
 	 //echo "err";exit;
 	
@@ -714,7 +670,7 @@ $err=True;
 			$username=$this->input->post('username');
 			$password=$this->input->post('password');
 			$hpass=$this->input->post('h_pass');
-			
+			$hidden_user=$this->input->post('h_user');
 			//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
 			$this->form_validation->set_rules('owner_name','Owner Name ','trim|required|xss_clean');
 			 $this->form_validation->set_rules('address','Address','trim|xss_clean');
@@ -731,7 +687,7 @@ $err=True;
 			 $this->form_validation->set_rules('mail','Mail ID','trim|required|xss_clean|valid_email|is_unique[vehicle_owners.email]');
 			 }*/
 			
-			 
+			 $err=True;
 			 //for insurance
 			if($this->mysession->get('vehicle_id')==null)
 			{
@@ -739,19 +695,38 @@ $err=True;
 				$err=False;
 			}
 	
+		$this->mysession->delete('v_pwd_err');	
+		if($this->input->post('username')!='') { 
 	
+			if($this->input->post('password')==''){
+				$err=False;
+				$this->mysession->set('v_pwd_err','Password Field Required');
+			}
+			else{
+			
+				if($owner_id==gINVALID ){
+					$this->form_validation->set_rules('password','Password','trim|min_length[5]|matches[cpassword]|xss_clean');
+					$this->form_validation->set_rules('cpassword','Confirmation','trim|min_length[5]|xss_clean');
+				}else{
+					$this->form_validation->set_rules('password','Password','trim|min_length[5]|xss_clean');
+				}
+			}
+		
+			if($hidden_user!=$this->input->post('username')){
+				$this->form_validation->set_rules('username','Username','trim|min_length[4]|xss_clean|is_unique[users.username]');
+			}
+			if($hidden_user==$this->input->post('username')){
+				$this->form_validation->set_rules('username','Username','trim|required|min_length[4]|xss_clean');
+			}
+		}
 
-			if($this->form_validation->run()==False ){
+			if(($this->form_validation->run()==False )||($err==false )){
 				$this->mysession->set('owner_id',$owner_id);
 					$data['username']=$username;
 					$data['password']=$password;
 				$this->mysession->set('owner_post_all',$data);
 				$id=$this->mysession->get('vehicle_id');
-				if($this->mysession->get('Err_invalid_add')==null){
-				$this->mysession->set('Err_tab','Missing Data in Owner Tab');}
-				else{
-		
-				}
+				
 				if($id==''){
 				$current_id='';
 				}

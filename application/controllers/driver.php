@@ -115,10 +115,10 @@ class Driver extends CI_Controller {
 		}
 		
 		if($hidden_user!=$this->input->post('username')){
-			$this->form_validation->set_rules('username','Username','trim|min_length[5]|max_length[12]|xss_clean|is_unique[users.username]');
+			$this->form_validation->set_rules('username','Username','trim|min_length[4]|xss_clean|is_unique[users.username]');
 		}
 		if($hidden_user==$this->input->post('username')){
-			$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[12]|xss_clean');
+			$this->form_validation->set_rules('username','Username','trim|required|min_length[4]|xss_clean');
 		}
 		}
 	$password=$this->input->post('password');
