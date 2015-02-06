@@ -1096,6 +1096,7 @@ if($this->mysession->get('owner_post_all')!=null ){
        }
        
        ?>
+			<div class="width-30-percent-with-margin-left-20-Service-View">
 						<fieldset class="body-border border-style" >
 						<legend class="body-head">Service Info</legend>
 						<div class="form-group">
@@ -1135,7 +1136,10 @@ if($this->mysession->get('owner_post_all')!=null ){
 					</tr>
 					</table><?php echo form_close();?>
 						</fieldset>
-						<?php if(isset($s_list)){ ?>
+		</div>
+		
+						<?php if(isset($s_list)&& !empty($s_list)){ ?>
+		<div class="width-30-percent-with-margin-left-20-Service-View">				
 						<fieldset class="body-border border-style" >
 						<legend class="body-head">Manage Sevice Info</legend>
 						<table>
@@ -1148,6 +1152,7 @@ if($this->mysession->get('owner_post_all')!=null ){
 						</table>
 						</fieldset>
 					<?php }?>
+					</div>
 						</div>
 				</div>
 				<?php }?>
