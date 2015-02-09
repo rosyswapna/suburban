@@ -227,7 +227,7 @@ echo form_close();?></td>
 			$this->mysession->set('d_data',$dbdata);	
 			$this->mysession->set('c_data',$dbcustomer);
 			$this->mysession->set('flag',1);*/	
-			echo nbs(5) ."<a href=".base_url().'trip_booking/SendTripConfirmation/'.$trips[$trip_index]['trip_id']." title='Send SMS' class='fa fa-mobile '></a>"; 
+			echo nbs(5) ."<a href=".base_url().'trip-booking/trip-confirmation/'.$trips[$trip_index]['trip_id']." title='Send SMS' class='fa fa-mobile '></a>"; 
 			//----ends 
 			}
 			

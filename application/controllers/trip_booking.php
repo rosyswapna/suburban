@@ -21,7 +21,7 @@ class Trip_booking extends CI_Controller {
 				$this->bookTrip();
 			
 			}else if($param2=='trip-confirmation') {
-		
+				
 				$this->SendTripConfirmation($param3,$flag=1);
 			
 			}
@@ -712,7 +712,7 @@ class Trip_booking extends CI_Controller {
 		}
 	} 
 	public function SendTripConfirmation($id,$flag=''){
-	
+
 	$data=$this->trip_booking_model->get_trip($id);
 	$data=$data[0];
 	
@@ -758,7 +758,7 @@ class Trip_booking extends CI_Controller {
 			
 			
 			
-		 if($flag=='1'){
+		 if($flag=='1'){ 
 				 $this->session->set_userdata(array('dbSuccess'=>'Message Sent Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
 				     redirect(base_url().'organization/front-desk/trips');
