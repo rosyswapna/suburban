@@ -77,22 +77,7 @@ if (isset($_GET['AddedID'])) {
 
 	display_footer_exit();*/
 
-	
-
-	$voucher = get_voucher_with_invoice($invoice_no);
-	
-	if($voucher['driver_id'] > 0){
-		meta_forward($path_to_root.'/purchasing/po_entry_items.php','DriverInvoice=Yes&INV='.$invoice_no);
-	}else if($voucher['vehicle_owner_id'] > 0){
-		meta_forward($path_to_root.'/purchasing/po_entry_items.php','OwnerInvoice=Yes&INV='.$invoice_no);
-	}else{
-		display_notification_centered( _("Trip Invoice Processed"));
-
-		display_note(print_document_link($invoice_no."-".$trans_type, _("&Print This Invoice"), true, ST_SALESINVOICE));
-
-		display_footer_exit();
-	}
-
+	meta_forward($path_to_root.'/purchasing/driver_invoice.php','TripInvoice='.$invoice_no);
 	
 
 } elseif (isset($_GET['UpdatedID']))  {
