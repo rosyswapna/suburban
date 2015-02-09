@@ -16,54 +16,61 @@ class Trip_booking extends CI_Controller {
 	if($this->session_check()==true) {
 		if($param1=='trip-booking') {
 		
-		if($param2=='book-trip') {
+			if($param2=='book-trip') {
 		
-			$this->bookTrip();
+				$this->bookTrip();
 			
-		}else if($param2=='getAvailableVehicles') {
+			}else if($param2=='trip-confirmation') {
 		
-			$this->getAvailableVehicles();
+				$this->SendTripConfirmation($param3,$flag=1);
 			
-		}else if($param2=='getVehicleDriverPercentages') {
+			}
+			else if($param2=='getAvailableVehicles') {
 		
-			$this->getVehicleDriverPercentages();
+				$this->getAvailableVehicles();
 			
-		}else if($param2=='getVehicle') {
+			}else if($param2=='getVehicleDriverPercentages') {
 		
-			$this->getVehicle();
+				$this->getVehicleDriverPercentages();
 			
-		}else if($param2=='tripVoucher') {
+			}else if($param2=='getVehicle') {
 		
-			$this->tripVoucher();
+				$this->getVehicle();
 			
-		}else if($param2=='getTarrif') {
+			}else if($param2=='tripVoucher') {
 		
-			$this->getTarrif();
+				$this->tripVoucher();
 			
-		}else if($param2=='getVouchers') {
+			}else if($param2=='getTarrif') {
 		
-			$this->getVouchers();
-		}else{
-			$this->notFound();
-		}	
+				$this->getTarrif();
+			
+			}else if($param2=='getVouchers') {
+		
+				$this->getVouchers();
+			}else{
+				$this->notFound();
+			}	
 		}else{
 			$this->notFound();
 		}
 	}elseif($this->customer_session_check()==true && $param2=='book-trip') {
-			$this->bookTrip();
-		}
-		elseif($this->driver_session_check()==true){
+		$this->bookTrip();
+	}
+	elseif($this->driver_session_check()==true){
 		if($param2=='getVouchers'){
 			$this->getVouchers();
 		}else if($param2=='tripVoucher'){
 			$this->tripVoucher();
 		}
-		}
+	}
 	else{
 			$this->notAuthorized();
 	}
+	
 	}
-		public function driver_session_check() {
+	
+	public function driver_session_check() {
 		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==DRIVER)) {
 			return true;
 		} else {
@@ -79,7 +86,21 @@ class Trip_booking extends CI_Controller {
 		}else{
 			$this->notAuthorized();
 	}
-	}	
+	}
+
+	public function load_templates($page='',$data=''){
+	if($this->session_check()==true) {
+	    $this->load->view('admin-templates/header',$data);
+	    $this->load->view('admin-templates/nav');
+	    $this->load->view($page,$data);
+	    $this->load->view('admin-templates/footer');
+	}
+	else{
+			$this->notAuthorized();
+		}
+
+	}
+	
 	public function bookTrip() {
 			
 			if(isset($_REQUEST['book_trip'])){
@@ -411,11 +432,11 @@ class Trip_booking extends CI_Controller {
 				if(isset($data['trip_id']) && $data['trip_id']>0){ 
 				$res = $this->trip_booking_model->updateTrip($dbdata,$data['trip_id'],$estimate,$guest);
 				if($res==true){
-					
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Updated Succesfully..!!'));
 					$this->session->set_userdata(array('dbError'=>''));
 					if($dbdata['trip_status_id']==TRIP_STATUS_CONFIRMED){
-						$this->SendTripConfirmation($data['trip_id'],$dbdata,$customer);
+						//$this->SendTripConfirmation($data['trip_id'],$dbdata,$customer);
+						$this->SendTripConfirmation($data['trip_id']);
 					}
 				}else{
 					$this->session->set_userdata(array('dbError'=>'Trip Updated unsuccesfully..!!'));
@@ -430,9 +451,8 @@ class Trip_booking extends CI_Controller {
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Booked Succesfully..!!'));
 					$this->session->set_userdata(array('dbError'=>''));
 					if($dbdata['trip_status_id']==TRIP_STATUS_CONFIRMED){
-						
-						$this->SendTripConfirmation($res,$dbdata,$customer);
-						
+						//$this->SendTripConfirmation($res,$dbdata,$customer);
+						$this->SendTripConfirmation($res);
 					}
 				
 				}else{
@@ -691,30 +711,26 @@ class Trip_booking extends CI_Controller {
 			return false;
 		}
 	} 
-	public function SendTripConfirmation($id,$data='',$customer=''){
-	/* if($flag=='1'){
-	$data=unserialize(urldecode($data));
-	$customer=unserialize(urldecode($customer));
-	}*/
-	if($this->mysession->get('flag')!=''||$this->mysession->get('d_data')!=''||$this->mysession->get('c_data')!=''){ 
-	$data=$this->mysession->get('d_data');
-	$customer=$this->mysession->get('c_data');
-	$flag=$this->mysession->get('flag'); 
-		$this->mysession->delete('flag');
-		$this->mysession->delete('d_data');
-		$this->mysession->delete('c_data');
+	public function SendTripConfirmation($id,$flag=''){
 	
-	}
+	$data=$this->trip_booking_model->get_trip($id);
+	$data=$data[0];
 	
 		//$message='Hi Customer, Your Trip Id: '.$id.'has been confirmed on '.$data['pick_up_date'].' '.$data['pick_up_time'].' Location :'.$data['pick_up_city'].'-'.$data['drop_city'].' Enjoy your trip.';
 		$driver=$this->trip_booking_model->getDriverDetails($data['driver_id']);
-		$name=$driver[0]->name;
-		$contact=$driver[0]->mobile; 
-		//print_r( $customer);exit;
-		$message='Hi Customer, Your Trip Id: '.$id.' has been confirmed on '.$data['pick_up_date'].'.Pickup time: '.$data['pick_up_time'].'.Location : '.$data['pick_up_city'].'-'.$data['drop_city'].'. Driver: '.$name.', '.$contact.'.';
-		$dr_message='Hi, Your trip id: '.$id.' had been allocated on '.$data['pick_up_date'].'. Guest details: '.$customer['name'].', '.$customer['mob'].'.Pickup: '.$data['pick_up_city'].', '.$data['pick_up_time'];
+		$d_name=$driver[0]->name;
+		$d_contact=$driver[0]->mobile;
+
+		$customer=$this->trip_booking_model->getCustomerDetails($data['customer_id']);
+		$c_name=$customer[0]->name;
+		$c_contact=$customer[0]->mobile;
+		$c_email=$customer[0]->email;
+		$message='Hi Customer, Your Trip Id: '.$id.' has been confirmed on '.$data['pick_up_date'].'.Pickup time: '.$data['pick_up_time'].'.Location : '.$data['pick_up_city'].'-'.$data['drop_city'].'. Driver: '.$d_name.', '.$d_contact.'.';
+		$dr_message='Hi, Your trip id: '.$id.' had been allocated on '.$data['pick_up_date'].'. Guest details: '.$c_name.', '.$c_contact.'.Pickup: '.$data['pick_up_city'].', '.$data['pick_up_time'];
 		$tbl_arry=array('vehicle_types','vehicle_ac_types','vehicle_makes','vehicle_models');
-	//echo $message.br().$dr_message;exit;
+	
+	
+		
 		for ($i=0;$i<4;$i++){
 		$result=$this->user_model->getArray($tbl_arry[$i]);
 		if($result!=false){
@@ -729,16 +745,16 @@ class Trip_booking extends CI_Controller {
 		$date = date('Y-m-d H:i:s');
 		
 		if(($data['pick_up_date'].' '.$data['pick_up_time'])>=$date){
-			
-			
-			if($contact != ""){
-				$this->sms->sendSms($contact,$dr_message);
-			}
-			
-			if($customer['mob'] != ""){ 
-				$this->sms->sendSms($customer['mob'],$message);
+			if($c_contact != ""){ 
+				$this->sms->sendSms($c_contact,$message);
 				
 			}
+			
+			if($d_contact != ""){
+				$this->sms->sendSms($d_contact,$dr_message);
+			}
+			
+			
 			
 			
 			
@@ -768,9 +784,9 @@ class Trip_booking extends CI_Controller {
 	
 
 
-			if($customer['email']!=''){ 
+			if($c_email!=''){ 
 				$subject=PRODUCT_NAME;
-				//$this->send_email->emailMe($customer['email'],$subject,$email_content);
+				//$this->send_email->emailMe($c_email,$subject,$email_content);
 			}
 		}
 
