@@ -45,6 +45,15 @@ if(isset($_GET['TripInvoice'])){
 //echo "<pre>";print_r($_SESSION);echo "</pre>";	
 
 
+
+function getReference()
+{
+	global $Refs;
+	$ref = $Refs->get_next(ST_SUPPINVOICE);
+	return $ref;
+}	
+
+
 if (isset($_POST['Commit']))
 {
 	$tripinvoice = $_POST['tripinvoice'];
@@ -112,13 +121,14 @@ if (isset($_POST['Commit']))
 			$grn_no = add_grn($cart);
 
 			//Direct Purchase Invoice
+			$ref = getReference();
  			$inv = new supp_trans(ST_SUPPINVOICE);
 			$inv->Comments = $cart->Comments;
 			$inv->supplier_id = $cart->supplier_id;
 			$inv->tran_date = $cart->orig_order_date;
 			$inv->due_date = $cart->due_date;
 			$inv->reference = $ref;
-			$inv->supp_reference = $cart->supp_ref;
+			$inv->supp_reference = $ref;
 			$inv->tax_included = $cart->tax_included;
 			$supp = get_supplier($cart->supplier_id);
 			$inv->tax_group_id = $supp['tax_group_id'];
