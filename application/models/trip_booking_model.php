@@ -49,6 +49,17 @@ class Trip_booking_model extends CI_Model {
 	return $results;
 	}
 	}
+	function getCustomerDetails($id){
+
+	$this->db->from('customers');
+	$condition=array('id'=>$id,'organisation_id'=>$this->session->userdata('organisation_id'));
+    $this->db->where($condition);
+	
+    $results = $this->db->get()->result();
+	if(count($results)>0){
+	return $results;
+	}
+	}
 
 	function checkTripVoucherEntry($trip_id){
 
@@ -454,6 +465,13 @@ $qry='SELECT T.id,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.pick_u
 	$this->db->where($conditon);
 	$this->db->from('rough_estimate');
 	$results = $this->db->get()->result();
+	return $results;
+	}
+	
+	function get_trip($id){
+	$this->db->where(array('id'=>$id));
+	$this->db->from('trips');
+	$results = $this->db->get()->result_array();
 	return $results;
 	}
 }
