@@ -15,13 +15,13 @@ function sendSms($phone,$message,$flag=''){
 		$url=$url_arry[0]->sms_gateway_url;
 		if($phone!='' && $message!=''){
 		$old_val=array('".$phone."','".$message."');
-		$new_val=array($phone,$message);
+		$new_val=array($phone,urlencode($message));
 		$url=str_replace($old_val,$new_val,$url);
 		}
 		if($url==false){
 		$url='';
 		}
-echo $url;exit;
+		echo $url.br();
 		$ch=curl_init(); 
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

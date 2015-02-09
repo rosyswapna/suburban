@@ -411,6 +411,7 @@ class Trip_booking extends CI_Controller {
 				if(isset($data['trip_id']) && $data['trip_id']>0){ 
 				$res = $this->trip_booking_model->updateTrip($dbdata,$data['trip_id'],$estimate,$guest);
 				if($res==true){
+					$this->mysession->delete('flag');
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Updated Succesfully..!!'));
 					$this->session->set_userdata(array('dbError'=>''));
 					if($dbdata['trip_status_id']==TRIP_STATUS_CONFIRMED){
@@ -429,7 +430,9 @@ class Trip_booking extends CI_Controller {
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Booked Succesfully..!!'));
 					$this->session->set_userdata(array('dbError'=>''));
 					if($dbdata['trip_status_id']==TRIP_STATUS_CONFIRMED){
+						$this->mysession->delete('flag');
 						$this->SendTripConfirmation($res,$dbdata,$customer);
+						
 					}
 				
 				}else{
@@ -696,7 +699,7 @@ class Trip_booking extends CI_Controller {
 	if($this->mysession->get('flag')!=''||$this->mysession->get('d_data')!=''||$this->mysession->get('c_data')!=''){ 
 	$data=$this->mysession->get('d_data');
 	$customer=$this->mysession->get('c_data');
-	$flag=$this->mysession->get('flag');
+	$flag=$this->mysession->get('flag'); 
 	}
 	
 		//$message='Hi Customer, Your Trip Id: '.$id.'has been confirmed on '.$data['pick_up_date'].' '.$data['pick_up_time'].' Location :'.$data['pick_up_city'].'-'.$data['drop_city'].' Enjoy your trip.';
@@ -722,16 +725,16 @@ class Trip_booking extends CI_Controller {
 		$date = date('Y-m-d H:i:s');
 		
 		if(($data['pick_up_date'].' '.$data['pick_up_time'])>=$date){
-			if($customer['mob'] != ""){ 
-				$this->sms->sendSms($customer['mob'],$message);
-				
-			}
+			
 			
 			if($contact != ""){
 				$this->sms->sendSms($contact,$dr_message);
 			}
 			
-			
+			if($customer['mob'] != ""){ 
+				$this->sms->sendSms($customer['mob'],$message);
+				
+			}
 			
 			
 			
