@@ -269,5 +269,13 @@ define('CNC_ORG_ADMIN',2);
 define('CNC_FRONT_DESK',3);
 
 
+//----------------------------------------------------------------------------------
+//	travelERP items constants
+//
+define('TRIP', 101);
+define('DRIVER_COMMISSION', 102);
+define('VEHICLE_COMMISSION', 103);
+
+
 
 ?>

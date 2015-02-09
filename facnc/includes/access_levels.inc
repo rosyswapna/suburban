@@ -169,6 +169,8 @@ $security_areas =array(
 	'SA_SUPPLIERANALYTIC' => array(SS_PURCH_A|1, _("Supplier analytical reports")),
 	'SA_SUPPBULKREP' => array(SS_PURCH_A|2, _("Supplier document bulk reports")),
 	'SA_SUPPPAYMREP' => array(SS_PURCH_A|3, _("Supplier payments report")),
+	'SA_DRIVERINVOICE' => array(SS_PURCH|5, _("Driver invoices")),
+	'SA_VEHICLEINVOICE' => array(SS_PURCH|5, _("Vehicle invoices")),
 //
 // Inventory 
 //
