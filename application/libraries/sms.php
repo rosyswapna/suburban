@@ -21,7 +21,7 @@ function sendSms($phone,$message,$flag=''){
 		if($url==false){
 		$url='';
 		}
-		//echo $url.br();
+		echo $url.br();exit;
 		$ch=curl_init(); 
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
