@@ -1,5 +1,9 @@
 
-	<?php
+	<?php	if(isset($hsms)){
+		}else{
+		$hsms='';
+		}
+	
 		if(!isset($org_id) && !isset($user_id) && !isset($status)) {  
 		$url='admin/organization/new';
 		$page_cap='Add Organization';
