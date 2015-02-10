@@ -150,6 +150,7 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
+				<li><a href="<?php echo base_url().'account/front_desk/JournelEntry';?>"><i class="fa fa-angle-double-right"></i>Journel Entry</a></li>
 				 
                                 <li><a href="<?php echo base_url().'account/front_desk/SalesDeliveries';?>"><i class="fa fa-angle-double-right"></i> Trip Deliveries</a></li>
 				<li><a href="<?php echo base_url().'account/front_desk/SalesInvoices';?>"><i class="fa fa-angle-double-right"></i> Trip Invoice</a></li>
@@ -160,6 +161,7 @@
 				<li><a href="<?php echo base_url().'account/front_desk/CustomerTransactions';?>"><i class="fa fa-angle-double-right"></i> Customer Transactions</a></li>
 				<li><a href="<?php echo base_url().'account/front_desk/DriverTransactions';?>"><i class="fa fa-angle-double-right"></i> Driver Transactions</a></li>
 				<li><a href="<?php echo base_url().'account/front_desk/OwnerTransactions';?>"><i class="fa fa-angle-double-right"></i> Vehicle Owner Transactions</a></li>
+				
                                 
                                 
                             </ul>
@@ -214,7 +216,6 @@
 		                        <li><a href="<?php echo base_url().'account/front_desk/GlAccounts';?>"><i class="fa fa-angle-double-right"></i>GL Accounts</a></li>
 					<li><a href="<?php echo base_url().'account/front_desk/GlAccountGroups';?>"><i class="fa fa-angle-double-right"></i>GL Account Groups</a></li>
 					<li><a href="<?php echo base_url().'account/front_desk/GlAccountClasses';?>"><i class="fa fa-angle-double-right"></i>GL Account Classes</a></li>
-					<li><a href="<?php echo base_url().'account/front_desk/JournelEntry';?>"><i class="fa fa-angle-double-right"></i>Journel Entry</a></li>
 		                        
 		                    </ul>
                         	</li>
