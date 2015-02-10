@@ -227,6 +227,8 @@ class Vehicle extends CI_Controller {
 	
 			$v_id=$this->input->post('hidden_id');//exit;
 			$data['vehicle_ownership_types_id']=$this->input->post('ownership');
+			$data['vehicle_percentage']=$this->input->post('vehicle_percentage');
+			$data['driver_percentage']=$this->input->post('driver_percentage');
 			$data['vehicle_type_id']=$this->input->post('vehicle_type');
 			$data['vehicle_make_id']=$this->input->post('make');
 			$data['vehicle_model_id']=$this->input->post('model');
@@ -259,61 +261,74 @@ class Vehicle extends CI_Controller {
 			$all_data=array('data'=>$data,'driver_data'=>$driver_data,'device_data'=>$device_data);
 			
 					
-					$this->form_validation->set_rules('year','Year','trim|required|xss_clean');
-					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean|regex_match[/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/]');
-					 $this->form_validation->set_rules('from_date','From Date ','trim|xss_clean');
-					 $this->form_validation->set_rules('from_date_device','From Date ','trim|xss_clean');
-					 $this->form_validation->set_rules('reg_date','Registration Date','trim|required|xss_clean');
-					 $this->form_validation->set_rules('eng_num','Engine Number','trim|xss_clean');
-					 $this->form_validation->set_rules('chases_num','Chases Number','trim|xss_clean');
-					 $this->form_validation->set_rules('permit_date','Permit Renewal Date','trim|xss_clean');
-					 $this->form_validation->set_rules('permit_amount','Permit Renewal  Amount','trim|xss_clean');
-					 $this->form_validation->set_rules('tax_amount','Tax Amount','trim|xss_clean');
-					 $this->form_validation->set_rules('tax_date','Tax Date','trim|xss_clean');
-					 //for insurance
-$err=True;
+			$this->form_validation->set_rules('year','Year','trim|required|xss_clean');
+			$this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean|regex_match[/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/]');
+			$this->form_validation->set_rules('from_date','From Date ','trim|xss_clean');
+			$this->form_validation->set_rules('from_date_device','From Date ','trim|xss_clean');
+			$this->form_validation->set_rules('reg_date','Registration Date','trim|required|xss_clean');
+			$this->form_validation->set_rules('eng_num','Engine Number','trim|xss_clean');
+			$this->form_validation->set_rules('chases_num','Chases Number','trim|xss_clean');
+			$this->form_validation->set_rules('permit_date','Permit Renewal Date','trim|xss_clean');
+			$this->form_validation->set_rules('permit_amount','Permit Renewal  Amount','trim|xss_clean');
+			$this->form_validation->set_rules('tax_amount','Tax Amount','trim|xss_clean');
+			$this->form_validation->set_rules('tax_date','Tax Date','trim|xss_clean');
+			//for insurance
+			$err=True;
 
 
-	if($data['vehicle_ownership_types_id'] ==-1){
-	 $data['vehicle_ownership_types_id'] ='';
-	 $err=False;
-	 $this->mysession->set('ownership','Choose Ownership Type');
-	 }
-	 if($data['vehicle_type_id'] ==-1){
-	 $data['vehicle_type_id'] ='';
-	 $err=False;
-	 $this->mysession->set('vehicle_type','Choose Vehicle Type');
-	 }
-	 if($data['vehicle_make_id'] ==-1){
-	 $data['vehicle_make_id'] ='';
-	 $err=False;
-	 $this->mysession->set('make','Choose Vehicle Make');
-	 }
-	 if($data['vehicle_ac_type_id'] ==-1){
-	 $data['vehicle_ac_type_id'] ='';
-	 $err=False;
-	 $this->mysession->set('ac','Choose AC Type');
-	 }
-	 if($data['vehicle_fuel_type_id'] ==-1){
-	 $data['vehicle_fuel_type_id'] ='';
-	 $err=False;
-	 $this->mysession->set('fuel','Choose Fuel Type');
-	 }
-	  if($data['vehicle_seating_capacity_id'] ==-1){
-	 $data['vehicle_seating_capacity_id'] ='';
-	 $err=False;
-	 $this->mysession->set('seat','Choose Seat Capacity');
-	 }
-	   if($data['vehicle_model_id'] ==-1){
-	 $data['vehicle_model_id'] ='-1';
-	 $err=False;
-	 $this->mysession->set('model','Choose Model Type');
-	 }
-	  if($driver_data['driver_id'] ==-1){
-	 $driver_data['driver_id'] ='';
-	 $err=False;
-	 $this->mysession->set('Driver','Choose Any Driver');
-	 } 
+			if($data['vehicle_ownership_types_id'] ==-1){
+			 $data['vehicle_ownership_types_id'] ='';
+			 $err=False;
+			 $this->mysession->set('ownership','Choose Ownership Type');
+			}
+			if($data['vehicle_ownership_types_id'] > 1){
+				if($data['vehicle_percentage'] ==-1){
+				 $data['vehicle_percentage'] ='';
+				 $err=False;
+				 $this->mysession->set('vehicle_percentage','Choose Vehicle Percentage');
+				}
+				if($data['driver_percentage'] ==-1){
+				 $data['driver_percentage'] ='';
+				 $err=False;
+				 $this->mysession->set('driver_percentage','Choose Driver Percentage');
+				}
+			}
+
+			if($data['vehicle_type_id'] ==-1){
+			 $data['vehicle_type_id'] ='';
+			 $err=False;
+			 $this->mysession->set('vehicle_type','Choose Vehicle Type');
+			}
+			if($data['vehicle_make_id'] ==-1){
+			 $data['vehicle_make_id'] ='';
+			 $err=False;
+			 $this->mysession->set('make','Choose Vehicle Make');
+			}
+			if($data['vehicle_ac_type_id'] ==-1){
+			 $data['vehicle_ac_type_id'] ='';
+			 $err=False;
+			 $this->mysession->set('ac','Choose AC Type');
+			}
+			if($data['vehicle_fuel_type_id'] ==-1){
+			 $data['vehicle_fuel_type_id'] ='';
+			 $err=False;
+			 $this->mysession->set('fuel','Choose Fuel Type');
+			}
+			if($data['vehicle_seating_capacity_id'] ==-1){
+			 $data['vehicle_seating_capacity_id'] ='';
+			 $err=False;
+			 $this->mysession->set('seat','Choose Seat Capacity');
+			}
+			if($data['vehicle_model_id'] ==-1){
+			 $data['vehicle_model_id'] ='-1';
+			 $err=False;
+			 $this->mysession->set('model','Choose Model Type');
+			}
+			if($driver_data['driver_id'] ==-1){
+			 $driver_data['driver_id'] ='';
+			 $err=False;
+			 $this->mysession->set('Driver','Choose Any Driver');
+			} 
 
 	 if($this->form_validation->run()==False|| $err==False){
 	 //echo "err";exit;

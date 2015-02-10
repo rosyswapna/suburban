@@ -76,6 +76,8 @@ define('BEACON_LIGHT_RED',1);
 define('BEACON_LIGHT_BLUE',2);
 
 define('gINVALID',-1);
+
+define('OWNED_VEHICLE',1);
 /*
 |--------------------------------------------------------------------------
 | File Stream Modes
