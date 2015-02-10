@@ -6,6 +6,49 @@ var total_tarif = 0;// global total tariff
 var km_flag = 1;
 var hr_flag = 2;
 
+
+
+//-------------add vehicle page related js -----------------------
+
+
+
+//get driver and vehicle percentage with vehicle ownership type
+$("#add-vehicle-ownership").change(function() {
+	getPercentages();
+
+});
+
+function getPercentages()
+{
+	var ownership = $("#add-vehicle-ownership").val();
+	$('#add-vehicle-vehicle-percentage option').remove();
+	$('#add-vehicle-driver-percentage option').remove();
+	$('#add-vehicle-vehicle-percentage').append($("<option value='-1'></option>").text('--Vehicle Percentage--'));
+	$('#add-vehicle-driver-percentage').append($("<option value='-1'></option>").text('--Driver Percentage--'));
+	if(ownership > 1){
+		$.post(base_url+"/trip-booking/getPercentages",
+		 {},function(data){
+			data=jQuery.parseJSON(data);
+			if(data.driver){
+				for(var i=0;i<data.driver.length;i++){
+					selected_driver = "";
+			  	$('#add-vehicle-driver-percentage').append($("<option value='"+data.driver[i].id+"' "+selected_driver+"></option>").text(data.driver[i].value));
+				}
+			}
+
+			if(data.vehicle){
+				
+				for(var j=0;j<data.vehicle.length;j++){
+					selected = "";
+			  	$('#add-vehicle-vehicle-percentage').append($("<option value='"+data.vehicle[j].id+"' "+selected+"></option>").text(data.vehicle[j].value));
+				}
+			}
+		});
+	}
+}
+
+//------------add vehicle ends--------------------
+
 $('.settings-add').click(function(){ 
 var trigger = $(this).parent().prev().prev().find('#editbox').attr('trigger');
 if(trigger=='true'){ 

@@ -1,321 +1,377 @@
 <?php //print_r($driver);?>
 
 <div class="page-outer">
-	   <fieldset class="body-border">
-		<legend class="body-head">Manage Vehicles</legend>
-		<?php  echo form_open(base_url()."vehicle/");?>
-		<div class="nav-tabs-custom">
-    <ul class="nav nav-tabs">
- <?php 
-
-	foreach($tabs as $tab=>$attr){
-	echo '<li class="'.$attr['class'].'">
-		<a href="#'.$attr['tab_id'].'" data-toggle="tab">'.$attr['text'].'</a>
-	      </li>';
-	}
-	?>
-    </ul>
-    <div class="tab-content">
-  <?php if (array_key_exists('v_tab', $tabs)) {?>
-         <div class="<?php echo $tabs['v_tab']['content_class'];?>" id="<?php echo $tabs['v_tab']['tab_id'];?>">
-	<?php 
-			$vehicle_id=gINVALID;
-			$ownership ="";
-			$vehicle_type="";
-			$make="";
-			$model="";
-			$year="";
-			$ac="";
-			$fuel="";
-			$seat="";
-			$driver_id="";
-			$from_date="";
-			$device_id="";
-			$from_date_device="";
-			$reg_number="";
-			$reg_date="";
-			$eng_num="";
-			$chases_num="";
-			$permit="";
-			$permit_date="";
-			$permit_amount="";
-			$tax_amount="";
-			$tax_date="";
-		if($this->mysession->get('post_all')!=null && $this->mysession->get('post_driver')!=null && $this->mysession->get('post_device')!=null){
-			$data=$this->mysession->get('post_all');
-			$driver_data=$this->mysession->get('post_driver');
-			$device_data=$this->mysession->get('post_device');
-			$vehicle_id=$this->mysession->get('v_id');
-			$ownership =$data['vehicle_ownership_types_id'];
-			$vehicle_type=$data['vehicle_type_id'];
-			$make=$data['vehicle_make_id'];
-			$model=$data['vehicle_model_id'];
-			$year=$data['vehicle_manufacturing_year'];
-			$ac=$data['vehicle_ac_type_id'];
-			$fuel=$data['vehicle_fuel_type_id'];
-			$seat=$data['vehicle_seating_capacity_id'];
-			$driver_id=$driver_data['driver_id'];
-			$from_date=$driver_data['from_date'];
-			$device_id=$device_data['device_id'];
-			$from_date_device=$device_data['from_date_device'];
-			$reg_number=$data['registration_number'];
-			$reg_date=$data['registration_date'];
-			$eng_num=$data['engine_number'];
-			$chases_num=$data['engine_number'];
-			$permit=$data['vehicle_permit_type_id']; 
-			$permit_date=$data['vehicle_permit_renewal_date'];
-			$permit_amount=$data['vehicle_permit_renewal_amount'];
-			$tax_amount=$data['tax_renewal_amount'];
-			$tax_date=$data['tax_renewal_date'];	
-		$this->mysession->delete('post_all');
-		$this->mysession->delete('post_driver');
+<fieldset class="body-border">
+<legend class="body-head">Manage Vehicles</legend>
+	<?php  echo form_open(base_url()."vehicle/");?>
+	<div class="nav-tabs-custom">
+		<ul class="nav nav-tabs">
+ 		<?php 
+		foreach($tabs as $tab=>$attr){
+		echo '<li class="'.$attr['class'].'">
+			<a href="#'.$attr['tab_id'].'" data-toggle="tab">'.$attr['text'].'</a>
+		      </li>';
 		}
-		 else if(isset($vehicle)&& $vehicle!=null){ 
-			$vehicle_id=$vehicle['id'];
-		    $ownership =$vehicle['vehicle_ownership_types_id'];
-			$vehicle_type=$vehicle['vehicle_type_id'];
-			$make=$vehicle['vehicle_make_id'];
-			$model=$vehicle['vehicle_model_id'];
-			$year=$vehicle['vehicle_manufacturing_year'];
-			$ac=$vehicle['vehicle_ac_type_id'];
-			$fuel=$vehicle['vehicle_fuel_type_id'];
-			$seat=$vehicle['vehicle_seating_capacity_id'];
-			$driver_id=@$driver['driver_id'];
-			$from_date=@$driver['from_date'];
-			if(isset($device['device_id'])){
-			$device_id=$device['device_id'];
-			}
-			if(isset($device['from_date'])){
-			$from_date_device=$device['from_date'];
-			}
-			$reg_number=$vehicle['registration_number'];
-			$reg_date=$vehicle['registration_date'];
-			$eng_num=$vehicle['engine_number'];
-			$chases_num=$vehicle['chases_number'];
-			$permit=$vehicle['vehicle_permit_type_id'];
-			$permit_date=$vehicle['vehicle_permit_renewal_date'];
-			$permit_amount=$vehicle['vehicle_permit_renewal_amount'];
-			$tax_amount=$vehicle['tax_renewal_amount'];
-			$tax_date=$vehicle['tax_renewal_date'];
-		 }
-		 
-	
-  
+		?>
+    		</ul>
 
-?>
+    		<div class="tab-content">
+  		<?php if (array_key_exists('v_tab', $tabs)) {?>
+         	<div class="<?php echo $tabs['v_tab']['content_class'];?>" id="<?php echo $tabs['v_tab']['tab_id'];?>">
+			<?php 
+			
+			
+			if($this->mysession->get('post_all')!=null && $this->mysession->get('post_driver')!=null && $this->mysession->get('post_device')!=null){
+				$data=$this->mysession->get('post_all');
+				$driver_data=$this->mysession->get('post_driver');
+				$device_data=$this->mysession->get('post_device');
+				$vehicle_id=$this->mysession->get('v_id');
+				$ownership =$data['vehicle_ownership_types_id'];
+				$vehicle_type=$data['vehicle_type_id'];
+				$make=$data['vehicle_make_id'];
+				$model=$data['vehicle_model_id'];
+				$year=$data['vehicle_manufacturing_year'];
+				$ac=$data['vehicle_ac_type_id'];
+				$fuel=$data['vehicle_fuel_type_id'];
+				$seat=$data['vehicle_seating_capacity_id'];
+				$driver_id=$driver_data['driver_id'];
+				$from_date=$driver_data['from_date'];
+				$device_id=$device_data['device_id'];
+				$from_date_device=$device_data['from_date_device'];
+				$reg_number=$data['registration_number'];
+				$reg_date=$data['registration_date'];
+				$eng_num=$data['engine_number'];
+				$chases_num=$data['engine_number'];
+				$permit=$data['vehicle_permit_type_id']; 
+				$permit_date=$data['vehicle_permit_renewal_date'];
+				$permit_amount=$data['vehicle_permit_renewal_amount'];
+				$tax_amount=$data['tax_renewal_amount'];
+				$tax_date=$data['tax_renewal_date'];	
+				$this->mysession->delete('post_all');
+				$this->mysession->delete('post_driver');
+
+				$vehicle_percentage =$data['vehicle_percentage'];
+				$driver_percentage =$data['driver_percentage'];
+
+			}else if(isset($vehicle)&& $vehicle!=null){ 
+				$vehicle_id=$vehicle['id'];
+			    	$ownership =$vehicle['vehicle_ownership_types_id'];
+
+				if($ownership <= OWNED_VEHICLE){
+					$driver_percentages = $vehicle_percentages = '';
+				}
+				
+				$vehicle_percentage =$vehicle['vehicle_percentage'];
+				$driver_percentage =$vehicle['driver_percentage'];
+
+
+				$vehicle_type=$vehicle['vehicle_type_id'];
+				$make=$vehicle['vehicle_make_id'];
+				$model=$vehicle['vehicle_model_id'];
+				$year=$vehicle['vehicle_manufacturing_year'];
+				$ac=$vehicle['vehicle_ac_type_id'];
+				$fuel=$vehicle['vehicle_fuel_type_id'];
+				$seat=$vehicle['vehicle_seating_capacity_id'];
+				$driver_id=@$driver['driver_id'];
+				$from_date=@$driver['from_date'];
+				if(isset($device['device_id'])){
+				$device_id=$device['device_id'];
+				}
+				if(isset($device['from_date'])){
+				$from_date_device=$device['from_date'];
+				}
+				$reg_number=$vehicle['registration_number'];
+				$reg_date=$vehicle['registration_date'];
+				$eng_num=$vehicle['engine_number'];
+				$chases_num=$vehicle['chases_number'];
+				$permit=$vehicle['vehicle_permit_type_id'];
+				$permit_date=$vehicle['vehicle_permit_renewal_date'];
+				$permit_amount=$vehicle['vehicle_permit_renewal_amount'];
+				$tax_amount=$vehicle['tax_renewal_amount'];
+				$tax_date=$vehicle['tax_renewal_date'];
+			}else{
+				$vehicle_id=gINVALID;
+				$ownership ="";
+				$vehicle_type="";
+				$make="";
+				$model="";
+				$year="";
+				$ac="";
+				$fuel="";
+				$seat="";
+				$driver_id="";
+				$from_date="";
+				$device_id="";
+				$from_date_device="";
+				$reg_number="";
+				$reg_date="";
+				$eng_num="";
+				$chases_num="";
+				$permit="";
+				$permit_date="";
+				$permit_amount="";
+				$tax_amount="";
+				$tax_date="";
+				$driver_percentages = $vehicle_percentages = '';
+				$vehicle_percentage = $driver_percentage = '';
+			}
+
+			
+			?>
 
 		<?php if($this->mysession->get('dbSuccess') != '') { ?>
-        <div class="success-message">
-			
-            <div class="alert alert-success alert-dismissable">
-                <i class="fa fa-check"></i>
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php 
-                echo $this->mysession->get('dbSuccess');
-                $this->mysession->set('dbSuccess','');
-                ?>
-           </div>
-       </div>
-       <?php    } ?>
-	   	  			<?php if($this->mysession->get('Err_invalid_add') != ''||$this->mysession->get('Err_tab') != ''){ ?>
-	<div class="alert alert-danger alert-dismissable">
-                                        <i class="fa fa-ban"></i>
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                        <b>Alert!</b><br><?php
-													echo $this->mysession->get('Err_tab').br();
-													$this->mysession->delete('Err_tab');
-													echo $this->mysession->get('Err_invalid_add');
-													$this->mysession->delete('Err_invalid_add');
-?>
-                                    </div>
-<?php  } ?>
+		<div class="success-message">
+			<div class="alert alert-success alert-dismissable">
+			<i class="fa fa-check"></i>
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			<?php 
+			echo $this->mysession->get('dbSuccess');
+			$this->mysession->set('dbSuccess','');
+			?>
+		   	</div>
+		</div>
+		<?php  } ?>
 
-           <div class="width-30-percent-with-margin-left-20-Driver-View">
+		<?php if($this->mysession->get('Err_invalid_add') != ''||$this->mysession->get('Err_tab') != ''){ ?>
+		<div class="alert alert-danger alert-dismissable">
+                 	<i class="fa fa-ban"></i>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <b>Alert!</b><br>
+			<?php echo $this->mysession->get('Err_tab').br();
+			$this->mysession->delete('Err_tab');
+			echo $this->mysession->get('Err_invalid_add');
+			$this->mysession->delete('Err_invalid_add');
+			?>
+                  </div>
+		<?php  } ?>
 
-<fieldset class="body-border-Driver-View border-style-Driver-view" >
-<legend class="body-head">Vehicle Details</legend>
-        <div class="form-group">
-	<?php echo form_label('Vehicle Ownership Type','usernamelabel'); ?>
-     <?php
-	 $class="form-control";
-		$msg="Ownership Type";
-		$name="ownership";
-		if($ownership!=null){
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_ownership_types'],$ownership,$class,$id='',$msg);
-	}
-	else{
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_ownership_types'],$ownership='',$class,$id='',$msg);
-	}?>
-	    <p class="text-red"><?php
-	if($this->mysession->get('ownership') != ''){
-	echo $this->mysession->get('ownership');
-	$this->mysession->delete('ownership');
- }
-	?></p>
-        </div>
+           	<div class="width-30-percent-with-margin-left-20-Driver-View">
+
+		<fieldset class="body-border-Driver-View border-style-Driver-view" >
+		<legend class="body-head">Vehicle Details</legend>
+
+		<div class="form-group">
+			<?php echo form_label('Vehicle Ownership Type','usernamelabel'); ?>
+		     	<?php
+			$class="form-control";$id = 'add-vehicle-ownership';
+			$msg="Ownership Type";
+			$name="ownership";
+			if($ownership!=null){
+				echo $this->form_functions->populate_dropdown($name,$select['vehicle_ownership_types'],$ownership,$class,$id,$msg);
+			}else{
+				echo $this->form_functions->populate_dropdown($name,$select['vehicle_ownership_types'],$ownership='',$class,$id,$msg);
+			}?>
+			<p class="text-red">
+			<?php if($this->mysession->get('ownership') != ''){
+				echo $this->mysession->get('ownership');
+				$this->mysession->delete('ownership');
+			} ?>
+			</p>
+		</div>
 	
-	<div class="form-group">
-	<?php echo form_label('Vehicle Type','usernamelabel'); ?>
-           <?php $class="form-control";
-		$msg="Vehicle type";
-		$name="vehicle_type";
-	if($vehicle_type!=null){
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_types'],$vehicle_type,$class,$id='',$msg);
-	}else{
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_types'],$vehicle_type='',$class,$id='',$msg);
-	}
- ?>
-	   <p class="text-red"><?php
-	if($this->mysession->get('vehicle_type') != ''){
-	echo $this->mysession->get('vehicle_type');
-	$this->mysession->delete('vehicle_type');
- }
-	?></p>
-        </div>
-	<div class="form-group">
-	<?php echo form_label('Vehicle Make','usernamelabel'); 
-	 $class="form-control";
-		$msg="Vehicle Make";
-		$name="make";
-		if($make!=null){
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_makes'],$make,$class,$id='',$msg);
-	}else{
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_makes'],$make='',$class,$id='',$msg);
-	}?>
-	  <p class="text-red"><?php
-	if($this->mysession->get('make') != ''){
-	echo $this->mysession->get('make');
-	$this->mysession->delete('make');
- }
-	?></p>
-	   
-        </div>
 		<div class="form-group">
-	<?php echo form_label('Vehicle Model','usernamelabel'); 
-	 $class="form-control";
-		$msg="Vehicle Model";
-		$name="model";
-		if($model!=null){
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_models'],$model,$class,$id='',$msg);
+		<?php echo form_label('Vehicle Type','usernamelabel'); ?>
+		   <?php $class="form-control";
+			$msg="Vehicle type";
+			$name="vehicle_type";
+		if($vehicle_type!=null){
+		echo $this->form_functions->populate_dropdown($name,$select['vehicle_types'],$vehicle_type,$class,$id='',$msg);
+		}else{
+		echo $this->form_functions->populate_dropdown($name,$select['vehicle_types'],$vehicle_type='',$class,$id='',$msg);
+		}
+	 ?>
+		   <p class="text-red"><?php
+		if($this->mysession->get('vehicle_type') != ''){
+		echo $this->mysession->get('vehicle_type');
+		$this->mysession->delete('vehicle_type');
+	 }
+		?></p>
+		</div>
+
+		<div class="form-group">
+		<?php echo form_label('Vehicle Make','usernamelabel'); 
+		 $class="form-control";
+			$msg="Vehicle Make";
+			$name="make";
+			if($make!=null){
+		echo $this->form_functions->populate_dropdown($name,$select['vehicle_makes'],$make,$class,$id='',$msg);
+		}else{
+		echo $this->form_functions->populate_dropdown($name,$select['vehicle_makes'],$make='',$class,$id='',$msg);
+		}?>
+		  <p class="text-red"><?php
+		if($this->mysession->get('make') != ''){
+		echo $this->mysession->get('make');
+		$this->mysession->delete('make');
+	 }
+		?></p>
+		   
+		</div>
+
+		<div class="form-group">
+		<?php echo form_label('Vehicle Model','usernamelabel'); 
+		 $class="form-control";
+			$msg="Vehicle Model";
+			$name="model";
+			if($model!=null){
+		echo $this->form_functions->populate_dropdown($name,$select['vehicle_models'],$model,$class,$id='',$msg);
+		}else{
+		echo $this->form_functions->populate_dropdown($name,$select['vehicle_models'],$model='',$class,$id='',$msg);
+		}?>
+		   <p class="text-red"><?php
+		if($this->mysession->get('model') != ''){
+		echo $this->mysession->get('model');
+		$this->mysession->delete('model');
+	 }
+		?></p>
+        	</div>
+
+		<div class="form-group">
+		<?php echo form_label(' Manufacturing Year','usernamelabel'); ?>
+		   <?php  echo form_input(array('name'=>'year','class'=>'fromyearpicker form-control' ,'value'=>$year));?>
+		   <?php echo $this->form_functions->form_error_session('year', '<p class="text-red">', '</p>'); ?>
+		</div>
+		<div class="form-group">
+		<?php echo form_label('Ac Type','usernamelabel'); ?>
+		   <?php $class="form-control";
+			$msg="AC Type";
+			$name="ac";
+			if($ac!=null){
+		echo $this->form_functions->populate_dropdown($name,$select['vehicle_ac_types'],$ac,$class,$id='',$msg); 
+		}else{
+		echo $this->form_functions->populate_dropdown($name,$select['vehicle_ac_types'],$ac='',$class,$id='',$msg); 
+		}?>
+		   <p class="text-red"><?php
+		if($this->mysession->get('ac') != ''){
+		echo $this->mysession->get('ac');
+		$this->mysession->delete('ac');
+	 }
+		?></p>
+		</div>
+	
+		<div class="form-group">
+		<?php echo form_label(' Fuel Type','usernamelabel'); ?>
+		   <?php $class="form-control";
+			$msg="Fuel Type";
+			$name="fuel";
+			if($fuel!=null){
+		echo $this->form_functions->populate_dropdown($name,$select['vehicle_fuel_types'],$fuel,$class,$id='',$msg); 
+	     }else{
+	   echo $this->form_functions->populate_dropdown($name,$select['vehicle_fuel_types'],$fuel='',$class,$id='',$msg);
+	}	?>
+		   <p class="text-red"><?php
+		if($this->mysession->get('fuel') != ''){
+		echo $this->mysession->get('fuel');
+		$this->mysession->delete('fuel');
+	 }
+		?></p>
+		</div>
+
+		<div class="form-group">
+		<?php echo form_label(' Seating Capacity','usernamelabel'); ?>
+		   <?php $class="form-control";
+			$msg="Seating Capacity";
+			$name="seat";
+			if($seat!=null){
+		echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_capacity'],$seat,$class,$id='',$msg); 
 	}else{
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_models'],$model='',$class,$id='',$msg);
-	}?>
-	   <p class="text-red"><?php
-	if($this->mysession->get('model') != ''){
-	echo $this->mysession->get('model');
-	$this->mysession->delete('model');
- }
-	?></p>
-        </div>
-	<div class="form-group">
-	<?php echo form_label(' Manufacturing Year','usernamelabel'); ?>
-           <?php  echo form_input(array('name'=>'year','class'=>'fromyearpicker form-control' ,'value'=>$year));?>
-	   <?php echo $this->form_functions->form_error_session('year', '<p class="text-red">', '</p>'); ?>
-        </div>
-	<div class="form-group">
-	<?php echo form_label('Ac Type','usernamelabel'); ?>
-           <?php $class="form-control";
-		$msg="AC Type";
-		$name="ac";
-		if($ac!=null){
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_ac_types'],$ac,$class,$id='',$msg); 
-	}else{
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_ac_types'],$ac='',$class,$id='',$msg); 
-	}?>
-	   <p class="text-red"><?php
-	if($this->mysession->get('ac') != ''){
-	echo $this->mysession->get('ac');
-	$this->mysession->delete('ac');
- }
-	?></p>
-        </div>	
-	<div class="form-group">
-	<?php echo form_label(' Fuel Type','usernamelabel'); ?>
-           <?php $class="form-control";
-		$msg="Fuel Type";
-		$name="fuel";
-		if($fuel!=null){
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_fuel_types'],$fuel,$class,$id='',$msg); 
-     }else{
-   echo $this->form_functions->populate_dropdown($name,$select['vehicle_fuel_types'],$fuel='',$class,$id='',$msg);
-}	?>
-	   <p class="text-red"><?php
-	if($this->mysession->get('fuel') != ''){
-	echo $this->mysession->get('fuel');
-	$this->mysession->delete('fuel');
- }
-	?></p>
-        </div>
-	<div class="form-group">
-	<?php echo form_label(' Seating Capacity','usernamelabel'); ?>
-           <?php $class="form-control";
-		$msg="Seating Capacity";
-		$name="seat";
-		if($seat!=null){
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_capacity'],$seat,$class,$id='',$msg); 
-}else{
-echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_capacity'],$seat='',$class,$id='',$msg); 
-}	?>
-	 <p class="text-red"><?php
-	if($this->mysession->get('seat') != ''){
-	echo $this->mysession->get('seat');
-	$this->mysession->delete('seat');
- }
-	?></p>   
-        </div>
-			<div class="form-group">
+	echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_capacity'],$seat='',$class,$id='',$msg); 
+	}	?>
+		 <p class="text-red"><?php
+		if($this->mysession->get('seat') != ''){
+		echo $this->mysession->get('seat');
+		$this->mysession->delete('seat');
+	 }
+		?></p>   
+		</div>
+
+		<div class="form-group">
 		<?php echo form_label('Registration Number','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'reg_number','class'=>'form-control','id'=>'reg_number','value'=>$reg_number)); ?>
-	   <?php echo $this->form_functions->form_error_session('reg_number', '<p class="text-red">', '</p>'); ?>
-        </div>
+           	<?php echo form_input(array('name'=>'reg_number','class'=>'form-control','id'=>'reg_number','value'=>$reg_number)); ?>
+	   	<?php echo $this->form_functions->form_error_session('reg_number', '<p class="text-red">', '</p>'); ?>
+        	</div>
+
 		<div class="form-group">
-	<?php echo form_label('Registration Date','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'reg_date','class'=>'fromdatepicker form-control' ,'value'=>$reg_date));?>
-	   <?php echo $this->form_functions->form_error_session('reg_date', '<p class="text-red">', '</p>'); ?>
-        </div> <div class="hide-me"><?php echo form_input(array('name'=>'h_reg','value'=>$reg_date));?></div>
-			<div class="form-group">
-	<?php echo form_label('Permit Type','usernamelabel'); ?>
-           <?php $class="form-control";
+		<?php echo form_label('Registration Date','usernamelabel'); ?>
+           	<?php echo form_input(array('name'=>'reg_date','class'=>'fromdatepicker form-control' ,'value'=>$reg_date));?>
+	   	<?php echo $this->form_functions->form_error_session('reg_date', '<p class="text-red">', '</p>'); ?>
+        	</div> <div class="hide-me"><?php echo form_input(array('name'=>'h_reg','value'=>$reg_date));?></div>
+		
+		<div class="form-group">
+		<?php echo form_label('Permit Type','usernamelabel'); ?>
+           	<?php $class="form-control";
 		$msg="Permit Type";
 		$name="permit";
 		if($permit!=null){
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_permit_types'],$permit,$class,$id='',$msg); }
-	else{
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_permit_types'],$permit='',$class,$id='',$msg);
-	}
-	?>
+			echo $this->form_functions->populate_dropdown($name,$select['vehicle_permit_types'],$permit,$class,$id='',$msg); }else{
+			echo $this->form_functions->populate_dropdown($name,$select['vehicle_permit_types'],$permit='',$class,$id='',$msg);
+		}
+		?>
 	  
-        </div>
-
-		
-	
-		</fieldset> </div>
+        	</div>
+		</fieldset></div>
 		
 		<div class="width-30-percent-with-margin-left-20-Driver-View">
-<fieldset class="body-border-Driver-View border-style-Driver-view" >
-<legend class="body-head">Other Details</legend>
-	<div class="form-group">
-	<?php echo form_label('Permit Renewal Date','usernamelabel'); ?>
-           <?php  echo form_input(array('name'=>'permit_date','class'=>'fromdatepicker form-control' ,'value'=>$permit_date));?>
-	   <?php echo $this->form_functions->form_error_session('permit_date', '<p class="text-red">', '</p>'); ?>
-        </div>	<div class="hide-me"><?php echo form_input(array('name'=>'h_permit','value'=>$permit_date));?></div>
-	<div class="form-group">
-	<?php echo form_label('Permit Renewal Amount','usernamelabel'); ?>
-	<?php 
-	if($permit_amount=='') {
-	echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>$permit_amount));
-	}
-	else {
-	echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>number_format($permit_amount,2)));
-	}	?>
-	   <?php echo $this->form_functions->form_error_session('permit_amount', '<p class="text-red">', '</p>'); ?>
-        <p class="text-red"><?php
-	if($this->mysession->get('Err_permit_amt') != ''){
-	echo $this->mysession->get('Err_permit_amt');
-	$this->mysession->delete('Err_permit_amt');
- }
-	?></p>
+		<fieldset class="body-border-Driver-View border-style-Driver-view" >
+		<legend class="body-head">Other Details</legend>
+
+		<div class="form-group ">
+			<?php echo form_label('Vehicle Percentage','vehicle_percentage'); ?>
+		     	<?php
+			$class="form-control";$id= "add-vehicle-vehicle-percentage";
+			$msg="Vehicle Percentage";
+			$name="vehicle_percentage";
+			
+			echo $this->form_functions->populate_dropdown($name,$vehicle_percentages,$vehicle_percentage,$class,$id,$msg);
+			?>
+			<p class="text-red">
+			<?php if($this->mysession->get('vehicle_percentage') != ''){
+				echo $this->mysession->get('vehicle_percentage');
+				$this->mysession->delete('vehicle_percentage');
+			} ?>
+			</p>
 		</div>
+		
+		<div class="form-group ">
+			<?php echo form_label('Driver Percentage','driver_percentage'); ?>
+		     	<?php
+			$class="form-control";$id= "add-vehicle-driver-percentage";
+			$msg="Driver Percentage";
+			$name="driver_percentage";
+			
+			echo $this->form_functions->populate_dropdown($name,$driver_percentages,$driver_percentage,$class,$id,$msg);
+			?>
+			<p class="text-red">
+			<?php if($this->mysession->get('driver_percentage') != ''){
+				echo $this->mysession->get('driver_percentage');
+				$this->mysession->delete('driver_percentage');
+			} ?>
+			</p>
+		</div>
+
+
+		<div class="form-group">
+		<?php echo form_label('Permit Renewal Date','usernamelabel'); ?>
+		   <?php  echo form_input(array('name'=>'permit_date','class'=>'fromdatepicker form-control' ,'value'=>$permit_date));?>
+		   <?php echo $this->form_functions->form_error_session('permit_date', '<p class="text-red">', '</p>'); ?>
+		</div>	<div class="hide-me"><?php echo form_input(array('name'=>'h_permit','value'=>$permit_date));?></div>
+		<div class="form-group">
+		<?php echo form_label('Permit Renewal Amount','usernamelabel'); ?>
+		<?php 
+		if($permit_amount=='') {
+		echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>$permit_amount));
+		}
+		else {
+		echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>number_format($permit_amount,2)));
+		}	?>
+		   <?php echo $this->form_functions->form_error_session('permit_amount', '<p class="text-red">', '</p>'); ?>
+		<p class="text-red"><?php
+		if($this->mysession->get('Err_permit_amt') != ''){
+		echo $this->mysession->get('Err_permit_amt');
+		$this->mysession->delete('Err_permit_amt');
+	 }
+		?></p>
+		</div>
+
 	<div class="form-group">
 		<?php echo form_label('Select Driver','usernamelabel'); ?>
            <?php $class="form-control";

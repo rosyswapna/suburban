@@ -89,89 +89,97 @@ class Vehicle extends CI_Controller {
 	
 	public function add($tbl,$param1){
 	
-	if(isset($_REQUEST['select'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['add'])){ 
+		if(isset($_REQUEST['select'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['add'])){ 
 			$err=false;
-		    $data['name']=$this->input->post('select');
+		    	$data['name']=$this->input->post('select');
 			$data['description']=$this->input->post('description');
+
 			if($data['name']==''||$data['description']==''){
+				$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
+				$err=true;
+			}
 			
-			$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
-			$err=true;
+			$percentage_tabels=array('driver_payment_percentages','vehicle_payment_percentages');
+			if((in_array($param1,$percentage_tabels) && !is_numeric($data['name'])) || (!in_array($param1,$percentage_tabels) && is_numeric($data['name']))) {
+				$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
+				$err=true;
 			}
-			if(is_numeric($data['name'])){
-			$numeric_allowed_tabels=array('driver_payment_percentages','vehicle_payment_percentages');
-			if(!in_array($param1,$numeric_allowed_tabels)){
-			$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
-			$err=true;
-			}
-			}
+
+
 			if(is_numeric($data['description'])){
-			$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
-			$err=true;
+				$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
+				$err=true;
 			}
 			
 			if($err==true){
-			redirect(base_url().'organization/front-desk/settings');
+				redirect(base_url().'organization/front-desk/settings');
 			}
 			else{
-			$data['organisation_id']=$this->session->userdata('organisation_id');
-			$data['user_id']=$this->session->userdata('id');
+				$data['organisation_id']=$this->session->userdata('organisation_id');
+				$data['user_id']=$this->session->userdata('id');
 			
-	        
-        //echo $param1;exit;
+	        		//vehicle and driver percentage value to value column in table
+        			if(in_array($param1,$percentage_tabels)){
+        				$data['value'] = $data['name'];
+        			}
 	
-		$result=$this->settings_model->addValues($tbl[$param1],$data);
-		if($result==true){
+				$result=$this->settings_model->addValues($tbl[$param1],$data);
+				if($result==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Details Added Succesfully..!'));
-				    $this->session->set_userdata(array('dbError'=>''));
-				    redirect(base_url().'organization/front-desk/settings');
-						}
+				    	$this->session->set_userdata(array('dbError'=>''));
+				    	redirect(base_url().'organization/front-desk/settings');
+				}
 			
-							}
-							}
+			}
+		}
 	}
+	//-------------------------------------------------------------------------------
+
 	public function edit($tbl,$param1){
-	if(isset($_REQUEST['select_text'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['edit'])){ 
+		if(isset($_REQUEST['select_text'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['edit'])){ 
 			$err=false;
-		    $data['name']=$this->input->post('select_text');
+		    	$data['name']=$this->input->post('select_text');
 			$data['description']=$this->input->post('description');
+
 			if($data['name']==''||$data['description']==''){
-			
-			$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
-			$err=true;
+				$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
+				$err=true;
 			}
-			if(is_numeric($data['name'])){
-			$numeric_allowed_tabels=array('driver_payment_percentages','vehicle_payment_percentages');
-			if(!in_array($param1,$numeric_allowed_tabels)){
-			$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
-			$err=true;
+
+			$percentage_tabels=array('driver_payment_percentages','vehicle_payment_percentages');
+			if((in_array($param1,$percentage_tabels) && !is_numeric($data['name'])) || (!in_array($param1,$percentage_tabels) && is_numeric($data['name']))) {
+				$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
+				$err=true;
 			}
-			}
+
 			if(is_numeric($data['description'])){
-			$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
-			$err=true;
+				$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
+				$err=true;
 			}
 			
 			if($err==true){
-			//redirect(base_url().'user/settings');
-			redirect(base_url().'organization/front-desk/settings');
+				//redirect(base_url().'user/settings');
+				redirect(base_url().'organization/front-desk/settings');
 			}
 			else{
-			$id=$this->input->post('id_val');
-	        $this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean');
-			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean');
-		
+				$id=$this->input->post('id_val');
+	        		$this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean');
+				$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean');
+				//vehicle and driver percentage value to value column in table
+        			if(in_array($param1,$percentage_tabels)){
+        				$data['value'] = $data['name'];
+        			}
       
-		$result=$this->settings_model->updateValues($tbl[$param1],$data,$id);
-		if($result==true){
+				$result=$this->settings_model->updateValues($tbl[$param1],$data,$id);
+				if($result==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Details Updated Succesfully..!'));
-				    $this->session->set_userdata(array('dbError'=>''));
-				    //redirect(base_url().'user/settings');
-				    redirect(base_url().'organization/front-desk/settings');
-						}
+			    		$this->session->set_userdata(array('dbError'=>''));
+			    		//redirect(base_url().'user/settings');
+			    		redirect(base_url().'organization/front-desk/settings');
+				}
 			
 			}
-							}
+		}
 	
 	}
 	
@@ -219,6 +227,8 @@ class Vehicle extends CI_Controller {
 	
 			$v_id=$this->input->post('hidden_id');//exit;
 			$data['vehicle_ownership_types_id']=$this->input->post('ownership');
+			$data['vehicle_percentage']=$this->input->post('vehicle_percentage');
+			$data['driver_percentage']=$this->input->post('driver_percentage');
 			$data['vehicle_type_id']=$this->input->post('vehicle_type');
 			$data['vehicle_make_id']=$this->input->post('make');
 			$data['vehicle_model_id']=$this->input->post('model');
@@ -251,61 +261,74 @@ class Vehicle extends CI_Controller {
 			$all_data=array('data'=>$data,'driver_data'=>$driver_data,'device_data'=>$device_data);
 			
 					
-					$this->form_validation->set_rules('year','Year','trim|required|xss_clean');
-					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean|regex_match[/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/]');
-					 $this->form_validation->set_rules('from_date','From Date ','trim|xss_clean');
-					 $this->form_validation->set_rules('from_date_device','From Date ','trim|xss_clean');
-					 $this->form_validation->set_rules('reg_date','Registration Date','trim|required|xss_clean');
-					 $this->form_validation->set_rules('eng_num','Engine Number','trim|xss_clean');
-					 $this->form_validation->set_rules('chases_num','Chases Number','trim|xss_clean');
-					 $this->form_validation->set_rules('permit_date','Permit Renewal Date','trim|xss_clean');
-					 $this->form_validation->set_rules('permit_amount','Permit Renewal  Amount','trim|xss_clean');
-					 $this->form_validation->set_rules('tax_amount','Tax Amount','trim|xss_clean');
-					 $this->form_validation->set_rules('tax_date','Tax Date','trim|xss_clean');
-					 //for insurance
-$err=True;
+			$this->form_validation->set_rules('year','Year','trim|required|xss_clean');
+			$this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean|regex_match[/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/]');
+			$this->form_validation->set_rules('from_date','From Date ','trim|xss_clean');
+			$this->form_validation->set_rules('from_date_device','From Date ','trim|xss_clean');
+			$this->form_validation->set_rules('reg_date','Registration Date','trim|required|xss_clean');
+			$this->form_validation->set_rules('eng_num','Engine Number','trim|xss_clean');
+			$this->form_validation->set_rules('chases_num','Chases Number','trim|xss_clean');
+			$this->form_validation->set_rules('permit_date','Permit Renewal Date','trim|xss_clean');
+			$this->form_validation->set_rules('permit_amount','Permit Renewal  Amount','trim|xss_clean');
+			$this->form_validation->set_rules('tax_amount','Tax Amount','trim|xss_clean');
+			$this->form_validation->set_rules('tax_date','Tax Date','trim|xss_clean');
+			//for insurance
+			$err=True;
 
 
-	if($data['vehicle_ownership_types_id'] ==-1){
-	 $data['vehicle_ownership_types_id'] ='';
-	 $err=False;
-	 $this->mysession->set('ownership','Choose Ownership Type');
-	 }
-	 if($data['vehicle_type_id'] ==-1){
-	 $data['vehicle_type_id'] ='';
-	 $err=False;
-	 $this->mysession->set('vehicle_type','Choose Vehicle Type');
-	 }
-	 if($data['vehicle_make_id'] ==-1){
-	 $data['vehicle_make_id'] ='';
-	 $err=False;
-	 $this->mysession->set('make','Choose Vehicle Make');
-	 }
-	 if($data['vehicle_ac_type_id'] ==-1){
-	 $data['vehicle_ac_type_id'] ='';
-	 $err=False;
-	 $this->mysession->set('ac','Choose AC Type');
-	 }
-	 if($data['vehicle_fuel_type_id'] ==-1){
-	 $data['vehicle_fuel_type_id'] ='';
-	 $err=False;
-	 $this->mysession->set('fuel','Choose Fuel Type');
-	 }
-	  if($data['vehicle_seating_capacity_id'] ==-1){
-	 $data['vehicle_seating_capacity_id'] ='';
-	 $err=False;
-	 $this->mysession->set('seat','Choose Seat Capacity');
-	 }
-	   if($data['vehicle_model_id'] ==-1){
-	 $data['vehicle_model_id'] ='-1';
-	 $err=False;
-	 $this->mysession->set('model','Choose Model Type');
-	 }
-	  if($driver_data['driver_id'] ==-1){
-	 $driver_data['driver_id'] ='';
-	 $err=False;
-	 $this->mysession->set('Driver','Choose Any Driver');
-	 } 
+			if($data['vehicle_ownership_types_id'] ==-1){
+			 $data['vehicle_ownership_types_id'] ='';
+			 $err=False;
+			 $this->mysession->set('ownership','Choose Ownership Type');
+			}
+			if($data['vehicle_ownership_types_id'] > 1){
+				if($data['vehicle_percentage'] ==-1){
+				 $data['vehicle_percentage'] ='';
+				 $err=False;
+				 $this->mysession->set('vehicle_percentage','Choose Vehicle Percentage');
+				}
+				if($data['driver_percentage'] ==-1){
+				 $data['driver_percentage'] ='';
+				 $err=False;
+				 $this->mysession->set('driver_percentage','Choose Driver Percentage');
+				}
+			}
+
+			if($data['vehicle_type_id'] ==-1){
+			 $data['vehicle_type_id'] ='';
+			 $err=False;
+			 $this->mysession->set('vehicle_type','Choose Vehicle Type');
+			}
+			if($data['vehicle_make_id'] ==-1){
+			 $data['vehicle_make_id'] ='';
+			 $err=False;
+			 $this->mysession->set('make','Choose Vehicle Make');
+			}
+			if($data['vehicle_ac_type_id'] ==-1){
+			 $data['vehicle_ac_type_id'] ='';
+			 $err=False;
+			 $this->mysession->set('ac','Choose AC Type');
+			}
+			if($data['vehicle_fuel_type_id'] ==-1){
+			 $data['vehicle_fuel_type_id'] ='';
+			 $err=False;
+			 $this->mysession->set('fuel','Choose Fuel Type');
+			}
+			if($data['vehicle_seating_capacity_id'] ==-1){
+			 $data['vehicle_seating_capacity_id'] ='';
+			 $err=False;
+			 $this->mysession->set('seat','Choose Seat Capacity');
+			}
+			if($data['vehicle_model_id'] ==-1){
+			 $data['vehicle_model_id'] ='-1';
+			 $err=False;
+			 $this->mysession->set('model','Choose Model Type');
+			}
+			if($driver_data['driver_id'] ==-1){
+			 $driver_data['driver_id'] ='';
+			 $err=False;
+			 $this->mysession->set('Driver','Choose Any Driver');
+			} 
 
 	 if($this->form_validation->run()==False|| $err==False){
 	 //echo "err";exit;

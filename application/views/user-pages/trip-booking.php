@@ -491,6 +491,21 @@ $available_vehicles='';
 						echo br(2);
 						 ?>
 						</div>
+
+						<?php if($booking_by == 'customer') { ?>
+						<div class ="hide-me"> <?php echo form_input(array('id'=>'tarrif','value'=>'-1'));?></div>
+						<?php } else{?>
+						<div class="form-group">
+						<?php $class="form-control row-source-50-percent-width-with-margin-8";
+						$id="tarrif"; 
+						echo $this->form_functions->populate_dropdown('tariff',$tariffs,$tariff,$class,$id,$msg="Tariffs");
+						
+						$id="available_vehicle";
+						echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles,$available_vehicle,$class,$id,$msg="Available Vehicles");
+						echo br(2);
+						?>
+						<div class="hide-me vehicle-tarif-checker" tariff_id="<?php echo $tariff;?>" available_vehicle_id="<?php echo $available_vehicle;?>"></div>
+						</div><?php }?>
 						<!--<div class="form-group">
 						<?php 
 								$class="form-control row-source-50-percent-width-with-margin-8";	
@@ -503,7 +518,7 @@ $available_vehicles='';
 						echo br(2);
 						 ?>
 						</div>-->
-						<div class="form-group">
+						<div class="form-group vehicle-advanced">
 						<table class="radio-checkbox-vehicle-group">
 						<tr>
 							<td class="beacon-light-chk-box-container">
@@ -547,7 +562,7 @@ $available_vehicles='';
 						</tr>
 						</table>
 						</div>
-						<div class="form-group">
+						<div class="form-group vehicle-advanced">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
 						echo $this->form_functions->populate_dropdown('seating_capacity',$vehicle_seating_capacity,$seating_capacity,$class,$id='',$msg="Seats");
 						echo $this->form_functions->populate_dropdown('language',$languages,$language,$class,$id='',$msg="Languages");
@@ -555,20 +570,9 @@ $available_vehicles='';
 						echo br(2);
 						 ?>
 						</div>
-						<?php if($booking_by == 'customer') { ?>
-						<div class ="hide-me"> <?php echo form_input(array('id'=>'tarrif','value'=>'-1'));?></div>
-						<?php } else{?>
-						<div class="form-group">
-						<?php $class="form-control row-source-50-percent-width-with-margin-8";
-						$id="tarrif"; 
-						echo $this->form_functions->populate_dropdown('tariff',$tariffs,$tariff,$class,$id,$msg="Tariffs");
+
 						
-						$id="available_vehicle";
-						echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles,$available_vehicle,$class,$id,$msg="Available Vehicles");
-						echo br(2);
-						?>
-						<div class="hide-me vehicle-tarif-checker" tariff_id="<?php echo $tariff;?>" available_vehicle_id="<?php echo $available_vehicle;?>"></div>
-						</div><?php }?>
+
 					</fieldset>
 				</div>
 				<?php $count=count($reccurent_alternatives_pickupdatepicker);?>

@@ -1682,112 +1682,121 @@ public function profile() {
 				case 'service':$active_tab = 's_tab';break;
 			}
 		
-				if($param3=='service'&& is_numeric($param4) ){
-				$active_tab = 's_tab';
-				$sid=$param4; 
-				$data['s_edit']=$this->vehicle_model->get_Service($sid);
-				}
-				$vid=$this->mysession->get('vehicle_id'); 
-				$data['s_list']=$this->vehicle_model->get_listService($vid);
+			if($param3=='service'&& is_numeric($param4) ){
+			$active_tab = 's_tab';
+			$sid=$param4; 
+			$data['s_edit']=$this->vehicle_model->get_Service($sid);
+			}
+			$vid=$this->mysession->get('vehicle_id'); 
+			$data['s_list']=$this->vehicle_model->get_listService($vid);
 			
 		}
 		
 			
 			
-				if($param2==''||is_numeric($param2)){
-				$data['vehicle_tab']='active';
-				$tbl='vehicles';
-				$id=$param2;
-				if($id!=null){
-			
+		if($param2==''||is_numeric($param2)){
+			$data['vehicle_tab']='active';
+			$tbl='vehicles';
+			$id=$param2;
+			if($id!=null){
 				$this->mysession->set('vehicle_id',$id);
-				
-				}
-				}
-				if($param2!=''){
-				
-					$id=$this->mysession->get('vehicle_id');
-				if($id!=''){
-						$tdate=date('Y-m-d');
-						$date=explode("-",$tdate);
-						$fdate=$date[0].'-'.$date[1].'-01';
-						$todate=$date[0].'-'.$date[1].'-31';
-						
-						if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['vdate_search'])){
-						if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
-						$fdate=$date[0].'-'.$date[1].'-01';
-						$todate=$date[0].'-'.$date[1].'-31';
-						}else{
-						$fdate=$_REQUEST['from_pick_date'];
-						$todate=$_REQUEST['to_pick_date'];}
-						$data['trip_tab']='active';
-						}
-						
-					$data['ve_id']=$id; 
-					$data['trips']=$this->trip_booking_model->getVehicleVouchers($id,$fdate,$todate); 
+			}
+		}
+
+		if($param2!=''){
+			$id=$this->mysession->get('vehicle_id');
+			if($id!=''){
+					$tdate=date('Y-m-d');
+					$date=explode("-",$tdate);
+					$fdate=$date[0].'-'.$date[1].'-01';
+					$todate=$date[0].'-'.$date[1].'-31';
 					
+					if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['vdate_search'])){
+					if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
+					$fdate=$date[0].'-'.$date[1].'-01';
+					$todate=$date[0].'-'.$date[1].'-31';
+					}else{
+					$fdate=$_REQUEST['from_pick_date'];
+					$todate=$_REQUEST['to_pick_date'];}
+					$data['trip_tab']='active';
 					}
-					}
+					
+				$data['ve_id']=$id; 
+				$data['trips']=$this->trip_booking_model->getVehicleVouchers($id,$fdate,$todate); 
 				
-				if($param2=='insurance' ){ 
-				$active_tab = 'i_tab';
 				}
+		}
 				
-				if($param2=='loan'&&($param3== ''|| is_numeric($param3))){
-				$active_tab = 'l_tab';
-				$tbl='vehicle_loans';
-				$id=$param3;
+		if($param2=='insurance' ){ 
+			$active_tab = 'i_tab';
+		}
+				
+		if($param2=='loan'&&($param3== ''|| is_numeric($param3))){
+			$active_tab = 'l_tab';
+			$tbl='vehicle_loans';
+			$id=$param3;
+		}
+		if($param2=='owner'&&($param3== ''|| is_numeric($param3))) {
+			$active_tab = 'o_tab';
+			$tbl='vehicle_owners';
+			$id=$param3;
+		}
+		
+		$org_id=$this->session->userdata('organisation_id');
+		$data['select']=$this->select_Vehicle_Values();
+
+			
+		if($param2!=null&& is_numeric($param2)){
+			$percentages	= $this->trip_booking_model->getPercentages();
+			
+			$data['vehicle_percentages']	 = array();
+			if(isset($percentages['vehicle'])){
+				
+				foreach($percentages['vehicle'] as $val){
+					$data['vehicle_percentages'][$val['id']] = $val['value'];
 				}
-				if($param2=='owner'&&($param3== ''|| is_numeric($param3))) {
-				$active_tab = 'o_tab';
-				$tbl='vehicle_owners';
-				$id=$param3;
+			}
+			if(isset($percentages['driver'])){
+				
+				foreach($percentages['driver'] as $val){
+					$data['driver_percentages'][$val['id']] = $val['value'];
 				}
-				/*if($param2=='service'&&($param3== ''|| is_numeric($param3))) {
-				$data['service_tab']='active';
-				$tbl='service';
-				$id=$param3;
-				}*/
-				$org_id=$this->session->userdata('organisation_id');
-				//$arry=array('id'=>$id,'organisation_id'=>$org_id);
-				
-				$data['select']=$this->select_Vehicle_Values();
-				
-				if($param2!=null&& is_numeric($param2)){
-				
-				$data['record_values']=$this->user_model->getRecordsById($tbl,$id); 
-				$data['driver']=$data['record_values']['driver'];
-				$data['vehicle']=$data['record_values']['vehicle'];//print_r($data['vehicle']);exit;
-				$data['device']=$data['record_values']['device'];
-				$insurance_id=$data['vehicle']['vehicles_insurance_id'];
-				$loan_id=$data['vehicle']['vehicle_loan_id'];
-				$owner_id=$data['vehicle']['vehicle_owner_id'];
-				if($insurance_id!=gINVALID && $insurance_id!=0){
+			}
+			//echo "<pre>";print_r($data['driver_percentages']);echo "</pre>";exit;
+
+			$data['record_values']=$this->user_model->getRecordsById($tbl,$id); 
+			$data['driver']=$data['record_values']['driver'];
+			$data['vehicle']=$data['record_values']['vehicle'];//print_r($data['vehicle']);exit;
+			$data['device']=$data['record_values']['device'];
+			$insurance_id=$data['vehicle']['vehicles_insurance_id'];
+			$loan_id=$data['vehicle']['vehicle_loan_id'];
+			$owner_id=$data['vehicle']['vehicle_owner_id'];
+			if($insurance_id!=gINVALID && $insurance_id!=0){
 				$data['get_insurance']=$this->user_model->getInsurance($insurance_id);
 
-				}
-				if($loan_id!=gINVALID && $loan_id!=0){
+			}
+			if($loan_id!=gINVALID && $loan_id!=0){
 				$data['get_loan']=$this->user_model->getLoan($loan_id);
-				
-				}
-				if($owner_id!=gINVALID && $owner_id!=0){
+			
+			}
+			if($owner_id!=gINVALID && $owner_id!=0){
 				$data['get_owner']=$this->user_model->getOwner($owner_id); 
-				
-				}
-				
-				if(is_numeric($param2)|| ($this->mysession->get("error")=='true')){
-				
+			
+			}
+			
+			if(is_numeric($param2)|| ($this->mysession->get("error")=='true')){
+			
 				$driver_id=@$data['driver']['driver_id'];
 				$result=$this->user_model->getDriverNameById($driver_id);
 				$data['select']['drivers'][$driver_id]=$result['name'];
 				//for device
 				if(isset($data['device']['device_id'])){
-				$device_id=$data['device']['device_id'];
-				$result=$this->user_model->getDeviceImeiById($device_id);
-				$data['select']['devices'][$device_id]=$result['imei'];
-				}
+					$device_id=$data['device']['device_id'];
+					$result=$this->user_model->getDeviceImeiById($device_id);
+					$data['select']['devices'][$device_id]=$result['imei'];
 				}
 			}
+		}
 			
 				$data['tabs'] = $this->set_up_vehicle_tabs($active_tab,$param2);
 				
@@ -1798,19 +1807,25 @@ public function profile() {
 			$this->notAuthorized();
 		}
 	}
+
 	public function select_Vehicle_Values(){
-	$tbl_arry=array('vehicle_models','drivers','devices','vehicle_ownership_types','vehicle_types','vehicle_makes','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_permit_types');
-	$this->load->model('user_model');
-	for ($i=0;$i<count($tbl_arry);$i++){
-	$result=$this->user_model->getArray($tbl_arry[$i]);
-	if($result!=false){
-	$data[$tbl_arry[$i]]=$result;
-	}
-	else{
-	$data[$tbl_arry[$i]]='';
-	}
-	}
-	return $data;
+		$tbl_arry=array(
+			'vehicle_models','drivers','devices',
+			'vehicle_ownership_types','vehicle_types','vehicle_makes',
+			'vehicle_ac_types','vehicle_fuel_types',
+			'vehicle_seating_capacity','vehicle_permit_types',
+			'vehicle_payment_percentages','driver_payment_percentages'
+			);
+		$this->load->model('user_model');
+		for ($i=0;$i<count($tbl_arry);$i++){
+			$result=$this->user_model->getArray($tbl_arry[$i]);
+			if($result!=false){
+				$data[$tbl_arry[$i]]=$result;
+			}else{
+				$data[$tbl_arry[$i]]='';
+			}
+		}
+		return $data;
 	}
 	
 	public function ShowVehicleList($param1,$param2) {

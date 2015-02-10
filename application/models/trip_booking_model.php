@@ -96,6 +96,27 @@ class Trip_booking_model extends CI_Model {
 	return false;
 	}
 	}
+
+	function getPercentages()
+	{
+		$percentages = array();
+		$qry='SELECT id,value from driver_payment_percentages where organisation_id = '.$this->session->userdata('organisation_id').' order by value DESC';
+		$result = $this->db->query($qry);
+		$result = $result->result_array();
+		if(count($result)>0){
+			$percentages['driver'] = $result;
+		}
+
+		$qry='SELECT id,value from vehicle_payment_percentages where organisation_id = '.$this->session->userdata('organisation_id').' order by value DESC';
+		$result = $this->db->query($qry);
+		$result = $result->result_array();
+		if(count($result)>0){
+			$percentages['vehicle'] = $result;
+		}
+
+		return $percentages;
+	}
+
 	function  bookTrip($data,$estimate) {// print_r($data);exit;
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert('trips',$data);
