@@ -89,89 +89,97 @@ class Vehicle extends CI_Controller {
 	
 	public function add($tbl,$param1){
 	
-	if(isset($_REQUEST['select'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['add'])){ 
+		if(isset($_REQUEST['select'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['add'])){ 
 			$err=false;
-		    $data['name']=$this->input->post('select');
+		    	$data['name']=$this->input->post('select');
 			$data['description']=$this->input->post('description');
+
 			if($data['name']==''||$data['description']==''){
+				$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
+				$err=true;
+			}
 			
-			$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
-			$err=true;
+			$percentage_tabels=array('driver_payment_percentages','vehicle_payment_percentages');
+			if((in_array($param1,$percentage_tabels) && !is_numeric($data['name'])) || (!in_array($param1,$percentage_tabels) && is_numeric($data['name']))) {
+				$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
+				$err=true;
 			}
-			if(is_numeric($data['name'])){
-			$numeric_allowed_tabels=array('driver_payment_percentages','vehicle_payment_percentages');
-			if(!in_array($param1,$numeric_allowed_tabels)){
-			$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
-			$err=true;
-			}
-			}
+
+
 			if(is_numeric($data['description'])){
-			$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
-			$err=true;
+				$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
+				$err=true;
 			}
 			
 			if($err==true){
-			redirect(base_url().'organization/front-desk/settings');
+				redirect(base_url().'organization/front-desk/settings');
 			}
 			else{
-			$data['organisation_id']=$this->session->userdata('organisation_id');
-			$data['user_id']=$this->session->userdata('id');
+				$data['organisation_id']=$this->session->userdata('organisation_id');
+				$data['user_id']=$this->session->userdata('id');
 			
-	        
-        //echo $param1;exit;
+	        		//vehicle and driver percentage value to value column in table
+        			if(in_array($param1,$percentage_tabels)){
+        				$data['value'] = $data['name'];
+        			}
 	
-		$result=$this->settings_model->addValues($tbl[$param1],$data);
-		if($result==true){
+				$result=$this->settings_model->addValues($tbl[$param1],$data);
+				if($result==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Details Added Succesfully..!'));
-				    $this->session->set_userdata(array('dbError'=>''));
-				    redirect(base_url().'organization/front-desk/settings');
-						}
+				    	$this->session->set_userdata(array('dbError'=>''));
+				    	redirect(base_url().'organization/front-desk/settings');
+				}
 			
-							}
-							}
+			}
+		}
 	}
+	//-------------------------------------------------------------------------------
+
 	public function edit($tbl,$param1){
-	if(isset($_REQUEST['select_text'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['edit'])){ 
+		if(isset($_REQUEST['select_text'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['edit'])){ 
 			$err=false;
-		    $data['name']=$this->input->post('select_text');
+		    	$data['name']=$this->input->post('select_text');
 			$data['description']=$this->input->post('description');
+
 			if($data['name']==''||$data['description']==''){
-			
-			$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
-			$err=true;
+				$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
+				$err=true;
 			}
-			if(is_numeric($data['name'])){
-			$numeric_allowed_tabels=array('driver_payment_percentages','vehicle_payment_percentages');
-			if(!in_array($param1,$numeric_allowed_tabels)){
-			$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
-			$err=true;
+
+			$percentage_tabels=array('driver_payment_percentages','vehicle_payment_percentages');
+			if((in_array($param1,$percentage_tabels) && !is_numeric($data['name'])) || (!in_array($param1,$percentage_tabels) && is_numeric($data['name']))) {
+				$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
+				$err=true;
 			}
-			}
+
 			if(is_numeric($data['description'])){
-			$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
-			$err=true;
+				$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
+				$err=true;
 			}
 			
 			if($err==true){
-			//redirect(base_url().'user/settings');
-			redirect(base_url().'organization/front-desk/settings');
+				//redirect(base_url().'user/settings');
+				redirect(base_url().'organization/front-desk/settings');
 			}
 			else{
-			$id=$this->input->post('id_val');
-	        $this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean');
-			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean');
-		
+				$id=$this->input->post('id_val');
+	        		$this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean');
+				$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean');
+				//vehicle and driver percentage value to value column in table
+        			if(in_array($param1,$percentage_tabels)){
+        				$data['value'] = $data['name'];
+        			}
       
-		$result=$this->settings_model->updateValues($tbl[$param1],$data,$id);
-		if($result==true){
+				$result=$this->settings_model->updateValues($tbl[$param1],$data,$id);
+				if($result==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Details Updated Succesfully..!'));
-				    $this->session->set_userdata(array('dbError'=>''));
-				    //redirect(base_url().'user/settings');
-				    redirect(base_url().'organization/front-desk/settings');
-						}
+			    		$this->session->set_userdata(array('dbError'=>''));
+			    		//redirect(base_url().'user/settings');
+			    		redirect(base_url().'organization/front-desk/settings');
+				}
 			
 			}
-							}
+		}
 	
 	}
 	
