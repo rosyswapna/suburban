@@ -582,7 +582,7 @@ $available_vehicles='';
 						echo $this->form_functions->populate_dropdown('seating_capacity',$vehicle_seating_capacity,$seating_capacity,$class,$id='',$msg="Seats");
 						echo $this->form_functions->populate_dropdown('language',$languages,$language,$class,$id='',$msg="Languages");
 						echo $this->form_functions->form_error_session('vehicle_seating_capacity', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('language', '<p class="text-red">', '</p>');
-						echo $this->form_functions->populate_dropdown('driver_list',$drivers,$available_driver,$class,$id='',$msg="Drivers");
+						echo $this->form_functions->populate_dropdown('driver_list',$driver_availability,$available_driver,$class,$id='',$msg="Drivers");
 						echo br(2);
 						 ?>
 				    </div>

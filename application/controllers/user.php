@@ -476,6 +476,9 @@ class User extends CI_Controller {
 	}
 	}
 	
+	$data['driver_availability']=$this->driver_model->GetDriverForTripBooking();
+	
+	
 	//echo date('Y-m-d H:i');
 	//$conditon =array('trip_status_id'=>TRIP_STATUS_PENDING,'CONCAT(pick_up_date," ",pick_up_time) >='=>date('Y-m-d H:i'),'organisation_id'=>$this->session->userdata('organisation_id'));
 	//$orderby = ' CONCAT(pick_up_date,pick_up_time) ASC';
