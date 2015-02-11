@@ -464,7 +464,7 @@ class User extends CI_Controller {
 			//set form arrays
 	
 	//echo $this->session->userdata('organisation_id');
-	$tbl_arry=array('booking_sources','available_drivers','trip_models','vehicle_types','vehicle_models','vehicle_makes','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','languages','payment_type','customer_types','customer_groups');
+	$tbl_arry=array('booking_sources','available_drivers','trip_models','drivers','vehicle_types','vehicle_models','vehicle_makes','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','languages','payment_type','customer_types','customer_groups');
 	
 	for ($i=0;$i<count($tbl_arry);$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
@@ -475,6 +475,7 @@ class User extends CI_Controller {
 	$data[$tbl_arry[$i]]='';
 	}
 	}
+	
 	//echo date('Y-m-d H:i');
 	//$conditon =array('trip_status_id'=>TRIP_STATUS_PENDING,'CONCAT(pick_up_date," ",pick_up_time) >='=>date('Y-m-d H:i'),'organisation_id'=>$this->session->userdata('organisation_id'));
 	//$orderby = ' CONCAT(pick_up_date,pick_up_time) ASC';
@@ -571,6 +572,7 @@ class User extends CI_Controller {
 	$data1['recurrent_yes']			= 	'';
 	if(isset($result->vehicle_beacon_light_option_id) && $result->vehicle_beacon_light_option_id > 0){
 		$data1['beacon_light']=TRUE;
+		$data1['advanced_vehicle']=TRUE;
 		if($result->vehicle_beacon_light_option_id==BEACON_LIGHT_RED){
 
 			$data1['beacon_light_radio']='red';
@@ -581,27 +583,56 @@ class User extends CI_Controller {
 			
 		}
 	}else{
-
+		
 		$data1['beacon_light']='';
 		$data1['beacon_light_radio']='';
 		$data1['beacon_light_id'] = '';
 
 	}
+
 	if(isset($result->pluckcard) && $result->pluckcard==true){
 		$data1['pluck_card']=TRUE;
+		$data1['advanced_vehicle']=TRUE;
 	}else{
 		$data1['pluck_card']='';
+		
 	}
 	if(isset($result->uniform) && $result->uniform==true){
 		$data1['uniform']=TRUE;
+		$data1['advanced_vehicle']=TRUE;
 	}else{
 		$data1['uniform']='';
+		
 	}
-	$data1['seating_capacity']		=	$result->vehicle_seating_capacity_id;
-	$data1['language']				=	$result->driver_language_id;
+	
+	if(isset($result->vehicle_seating_capacity_id) && $result->vehicle_seating_capacity_id > 0){
+		$data1['advanced_vehicle']=TRUE;
+		$data1['seating_capacity']=$result->vehicle_seating_capacity_id;
+	}else{
+		
+		$data1['seating_capacity']='';
+	}
+	
+	if(isset($result->driver_language_id) && $result->driver_language_id > 0){
+		$data1['advanced_vehicle']=TRUE;
+		$data1['language']=$result->driver_language_id;
+	}else{
+		
+		$data1['language']='';
+	}
+	if($data1['advanced_vehicle']=TRUE){
+	$data1['advanced_vehicle']=TRUE;
+	}
+	else{
+	$data1['advanced_vehicle']='';
+	}
+
+	//$data1['seating_capacity']		=	$result->vehicle_seating_capacity_id;
+	//$data1['language']				=	$result->driver_language_id;
 	$data1['tariff']				=	$result->tariff_id;
 	$data1['available_vehicle']		=	$result->vehicle_id;
 	$data1['available_driver']		=	$result->driver_id;
+	
 	$this->session->set_userdata('driver_id',$result->driver_id);
 	$data1['customer_type']			=	$result->customer_type_id;
 	}else{
@@ -646,7 +677,7 @@ class User extends CI_Controller {
 	$data['tariffs']='';
 	$data['available_vehicles']='';
 	}*/
-
+	
 	if(isset($data1) && count($data1)>0){
 	$data['information']=$data1;
 	}else{

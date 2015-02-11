@@ -131,6 +131,7 @@ class Trip_booking extends CI_Controller {
 					$data['advanced']='';
 					$data['customer_group']=$_REQUEST['customer_group'];
 				}
+				
 				if(isset($_REQUEST['guestname']) && $_REQUEST['guestname']!=''){
 					if($_REQUEST['guest_id']==gINVALID){
 					$this->form_validation->set_rules('guestname','Guest name','trim|required|xss_clean');
@@ -149,7 +150,7 @@ class Trip_booking extends CI_Controller {
 					$data['guestmobile']='';
 					$data['guest_id']=gINVALID;
 				}
-		
+				
 				$this->form_validation->set_rules('customer','Customer name','trim|xss_clean');
 				$this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email|');
 				$this->form_validation->set_rules('mobile','Mobile','trim|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
@@ -215,6 +216,7 @@ class Trip_booking extends CI_Controller {
 				$data['remarks']			=	$this->input->post('remarks');
 				if(isset($_REQUEST['beacon_light'])){
 					$data['beacon_light']=TRUE;
+					$data['advanced_vehicle']=TRUE;
 					if($this->input->post('beacon_light_radio')=='red'){
 						$data['beacon_light_radio']='red';
 						$data['beacon_light_id'] = BEACON_LIGHT_RED;
@@ -225,21 +227,43 @@ class Trip_booking extends CI_Controller {
 					}
 				}else{
 					$data['beacon_light']=FALSE;
+					$data['advanced_vehicle']='';
 					$data['beacon_light_radio']='';
 					$data['beacon_light_id'] = '';
 				}
 				if(isset($_REQUEST['pluck_card'])){
 					$data['pluck_card']=TRUE;
+					$data['advanced_vehicle']=TRUE;
 				}else{
 					$data['pluck_card']='';
+					$data['advanced_vehicle']='';
 				}
 				if(isset($_REQUEST['uniform'])){
 				$data['uniform']=TRUE;
+				$data['advanced_vehicle']=TRUE;
 				}else{
 					$data['uniform']='';
+					$data['advanced_vehicle']='';
 				}
-				$data['seating_capacity']		=	$this->input->post('seating_capacity');
-				$data['language']				=	$this->input->post('language');
+			if(isset($_REQUEST['seating_capacity']) && $_REQUEST['seating_capacity']!=gINVALID){
+					$this->form_validation->set_rules('seating_capacity','Seating Capacity','trim|xss_clean');
+					$data['advanced_vehicle']=TRUE;
+					$data['seating_capacity']=$this->input->post('seating_capacity');
+			}else{
+					$data['advanced_vehicle']='';
+					$data['seating_capacity']=$_REQUEST['seating_capacity'];
+			}
+			
+			if(isset($_REQUEST['language']) && $_REQUEST['language']!=gINVALID){
+					$this->form_validation->set_rules('language','Language','trim|xss_clean');
+					$data['advanced_vehicle']=TRUE;
+					$data['language']=$this->input->post('language');
+			}else{
+					$data['advanced_vehicle']='';
+					$data['language']=$_REQUEST['language'];
+			}
+				//$data['seating_capacity']		=	$this->input->post('seating_capacity');
+				//$data['language']				=	$this->input->post('language');
 				$data['tariff']					=	$this->input->post('tariff');
 				$data['available_vehicle']		=	$this->input->post('available_vehicle');
 				$data['available_driver']		=	$this->input->post('available_driver');
@@ -358,12 +382,18 @@ class Trip_booking extends CI_Controller {
 
 					$data['driver_id'] = $this->trip_booking_model->getDriver($data['available_vehicle']);
 					$trip_status=TRIP_STATUS_CONFIRMED;
+					//echo $data1['driver_id'];exit;
 
 				}else{
 					$data['driver_id'] = gINVALID;
 					$trip_status=TRIP_STATUS_PENDING;
 				}
-				
+			//** assign new driver to vehicle
+			if($this->input->post('driver_list')>gINVALID)	
+			{
+				$data['driver_id'] =$this->input->post('driver_list');
+			}
+			
 			
 			$dbdata['customer_id']					=$this->session->userdata('customer_id');
 			$dbdata['guest_id']						=$data['guest_id'];
@@ -409,6 +439,7 @@ class Trip_booking extends CI_Controller {
 			$dbdata['trip_model_id']				=$data['trip_model'];
 			$dbdata['tariff_id']					=$data['tariff'];
 			$dbdata['vehicle_id']					=$data['available_vehicle'];
+			
 			$dbdata['driver_id']					=$data['driver_id'];
 			$dbdata['remarks']						=$data['remarks'];
 			$dbdata['organisation_id']				=$this->session->userdata('organisation_id');
@@ -756,12 +787,12 @@ class Trip_booking extends CI_Controller {
 		
 		if(($data['pick_up_date'].' '.$data['pick_up_time'])>=$date){
 			if($c_contact != ""){ 
-				$this->sms->sendSms($c_contact,$message);
+				//$this->sms->sendSms($c_contact,$message);
 				
 			}
 			
 			if($d_contact != ""){
-				$this->sms->sendSms($d_contact,$dr_message);
+				//$this->sms->sendSms($d_contact,$dr_message);
 			}
 			
 			
