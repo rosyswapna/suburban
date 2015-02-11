@@ -147,6 +147,8 @@ FROM trips trip WHERE  trip.driver_id ='".$avl_driver['id']."' AND CONCAT(trip.p
 					if($query->num_rows() == 1){
 						$row = $query->row();
 						$drivers[$avl_driver['id']] = $avl_driver['name']."(".$row->TripTime.")";
+					}else{
+						$drivers[$avl_driver['id']] = $avl_driver['name']."("."Free".")";
 					}
 				}
 			}
