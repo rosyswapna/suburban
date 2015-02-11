@@ -480,7 +480,7 @@ class Trip_booking extends CI_Controller {
 				
 				redirect(base_url().'organization/front-desk/trip-booking');
 
-				}else{
+				}else{ 
 				$res = $this->trip_booking_model->bookTrip($dbdata,$estimate);
 				if($res!=false && $res>0){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Booked Succesfully..!!'));

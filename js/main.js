@@ -1482,15 +1482,17 @@ function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehic
 			  {
 				id:available_vehicle_id
 			  },function(data1){data1=jQuery.parseJSON(data1);
-				var selected="selected=selected";
-				selected_option="<option value='"+data1.data[0].id+"' vehicle_model_id='"+data1.data[0].vehicle_model_id+"'  vehicle_make_id='"+data1.data[0].vehicle_make_id+"' "+selected+">"+data1.data[0].registration_number+"</option>";
+				var selected="selected=selected"; 
+				var reg_num=data1.data[0].registration_number;
+				
+				selected_option="<option value='"+data1.data[0].id+"' vehicle_model_id='"+data1.data[0].vehicle_model_id+"'  vehicle_make_id='"+data1.data[0].vehicle_make_id+"' "+selected+">"+reg_num.substr(reg_num.length - 4)+"</option>";
 				$('#available_vehicle').append(selected_option);
 				});
 			}
-			if(data!='false'){
+			if(data!='false'){ 
 			data=jQuery.parseJSON(data);
 			
-
+			
 			//var vehicle_models=$('.vehicle-models').html().split(',');
 			for(var i=0;i<data.data.length;i++){
 				if(available_vehicle_id==data.data[i].vehicle_id){
@@ -1498,6 +1500,7 @@ function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehic
 				}else{
 				var selected="";
 				}
+				//alert(data.data[i].registration_number);
 			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' "+selected+"></option>").text(data.data[i].registration_number));
 				//i=Number(i)+1;
 			}
