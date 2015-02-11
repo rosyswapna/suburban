@@ -126,5 +126,34 @@ class Driver_model extends CI_Model {
 	return true;
 	}
 
+	public function GetDriverForTripBooking()
+	{
+		$sql = "SELECT dr.id,dr.name FROM drivers dr WHERE dr.id NOT IN (SELECT driver_id 			FROM trips WHERE NOW() BETWEEN CONCAT(pick_up_date,' ',pick_up_time) AND CONCAT(drop_date,' ',drop_time))
+GROUP BY dr.id";
+
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0){
+			$avl_drivers = $query->result_array();
+			foreach($avl_drivers as $avl_driver){
+				
+				$sql_free = "SELECT CONCAT(trip.drop_date,' ',trip.drop_time) FROM trips trip WHERE CONCAT(trip.drop_date,' ',trip.drop_time) < NOW() AND trip.driver_id ='".$avl_driver['id']."' ORDER BY CONCAT(trip.drop_date,' ',trip.drop_time) DESC LIMIT 1";
+				$query = $this->db->query($sql_free);
+				if($query->num_rows() == 1){
+					$drivers[$avl_driver['id']] = $avl_driver['name']."("."Free".")";
+				}else{
+					$sql_have_future_trip = "SELECT CONCAT(trip.pick_up_date,' ',trip.pick_up_time) AS TripTime
+FROM trips trip WHERE  trip.driver_id ='".$avl_driver['id']."' AND CONCAT(trip.pick_up_date,' ',trip.pick_up_time) > NOW() ORDER BY CONCAT(trip.pick_up_date,' ',trip.pick_up_time) ASC LIMIT 1";
+					$query = $this->db->query($sql_have_future_trip);
+					if($query->num_rows() == 1){
+						$row = $query->row();
+						$drivers[$avl_driver['id']] = $avl_driver['name']."(".$row->TripTime.")";
+					}
+				}
+			}
+		}
+		return $drivers;
+	}
+
+
 
 }?>
