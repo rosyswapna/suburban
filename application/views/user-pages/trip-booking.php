@@ -10,6 +10,7 @@ $new_customer		=	true;
 $email				=	'';
 $mobile				=	'';
 $advanced			=	'';
+$advanced_vehicle		=	'';
 $guest				=	'';
 $email				=	'';
 $customer_group		=	'';
@@ -43,6 +44,7 @@ $beacon_light_radio	   	    =	'';
 $pluck_card 				=	'';
 $uniform 					=	'';
 $seating_capacity 			=	'';
+$available_driver 			=	'';
 $language 					=	'';
 $tariff 					=	'';
 $available_vehicle			=	'';
@@ -84,7 +86,7 @@ if(isset($data['guest_id'])){
 $guest_id=$data['guest_id'];
 }
 }else{
-$data =$information;
+$data =$information; 
 $trip_id = $data['trip_id'];
 if(isset($data['guest_id'])){
 $guest_id=$data['guest_id'];
@@ -100,6 +102,7 @@ $new_customer				=	$data['new_customer'];
 $email						=	$data['email'];
 $mobile						=	$data['mobile'];
 $advanced					=	$data['advanced'];
+$advanced_vehicle				=	$data['advanced_vehicle'];
 $email						=	$data['email'];
 if($data['customer_group']!=-1){
 $customer_group				=	$data['customer_group'];
@@ -153,6 +156,9 @@ $pluck_card 				=	$data['pluck_card'];
 $uniform 					=	$data['uniform'];
 if($data['seating_capacity']!=-1){
 $seating_capacity 			=	$data['seating_capacity'];
+}
+if($data['available_driver']!=-1){
+$available_driver 			=	$data['available_driver'];
 }
 if($data['language']!=-1){
 $language 					=	$data['language'];
@@ -518,8 +524,17 @@ $available_vehicles='';
 						echo br(2);
 						 ?>
 						</div>-->
-						<div class="form-group vehicle-advanced">
-						<table class="radio-checkbox-vehicle-group">
+						
+						<div class="form-group advanced-vehicle-container margin-top-less-20">
+									<?php
+									echo form_checkbox(array('name'=>'advanced_vehicle','class'=>'advanced-vehicle-chek-box flat-red','checked'=>$advanced_vehicle));
+									echo nbs(4).form_label('Advanced');
+									?>
+						</div>
+					
+				<div class="group-vehicle-toggle div-with-90-percent-width-and-marigin-5">
+				   <div class="form-group vehicle-advanced">
+					<table class="radio-checkbox-vehicle-group">
 						<tr>
 							<td class="beacon-light-chk-box-container">
 								<?php
@@ -527,7 +542,7 @@ $available_vehicles='';
 								
 									echo nbs(5).form_label('Beacon Light');
 								?>	
-							</td>
+								</td>
 							<td>
 								<span class="beacon-radio1-container">
 								<?php
@@ -543,7 +558,6 @@ $available_vehicles='';
 								</span>
 							</td>
 						</tr>
-
 						<tr>
 							<td>
 								<?php
@@ -560,16 +574,22 @@ $available_vehicles='';
 								?>
 							</td>
 						</tr>
-						</table>
-						</div>
-						<div class="form-group vehicle-advanced">
+					</table>								
+				    </div>
+				    
+				    <div class="form-group vehicle-advanced">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
 						echo $this->form_functions->populate_dropdown('seating_capacity',$vehicle_seating_capacity,$seating_capacity,$class,$id='',$msg="Seats");
 						echo $this->form_functions->populate_dropdown('language',$languages,$language,$class,$id='',$msg="Languages");
 						echo $this->form_functions->form_error_session('vehicle_seating_capacity', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('language', '<p class="text-red">', '</p>');
+						echo $this->form_functions->populate_dropdown('driver_list',$drivers,$available_driver,$class,$id='',$msg="Drivers");
 						echo br(2);
 						 ?>
-						</div>
+				    </div>
+			     </div>
+						
+						
+						
 
 						
 

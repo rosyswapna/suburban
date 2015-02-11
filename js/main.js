@@ -379,7 +379,7 @@ var pathname = window.location.pathname.split("/");
 
 if(pathname[3]=="trip-booking" || pathname[4]=="trip-booking"){
 
-if($('.advanced-chek-box').attr('checked')=='checked'){
+if($('.advanced-chek-box').attr('checked')=='checked'){ 
 
 $('.group-toggle').toggle();
 
@@ -388,6 +388,11 @@ $('.group-toggle').toggle();
 if($('.guest-chek-box').attr('checked')=='checked'){
 
 $('.guest-toggle').toggle();
+
+}
+if($('.advanced-vehicle-chek-box').attr('checked')=='checked'){ 
+
+$('.group-vehicle-toggle').toggle();
 
 }
 
@@ -557,6 +562,12 @@ $('.toggle-via').toggle();
 $('.advanced-container > .icheckbox_minimal > .iCheck-helper').on('click',function(){
 
 $('.group-toggle').toggle();
+
+
+});
+$('.advanced-vehicle-container > .icheckbox_minimal > .iCheck-helper').on('click',function(){
+
+$('.group-vehicle-toggle').toggle();
 
 
 });
