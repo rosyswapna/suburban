@@ -32,6 +32,10 @@ class Trip extends CI_Controller {
 		
 			$this->tripComplete($param2,$param3);
 			
+			}else if($param1=='trip-expense') {
+		
+			$this->manageTripExpense($tbl[$param1]);
+			
 			}
 			if($param1) {
 			
@@ -74,6 +78,81 @@ class Trip extends CI_Controller {
 		}else{
 			$this->notAuthorized();
 	}
+	}
+
+	public function manageTripExpense($table)
+	{
+		$this->load->model('account_model');
+		$ExpenseId = $this->input->post('id_val');
+
+		if(isset($_REQUEST['add']) || isset($_REQUEST['edit'])){
+
+			if(isset($_REQUEST['edit'])){
+				$data['name']=$this->input->post('select_text');
+				$name = 'select_text';
+				
+			}else{
+				$data['name']=$this->input->post('select');
+				$data['value']=$this->input->post('select');
+
+				$fa_data['account_code'] = $data['name'];
+
+				$name = 'select';
+				
+			}
+
+			
+			$data['description']=$this->input->post('description');
+			$data['organisation_id']=$this->session->userdata('organisation_id');
+			$data['user_id']=$this->session->userdata('id');
+
+			$this->form_validation->set_rules($name,'Trip Expense Code','trim|required|min_length[4]|numeric|xss_clean||is_unique['.$table.'.value]');
+			$this->form_validation->set_rules('description','Trip Expense Description','trim|required|min_length[2]|xss_clean');
+			
+
+			if($this->form_validation->run()==False){
+				$errMSG = validation_errors();
+				$this->session->set_userdata(array('Err_num_name'=>$errMSG));
+				redirect(base_url().'organization/front-desk/settings');
+			}else{
+		
+				// gl account for this expense
+				$fa_data['account_name'] = $data['description'];
+				$fa_data['account_type'] = CURRENT_LBTS;//FA ACCOOUNT TYPE 
+				$updateGl = $this->account_model->GLAccount($fa_data);
+				
+				if($updateGl){
+					//update trip expense
+					if($ExpenseId){//edit expense
+						$result=$this->settings_model->updateValues($table,$data,$ExpenseId);
+						$mode = "Updated";
+
+					}else{//add expense
+						$result=$this->settings_model->addValues($table,$data);
+						$mode = "Added";
+					}
+
+					if($result==true){
+						$this->session->set_userdata(array('dbSuccess'=>'Details '.$mode.' Succesfully..!'));
+					    	$this->session->set_userdata(array('dbError'=>''));
+					     	redirect(base_url().'organization/front-desk/settings');
+					}else{
+						$this->session->set_userdata(array('dbSuccess'=>''));
+				    		$this->session->set_userdata(array('dbError'=>'Error in updating Trip Expense'));
+				     		redirect(base_url().'organization/front-desk/settings');
+					}
+					
+				}
+				
+				
+			}
+
+		}else if(isset($_REQUEST['delete'])){ 
+
+			$id=$this->input->post('id_val');
+		}else{
+			redirect(base_url().'organization/front-desk/settings');
+		}
 	}
 	
 	public function add($tbl,$param1){

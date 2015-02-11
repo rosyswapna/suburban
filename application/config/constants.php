@@ -14,7 +14,7 @@
 |
 */
 
-//<<<<<<<<<<<<<<<<<fa constants-------
+//________________fa constants____________
 define('PT_MISC', 0);
 define('PT_WORKORDER', 1);
 define('PT_CUSTOMER', 2);
@@ -23,7 +23,22 @@ define('PT_QUICKENTRY', 4);
 define('PT_DIMESION', 5);
 define('PT_DRIVER', 6);
 define('PT_OWNER', 7);
-//>>>>>>>>>>>>>>>>fa constants-------
+
+//account types
+define('CURRENT_ASTS',1);
+define('INVENTORY_ASTS',2);
+define('CAPITAL_ASTS',3);
+define('CURRENT_LBTS',4);
+define('LONG_TERM_LBTS',5);
+define('SHARE_CAPITAL',6);
+define('RETAIN_EARNINGS',7);
+define('SALES_RVNE',8);
+define('OTHER_RVNE',9);
+define('COGS',10);
+define('PAYROLL_EXPNS',11);
+define('GA_EXPNS',12);
+
+//___________________fa constants______________________________
 
 //payment types
 define('CASH',1);

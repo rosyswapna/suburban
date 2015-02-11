@@ -545,7 +545,7 @@
 	$class="form-control";
 	$tbl="trip_expense_type";
 	echo $this->form_functions->populate_editable_dropdown('select',$trip_expense_type,$class,$tbl)?>
-	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true','readonly'=>'readonly'));?>
 	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
 	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>

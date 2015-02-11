@@ -440,6 +440,33 @@ class account_model extends CI_Model {
 		
 	}
 
+	function GLAccount($data)
+	{
+		$fa_gl_table = $this->session->userdata('organisation_id')."_chart_master";
+
+		if($this->check_fa_table_exists($fa_gl_table)){
+
+			$this->db->from($fa_gl_table);
+			$this->db->where('account_code',$data['account_code']);
+			$num = $this->db->get()->num_rows();
+		
+			if($num== 1){
+				//gl account exists in fa
+				$this->db->where('account_code',$data['account_code']);
+				$this->db->set('account_name',$data['account_name']);
+				$this->db->update($fa_gl_table);
+			}else{
+				//gl account not exists in fa
+				if($data['account_code'] != '')
+				$this->db->insert($fa_gl_table,$data);
+			}
+			
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 
 	function add_gl_trans($driver_id,$amount)
 	{
