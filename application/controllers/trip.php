@@ -80,6 +80,7 @@ class Trip extends CI_Controller {
 	}
 	}
 
+	//----------------------------------trip expense action -------------------------------
 	public function manageTripExpense($table)
 	{
 		$this->load->model('account_model');
@@ -105,8 +106,10 @@ class Trip extends CI_Controller {
 			$data['description']=$this->input->post('description');
 			$data['organisation_id']=$this->session->userdata('organisation_id');
 			$data['user_id']=$this->session->userdata('id');
+		
+			$fa_table = $this->session->userdata('organisation_id')."_chart_master";
 
-			$this->form_validation->set_rules($name,'Trip Expense Code','trim|required|min_length[4]|numeric|xss_clean||is_unique['.$table.'.value]');
+			$this->form_validation->set_rules($name,'Trip Expense Code','trim|required|min_length[4]|numeric|xss_clean||is_unique['.$fa_table.'.account_code]');
 			$this->form_validation->set_rules('description','Trip Expense Description','trim|required|min_length[2]|xss_clean');
 			
 
@@ -150,10 +153,24 @@ class Trip extends CI_Controller {
 		}else if(isset($_REQUEST['delete'])){ 
 
 			$id=$this->input->post('id_val');
-		}else{
-			redirect(base_url().'organization/front-desk/settings');
+			$expense = $this->settings_model->getValues($id,$table);
+			//print_r($expense);exit;	
+			$Deleted = $this->account_model->GlAccountDelete($expense[0]['name']);
+			if($Deleted){
+				$result=$this->settings_model->deleteValues($table,$id);
+				if($result==true){
+					$this->session->set_userdata(array('dbSuccess'=>'Details Deleted Succesfully..!'));
+					$this->session->set_userdata(array('dbError'=>''));
+				}
+			}else{
+				$this->session->set_userdata(array('Err_num_name'=>'Cannot delete this account because transactions have been created using this account.'));
+			}
+			
 		}
+		redirect(base_url().'organization/front-desk/settings');
+		
 	}
+	//----------------------------------trip expense action ends here-------------------------------
 	
 	public function add($tbl,$param1){
 	

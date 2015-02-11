@@ -466,6 +466,47 @@ class account_model extends CI_Model {
 			return false;
 		}
 	}
+	function GlAccountDelete($code){
+
+		$table = $this->session->userdata('organisation_id')."_gl_trans";
+		$tx = $this->key_in_foreign_table($code, $table, 'account');
+		
+		if($tx  > 0){
+			return false;
+		}else{
+			$org_id=$this->session->userdata('organisation_id');
+			$tbl = $org_id."_chart_master";
+			$this->db->where('account_code',$code );
+			$this->db->delete($tbl);
+			return true;
+		}
+	}
+
+
+	function key_in_foreign_table($id, $tables, $stdkey)
+	{
+
+		//$table_pref = $this->session->userdata('organisation_id')."_";
+
+		if (!is_array($tables))
+			$tables = array($tables);
+
+		$sqls = array();
+		foreach ($tables as $tbl => $key) {
+			if (is_numeric($tbl)) {
+				$tbl = $key;
+				$key = $stdkey;
+			}
+			$sqls[] = "(SELECT COUNT(*) as cnt FROM `$tbl` WHERE `$key`=".$this->db->escape($id).")\n";
+		}
+
+		$sql = "SELECT sum(cnt) as NUM FROM (". implode(' UNION ', $sqls).") as counts";
+		$query = $this->db->query($sql);
+		$count = $query->row_array() ;
+		
+
+		return $count['NUM'];
+	}
 
 
 	function add_gl_trans($driver_id,$amount)
