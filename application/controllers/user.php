@@ -631,7 +631,20 @@ class User extends CI_Controller {
 	//$data1['language']				=	$result->driver_language_id;
 	$data1['tariff']				=	$result->tariff_id;
 	$data1['available_vehicle']		=	$result->vehicle_id;
+	
+	if($data1['available_vehicle']>0){
+		$driver_id = $this->trip_booking_model->getDriver($data1['available_vehicle']);
+	}else{
+		$driver_id = gINVALID;
+	}
+	
 	$data1['available_driver']		=	$result->driver_id;
+	
+	if($driver_id==$data1['available_driver']){
+		$data1['advanced_vehicle']='';
+	}else{
+		$data1['advanced_vehicle']=TRUE;
+	}
 	
 	$this->session->set_userdata('driver_id',$result->driver_id);
 	$data1['customer_type']			=	$result->customer_type_id;

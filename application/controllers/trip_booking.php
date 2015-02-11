@@ -382,7 +382,7 @@ class Trip_booking extends CI_Controller {
 
 					$data['driver_id'] = $this->trip_booking_model->getDriver($data['available_vehicle']);
 					$trip_status=TRIP_STATUS_CONFIRMED;
-					//echo $data1['driver_id'];exit;
+					
 
 				}else{
 					$data['driver_id'] = gINVALID;
