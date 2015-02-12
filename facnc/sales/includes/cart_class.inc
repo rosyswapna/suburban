@@ -641,14 +641,15 @@ class line_details
 	var $pickup_date;
 	var $cnc_line_amount;
 	
+	var $trip_expense = array();
+	
 
 
 	function line_details ($stock_id, $qty, $prc, $disc_percent,
 		$qty_done, $standard_cost, $description, $id=0, $src_no=0, $src_id=0,$trip_voucher=0,$comments='')
 	{
 	/* Constructor function to add a new LineDetail object with passed params */
-		$cnc_voucher = get_cnc_voucher($trip_voucher);
-		
+		$cnc_voucher = get_cnc_voucher($trip_voucher);		
 
 		if($cnc_voucher){
 			$this->trip_id 		= $cnc_voucher['trip_id'];
@@ -660,6 +661,7 @@ class line_details
 			$this->pickup_date	= $cnc_voucher['pick_up_date'];
 			$this->cnc_line_amount 	= $cnc_voucher['amount'];
 			$this->price 		= $cnc_voucher['amount'];
+			$this->trip_expense 	= unserialize($cnc_voucher['trip_expense']);
 
 		}
 

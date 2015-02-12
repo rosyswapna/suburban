@@ -142,6 +142,8 @@ if ( (isset($_GET['DeliveryNumber']) && ($_GET['DeliveryNumber'] > 0) )
 	}
 
 	$_SESSION['Items'] = $dn;
+
+	
 	copy_from_cart();
 
 } elseif (isset($_GET['ModifyInvoice']) && $_GET['ModifyInvoice'] > 0) {
@@ -642,6 +644,8 @@ submit_center_first('Update', _("Update"),
   _('Refresh document page'), true);
 submit_center_last('process_invoice', _("Process Invoice"),
   _('Check entered data and save document'), 'default');
+//submit_center_last('process_invoice', _("Process Invoice"),
+ // _('Check entered data and save document'));
 
 end_form();
 

@@ -2,3 +2,6 @@
 _____________________need to update______________________________________
 
 ALTER TABLE `vehicles`  ADD `vehicle_percentage` INT(11) NOT NULL AFTER `tax_renewal_date`,  ADD `driver_percentage` INT(11) NOT NULL AFTER `vehicle_percentage`
+
+
+ALTER TABLE `trips`  ADD `trip_expense` TEXT NOT NULL AFTER `driver_batta`;

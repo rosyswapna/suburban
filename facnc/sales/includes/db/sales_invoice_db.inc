@@ -14,6 +14,7 @@
 //
 function write_sales_invoice(&$invoice)
 {
+	//echo "<pre>";print_r($invoice);echo "<pre>";exit;
 	global $Refs;
 
 	$trans_no = $invoice->trans_no;
@@ -125,9 +126,20 @@ function write_sales_invoice(&$invoice)
 					($customer['dimension_id'] != 0 ? $customer["dimension_id"] : $stock_gl_code["dimension_id"]));
 				$dim2 = ($invoice->dimension2_id != $customer['dimension2_id'] ? $invoice->dimension2_id : 
 					($customer['dimension2_id'] != 0 ? $customer["dimension2_id"] : $stock_gl_code["dimension2_id"]));
-				$total += add_gl_trans_customer(ST_SALESINVOICE, $invoice_no, $date_, $sales_account, $dim, $dim2,
-					-$line_taxfree_price ,
-					$invoice->customer_id, "The sales price GL posting could not be inserted");
+
+				//add gl for trip expenses							
+				//$total += add_gl_trans_customer(ST_SALESINVOICE, $invoice_no, $date_, $sales_account, $dim, $dim2,-$line_taxfree_price ,$invoice->customer_id, "The sales price GL posting could not be inserted");
+				$totalExpense = 0;
+				foreach($invoice_line->trip_expense as $ExpenseGL => $amount){
+
+					if($amount > 0)
+						$total += add_gl_trans_customer(ST_SALESINVOICE, $invoice_no, $date_, $ExpenseGL, $dim, $dim2,-$amount ,$invoice->customer_id, "The Expense GL posting could not be inserted");
+					$totalExpense +=$amount;
+				}
+
+				$total += add_gl_trans_customer(ST_SALESINVOICE, $invoice_no, $date_, $sales_account, $dim, $dim2,-($line_taxfree_price-$totalExpense) ,$invoice->customer_id, "The sales price GL posting could not be inserted");
+
+
 
 				if ($invoice_line->discount_percent != 0) {
 
