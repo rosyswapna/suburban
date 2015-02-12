@@ -684,37 +684,13 @@ echo form_close();?></td>
 
 				<!--trip expenses start-->
 				<div class="row-100-percent-width-margin-0-8" id="expense-div">
-
+				
+					
+				
 				</div>
 				<!--trip expenses ends here-->
 
-				<div class="row-100-percent-width-margin-0-8">
-					
-					<!-- col 1 -->
-					<div class=" form-group div-with-20-percent-width-with-margin-0-10">
-						<?php echo form_label('State Tax','statetax'); ?>
-						<?php echo form_input(array('name'=>'statetax','class'=>'form-control statetax padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter State Tax')); 
-						?>
-					</div>
-
-					<div class="form-group div-with-20-percent-width-with-margin-0-10">
-						<?php echo form_label('Parking Fee','parking'); ?>
-						<?php echo form_input(array('name'=>'parkingfee','class'=>'form-control parkingfee padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter Parking Fee')); ?>
 				
-					</div>
-						
-					<div class="form-group div-with-20-percent-width-with-margin-0-10">
-						<?php echo form_label('Toll Fee','tollfee'); ?>
-						<?php echo form_input(array('name'=>'tollfee','class'=>'form-control tollfee padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter Toll Fee')); ?>
-				
-					</div>
-
-					<div class="form-group div-with-20-percent-width-with-margin-0-10">
-						<?php echo form_label('Adt Fuel Charge','adtfuel'); ?>
-						<?php echo form_input(array('name'=>'extrafuel','class'=>'form-control extrafuel padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Adt Fuel Charge')); ?>
-				
-					</div>	
-				</div>
 
 				<!-- second section ends -->
 				</fieldset>
