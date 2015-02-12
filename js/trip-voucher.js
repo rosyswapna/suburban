@@ -157,7 +157,7 @@ $('.voucher').on('click',function(){
 			}else{ 
 			
 			if(data[0].trip_expense){
-				$.each(data[0].trip_expense,function(code,amount){alert(amount);
+				$.each(data[0].trip_expense,function(code,amount){
 					$("input[name='expense["+code+"]']").val(amount);
 				});
 			
