@@ -22,7 +22,7 @@
 			
 			
 			if($this->mysession->get('post_all')!=null && $this->mysession->get('post_driver')!=null && $this->mysession->get('post_device')!=null){
-				$data=$this->mysession->get('post_all');
+				$data=$this->mysession->get('post_all'); 
 				$driver_data=$this->mysession->get('post_driver');
 				$device_data=$this->mysession->get('post_device');
 				$vehicle_id=$this->mysession->get('v_id');
@@ -46,12 +46,15 @@
 				$permit_date=$data['vehicle_permit_renewal_date'];
 				$permit_amount=$data['vehicle_permit_renewal_amount'];
 				$tax_amount=$data['tax_renewal_amount'];
-				$tax_date=$data['tax_renewal_date'];	
+				$tax_date=$data['tax_renewal_date'];
+				$vehicle_percentages =$data['vehicle_percentages'];
+				$driver_percentages =$data['driver_percentages'];				
+				$vehicle_percentage =$data['vehicle_percentage'];
+				$driver_percentage =$data['driver_percentage'];
 				$this->mysession->delete('post_all');
 				$this->mysession->delete('post_driver');
 
-				$vehicle_percentage =$data['vehicle_percentage'];
-				$driver_percentage =$data['driver_percentage'];
+				
 
 			}else if(isset($vehicle)&& $vehicle!=null){ 
 				$vehicle_id=$vehicle['id'];
