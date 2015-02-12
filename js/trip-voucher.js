@@ -45,13 +45,18 @@ $('.voucher').on('click',function(){
 		ajax:'YES'
 			
 	},function(data){
+		var expense_html=''; 
+		
 		if(data!='false'){
-			for(var i=0;i<data.length;i++){
-				// data[i].description;
-				// data[i].value;
-				// data[i].id;
+			var val='';
+			// if(edit) val=data[i].value;
+		for(var i=0;i<data.length;i++){ 
+		
+		var expense_html='<div class=" form-group div-with-20-percent-width-with-margin-0-10"><label for="expense['+data[i].id+']">'+data[i].description+'</label><input name="expense['+data[i].id+']" class="form-control  padding-2px-0-0-10-px voucher-text-box" placeholder="Enter '+data[i].description+'" value="'+val+'"type="text"></div>';
+			$('#expense-div').append(expense_html);
 			}
 			
+		
 		}else{
 			//alert("no data");
 		}
