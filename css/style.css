@@ -203,6 +203,12 @@ width:22%;
 margin:10px;
 }
 
+.div-with-20-percent-width-with-margin-0-10{
+float:left;
+width:22%;
+margin:0 10px;
+}
+
 .div-with-67-percent-width-with-margin-10{
 float:left;
 width:67%;
@@ -258,6 +264,12 @@ float:left;
 .row-source-full-100-percent-width-with-margin-8{
 width:100%;
 margin:8px;
+float:left;
+}
+
+.row-100-percent-width-margin-0-8{
+width:100%;
+margin:0px 8px;
 float:left;
 }
 

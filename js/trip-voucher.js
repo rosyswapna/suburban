@@ -38,6 +38,25 @@ var r = confirm("Please Select Vehicle Model To Complete The Trip..Click OK to C
 
 var nighthalt_flag = false;//night halt flag variable
 $('.voucher').on('click',function(){ 
+
+
+	$.post(base_url+"/trip-booking/getTripExpenses",
+	{
+		ajax:'YES'
+			
+	},function(data){
+		if(data!='false'){
+			for(var i=0;i<data.length;i++){
+				// data[i].description;
+				// data[i].value;
+				// data[i].id;
+			}
+			
+		}else{
+			//alert("no data");
+		}
+	});//return false;
+	
 	clearAllFields();
 	var new_voucher = $(this).attr('new_voucher');
 	var trip_id=$(this).attr('trip_id');

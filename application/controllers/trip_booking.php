@@ -52,6 +52,9 @@ class Trip_booking extends CI_Controller {
 			}else if($param2=='getVouchers') {
 		
 				$this->getVouchers();
+			}else if($param2=='getTripExpenses') {
+		
+				$this->getTripExpenses();
 			}else{
 				$this->notFound();
 			}	
@@ -66,6 +69,9 @@ class Trip_booking extends CI_Controller {
 			$this->getVouchers();
 		}else if($param2=='tripVoucher'){
 			$this->tripVoucher();
+		}else if($param2=='getTripExpenses') {
+		
+			$this->getTripExpenses();
 		}
 	}
 	else{
@@ -677,6 +683,29 @@ class Trip_booking extends CI_Controller {
 		echo json_encode($percentage);
 	}
 
+	public function getTripExpenses($ajax='NO')
+	{
+		if(isset($_REQUEST['ajax']))
+			$ajax=$_REQUEST['ajax'];
+
+		$expense = $this->trip_booking_model->getTripExpenses();
+
+		if($expense==gINVALID){
+			if($ajax=='NO'){
+				return false;
+			}else{
+				echo 'false';
+			}
+		}else{
+			if($ajax=='NO'){
+				return $expense;
+			}else{
+				header('Content-Type: application/json');
+				echo json_encode($expense);
+			}
+		}
+	}
+
 	public function getVouchers($trip_id='',$ajax='NO'){ 
 	if(isset($_REQUEST['trip_id']) && isset($_REQUEST['ajax'])){ 
 	$trip_id=$_REQUEST['trip_id'];
@@ -698,6 +727,8 @@ class Trip_booking extends CI_Controller {
 		}
 	}
 	}
+
+
 	public function getTarrif(){
 		if($_REQUEST['tarrif_id'] && $_REQUEST['ajax']){
 			$res=$this->tarrif_model->selectTariffDetails($_REQUEST['tarrif_id']);

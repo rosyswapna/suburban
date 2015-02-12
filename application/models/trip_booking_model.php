@@ -61,21 +61,36 @@ class Trip_booking_model extends CI_Model {
 	}
 	}
 
+	function getTripExpenses(){
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->from('trip_expense_type');
+    		$this->db->where( 'organisation_id', $org_id );
+		//---
+    		$results = $this->db->get()->result();
+		if(count($results)>0){//print_r($results);
+			return $results;
+		}else{
+			return gINVALID;
+		}
+	}
+
 	function checkTripVoucherEntry($trip_id){
 
-	$this->db->from('trip_vouchers');
-    $this->db->where('trip_id',$trip_id);
-	//newly added-to be organisation based
+		$this->db->from('trip_vouchers');
+    		$this->db->where('trip_id',$trip_id);
+		//newly added-to be organisation based
 		$org_id=$this->session->userdata('organisation_id');
 		$this->db->where( 'organisation_id', $org_id );
 		//---
-    $results = $this->db->get()->result();
-	if(count($results)>0){//print_r($results);
-	return $results;
-	}else{
-	return gINVALID;
+    		$results = $this->db->get()->result();
+		if(count($results)>0){//print_r($results);
+			return $results;
+		}else{
+			return gINVALID;
+		}
 	}
-	}
+
+
 	function getdriverPercentages(){
 		$qry='SELECT name from driver_payment_percentages where organisation_id = '.$this->session->userdata('organisation_id').' order by id DESC limit 1';
 	$result=$this->db->query($qry);

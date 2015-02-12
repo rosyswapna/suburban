@@ -574,6 +574,7 @@ echo form_close();?></td>
 						
 					</div>
 					<!-- col 4 -->
+
 					<!-- col 3 -->
 					<div class="div-with-15-percent-width-with-margin-10">
 						
@@ -646,62 +647,30 @@ echo form_close();?></td>
 						
 					</div>
 					
-				<!--</div>
+				</div>
 				<!-- section 3 end -->
 				
-				<!--  section 4 start
-				<div class="row-source-full-100-percent-width-with-margin-8">-->
-					<!-- col 1 -->
-					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
-						<div class=" form-group margin-bottom-0-px">
-							<?php echo form_label('State Tax','statetax'); ?>
-							<?php echo form_input(array('name'=>'statetax','class'=>'form-control statetax padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter State Tax')); 
-							?>
-						</div>
-						<div class=" form-group margin-bottom-0-px">
-							<?php echo form_label('Night Halt','nighthalt'); ?>
-							<?php echo form_input(array('name'=>'nighthalt','class'=>'form-control nighthalt padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter Night Halt')); 
-							?>
-						</div>
-						
+				<!--  section 4 start-->
+				<div class="row-100-percent-width-margin-0-8">
+
+					<div class=" form-group div-with-20-percent-width-with-margin-0-10">
+						<?php echo form_label('Driver Bata','driverbatalabel'); ?>
+						<?php echo form_input(array('name'=>'driverbata','class'=>'form-control driverbata padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter Driver Bata')); ?>
+				
 					</div>
-					<!-- col 2 -->
-					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px ">
-						<div class=" form-group margin-bottom-0-px">
-							<?php echo form_label('Driver Bata','driverbatalabel'); ?>
-							<?php echo form_input(array('name'=>'driverbata','class'=>'form-control driverbata padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter Driver Bata')); ?>
-					
-						</div>
-						<div class=" form-group margin-bottom-0-px">
-							<?php echo form_label('Parking Fee','parking'); ?>
-							<?php echo form_input(array('name'=>'parkingfee','class'=>'form-control parkingfee padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter Parking Fee')); ?>
-					
-						</div>
-						
+
+					<div class=" form-group div-with-20-percent-width-with-margin-0-10">
+						<?php echo form_label('Night Halt','nighthalt'); ?>
+						<?php echo form_input(array('name'=>'nighthalt','class'=>'form-control nighthalt padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter Night Halt')); 
+						?>
 					</div>
-					<!-- col 3 -->
-					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
-						
-						<div class=" form-group margin-bottom-0-px">
-							<?php echo form_label('Toll Fee','tollfee'); ?>
-							<?php echo form_input(array('name'=>'tollfee','class'=>'form-control tollfee padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter Toll Fee')); ?>
-					
-						</div>
-						<div class=" form-group margin-bottom-0-px">
-							<?php echo form_label('Adt Fuel Charge','adtfuel'); ?>
-							<?php echo form_input(array('name'=>'extrafuel','class'=>'form-control extrafuel padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Adt Fuel Charge')); ?>
-					
-						</div>
-						
+
+					<div class=" form-group div-with-20-percent-width-with-margin-0-10">
+						<?php echo form_label('Total Amount','totalamount'); ?>
+						<?php echo form_input(array('name'=>'totalamount','class'=>'form-control totalamount padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Total Amount','readonly'=>'true','amount-class-to-be-selected'=>'')); ?>
+				
 					</div>
-					<!-- col 4 -->
-					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
-						<div class=" form-group margin-bottom-0-px">
-							<?php echo form_label('Total Amount','totalamount'); ?>
-							<?php echo form_input(array('name'=>'totalamount','class'=>'form-control totalamount padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Total Amount','readonly'=>'true','amount-class-to-be-selected'=>'')); ?>
-					
-						</div>
-						<div class=" form-group margin-bottom-0-px">
+					<div class=" form-group div-with-20-percent-width-with-margin-0-10">
 						<?php echo form_label('Total Tax','totaltax'); ?>
 						<?php 
 						$class="form-control taxgroup padding-2px-0-0-10-px voucher-text-box";
@@ -709,12 +678,44 @@ echo form_close();?></td>
 						echo $this->form_functions->populate_editable_dropdown('taxgroup',$taxes,$class,$tbl);
 						echo form_input(array('name'=>'select_text','id'=>'totaltax','class'=>'form-control padding-2px-0-0-10-px voucher-text-box','style'=>'display:none','trigger'=>'true'));?>	
 
-							</div>
-						
 					</div>
-					
-					
+
 				</div>
+
+				<!--trip expenses start-->
+				<div class="row-100-percent-width-margin-0-8" id="expense-div">
+
+				</div>
+				<!--trip expenses ends here-->
+
+				<div class="row-100-percent-width-margin-0-8">
+					
+					<!-- col 1 -->
+					<div class=" form-group div-with-20-percent-width-with-margin-0-10">
+						<?php echo form_label('State Tax','statetax'); ?>
+						<?php echo form_input(array('name'=>'statetax','class'=>'form-control statetax padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter State Tax')); 
+						?>
+					</div>
+
+					<div class="form-group div-with-20-percent-width-with-margin-0-10">
+						<?php echo form_label('Parking Fee','parking'); ?>
+						<?php echo form_input(array('name'=>'parkingfee','class'=>'form-control parkingfee padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter Parking Fee')); ?>
+				
+					</div>
+						
+					<div class="form-group div-with-20-percent-width-with-margin-0-10">
+						<?php echo form_label('Toll Fee','tollfee'); ?>
+						<?php echo form_input(array('name'=>'tollfee','class'=>'form-control tollfee padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter Toll Fee')); ?>
+				
+					</div>
+
+					<div class="form-group div-with-20-percent-width-with-margin-0-10">
+						<?php echo form_label('Adt Fuel Charge','adtfuel'); ?>
+						<?php echo form_input(array('name'=>'extrafuel','class'=>'form-control extrafuel padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Adt Fuel Charge')); ?>
+				
+					</div>	
+				</div>
+
 				<!-- second section ends -->
 				</fieldset>
 				<fieldset class="body-border">
