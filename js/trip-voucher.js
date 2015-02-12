@@ -125,7 +125,7 @@ $('.voucher').on('click',function(){
 			ajax:'YES'
 			
 		},function(data){
-			if(data=='false'){
+			if(data=='false'){ 
 				start_time=pick_up_time.split(':');
 				$('.tripstartingtime').val(start_time[0]+':'+start_time[1]);
 				
@@ -154,7 +154,19 @@ $('.voucher').on('click',function(){
 					});
 	
 				
-			}else{
+			}else{ 
+			
+			if(data[0].trip_expense){
+				$.each(data[0].trip_expense,function(code,amount){
+					$("input[name='expense["+code+"]']").val(amount);
+				});
+			
+			}
+			
+			
+			
+			
+			
 				var total_km = data[0].end_km_reading-data[0].start_km_reading;
 				if(data[0].trip_start_date!='' && data[0].trip_starting_time!='' && data[0].trip_end_date!='' && data[0].trip_ending_time!='' ){
 					var time_diff = timeDifference(data[0].trip_start_date,data[0].trip_starting_time,data[0].trip_end_date,data[0].trip_ending_time);

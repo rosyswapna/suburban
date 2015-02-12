@@ -719,10 +719,14 @@ class Trip_booking extends CI_Controller {
 		echo 'false';
 		}
 	}else{
+		if($voucher[0]->trip_expense!=''){
+		$voucher[0]->trip_expense=unserialize($voucher[0]->trip_expense);
+		}
+	
 		if($ajax=='NO'){
 		return $voucher;
 		}else{
-		header('Content-Type: application/json');
+		header('Content-Type: application/json'); 
 		echo json_encode($voucher);
 		}
 	}
