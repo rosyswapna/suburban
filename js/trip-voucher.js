@@ -52,7 +52,7 @@ $('.voucher').on('click',function(){
 			
 			for(var i=0;i<data.length;i++){ 
 		
-				expense_html+='<div class=" form-group div-with-20-percent-width-with-margin-0-10"><label for="'+data[i].value+'">'+data[i].description+'</label><input name="'+data[i].value+'" class="form-control  padding-2px-0-0-10-px voucher-text-box trip-expense-input" placeholder="Enter '+data[i].description+'" value="'+val+'"type="text" id="'+data[i].value+'"></div>';
+				expense_html+='<div class=" form-group div-with-20-percent-width-with-margin-0-10"><label for="expense['+data[i].value+']">'+data[i].description+'</label><input name="expense['+data[i].value+']" class="form-control  padding-2px-0-0-10-px voucher-text-box trip-expense-input" placeholder="Enter '+data[i].description+'" value="'+val+'"type="text" id="'+data[i].value+'"></div>';
 			
 			}
 			$('#expense-div').append(expense_html);
@@ -157,7 +157,7 @@ $('.voucher').on('click',function(){
 			}else{ 
 			
 			if(data[0].trip_expense){
-				$.each(data[0].trip_expense,function(code,amount){
+				$.each(data[0].trip_expense,function(code,amount){alert(amount);
 					$("input[name='expense["+code+"]']").val(amount);
 				});
 			
@@ -1246,13 +1246,14 @@ $('.statetax,.driverbata,.tollfee,.nighthalt,.parkingfee,.extrafuel').keyup(func
 
 
 $('.trip-voucher-save').on('click',function(){ 
-	var expense = new Array();
-	$("input.trip-expense-input")
-	.map(function(){
-	//return $(this).val()+"=>"+$(this).attr("id");
-	expense[$(this).attr("id")]=$(this).val();
-	}).get();
-	alert(expense);
+	
+	
+	var expense = {};
+	$("input.trip-expense-input").each(function(){
+		expense[$(this).attr("id")] = $(this).val();
+	});
+	
+	
 
 	var new_voucher=$(this).attr('new_voucher');
 	var tax_group = $('.taxgroup').val();//tax calculating factor
@@ -1451,7 +1452,8 @@ $('.trip-voucher-save').on('click',function(){
 				driver_id:driver_id,
 				total_trip_amount:totalamount,
 				tax_group:tax_group,
-				payment_type_id:payment_type_id
+				payment_type_id:payment_type_id,	
+				expense:expense
                
             },function(data){
               if(data!='false'){

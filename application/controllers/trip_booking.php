@@ -630,10 +630,13 @@ class Trip_booking extends CI_Controller {
 				//$data["tax_group"]							=	$_REQUEST["tax_group"];
 				$data["payment_type_id"]						=	$_REQUEST["payment_type_id"];
 
-			print_r($_REQUEST);exit;
-
 				//trip expense
-				$data['trip_expense'] = count($_REQUEST['expense']) ? serialize($_POST['expense']) : '';
+				if(isset($_REQUEST['expense'])){
+					$data['trip_expense'] = count($_REQUEST['expense']) ? serialize($_REQUEST['expense']) : '';
+				}
+
+				
+				
 
 
 				$this->mysession->delete('tax_group');
