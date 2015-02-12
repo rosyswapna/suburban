@@ -112,7 +112,7 @@ class Trip extends CI_Controller {
 			
 
 			
-			$this->form_validation->set_rules('description','Trip Expense Description','trim|required|min_length[2]|xss_clean');
+			$this->form_validation->set_rules('description','Trip Expense Description','trim|required|min_length[2]|max_length[30]|xss_clean');
 			
 
 			if($this->form_validation->run()==False){
