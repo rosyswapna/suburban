@@ -442,6 +442,8 @@ $('.modal-close').on('click',function(){
 	clearErrorLabels();
 	clearAllFields();
 	resetTax();
+	history.go(0);
+
 
 });
 
