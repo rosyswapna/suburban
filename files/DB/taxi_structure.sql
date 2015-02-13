@@ -797,6 +797,7 @@ CREATE TABLE IF NOT EXISTS `trip_vouchers` (
   `remarks` text NOT NULL,
   `driver_trip_amount` double NOT NULL,
   `vehicle_trip_amount` double NOT NULL,
+  `trip_expense` text NOT NULL,
   `trip_narration` text NOT NULL,
   `delivery_no` int(11) NOT NULL COMMENT 'fa delivery number',
   `invoice_no` int(11) NOT NULL COMMENT 'fa invoice no',
@@ -805,7 +806,7 @@ CREATE TABLE IF NOT EXISTS `trip_vouchers` (
   KEY `trip_id` (`trip_id`,`organisation_id`,`driver_id`,`user_id`),
   KEY `delivery_no` (`delivery_no`,`invoice_no`),
   KEY `tariff_id` (`tariff_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -915,6 +916,8 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
   `vehicle_permit_renewal_amount` double NOT NULL,
   `tax_renewal_amount` double NOT NULL,
   `tax_renewal_date` date NOT NULL,
+  `vehicle_percentage` int(11) NOT NULL,
+  `driver_percentage` int(11) NOT NULL,
   `organisation_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -933,8 +936,10 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
   KEY `vehicle_permit_type_id` (`vehicle_permit_type_id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`),
-  KEY `vehicle_model_id` (`vehicle_model_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
+  KEY `vehicle_model_id` (`vehicle_model_id`),
+  KEY `driver_percentage` (`driver_percentage`),
+  KEY `vehicle_percentage` (`vehicle_percentage`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 

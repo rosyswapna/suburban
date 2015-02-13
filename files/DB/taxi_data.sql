@@ -110,15 +110,6 @@ INSERT INTO `statuses` (`id`, `name`, `description`) VALUES
 (1, 'Active', 'Active'),
 (2, 'Inactive', 'Inactive');
 
---
--- Dumping data for table `trip_expense_type`
---
-
-INSERT INTO `trip_expense_type` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Toll', 'Toll', NULL, 1, 5, '2014-09-09 06:40:08', '0000-00-00 00:00:00'),
-(2, 'StateTax', 'StateTax', NULL, 1, 5, '2014-09-09 06:40:23', '2014-09-09 06:40:39'),
-(3, 'NightHalt', 'NightHalt', NULL, 1, 5, '2014-09-09 06:41:03', '0000-00-00 00:00:00'),
-(4, 'ExtraPetrolOrDiesel', 'ExtraPetrolOrDiesel', NULL, 1, 5, '2014-09-09 06:41:44', '2014-09-09 06:41:56');
 
 --
 -- Dumping data for table `trip_models`
