@@ -89,6 +89,7 @@ class Trip extends CI_Controller {
 		if(isset($_REQUEST['add']) || isset($_REQUEST['edit'])){
 
 			$fa_table = $this->session->userdata('organisation_id')."_chart_master";
+			
 			if(isset($_REQUEST['edit'])){
 				$data['name']=$this->input->post('select_text');
 				$name = 'select_text';
@@ -97,14 +98,13 @@ class Trip extends CI_Controller {
 				$data['name']=$this->input->post('select');
 				$data['value']=$this->input->post('select');
 
-				$fa_data['account_code'] = $data['name'];
 
 				$name = 'select';
 				$this->form_validation->set_rules($name,'Trip Expense Code','trim|required|min_length[4]|numeric|xss_clean||is_unique['.$fa_table.'.account_code]');
 				
 			}
 
-			
+			$fa_data['account_code'] = $data['name'];
 			$data['description']=$this->input->post('description');
 			$data['organisation_id']=$this->session->userdata('organisation_id');
 			$data['user_id']=$this->session->userdata('id');
