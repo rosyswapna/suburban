@@ -1974,10 +1974,13 @@ Date.prototype.yyyymmdd = function() {
    };  
 
 d = new Date();
-$('#driverDate').val(d.yyyymmdd());
-$('#driverDate').attr('readonly', 'true');
-$('#hdriverDate').val(d.yyyymmdd());
+	$('#driverDate').val(d.yyyymmdd());
+	$('#driverDate').attr('readonly', 'true');
+	$('#hdriverDate').val(d.yyyymmdd());
 
+}else{
+	var date_driver='';
+	$('#driverDate').val(date_driver);
 }
 
 });
@@ -2002,6 +2005,11 @@ $('#deviceDate').attr('readonly', 'true');
 
 
 }
+else{
+	var date_device='';
+	$('#deviceDate').val(date_device);
+}
+
 
 });
 
