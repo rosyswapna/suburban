@@ -39,7 +39,10 @@ var r = confirm("Please Select Vehicle Model To Complete The Trip..Click OK to C
 var nighthalt_flag = false;//night halt flag variable
 $('.voucher').on('click',function(){ 
 
-
+	$('#voucher-stretch').addClass( "strech" );
+	$('#voucher-hide').css('display','none');
+	
+	
 	$.post(base_url+"/trip-booking/getTripExpenses",
 	{
 		ajax:'YES'
@@ -89,7 +92,7 @@ $('.voucher').on('click',function(){
 
 	$('.overlay-container').css('display','block');
 
-	var top=-1*(Number($('.trips-table').height())-30); 
+	var top=-1*(Number($('.trips-table').height())+100); 
 	$('.modal-body').css('top',top);
 
 	
@@ -432,6 +435,10 @@ function timeDifference(fromdate,fromtime,todate,totime){
 
 
 $('.modal-close').on('click',function(){
+	
+	$('#voucher-stretch').removeClass( "strech" );
+	$('#voucher-hide').css('display','block');
+	
 	clearErrorLabels();
 	clearAllFields();
 	resetTax();
