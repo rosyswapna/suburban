@@ -376,10 +376,11 @@ echo form_close();?></td>
 		<div class="loading-img"></div>
 		<div class="modal-body border-2-px box-shadow">
 			<div class="profile-body width-80-percent-and-margin-auto height-1250-px ">
-			<fieldset class="body-border">
-   			 <legend class="body-head">Trip Details</legend>
 
-				<!-- section 1 start -->
+			<!-- section 1 start -->
+			<fieldset class="body-border">
+				<legend class="body-head">Trip Details</legend>
+
 				<div class="row-source-full-100-percent-width-with-margin-8">
 					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
 				
@@ -444,9 +445,9 @@ echo form_close();?></td>
 					
 					
 				</div>
-				<!-- section 1 ends  -->
+			<!-- section 1 ends  -->
 				
-				<!-- section 2 start -->				
+			<!-- section 2 start -->				
 				<div class="row-source-full-100-percent-width-with-margin-8">
 					
 					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
@@ -519,10 +520,12 @@ echo form_close();?></td>
 						
 					
 				</div>
-				</fieldset>
-				<!-- section 2 ends -->
-				<fieldset class="body-border">
-   			  <legend class="body-head">Trip Payment</legend>
+			</fieldset>
+			<!-- section 2 ends -->
+
+			<!----------------Trip payment block start-------------------------->
+			<fieldset class="body-border">
+   			 	<legend class="body-head">Trip Payment</legend>
 				<!-- section 3 start -->
 				<div class="row-source-full-100-percent-width-with-margin-8">
 					<!-- col 1 -->
@@ -682,47 +685,20 @@ echo form_close();?></td>
 
 				</div>
 
-				<!--trip expenses start-->
+				<!--trip expenses start----- (add content by ajax)-->
 				<div class="row-100-percent-width-margin-0-8" id="expense-div">
-				
-					
 				
 				</div>
 				<!--trip expenses ends here-->
 
-				<div class="row-100-percent-width-margin-0-8">
-					
-					<!-- col 1 -->
-					<div class=" form-group div-with-20-percent-width-with-margin-0-10">
-						<?php echo form_label('State Tax','statetax'); ?>
-						<?php echo form_input(array('name'=>'statetax','class'=>'form-control statetax padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter State Tax')); 
-						?>
-					</div>
+			</fieldset>
 
-					<div class="form-group div-with-20-percent-width-with-margin-0-10">
-						<?php echo form_label('Parking Fee','parking'); ?>
-						<?php echo form_input(array('name'=>'parkingfee','class'=>'form-control parkingfee padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter Parking Fee')); ?>
-				
-					</div>
-						
-					<div class="form-group div-with-20-percent-width-with-margin-0-10">
-						<?php echo form_label('Toll Fee','tollfee'); ?>
-						<?php echo form_input(array('name'=>'tollfee','class'=>'form-control tollfee padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Enter Toll Fee')); ?>
-				
-					</div>
+			<!---------------------------trip payment block ends here----------------------------------->
 
-					<div class="form-group div-with-20-percent-width-with-margin-0-10">
-						<?php echo form_label('Adt Fuel Charge','adtfuel'); ?>
-						<?php echo form_input(array('name'=>'extrafuel','class'=>'form-control extrafuel padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Adt Fuel Charge')); ?>
-				
-					</div>	
-				</div>
-
-				<!-- second section ends -->
-				</fieldset>
-				<fieldset class="body-border">
-   					 <legend class="body-head">Driver Payment</legend>
-						<div class="row-source-full-100-percent-width-with-margin-8">
+			<!---------------------------Driver payment block start---------------------------->
+			<fieldset class="body-border">
+	   			 <legend class="body-head">Driver Payment</legend>
+				<div class="row-source-full-100-percent-width-with-margin-8">
 					<!-- col 1 -->
 					<div class="div-with-9-percent-width-with-margin-8">
 						
@@ -875,6 +851,11 @@ echo form_close();?></td>
 				</div>
 				
 				</fieldset>
+
+			<!----------------Driver payment block ends -------------------------->
+
+
+			<!----------------Vehicle payment block start-------------------------->
 				<fieldset class="body-border">
    			 		<legend class="body-head">Vehicle Payment</legend>
 						<div class="row-source-full-100-percent-width-with-margin-8">
@@ -1029,15 +1010,18 @@ echo form_close();?></td>
 					
 				</div>
 				
-				</fieldset>
-				<!-- controls  -->
-				<div class="row-source-full-100-percent-width-with-margin-8">
-			   		<div class="box-footer no-border">
-					<?php 
-						echo form_submit("trip-voucher-save","SAVE","class='btn btn-success trip-voucher-save'").nbs(5);  ?>
-					<button class='btn btn-danger modal-close' type='button'>CLOSE</button>  
-					</div>
+			</fieldset>
+			<!----------------Vehicle payment block ends-------------------------->
+			
+
+			<!-- controls  -->
+			<div class="row-source-full-100-percent-width-with-margin-8">
+		   		<div class="box-footer no-border">
+				<?php 
+					echo form_submit("trip-voucher-save","SAVE","class='btn btn-success trip-voucher-save'").nbs(5);  ?>
+				<button class='btn btn-danger modal-close' type='button'>CLOSE</button>  
 				</div>
+			</div>
 			
 			
 		</div><!-- body -->
