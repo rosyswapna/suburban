@@ -85,14 +85,14 @@ class Customers_model extends CI_Model {
 	}
 	}*/
 	
-	public function addGuest($data,$login=false){
+	public function addGuest($data,$login=false){  
 		$data['organisation_id']=$this->session->userdata('organisation_id');
 		$data['user_id']=$this->session->userdata('id');
 		
-		$login_id = $this->getLoginId($data,$login);
-		if($login_id >0){
-		$data['login_id']=$login_id;
- 		if($data['mobile']!=''){
+			$login_id = $this->getLoginId($data,$login);
+			$data['login_id']=$login_id;
+ 		
+		if($data['name']!=''){
 		$condition['mobile']=$data['mobile'];
 		$condition['organisation_id']=$this->session->userdata('organisation_id');
 		$res=$this->getCustomerDetails($condition);
@@ -123,10 +123,7 @@ class Customers_model extends CI_Model {
 			}
 
 		}
-	}
-	else{
-		return false;
-	}
+	
 	}
 	
 	public function getLoginId($data,$login)
