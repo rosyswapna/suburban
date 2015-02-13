@@ -276,6 +276,14 @@ define('TRIP', 101);
 define('DRIVER_COMMISSION', 102);
 define('VEHICLE_COMMISSION', 103);
 
+//tax groups
+define('TAX_GROUP_IN', 1);
+define('TAX_GROUP_EX', 2);
+
+
+
+
+
 
 
 ?>

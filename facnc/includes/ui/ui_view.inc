@@ -542,6 +542,64 @@ function display_edit_tax_items($taxes, $columns, $tax_included, $rightspan=0, $
 	}
 	return $total;
 }
+//--------------------------------------------------------------------------------------
+
+function display_edit_tax_items_with_tax_group($taxes, $columns, $tax_group, $rightspan=0, $editable=false,$param2 = "align=right",$cnc_voucher= false)
+{
+	$total = 0;
+
+
+    foreach ($taxes as $taxitem)
+	{
+		$amount = isset($taxitem['Override']) ? $taxitem['Override'] : $taxitem['Value'];
+		if ($taxitem['Value'] != 0){
+			if ($editable) {
+				if (!isset($_POST['mantax['.$taxitem['tax_type_id'].']']))
+					$_POST['mantax['.$taxitem['tax_type_id'].']'] = price_format($amount);
+				start_row();
+				if ($tax_included) {
+					$colspan = $columns-1;
+					label_cell(_("Included") . " " . $taxitem['tax_type_name'].":",
+						"colspan={$colspan} align='right'");
+					amount_cells(null, 'mantax['.$taxitem['tax_type_id'].']',
+						null, "colspan=$columns align=right", '<td></td>', user_price_dec());
+				} else {
+					label_cell($taxitem['tax_type_name'], "colspan=$columns align='right'");
+					amount_cells(null, 'mantax['.$taxitem['tax_type_id'].']',
+						null, "colspan=$columns align=right", null, user_price_dec());
+					$total +=  round2($amount, user_price_dec());
+				}
+				if ($rightspan)
+					label_cell('', "colspan ='$rightspan'");
+				end_row();
+			} else {
+
+				if($cnc_voucher){
+					$value = ($cnc_voucher['amount']*0.4)*$taxitem['rate']/100;
+					//$value = number_format2($taxitem['Value'],user_price_dec());
+					$value = number_format2($value,user_price_dec());
+				}else{
+					$value = number_format2($taxitem['Value'],user_price_dec());
+				}
+				
+				if ($tax_group == TAX_GROUP_IN)
+				{
+					label_row(_("Included") . " " . $taxitem['tax_type_name']
+						. " " . $value , "", "colspan=$columns align=right", "align=right", $rightspan);
+				}
+				else
+				{
+					label_row($taxitem['tax_type_name'],
+						$value, "colspan=$columns align=right", $param2, $rightspan);
+					$total +=  round2($taxitem['Value'], user_price_dec());
+				}
+			}
+		}
+	}
+	return $total;
+}
+
+
 
 //--------------------------------------------------------------------------------------
 

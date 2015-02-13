@@ -143,6 +143,8 @@ if ( (isset($_GET['DeliveryNumber']) && ($_GET['DeliveryNumber'] > 0) )
 
 	$_SESSION['Items'] = $dn;
 
+	//echo "<pre>";print_r($_SESSION['Items']);echo "</pre>";exit;
+
 	
 	copy_from_cart();
 
@@ -621,7 +623,10 @@ $right_colspan = $is_batch_invoice ? 2:0;
 label_row(_("Sub-total"), $display_sub_total, "colspan=$colspan align=right","colspan=$right_colspan align=left");
 
 $taxes = $_SESSION['Items']->get_taxes(input_num('ChargeFreightCost'));
-$tax_total = display_edit_tax_items($taxes, $colspan, $_SESSION['Items']->tax_included,0,false,"colspan=$right_colspan align=left");
+//$tax_total = display_edit_tax_items($taxes, $colspan, $_SESSION['Items']->tax_included,0,false,"colspan=$right_colspan align=left");
+
+$tax_total = display_edit_tax_items_with_tax_group($taxes, $colspan, $_SESSION['Items']->tax_group_id,0,false,"colspan=$right_colspan align=left");
+
 
 
 $display_total = price_format(($inv_items_total + input_num('ChargeFreightCost') + $tax_total));
