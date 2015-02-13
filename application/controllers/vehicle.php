@@ -379,20 +379,25 @@ class Vehicle extends CI_Controller {
 			$day_before = strtotime("yesterday", $from_unix_time);
 			$formatted_date = date('Y-m-d', $day_before);
 			//for device data
-			$dev_date=explode("-",$device_data['from_date_device']);
-			$dev_year=$dev_date[0];
-			$dev_month=$dev_date[1];
-			$dev_day=$dev_date[2];
+			if($device_data['device_id'] > 0){
+				$dev_date=explode("-",$device_data['from_date_device']);
+				$dev_year=$dev_date[0];
+				$dev_month=$dev_date[1];
+				$dev_day=$dev_date[2];
 
-			$dev_from_unix_time = mktime(0, 0, 0, $dev_month, $dev_day, $dev_year);
-			$dev_day_before = strtotime("yesterday", $dev_from_unix_time);
-			$dev_formatted_date = date('Y-m-d', $dev_day_before);
+				$dev_from_unix_time = mktime(0, 0, 0, $dev_month, $dev_day, $dev_year);
+				$dev_day_before = strtotime("yesterday", $dev_from_unix_time);
+				$dev_formatted_date = date('Y-m-d', $dev_day_before);
+			}
+			
 	  if($v_id==gINVALID){ 
 		$res=$this->vehicle_model->insertVehicle($data,$driver_data,$device_data);
 		$v_id=$this->mysession->get('vehicle_id');
 		if( $res==true ) {
 			$this->vehicle_model->map_drivers($driver_data['driver_id'],$driver_data['from_date'],$formatted_date);
-			$this->vehicle_model->map_devices($device_data['device_id'],$device_data['from_date_device'],$dev_formatted_date);
+			if($device_data['device_id'] > 0)
+				$this->vehicle_model->map_devices($device_data['device_id'],$device_data['from_date_device'],$dev_formatted_date);
+
 			$this->mysession->set('dbSuccess',' Vehicle Details Added Succesfully..!');
 			$this->mysession->set('dbError','');
 			redirect(base_url().'organization/front-desk/vehicle/'.$v_id);
@@ -400,14 +405,15 @@ class Vehicle extends CI_Controller {
 		}
 		else{
 		
-		$res=$this->vehicle_model->UpdateVehicledetails($data,$v_id); 
-		if($res==true){
-		$this->vehicle_model->map_drivers($driver_data['driver_id'],$driver_data['from_date'],$formatted_date);
-		$this->vehicle_model->map_devices($device_data['device_id'],$device_data['from_date_device'],$dev_formatted_date);
-		$this->mysession->set('dbSuccess',' Vehicle Details Updated Succesfully..!');
-	    $this->mysession->set('dbError','');
-	    redirect(base_url().'organization/front-desk/vehicle/'.$v_id);
-		}
+			$res=$this->vehicle_model->UpdateVehicledetails($data,$v_id); 
+			if($res==true){
+				$this->vehicle_model->map_drivers($driver_data['driver_id'],$driver_data['from_date'],$formatted_date);
+				if($device_data['device_id'] > 0)
+					$this->vehicle_model->map_devices($device_data['device_id'],$device_data['from_date_device'],$dev_formatted_date);
+				$this->mysession->set('dbSuccess',' Vehicle Details Updated Succesfully..!');
+	    			$this->mysession->set('dbError','');
+	    			redirect(base_url().'organization/front-desk/vehicle/'.$v_id);
+			}
 		}
 	 
 		}
