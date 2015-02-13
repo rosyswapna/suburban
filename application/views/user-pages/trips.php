@@ -375,7 +375,7 @@ echo form_close();?></td>
    		<div class="overlay modal"></div>
 		<div class="loading-img"></div>
 		<div class="modal-body border-2-px box-shadow">
-			<div class="profile-body width-80-percent-and-margin-auto height-1250-px ">
+			<div class="profile-body width-80-percent-and-margin-auto height-auto ">
 			<fieldset class="body-border">
    			 <legend class="body-head">Trip Details</legend>
 

@@ -828,7 +828,7 @@ class Trip_booking extends CI_Controller {
 		$vehicle=$this->trip_booking_model->getVehicle($data['vehicle_id']);
 		$date = date('Y-m-d H:i:s');
 		
-		if(($data['pick_up_date'].' '.$data['pick_up_time'])>=$date){
+		//if(($data['pick_up_date'].' '.$data['pick_up_time'])>=$date){
 			if($c_contact != ""){ 
 				//$this->sms->sendSms($c_contact,$message);
 				
@@ -874,7 +874,7 @@ class Trip_booking extends CI_Controller {
 				$subject=PRODUCT_NAME;
 				//$this->send_email->emailMe($c_email,$subject,$email_content);
 			}
-		}
+		//}
 
 	}
 

@@ -89,7 +89,7 @@ $('.voucher').on('click',function(){
 
 	$('.overlay-container').css('display','block');
 
-	var top=-1*(Number($('.trips-table').height())+70);
+	var top=-1*(Number($('.trips-table').height())-30); 
 	$('.modal-body').css('top',top);
 
 	
