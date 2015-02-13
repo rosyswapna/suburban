@@ -21,6 +21,12 @@ margin:0 10px 0 10px;
 .height-1250-px{
 height: 1200px;
 }
+
+.height-auto{
+height: auto;
+overflow:hidden;
+}
+
 .padding-2px-0-0-10-px{
 padding:2px 0 0 10px;
 }
