@@ -287,4 +287,4 @@
                 </section>
                 <!-- /.sidebar -->
             </aside>
-        	<aside class="right-side">
+        	<aside class="right-side" id ="voucher-stretch">
