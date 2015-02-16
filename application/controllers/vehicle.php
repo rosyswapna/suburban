@@ -334,25 +334,23 @@ class Vehicle extends CI_Controller {
 	 if($this->form_validation->run()==False|| $err==False){
 	
 		
-		$percentages	= $this->trip_booking_model->getPercentages();
-		if(isset($percentages['vehicle'])){
-				
+		
+		$data['vehicle_percentages'] = $data['driver_percentages']= array();
+		if($data['vehicle_ownership_types_id'] > 0 && $data['vehicle_ownership_types_id']!=OWNED_VEHICLE){
+			$percentages	= $this->trip_booking_model->getPercentages();
+			if(isset($percentages['vehicle'])){
 				foreach($percentages['vehicle'] as $val){
 					$data['vehicle_percentages'][$val['id']] = $val['value']; 
 				}
 			}
-		if(isset($percentages['driver'])){
-				
+			if(isset($percentages['driver'])){
 				foreach($percentages['driver'] as $val){
 					$data['driver_percentages'][$val['id']] = $val['value'];
 				}
 			}
+		}
+
 			
-		if($data['vehicle_ownership_types_id']=='' ||$data['vehicle_ownership_types_id']==OWNED_VEHICLE){
-			$data['vehicle_percentages']='';
-			$data['driver_percentages']='';
-			
-		}		
 		
 		$this->mysession->set('v_id',$v_id);
 		$this->mysession->set('post_all',$data);

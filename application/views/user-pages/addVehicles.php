@@ -380,11 +380,9 @@
            <?php $class="form-control";
 		$msg="Driver";
 		$name="driver";
-		if($driver_id!=null){
-	echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id,$class,$id='addDriver',$msg); 
-}else{
-echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id='',$class,$id='addDriver',$msg); 
-}	?>
+		
+		echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id,$class,$id='addDriver',$msg); 
+	?>
 	     <p class="text-red"><?php
 	if($this->mysession->get('Driver') != ''){
 	echo $this->mysession->get('Driver');
