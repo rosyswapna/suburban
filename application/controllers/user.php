@@ -1716,7 +1716,6 @@ public function profile() {
 	
 		if($this->session_check()==true) {
 			$active_tab = 'v_tab';
-			$data['mode']=$param1;
 			if($param1==''){
 				$this->mysession->delete('vehicle_id');
 			} 
@@ -1816,9 +1815,6 @@ public function profile() {
 
 			
 			}
-					
-			//$this->mysession->get('vehicle_id');
-			
 			
 			$data['tabs'] = $this->set_up_vehicle_tabs($active_tab,$param1);
 			$data['title']="Vehicle Details | ".PRODUCT_NAME;  
