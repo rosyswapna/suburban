@@ -128,10 +128,11 @@ class Driver_model extends CI_Model {
 
 	public function GetDriverForTripBooking()
 	{
-		$sql = "SELECT dr.id,dr.name FROM drivers dr WHERE dr.id NOT IN (SELECT driver_id 			FROM trips WHERE NOW() BETWEEN CONCAT(pick_up_date,' ',pick_up_time) AND CONCAT(drop_date,' ',drop_time))
+		$sql = "SELECT dr.id,dr.name FROM drivers dr WHERE dr.id NOT IN (SELECT driver_id FROM trips WHERE NOW() BETWEEN CONCAT(pick_up_date,' ',pick_up_time) AND CONCAT(drop_date,' ',drop_time))
 GROUP BY dr.id";
 
 		$query = $this->db->query($sql);
+		$drivers=array();
 		if($query->num_rows() > 0){
 			$avl_drivers = $query->result_array();
 			foreach($avl_drivers as $avl_driver){
