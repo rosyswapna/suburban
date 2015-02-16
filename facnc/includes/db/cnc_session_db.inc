@@ -82,34 +82,6 @@ function get_cnc_user($userid)
 //get trip voucher details
 function get_cnc_voucher($id = 0)
 {
-	/*$sql = "SELECT 
-		cust.id AS cnc_cust_id,
-		cust.name AS customer_name,
-		custg.name AS group_name,
-		custg.id AS group_id,
-		vehicle.registration_number AS vehicle_no,
-		tripmd.name AS trip_model,
-		trip.id AS trip_id,
-		trip.pick_up_city AS from_city,
-		trip.drop_city AS to_city,
-		trip.pick_up_date,
-		voucher.driver_bata,
-		voucher.id as voucher_no,
-		voucher.voucher_no as voucher_str,
-		voucher.parking_fees,
-		voucher.toll_fees,
-		voucher.state_tax,
-		voucher.night_halt_charges,
-		(voucher.end_km_reading-voucher.start_km_reading) AS total_km_reading,
-		voucher.total_trip_amount as amount,
-		voucher.no_of_days,
-		voucher.base_tarif,
-		voucher.base_amount,
-		voucher.adt_tarif,
-		voucher.adt_tarif_rate,
-		voucher.km_hr,
-		vmodels.name as vehicle_model
-		";*/
 	$sql = "SELECT 
 		cust.id AS cnc_cust_id,
 		cust.name AS customer_name,
@@ -122,6 +94,8 @@ function get_cnc_voucher($id = 0)
 		trip.drop_city AS to_city,
 		trip.pick_up_date,
 		voucher.trip_expense,
+		voucher.driver_bata,
+		voucher.night_halt_charges as night_halt,
 		voucher.id as voucher_no,
 		voucher.voucher_no as voucher_str,
 		(voucher.end_km_reading-voucher.start_km_reading) AS total_km_reading,

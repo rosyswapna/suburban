@@ -309,6 +309,8 @@ INSERT INTO `0_chart_master` (`account_code`, `account_code2`, `account_name`, `
 ('5012', '', 'Cost of Trip - Vehicle', '10', 0),
 ('1206', '', 'Bank Account', '1', 0),
 ('1207', '', 'Cash Account', '1', 0),
+('2040', '', 'Driver Bata', '4', 0),
+('2041', '', 'Night Halt', '4', 0),
 ('2051', '', 'Servie Tax', '4', 0),
 ('2052', '', 'Education Cess', '4', 0),
 ('2053', '', 'Higher Education Cess', '4', 0);
@@ -1645,6 +1647,8 @@ INSERT INTO `0_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
 ('default_cogs_act', 'glsetup.items', 'varchar', 15, '5010'),
 ('default_driver_cogs_act', 'glsetup.items', 'varchar', 15, '5011'),
 ('default_vehicle_cogs_act', 'glsetup.items', 'varchar', 15, '5012'),
+('default_driver_bata_act', 'glsetup.items', 'varchar', 15, '2040'),
+('default_night_halt_act', 'glsetup.items', 'varchar', 15, '2041'),
 ('default_adj_act', 'glsetup.items', 'varchar', 15, '5040'),
 ('default_inv_sales_act', 'glsetup.items', 'varchar', 15, '4010'),
 ('default_assembly_act', 'glsetup.items', 'varchar', 15, '1530'),

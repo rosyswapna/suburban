@@ -127,19 +127,37 @@ function write_sales_invoice(&$invoice)
 				$dim2 = ($invoice->dimension2_id != $customer['dimension2_id'] ? $invoice->dimension2_id : 
 					($customer['dimension2_id'] != 0 ? $customer["dimension2_id"] : $stock_gl_code["dimension2_id"]));
 
-				//add gl for trip expenses							
+				//_____________________________Split Gl for sales trip into travel erp accounts___
+						
 				//$total += add_gl_trans_customer(ST_SALESINVOICE, $invoice_no, $date_, $sales_account, $dim, $dim2,-$line_taxfree_price ,$invoice->customer_id, "The sales price GL posting could not be inserted");
-				$totalExpense = 0;
+
+				//add gl for trip expenses
+				$totalExpense = $driver_bata = $night_halt = 0;
 				foreach($invoice_line->trip_expense as $ExpenseGL => $amount){
 
 					if($amount > 0)
 						$total += add_gl_trans_customer(ST_SALESINVOICE, $invoice_no, $date_, $ExpenseGL, $dim, $dim2,-$amount ,$invoice->customer_id, "The Expense GL posting could not be inserted");
 					$totalExpense +=$amount;
 				}
+				//-------------------------
 
-				$total += add_gl_trans_customer(ST_SALESINVOICE, $invoice_no, $date_, $sales_account, $dim, $dim2,-($line_taxfree_price-$totalExpense) ,$invoice->customer_id, "The sales price GL posting could not be inserted");
+				//driver bata
+				if ($invoice_line->driver_bata != 0) {
+					$total += add_gl_trans_customer(ST_SALESINVOICE, $invoice_no, $date_, $company_data["default_driver_bata_act"], $dim, $dim2,-$invoice_line->driver_bata ,$invoice->customer_id, "The Driver Bata GL posting could not be inserted");
+				}
+				//-------------------------
 
+				//night halt
+				if ($invoice_line->night_halt != 0) {
+					$total += add_gl_trans_customer(ST_SALESINVOICE, $invoice_no, $date_, $company_data["default_night_halt_act"], $dim, $dim2,-$invoice_line->night_halt ,$invoice->customer_id, "The Bight Halt GL posting could not be inserted");
+				}
+				//-------------------------
 
+				//sales trip
+				$sales_trip_amount = $line_taxfree_price-$totalExpense-$invoice_line->driver_bata-$invoice_line->night_halt;
+				$total += add_gl_trans_customer(ST_SALESINVOICE, $invoice_no, $date_, $sales_account, $dim, $dim2, -$sales_trip_amount,$invoice->customer_id, "The sales price GL posting could not be inserted");
+				//-------------------------
+				//__________________________________________________________________
 
 				if ($invoice_line->discount_percent != 0) {
 

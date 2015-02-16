@@ -115,6 +115,9 @@ $_POST['default_cogs_act'] = $myrow["default_cogs_act"];
 
 $_POST['default_driver_cogs_act'] = $myrow["default_driver_cogs_act"];
 $_POST['default_vehicle_cogs_act'] = $myrow["default_vehicle_cogs_act"];
+$_POST['default_driver_bata_act'] = $myrow["default_driver_bata_act"];
+$_POST['default_night_halt_act'] = $myrow["default_night_halt_act"];
+
 
 
 $_POST['default_adj_act'] = $myrow["default_adj_act"];
@@ -179,20 +182,24 @@ gl_all_accounts_list_row(_("Prompt Payment Discount Account:"), 'default_prompt_
 
 text_row(_("Delivery Required By:"), 'default_delivery_required', $_POST['default_delivery_required'], 6, 6, '', "", _("days"));
 
-//----------------
-
-table_section(2);
-
+//---------------
 table_section_title(_("Dimension Defaults"));
 
 text_row(_("Dimension Required By After:"), 'default_dim_required', $_POST['default_dim_required'], 6, 6, '', "", _("days"));
-//---------------
+
+//----------------
 
 table_section_title(_("Suppliers and Purchasing"));
 
 percent_row(_("Delivery Over-Receive Allowance:"), 'po_over_receive');
 
 percent_row(_("Invoice Over-Charge Allowance:"), 'po_over_charge');
+
+
+//----------------
+
+table_section(2);
+
 
 table_section_title(_("Suppliers and Purchasing Defaults"));
 
@@ -216,12 +223,19 @@ gl_all_accounts_list_row(_("Inventory Account:"), 'default_inventory_act', $_POS
 // this one is default for items and suppliers (purchase account)
 gl_all_accounts_list_row(_("C.O.G.S. Account:"), 'default_cogs_act', $_POST['default_cogs_act']);
 
-gl_all_accounts_list_row(_("C.O.G.S. Account for Driver:"), 'default_driver_cogs_act', $_POST['default_driver_cogs_act']);
-gl_all_accounts_list_row(_("C.O.G.S. Account for Vehicle:"), 'default_vehicle_cogs_act', $_POST['default_vehicle_cogs_act']);
+
 
 gl_all_accounts_list_row(_("Inventory Adjustments Account:"), 'default_adj_act', $_POST['default_adj_act']);
 
 gl_all_accounts_list_row(_("Item Assembly Costs Account:"), 'default_assembly_act', $_POST['default_assembly_act']);
+//----------------
+
+table_section_title(_("Trip Defaults"));
+gl_all_accounts_list_row(_("C.O.G.S. Account for Driver:"), 'default_driver_cogs_act', $_POST['default_driver_cogs_act']);
+gl_all_accounts_list_row(_("C.O.G.S. Account for Vehicle:"), 'default_vehicle_cogs_act', $_POST['default_vehicle_cogs_act']);
+
+gl_all_accounts_list_row(_("Driver Bata Account"), 'default_driver_bata_act', $_POST['default_driver_bata_act']);
+gl_all_accounts_list_row(_("Night Halt Account:"), 'default_night_halt_act', $_POST['default_night_halt_act']);
 
 //----------------
 

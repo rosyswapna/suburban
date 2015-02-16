@@ -642,6 +642,8 @@ class line_details
 	var $cnc_line_amount;
 	
 	var $trip_expense = array();
+	var $driver_bata;
+	var $night_halt;
 	
 
 
@@ -662,6 +664,8 @@ class line_details
 			$this->cnc_line_amount 	= $cnc_voucher['amount'];
 			$this->price 		= $cnc_voucher['amount'];
 			$this->trip_expense 	= unserialize($cnc_voucher['trip_expense']);
+			$this->driver_bata	= $cnc_voucher['driver_bata'];
+			$this->night_halt	= $cnc_voucher['night_halt'];
 
 		}
 
