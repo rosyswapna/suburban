@@ -272,7 +272,7 @@ class Trip_booking extends CI_Controller {
 				//$data['language']				=	$this->input->post('language');
 				$data['tariff']					=	$this->input->post('tariff');
 				$data['available_vehicle']		=	$this->input->post('available_vehicle');
-				$data['available_driver']		=	$this->input->post('available_driver');
+				$data['available_driver']		=	$this->input->post('driver_list');
 				$data['customer_type']			=	$this->input->post('customer_type');
 				if($data['trip_id']==''){
 					if(isset($_REQUEST['recurrent_yes'])){
