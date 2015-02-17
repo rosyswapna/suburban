@@ -593,7 +593,9 @@ class User extends CI_Controller {
 		$return_data['recurrent_continues']	=$data['recurrent_continues'];
 		$return_data['recurrent_alternatives']	=$data['recurrent_alternatives'];
 		$return_data['advanced']		=$data['advanced'];
+	     if($data['advanced_vehicle']){
 		$return_data['advanced_vehicle']	=$data['advanced_vehicle'];
+		}
 		$return_data['customer_group']		=$data['customer_group'];
 	     if(isset($data['guest_id'])){
 		$return_data['guest_id']		=$data['guest_id'];
@@ -763,6 +765,25 @@ class User extends CI_Controller {
 				$return_data['vehicle_model_id']				=	$data->vehicle_model_id;
 				$return_data['remarks']				=	$data->remarks;
 				$return_data['recurrent_yes']				= 	'';
+				//$data1['seating_capacity']		=	$result->vehicle_seating_capacity_id;
+				//$data1['language']				=	$result->driver_language_id;
+				$return_data['tariff']				=	$data->tariff_id;
+				$return_data['available_vehicle']		=	$data->vehicle_id;
+				$return_data['available_vehicles']='';
+				$return_data['tariffs']='';
+				if($return_data['available_vehicle']>0){
+					$driver_id = $this->trip_booking_model->getDriver($return_data['available_vehicle']);
+				}else{
+					$driver_id = gINVALID;
+				}
+	
+				$return_data['available_driver']		=	$data->driver_id;
+	
+				if($driver_id==$return_data['available_driver']){
+					$return_data['advanced_vehicle']='';
+				}else{
+					$return_data['advanced_vehicle']=TRUE;
+				}
 				
 				if(isset($data->vehicle_beacon_light_option_id) && $data->vehicle_beacon_light_option_id > 0){
 					$return_data['beacon_light']=TRUE;
@@ -815,34 +836,6 @@ class User extends CI_Controller {
 		
 					$return_data['language']='';
 				}
-				
-				if($return_data['advanced_vehicle']=TRUE){
-					$return_data['advanced_vehicle']=TRUE;
-				}
-				else{
-					$return_data['advanced_vehicle']='';
-				}
-
-				//$data1['seating_capacity']		=	$result->vehicle_seating_capacity_id;
-				//$data1['language']				=	$result->driver_language_id;
-				$return_data['tariff']				=	$data->tariff_id;
-				$return_data['available_vehicle']		=	$data->vehicle_id;
-				$return_data['available_vehicles']='';
-				$return_data['tariffs']='';
-				if($return_data['available_vehicle']>0){
-					$driver_id = $this->trip_booking_model->getDriver($return_data['available_vehicle']);
-				}else{
-					$driver_id = gINVALID;
-				}
-	
-				$return_data['available_driver']		=	$data->driver_id;
-	
-				if($driver_id==$return_data['available_driver']){
-					$return_data['advanced_vehicle']='';
-				}else{
-					$return_data['advanced_vehicle']=TRUE;
-				}
-	
 				$this->session->set_userdata('driver_id',$data->driver_id);
 				$return_data['customer_type']			=	$data->customer_type_id;
 				
