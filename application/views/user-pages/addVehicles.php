@@ -859,6 +859,7 @@ if($this->mysession->get('owner_post_all')!=null ){
 			$own_dob=$data['dob'];
 			$own_user=$data['username'];
 			$own_pas=$data['password'];
+			$supplier_group=$data['supplier_group'];
 		$this->mysession->delete('owner_post_all');
 
 }else if(isset($get_owner)&& $get_owner!=null){
@@ -871,6 +872,7 @@ if($this->mysession->get('owner_post_all')!=null ){
 			$own_user=$get_owner['username'];
 			$own_pas=$get_owner['password'];
 			$h_pass=$get_owner['password'];
+			$supplier_group=$get_owner['supplier_group_id'];
 	
 	}
 
@@ -931,6 +933,18 @@ if($this->mysession->get('owner_post_all')!=null ){
 		<div class="form-group">
 	<?php echo form_label('Date of Birth','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'dob','class'=>'fromdatepicker form-control' ,'value'=>$own_dob)); ?>
+	   <?php echo $this->form_functions->form_error_session('dob', '<p class="text-red">', '</p>'); ?>
+        </div>
+	
+	<div class="form-group">
+	<?php echo form_label('Supplier Group','usernamelabel'); ?>
+        <?php
+			$class="form-control";$id= "add-supplier";
+			$msg="Supplier Group";
+			$name="supplier_group";
+			
+			echo $this->form_functions->populate_dropdown($name,$select['supplier_groups'],@$supplier_group,$class,$id,$msg);
+			?>
 	   <?php echo $this->form_functions->form_error_session('dob', '<p class="text-red">', '</p>'); ?>
         </div>
 	

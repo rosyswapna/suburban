@@ -1944,7 +1944,7 @@ public function profile() {
 				}
 				if($owner_id!=gINVALID && $owner_id!=0){
 					$data['get_owner']=$this->user_model->getOwner($owner_id); 
-			
+					
 				}
 
 
@@ -1995,7 +1995,7 @@ public function profile() {
 			'vehicle_ownership_types','vehicle_types','vehicle_makes',
 			'vehicle_ac_types','vehicle_fuel_types',
 			'vehicle_seating_capacity','vehicle_permit_types',
-			'vehicle_payment_percentages','driver_payment_percentages'
+			'vehicle_payment_percentages','driver_payment_percentages','supplier_groups'
 			);
 		$this->load->model('user_model');
 		for ($i=0;$i<count($tbl_arry);$i++){

@@ -711,6 +711,7 @@ $err=True;
 			$data['mobile']=$this->input->post('mobile');
 			$data['email']=$this->input->post('mail');
 			$data['dob']=$this->input->post('dob');
+			$supplier_group_id=$this->input->post('supplier_group'); 
 			$data['organisation_id']=$this->session->userdata('organisation_id');
 			$data['user_id']=$this->session->userdata('id');
 			$hphone=$this->input->post('hphone_own');
@@ -772,6 +773,7 @@ $err=True;
 				$this->mysession->set('owner_id',$owner_id);
 					$data['username']=$username;
 					$data['password']=$password;
+					$data['supplier_group']=$this->input->post('supplier_group'); 
 				$this->mysession->set('owner_post_all',$data);
 				$id=$this->mysession->get('vehicle_id');
 				
@@ -802,7 +804,7 @@ $err=True;
 				if($owner_id==gINVALID ){ 
 		
 					$id=$this->mysession->get('vehicle_id');
-					$res=$this->vehicle_model->insertOwner($data,$login);
+					$res=$this->vehicle_model->insertOwner($data,$login,$supplier_group_id);
 
 					if($res) {
 	
@@ -818,6 +820,9 @@ $err=True;
 				}else{
 
 					$res=$this->vehicle_model->UpdateOwnerdetails($data,$owner_id,$login,$flag); 
+					$supplier_data=array('supplier_group_id'=>$supplier_group_id);
+					$vehicle_update=$this->vehicle_model->UpdateVehicledetails($supplier_data,$current_id);
+					
 					if($res==true){
 						//edit vehicle owner enter as supplier in fa
 						$this->load->model('account_model');

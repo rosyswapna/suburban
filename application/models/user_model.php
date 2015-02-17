@@ -234,9 +234,10 @@ class user_model extends CI_Model {
 	$org_id=$this->session->userdata('organisation_id');
 	//$qry=$this->db->where('organisation_id', $org_id );
 	//---
-	$this->db->select('vehicle_owners.*,users.username,users.password');
+	$this->db->select('vehicle_owners.*,users.username,users.password,vehicles.supplier_group_id');
 	$this->db->from('vehicle_owners');
 	$this->db->join('users', 'vehicle_owners.login_id = users.id','left');
+	$this->db->join('vehicles', 'vehicle_owners.id = vehicles.vehicle_owner_id','left');
 	$this->db->where(array('vehicle_owners.id'=>$id,'vehicle_owners.organisation_id'=>$org_id));
 	//$qry=$this->db->where('id',$id);
 	//$qry=$this->db->get('vehicle_owners');

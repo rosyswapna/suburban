@@ -153,7 +153,7 @@ return true;
 	
 
 	//----------insert owner--------------------------------------------
-	public function insertOwner($data,$login){
+	public function insertOwner($data,$login,$supplier_group_id){
 		
 		$login_id = $this->getLoginId($data,$login);
 		$data['login_id'] = $login_id;
@@ -164,6 +164,7 @@ return true;
 
 		if($o_id = $this->db->insert_id()){
 			$map_qry=$this->db->set('vehicle_owner_id', $o_id);
+			$map_qry=$this->db->set('supplier_group_id', $supplier_group_id);
 			$v_id=$this->mysession->get('vehicle_id');
 			$map_qry=$this->db->where('id',$v_id);
 			//newly added-to be organisation based
