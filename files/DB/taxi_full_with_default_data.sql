@@ -2292,7 +2292,7 @@ CREATE TABLE IF NOT EXISTS `driver_payment_percentages` (
   KEY `id` (`id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -2482,7 +2482,7 @@ CREATE TABLE IF NOT EXISTS `payment_type` (
   KEY `id` (`id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `payment_type`
@@ -2528,7 +2528,7 @@ CREATE TABLE IF NOT EXISTS `service` (
   `organisation_id` int(11) NOT NULL,
   `vehicle_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -2551,6 +2551,27 @@ CREATE TABLE IF NOT EXISTS `statuses` (
 INSERT INTO `statuses` (`id`, `name`, `description`) VALUES
 (1, 'Active', 'Active'),
 (2, 'Inactive', 'Inactive');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplier_groups`
+--
+
+CREATE TABLE IF NOT EXISTS `supplier_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `description` text,
+  `value` int(11) DEFAULT NULL,
+  `organisation_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`),
+  KEY `organisation_id` (`organisation_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -2735,12 +2756,7 @@ CREATE TABLE IF NOT EXISTS `trip_expense_type` (
   KEY `id` (`id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `trip_expense_type`
---
-
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 -- --------------------------------------------------------
@@ -2903,7 +2919,7 @@ CREATE TABLE IF NOT EXISTS `trip_vouchers` (
   KEY `trip_id` (`trip_id`,`organisation_id`,`driver_id`,`user_id`),
   KEY `delivery_no` (`delivery_no`,`invoice_no`),
   KEY `tariff_id` (`tariff_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -3028,6 +3044,7 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
   `vehicles_insurance_id` int(11) NOT NULL,
   `vehicle_loan_id` int(11) NOT NULL,
   `vehicle_owner_id` int(11) NOT NULL,
+  `supplier_group_id` int(11) NOT NULL,
   `vehicle_ownership_types_id` int(11) NOT NULL,
   `vehicle_type_id` int(11) NOT NULL,
   `vehicle_make_id` int(11) NOT NULL,
@@ -3064,7 +3081,7 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
   KEY `vehicle_model_id` (`vehicle_model_id`),
   KEY `driver_percentage` (`driver_percentage`),
   KEY `vehicle_percentage` (`vehicle_percentage`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -3357,7 +3374,7 @@ CREATE TABLE IF NOT EXISTS `vehicle_models` (
   KEY `id` (`id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 -- --------------------------------------------------------
 
@@ -3436,7 +3453,7 @@ INSERT INTO `vehicle_ownership_types` (`id`, `name`, `description`, `value`, `or
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vehicle_ownership_types`
+-- Table structure for table `vehicle_payment_percentages`
 --
 
 CREATE TABLE IF NOT EXISTS `vehicle_payment_percentages` (
@@ -3452,7 +3469,7 @@ CREATE TABLE IF NOT EXISTS `vehicle_payment_percentages` (
   KEY `id` (`id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
