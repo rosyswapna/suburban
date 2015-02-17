@@ -99,7 +99,7 @@ if (isset($_POST['Commit']))
 			//create line items
 			$trip_ids = array();
 			foreach($vouchers as $voucher){
-				$_SESSION['PO']->add_to_order (count($_SESSION['PO']->line_items), $item['stock_id'], 1, $item['description'], $voucher['driver_payment_amount'], '', '', 0, 0, $voucher['trip_id'],$voucher['no_of_days']);
+				$_SESSION['PO']->add_to_order (count($_SESSION['PO']->line_items), $item['stock_id'], 1, $item['description'], $voucher['vehicle_payment_amount'], '', '', 0, 0, $voucher['trip_id'],$voucher['no_of_days']);
 				$trip_ids[] = $voucher['trip_id'];
 			}
 
