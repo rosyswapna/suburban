@@ -22,3 +22,6 @@ CREATE TABLE IF NOT EXISTS `supplier_groups` (
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+
+ALTER TABLE `vehicles`  ADD `supplier_group_id` INT(11) NOT NULL AFTER `vehicle_owner_id`;
