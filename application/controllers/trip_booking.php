@@ -116,6 +116,7 @@ class Trip_booking extends CI_Controller {
 			if(isset($_REQUEST['book_trip'])){
 
 				$my_customer = $this->session->userdata('customer_id');
+				
 				if(empty($my_customer) && $_REQUEST['customer_group']==gINVALID){
 					$trip_whom = false;
 					$this->form_validation->set_message('customer_group', 'Customer group or customer required');
@@ -140,21 +141,21 @@ class Trip_booking extends CI_Controller {
 				
 				if(isset($_REQUEST['guestname']) && $_REQUEST['guestname']!=''){
 					if($_REQUEST['guest_id']==gINVALID){
-					$this->form_validation->set_rules('guestname','Guest name','trim|required|xss_clean');
-					$this->form_validation->set_rules('guestemail','Guest email','trim|valid_email');
-					$this->form_validation->set_rules('guestmobile','Guest mobile','trim|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');	
+						$this->form_validation->set_rules('guestname','Guest name','trim|required|xss_clean');
+						$this->form_validation->set_rules('guestemail','Guest email','trim|valid_email');
+						$this->form_validation->set_rules('guestmobile','Guest mobile','trim|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');	
 					}
-					$data['guest']=TRUE;
-					$data['guestname']=$this->input->post('guestname');
-					$data['guestemail']=$this->input->post('guestemail');
-					$data['guestmobile']=$this->input->post('guestmobile');
-					$data['guest_id']=$this->input->post('guest_id');
+						$data['guest']=TRUE;
+						$data['guestname']=$this->input->post('guestname');
+						$data['guestemail']=$this->input->post('guestemail');
+						$data['guestmobile']=$this->input->post('guestmobile');
+						$data['guest_id']=$this->input->post('guest_id');
 				}else{
-					$data['guest']='';
-					$data['guestname']='';
-					$data['guestemail']='';
-					$data['guestmobile']='';
-					$data['guest_id']=gINVALID;
+						$data['guest']='';
+						$data['guestname']='';
+						$data['guestemail']='';
+						$data['guestmobile']='';
+						$data['guest_id']=gINVALID;
 				}
 				
 				$this->form_validation->set_rules('customer','Customer name','trim|xss_clean');
@@ -188,38 +189,39 @@ class Trip_booking extends CI_Controller {
 				
 	
 				$data['customer']			=	$this->input->post('customer');
-				$data['new_customer']		=	$this->input->post('new_customer');
+				$data['new_customer']			=	$this->input->post('new_customer');
 				$data['email']				=	$this->input->post('email');
 				$data['mobile']				=	$this->input->post('mobile');
-				$data['registration_type_id']=CUSTOMER_REG_TYPE_PHONE_CALL;	
-				$data['booking_source']		=	$this->input->post('booking_source');
+				$data['registration_type_id']		=  	CUSTOMER_REG_TYPE_PHONE_CALL;	
+				$data['booking_source']			=	$this->input->post('booking_source');
 				$data['source']				=	$this->input->post('source');
 				$data['trip_model']			=	$this->input->post('trip_model');
-				$data['no_of_passengers']	=	$this->input->post('no_of_passengers');
+				$data['no_of_passengers']		=	$this->input->post('no_of_passengers');
 				$data['pickupcity']			=	$this->input->post('pickupcity');
-				$data['pickupcitylat']		=	$this->input->post('pickupcitylat');
-				$data['pickupcitylng']		=	$this->input->post('pickupcitylng');
+				$data['pickupcitylat']			=	$this->input->post('pickupcitylat');
+				$data['pickupcitylng']			=	$this->input->post('pickupcitylng');
 				//$data['pickuparea']			=	$this->input->post('pickuparea');
-				$data['pickuplandmark']		=	$this->input->post('pickuplandmark');
+				$data['pickuplandmark']			=	$this->input->post('pickuplandmark');
 				$data['viacity']			=	$this->input->post('viacity');
 				$data['viacitylat']			=	$this->input->post('viacitylat');
 				$data['viacitylng']			=	$this->input->post('viacitylng');
 				//$data['viaarea']			=	$this->input->post('viaarea');
-				$data['vialandmark']		=	$this->input->post('vialandmark');
-				$data['dropdownlocation']	=	$this->input->post('dropdownlocation');
-				$data['dropdownlocationlat']	=	$this->input->post('dropdownlocationlat');
-				$data['dropdownlocationlng']	=	$this->input->post('dropdownlocationlng');
-				//$data['dropdownarea']		=	$this->input->post('dropdownarea');
-				$data['dropdownlandmark']	=	$this->input->post('dropdownlandmark');
-				$data['pickupdatepicker']	=	$this->input->post('pickupdatepicker');
-				$data['dropdatepicker']		=	$this->input->post('dropdatepicker');
-				$data['pickuptimepicker']	=	$this->input->post('pickuptimepicker');
-				$data['droptimepicker']		=	$this->input->post('droptimepicker');
-				//$data['vehicle_type']		=	$this->input->post('vehicle_type');
-				$data['vehicle_ac_type']	=	$this->input->post('vehicle_ac_type');
-				//$data['vehicle_make']		=	$this->input->post('vehicle_make');
-				$data['vehicle_model']		=	$this->input->post('vehicle_model');
+				$data['vialandmark']			=	$this->input->post('vialandmark');
+				$data['dropdownlocation']		=	$this->input->post('dropdownlocation');
+				$data['dropdownlocationlat']		=	$this->input->post('dropdownlocationlat');
+				$data['dropdownlocationlng']		=	$this->input->post('dropdownlocationlng');
+				//$data['dropdownarea']			=	$this->input->post('dropdownarea');
+				$data['dropdownlandmark']		=	$this->input->post('dropdownlandmark');
+				$data['pickupdatepicker']		=	$this->input->post('pickupdatepicker');
+				$data['dropdatepicker']			=	$this->input->post('dropdatepicker');
+				$data['pickuptimepicker']		=	$this->input->post('pickuptimepicker');
+				$data['droptimepicker']			=	$this->input->post('droptimepicker');
+				//$data['vehicle_type']			=	$this->input->post('vehicle_type');
+				$data['vehicle_ac_type']		=	$this->input->post('vehicle_ac_type');
+				//$data['vehicle_make']			=	$this->input->post('vehicle_make');
+				$data['vehicle_model']			=	$this->input->post('vehicle_model');
 				$data['remarks']			=	$this->input->post('remarks');
+				
 				if(isset($_REQUEST['beacon_light'])){
 					$data['beacon_light']=TRUE;
 					$data['advanced_vehicle']=TRUE;
@@ -237,6 +239,7 @@ class Trip_booking extends CI_Controller {
 					$data['beacon_light_radio']='';
 					$data['beacon_light_id'] = '';
 				}
+				
 				if(isset($_REQUEST['pluck_card'])){
 					$data['pluck_card']=TRUE;
 					$data['advanced_vehicle']=TRUE;
@@ -244,6 +247,7 @@ class Trip_booking extends CI_Controller {
 					$data['pluck_card']='';
 					$data['advanced_vehicle']='';
 				}
+				
 				if(isset($_REQUEST['uniform'])){
 				$data['uniform']=TRUE;
 				$data['advanced_vehicle']=TRUE;
@@ -251,29 +255,30 @@ class Trip_booking extends CI_Controller {
 					$data['uniform']='';
 					$data['advanced_vehicle']='';
 				}
-			if(isset($_REQUEST['seating_capacity']) && $_REQUEST['seating_capacity']!=gINVALID){
+				
+				if(isset($_REQUEST['seating_capacity']) && $_REQUEST['seating_capacity']!=gINVALID){
 					$this->form_validation->set_rules('seating_capacity','Seating Capacity','trim|xss_clean');
 					$data['advanced_vehicle']=TRUE;
 					$data['seating_capacity']=$this->input->post('seating_capacity');
-			}else{
+				}else{
 					$data['advanced_vehicle']='';
 					$data['seating_capacity']=$_REQUEST['seating_capacity'];
-			}
+				}
 			
-			if(isset($_REQUEST['language']) && $_REQUEST['language']!=gINVALID){
+				if(isset($_REQUEST['language']) && $_REQUEST['language']!=gINVALID){
 					$this->form_validation->set_rules('language','Language','trim|xss_clean');
 					$data['advanced_vehicle']=TRUE;
 					$data['language']=$this->input->post('language');
-			}else{
+				}else{
 					$data['advanced_vehicle']='';
 					$data['language']=$_REQUEST['language'];
-			}
-				//$data['seating_capacity']		=	$this->input->post('seating_capacity');
+				}
+				//$data['seating_capacity']			=	$this->input->post('seating_capacity');
 				//$data['language']				=	$this->input->post('language');
 				$data['tariff']					=	$this->input->post('tariff');
-				$data['available_vehicle']		=	$this->input->post('available_vehicle');
-				$data['available_driver']		=	$this->input->post('driver_list');
-				$data['customer_type']			=	$this->input->post('customer_type');
+				$data['available_vehicle']			=	$this->input->post('available_vehicle');
+				$data['available_driver']			=	$this->input->post('driver_list');
+				$data['customer_type']				=	$this->input->post('customer_type');
 				if($data['trip_id']==''){
 					if(isset($_REQUEST['recurrent_yes'])){
 					$data['recurrent_yes'] = TRUE;

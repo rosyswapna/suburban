@@ -1,7 +1,6 @@
 <?php
 
-
-$trip_id			=	'';
+/*$trip_id			=	'';
 $guest_id			=	gINVALID;
 $booking_source		=	'';
 $source				=	'';
@@ -22,22 +21,21 @@ $remarks			=	'';
 $trip_model			=	'';		
 $no_of_passengers	=	'';
 $pickupcity			=	'';
-//$pickuparea			=	'';
+
 $pickuplandmark		=	'';
 $viacity			=	'';
-//$viaarea			=	'';
+
 $vialandmark		=	'';
 $dropdownlocation	=	'';
-//$dropdownarea		=	'';
+
 $dropdownlandmark	=	'';
 $pickupdatepicker	=	'';
 $dropdatepicker		=	'';
 $pickuptimepicker	=	'';
 $droptimepicker 	=	'';
 
-//$vehicle_type 				=	'';
 $vehicle_ac_type			=	'';
-//$vehicle_make_id			=	'';
+
 $vehicle_model_id			=	'';
 $beacon_light				=	'';
 $beacon_light_radio	   	    =	'';
@@ -74,18 +72,17 @@ $customer_type					= -1;
 
 
 
-//echo $information['customer'];
-if($this->mysession->get('post')!=NULL || $information!=false){
+if($this->mysession->get('post')!=NULL || $information!=false){ 
 
 if($this->mysession->get('post')!=NULL){
-$data						=	$this->mysession->get('post');//print_r($data);
+$data						=	$this->mysession->get('post'); 
 if(isset($data['trip_id'])){
 $trip_id = $data['trip_id'];
 }
 if(isset($data['guest_id'])){
 $guest_id=$data['guest_id'];
 }
-}else{
+}else{ 
 $data =$information; 
 $trip_id = $data['trip_id'];
 if(isset($data['guest_id'])){
@@ -119,29 +116,24 @@ $no_of_passengers			=	$data['no_of_passengers'];
 $pickupcity					=	$data['pickupcity'];
 $pickupcitylat				=	$data['pickupcitylat'];
 $pickupcitylng				=	$data['pickupcitylng'];
-//$pickuparea					=	$data['pickuparea'];
+
 $pickuplandmark				=	$data['pickuplandmark'];
 $viacity					=	$data['viacity'];
 $viacitylat					=	$data['viacitylat'];
 $viacitylng					=	$data['viacitylng'];
-//$viaarea					=	$data['viaarea'];
+
 $vialandmark				=	$data['vialandmark'];
 $dropdownlocation			=	$data['dropdownlocation'];
 $dropdownlocationlat		=	$data['dropdownlocationlat'];
 $dropdownlocationlng		=	$data['dropdownlocationlng'];
-//$dropdownarea				=	$data['dropdownarea'];
+
 $dropdownlandmark			=	$data['dropdownlandmark'];
 $pickupdatepicker			=	$data['pickupdatepicker'];
 $dropdatepicker				=	$data['dropdatepicker'];
 $pickuptimepicker			=	$data['pickuptimepicker'];
 $droptimepicker 			=	$data['droptimepicker'];
 $remarks					=	$data['remarks'];
-/*if($data['vehicle_type']!=-1){
-$vehicle_type 				=	$data['vehicle_type'];
-}
-if($data['vehicle_make']!=-1){
-$vehicle_make_id			=	$data['vehicle_make'];
-}*/
+
 if($data['vehicle_ac_type']!=-1){
 $vehicle_ac_type			=	$data['vehicle_ac_type'];
 }
@@ -202,8 +194,8 @@ $this->mysession->delete('post');
 if($customer_type==-1){
 $customer_type='';
 }
-$available_vehicles='';
-//$available_vehicle='';
+$available_vehicles='';*/
+
 ?>
 
 
@@ -582,7 +574,11 @@ $available_vehicles='';
 						echo $this->form_functions->populate_dropdown('seating_capacity',$vehicle_seating_capacity,$seating_capacity,$class,$id='',$msg="Seats");
 						echo $this->form_functions->populate_dropdown('language',$languages,$language,$class,$id='',$msg="Languages");
 						echo $this->form_functions->form_error_session('vehicle_seating_capacity', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('language', '<p class="text-red">', '</p>');
+						 if($booking_by == 'customer') { ?>
+						<div class ="hide-me"> <?php echo form_input(array('name'=>'driver_list','value'=>'-1'));?></div>
+						<?php } else{
 						echo $this->form_functions->populate_dropdown('driver_list',$driver_availability,$available_driver,$class,$id='',$msg="Drivers");
+						}
 						echo br(2);
 						 ?>
 				    </div>
