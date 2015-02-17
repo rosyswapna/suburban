@@ -4,6 +4,7 @@ class General extends CI_Controller {
 		{
 		parent::__construct();
 		$this->load->model("settings_model");
+		$this->load->model("account_model");
 		$this->load->helper('my_helper');
 		no_cache();
 
@@ -12,7 +13,7 @@ class General extends CI_Controller {
 	
 		if($this->session_check()==true) {
 	
-		$tbl=array('languages'=>'languages','language-proficiency'=>'language_proficiency','driver-type'=>'driver_type','payment-type'=>'payment_type','customer-type'=>'customer_types','customer-groups'=>'customer_groups','registration-types'=>'customer_registration_types ','marital-statuses'=>'marital_statuses','bank-account-types'=>'bank_account_types','id-proof-types'=>'id_proof_types');
+		$tbl=array('languages'=>'languages','language-proficiency'=>'language_proficiency','driver-type'=>'driver_type','payment-type'=>'payment_type','customer-type'=>'customer_types','customer-groups'=>'customer_groups','registration-types'=>'customer_registration_types ','marital-statuses'=>'marital_statuses','bank-account-types'=>'bank_account_types','id-proof-types'=>'id_proof_types','supplier-groups'=>'supplier_groups');
 			if($param1=='getDescription') {
 			$this->getDescription();
 			}
@@ -77,8 +78,9 @@ class General extends CI_Controller {
 					//------------fa module integration code starts here-----
 					//save customer gruop as customer in fa table
 					if($param1 == 'customer-groups'){
-						$this->load->model("account_model");
 						$fa_customer = $this->account_model->add_fa_customer($result,"CG");
+					}elseif($param1 == 'supplier-groups'){
+						$fa_supplier = $this->account_model->add_fa_supplier($result,"SG");
 					}
 					//-----------fa code ends here---------------------------
 

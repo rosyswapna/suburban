@@ -223,6 +223,16 @@ class account_model extends CI_Model {
 		$this->db->where('organisation_id',$this->session->userdata('organisation_id'));	
 		return $this->db->get()->row_array();
 	}
+
+	function get_cnc_supplier_group($id)
+	{
+		$this->db->from('supplier_groups');
+		$this->db->where('id',$id );
+		$this->db->where('organisation_id',$this->session->userdata('organisation_id'));	
+		return $this->db->get()->row_array();
+	}
+
+
 	function fa_supplier_exists($ref,$table)
 	{
 		$this->db->from($table);
@@ -313,6 +323,11 @@ class account_model extends CI_Model {
 		}elseif($type == 'VW'){
 			$cnc_data = $this->get_cnc_vehicle_owner($id);
 			$address = $cnc_data['address'];
+			$ac = "";
+			$purchase_act = $prefs['default_vehicle_cogs_act'];
+		}elseif($type == 'SG'){
+			$cnc_data = $this->get_cnc_supplier_group($id);
+			$address = "";
 			$ac = "";
 			$purchase_act = $prefs['default_vehicle_cogs_act'];
 		}
