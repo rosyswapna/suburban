@@ -525,6 +525,12 @@ class cart
 			
 		}
 
+		if($this->tax_group_id == TAX_GROUP_EX){
+			 $this->tax_included = 0;
+		}else{
+			 $this->tax_included = 1;
+		}
+
 		$taxes = get_tax_for_items($items, $prices, $shipping_cost,
 		  $this->tax_group_id, $this->tax_included,  $this->tax_group_array);
 

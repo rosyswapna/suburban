@@ -199,7 +199,7 @@ function get_vouchers_with_invoice($inv_no){
 
 //get invoiced trip vouchers by driver
 function get_driver_vouchers_with_invoice($inv_no){
-	$sql = "SELECT voucher.*,vh.vehicle_owner_id,driver.name as driver_name
+	$sql = "SELECT voucher.*,driver.name as driver_name
 		FROM trip_vouchers voucher
 		LEFT JOIN trips tr ON tr.id = voucher.trip_id
 		LEFT JOIN vehicles vh ON vh.id = tr.vehicle_id

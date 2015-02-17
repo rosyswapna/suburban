@@ -129,9 +129,9 @@ class Account extends CI_Controller {
 	{
 		if($this->org_user_session_check() == true) {
 			
-			//print_r($_REQUEST);exit;
-			$this->account_model->add_gl_trans($_REQUEST['driver_id'],$_REQUEST['amount']);
 			echo "ok";exit;
+			$this->account_model->add_gl_trans($_REQUEST['driver_id'],$_REQUEST['amount']);
+			
 
 		}else{
 			$this->notAuthorized();
