@@ -732,7 +732,7 @@ $this->mysession->delete('post');
 
 	<?php 
 		
-		echo form_submit("save_trip_account","Process Trips","class='btn btn-primary'");
+		//echo form_submit("save_trip_account","Process Trips","class='btn btn-primary'");
 		echo form_close();
 	?>
 		
