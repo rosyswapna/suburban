@@ -235,7 +235,7 @@ class Trip_booking extends CI_Controller {
 					}
 				}else{
 					$data['beacon_light']=FALSE;
-					$data['advanced_vehicle']='';
+					//$data['advanced_vehicle']='';
 					$data['beacon_light_radio']='';
 					$data['beacon_light_id'] = '';
 				}
@@ -245,7 +245,7 @@ class Trip_booking extends CI_Controller {
 					$data['advanced_vehicle']=TRUE;
 				}else{
 					$data['pluck_card']='';
-					$data['advanced_vehicle']='';
+					//$data['advanced_vehicle']='';
 				}
 				
 				if(isset($_REQUEST['uniform'])){
@@ -253,7 +253,7 @@ class Trip_booking extends CI_Controller {
 				$data['advanced_vehicle']=TRUE;
 				}else{
 					$data['uniform']='';
-					$data['advanced_vehicle']='';
+					//$data['advanced_vehicle']='';
 				}
 				
 				if(isset($_REQUEST['seating_capacity']) && $_REQUEST['seating_capacity']!=gINVALID){
@@ -261,7 +261,7 @@ class Trip_booking extends CI_Controller {
 					$data['advanced_vehicle']=TRUE;
 					$data['seating_capacity']=$this->input->post('seating_capacity');
 				}else{
-					$data['advanced_vehicle']='';
+					//$data['advanced_vehicle']='';
 					$data['seating_capacity']=$_REQUEST['seating_capacity'];
 				}
 			
@@ -270,7 +270,7 @@ class Trip_booking extends CI_Controller {
 					$data['advanced_vehicle']=TRUE;
 					$data['language']=$this->input->post('language');
 				}else{
-					$data['advanced_vehicle']='';
+					//$data['advanced_vehicle']='';
 					$data['language']=$_REQUEST['language'];
 				}
 				//$data['seating_capacity']			=	$this->input->post('seating_capacity');
@@ -355,7 +355,8 @@ class Trip_booking extends CI_Controller {
 					}
 
 				
-			if($this->form_validation->run()==False || $trip_whom == false){	
+			if($this->form_validation->run()==False || $trip_whom == false){
+				
 				$this->mysession->set('post',$data);
 				redirect(base_url().'organization/front-desk/trip-booking/'.$data['trip_id']);
 			}else{
