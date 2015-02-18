@@ -3,142 +3,152 @@
 class Admin extends CI_Controller {
 
 	public function __construct()
-{
-    parent::__construct();
-    $this->load->helper('my_helper');
-    no_cache();
+	{
+		parent::__construct();
+		$this->load->helper('my_helper');
+		$this->load->model('admin_model');
+		no_cache();
 
-}
-	public function session_check() {
-	if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==SYSTEM_ADMINISTRATOR)) {
-		return true;
-	} else {
-		return false;
 	}
 
-	}    
+	public function session_check() {
+		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==SYSTEM_ADMINISTRATOR)) {
+			return true;
+		} else {
+			return false;
+		}
+	} 
+   
 	public function index(){
 	
-        if($this->session_check()==true) {
-		$data['title']="Home | ".PRODUCT_NAME;   
-        $page='admin-pages/home';
-     
-		$this->load_templates($page,$data);
+		if($this->session_check()==true) {
+			$data['title']="Home | ".PRODUCT_NAME;   
+			$page='admin-pages/home';
+			$this->load_templates($page,$data);
 		}else{
 			$this->notAuthorized();
 		}
-	
-    }
-	
-	public function organization($action = '', $secondaction = ''){
-		if($this->session_check()==true) {
-			if ($action =='new' && $secondaction == ''){
-				if(isset($_REQUEST['name']) && isset($_REQUEST['addr'])&& isset($_REQUEST['uname'])&& isset($_REQUEST['pwd'])&& isset($_REQUEST['mail'])&& isset($_REQUEST['phn'])&& isset($_REQUEST['fname'])&& isset($_REQUEST['lname'])&&  isset($_REQUEST['submit'])){ 
-					$name = $this->input->post('name');
-					$fname = trim($this->input->post('fname'));
-					$lname = trim($this->input->post('lname'));
-					$addr  = $this->input->post('addr');
-					$uname  = trim($this->input->post('uname'));
-					$pwd  = $this->input->post('pwd');
-					$mail  = $this->input->post('mail');
-					$phn = $this->input->post('phn');
-					$sms = $this->input->post('sms');
-					$sys_mail = $this->input->post('sys_mail');
-					$this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean|is_unique[organisations.name]');
-					$this->form_validation->set_rules('fname','First Name','trim|required|min_length[2]|xss_clean');
-					$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[2]|xss_clean');
-					$this->form_validation->set_rules('addr','Address','trim|required|min_length[10]|xss_clean');
-					$this->form_validation->set_rules('uname','Username','trim|required|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
-					$this->form_validation->set_rules('pwd','Password','trim|required|min_length[5]|max_length[12]|matches[cpwd]|xss_clean');
-					$this->form_validation->set_rules('cpwd','Confirmation','trim|required|min_length[5]|max_length[12]|xss_clean');
-					$this->form_validation->set_rules('mail','Mail','trim|required|valid_email|is_unique[users.email]');
-					$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean|is_unique[users.phone]');
-					$this->form_validation->set_rules('sms','Sms Gateway','trim|min_length[10]|xss_clean');
-					$this->form_validation->set_rules('sys_mail','System Mail','trim|valid_email|is_unique[organisations.system_email]');
-					if($this->form_validation->run()==False){
-						$data=array('title'=>'Add New Organization | '.PRODUCT_NAME,'name'=>$name,'fname'=>$fname,'lname'=>$lname,'uname'=>$uname,'pwd'=>$pwd,'addr'=>$addr,'mail'=>$mail,'phn'=>$phn,'sms'=>$sms,'sys_mail'=>$sys_mail,'cpwd'=>'');
-	$this->showAddOrg($data);
-					}else {
-						$this->load->model('admin_model');
-		   
-						//inserting values to db
-						$res=$this->admin_model->insertOrg($name,$fname,$lname,$addr,$uname,$pwd,$mail,$phn,$sms,$sys_mail);
-						if($res==true){ 
-							//sending email to admin
-							// $data=array('name'=>$name,'fname'=>$fname,'lname'=>$lname,'uname'=>$uname,'pwd'=>$pwd,'addr'=>$addr,'mail'=>$mail,'phn'=>$phn);
-							// $rs=$this->sendEmail($data);
-							// if($rs==true){
-							$this->session->set_userdata(array('dbSuccess'=>'Organization Added Succesfully..!'));
-							$this->session->set_userdata(array('dbError'=>''));
-							redirect(base_url().'admin/organization/list');
-		
-				  			//}
-						}
-					}
-				}else if(($this->session->userdata('isLoggedIn')==true )&&($this->session->userdata('type')==SYSTEM_ADMINISTRATOR)){
-					$data=array('title'=>'Add New Organization |'.PRODUCT_NAME,'name'=>'','fname'=>'','lname'=>'','uname'=>'','pwd'=>'','addr'=>'','mail'=>'','phn'=>'','sms'=>'','sys_mail'=>'','cpwd'=>'');
-					$this->showAddOrg($data);
-				} 
-		
-			}else if($action=='list' && ($secondaction == ''|| is_numeric($secondaction))) {
-	
-				$this->load->model('admin_model');
-				$data['status']=$this->admin_model->getStatus();
-				$condition='';
-				$per_page=3;
-				$like_arry='';
-				$where_arry='';
-				//for search
-				if((isset($_REQUEST['sname'])|| isset($_REQUEST['status']))&& isset($_REQUEST['search'])){
-					if($secondaction==''){
-					$secondaction='0';
-					}
-					$this->mysession->delete('condition');
-					if($_REQUEST['sname']!=null&& $_REQUEST['status']!=-1){
-					$like_arry=array('name'=> $_REQUEST['sname']);
-					$where_arry=array('status_id'=>$_REQUEST['status']);
 
-					}
-					if($_REQUEST['sname']==null&& $_REQUEST['status']!=-1){
-					$where_arry=array('status_id'=>$_REQUEST['status']);
-					}
-					if($_REQUEST['sname']!=null&& $_REQUEST['status']==-1){
-					$like_arry=array('name'=> $_REQUEST['sname']);
-					}
-					$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
-					$data['status_id']=$_REQUEST['status'];
-					$data['sname']=$_REQUEST['sname'];
-				}
-				if(is_null($this->mysession->get('condition'))){
-				$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
-				}
-				$tbl='organisations';
-				$data['org_status']=$this->admin_model->getStatus();
-				$baseurl=base_url().'admin/organization/list/';
-				$uriseg ='4';
-	
-				    $p_res=$this->mypage->paging($tbl,$per_page,$secondaction,$baseurl,$uriseg);
-					if($secondaction==''){
-						$this->mysession->delete('condition');
-						}
-					//check company exists in fa. If exists then remove link add account for this organisation
-					$data['values']=$p_res['values'];
-					if(empty($data['values'])){
-					$data['result']="No Results Found !";
-					}
-					$data['page_links']=$p_res['page_links'];
-					$data['title']='Organization List| '.PRODUCT_NAME;
-					$page='admin-pages/orgList';
-					$this->load_templates($page,$data);
-	     
-			}else{
-				$this->load->model('admin_model');
-				//$result=$this->admin_model->checkOrg($action);//print_r($result);exit;
+	}
+
+
+	//New organisation 
+	public function NewOrganisation()
+	{
+		
+		if(isset($_REQUEST['name']) && isset($_REQUEST['addr'])&& isset($_REQUEST['uname'])&& isset($_REQUEST['pwd'])&& isset($_REQUEST['mail'])&& isset($_REQUEST['phn'])&& isset($_REQUEST['fname'])&& isset($_REQUEST['lname'])&&  isset($_REQUEST['submit'])){ 
+			$name = $this->input->post('name');
+			$fname = trim($this->input->post('fname'));
+			$lname = trim($this->input->post('lname'));
+			$addr  = $this->input->post('addr');
+			$uname  = trim($this->input->post('uname'));
+			$pwd  = $this->input->post('pwd');
+			$mail  = $this->input->post('mail');
+			$phn = $this->input->post('phn');
+			$sms = $this->input->post('sms');
+			$sys_mail = $this->input->post('sys_mail');
+			$this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean|is_unique[organisations.name]');
+			$this->form_validation->set_rules('fname','First Name','trim|required|min_length[2]|xss_clean');
+			$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[2]|xss_clean');
+			$this->form_validation->set_rules('addr','Address','trim|required|min_length[10]|xss_clean');
+			$this->form_validation->set_rules('uname','Username','trim|required|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
+			$this->form_validation->set_rules('pwd','Password','trim|required|min_length[5]|max_length[12]|matches[cpwd]|xss_clean');
+			$this->form_validation->set_rules('cpwd','Confirmation','trim|required|min_length[5]|max_length[12]|xss_clean');
+			$this->form_validation->set_rules('mail','Mail','trim|required|valid_email|is_unique[users.email]');
+			$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean|is_unique[users.phone]');
+			$this->form_validation->set_rules('sms','Sms Gateway','trim|min_length[10]|xss_clean');
+			$this->form_validation->set_rules('sys_mail','System Mail','trim|valid_email|is_unique[organisations.system_email]');
+			if($this->form_validation->run()==False){
+				$data=array('title'=>'Add New Organization | '.PRODUCT_NAME,'name'=>$name,'fname'=>$fname,'lname'=>$lname,'uname'=>$uname,'pwd'=>$pwd,'addr'=>$addr,'mail'=>$mail,'phn'=>$phn,'sms'=>$sms,'sys_mail'=>$sys_mail,'cpwd'=>'');
+$this->showAddOrg($data);
+			}else {
 				
+   
+				//inserting values to db
+				$res=$this->admin_model->insertOrg($name,$fname,$lname,$addr,$uname,$pwd,$mail,$phn,$sms,$sys_mail);
+				if($res==true){ 
+					//sending email to admin
+					// $data=array('name'=>$name,'fname'=>$fname,'lname'=>$lname,'uname'=>$uname,'pwd'=>$pwd,'addr'=>$addr,'mail'=>$mail,'phn'=>$phn);
+					// $rs=$this->sendEmail($data);
+					// if($rs==true){
+					$this->session->set_userdata(array('dbSuccess'=>'Organization Added Succesfully..!'));
+					$this->session->set_userdata(array('dbError'=>''));
+					redirect(base_url().'admin/organization/list');
+
+		  			//}
+				}
+			}
+		}else if(($this->session->userdata('isLoggedIn')==true )&&($this->session->userdata('type')==SYSTEM_ADMINISTRATOR)){
+			$data=array('title'=>'Add New Organization |'.PRODUCT_NAME,'name'=>'','fname'=>'','lname'=>'','uname'=>'','pwd'=>'','addr'=>'','mail'=>'','phn'=>'','sms'=>'','sys_mail'=>'','cpwd'=>'');
+			$this->showAddOrg($data);
+		}
+	}
+
+	//List organisation
+	public function ListOrganisation($secondaction='')
+	{
+		
+		$data['status']=$this->admin_model->getStatus();
+		$condition='';
+		$per_page=3;
+		$like_arry='';
+		$where_arry='';
+		//for search
+		if((isset($_REQUEST['sname'])|| isset($_REQUEST['status']))&& isset($_REQUEST['search'])){
+			if($secondaction==''){
+			$secondaction='0';
+			}
+			$this->mysession->delete('condition');
+			if($_REQUEST['sname']!=null&& $_REQUEST['status']!=-1){
+			$like_arry=array('name'=> $_REQUEST['sname']);
+			$where_arry=array('status_id'=>$_REQUEST['status']);
+
+			}
+			if($_REQUEST['sname']==null&& $_REQUEST['status']!=-1){
+			$where_arry=array('status_id'=>$_REQUEST['status']);
+			}
+			if($_REQUEST['sname']!=null&& $_REQUEST['status']==-1){
+			$like_arry=array('name'=> $_REQUEST['sname']);
+			}
+			$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
+			$data['status_id']=$_REQUEST['status'];
+			$data['sname']=$_REQUEST['sname'];
+		}
+		if(is_null($this->mysession->get('condition'))){
+		$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
+		}
+		$tbl='organisations';
+		$data['org_status']=$this->admin_model->getStatus();
+		$baseurl=base_url().'admin/organization/list/';
+		$uriseg ='4';
+
+		    $p_res=$this->mypage->paging($tbl,$per_page,$secondaction,$baseurl,$uriseg);
+			if($secondaction==''){
+				$this->mysession->delete('condition');
+				}
+			//check company exists in fa. If exists then remove link add account for this organisation
+			$data['values']=$p_res['values'];
+			if(empty($data['values'])){
+			$data['result']="No Results Found !";
+			}
+			$data['page_links']=$p_res['page_links'];
+			$data['title']='Organization List| '.PRODUCT_NAME;
+			$page='admin-pages/orgList';
+			$this->load_templates($page,$data);
+	}
+	
+	//Admin actions with Organisation(new,list,organisation change password)
+	public function organization($action = '', $secondaction = ''){
+
+		if($this->session_check()==true) {
+			if ($action =='new' && $secondaction == ''){ 
+				$this->NewOrganisation();
+			}else if($action=='list' && ($secondaction == ''|| is_numeric($secondaction))) {
+				$this->ListOrganisation($secondaction);
+	     		}else{
 				$result=$this->admin_model->checkOrgWithId($action);
 				if(!$result){
 					echo "page not found";
-
 				}else{ 
 					$org_res=$result['org_res'];
 					$user_res=$result['user_res'];
@@ -147,23 +157,24 @@ class Admin extends CI_Controller {
 					if($secondaction =='password-reset'){
 						//if organization name  and password-reset comes what to do?
 						$this->load->model('admin_model');
-					   	$data['title']		  =		"Reset Password | ".PRODUCT_NAME; 
-						$data['password']	  = 	'';
-						$data['cpassword'] 	  = 	'';
-						$data['orgname']	  =		$action;
+					   	$data['title']		  = "Reset Password | ".PRODUCT_NAME; 
+						$data['password']	  = '';
+						$data['cpassword'] 	  = '';
+						$data['orgname']	  = $action;
+
 				      		if(isset($_REQUEST['admin-org-password-reset'])){
 							$this->form_validation->set_rules('password','New Password','trim|required|min_length[5]|max_length[12]|xss_clean');
 							$this->form_validation->set_rules('cpassword','Confirm Password','trim|required|min_length[5]|max_length[12]|matches[password]|xss_clean');
 							$data['password'] = trim($this->input->post('password'));
 							$data['cpassword'] = trim($this->input->post('cpassword'));
 							if($this->form_validation->run() != False) {
-								$dbdata['password']  				= md5($this->input->post('password'));
-								$dbdata['passwordnotencrypted']  	= $this->input->post('password');
-								$dbdata['name']  					= $org_res['name'];
-								$dbdata['username'] 				= $user_res['username'];
-								$dbdata['email']  					= $user_res['email'];
-								$dbdata['id'] 						= $user_res['id'];
-								$val    			    			= $this->admin_model->resetOrganizationPasswordAdmin($dbdata);
+								$dbdata['password']  = md5($this->input->post('password'));
+								$dbdata['passwordnotencrypted']  = $this->input->post('password');
+								$dbdata['name']  	= $org_res['name'];
+								$dbdata['username'] 	= $user_res['username'];
+								$dbdata['email']  	= $user_res['email'];
+								$dbdata['id'] 		= $user_res['id'];
+								$val= $this->admin_model->resetOrganizationPasswordAdmin($dbdata);
 								if($val == true) {
 									//$this->sendEmailOnorganizationPaswordReset($dbdata);			
 									redirect(base_url().'admin/organization/list');
@@ -272,9 +283,9 @@ class Admin extends CI_Controller {
 							$data['hphone']=$user_res['phone'];
 							$data['status']=$org_res['status_id'];
 							$this->showAddOrg($data);
-							}
-		
 						}
+		
+					}
 				}
 			}
 		}else{
@@ -284,14 +295,14 @@ class Admin extends CI_Controller {
 
 
 	public function show_org_reset_password($data) {
-	if($this->session_check()==true) {
-				$page='admin-pages/password-reset';
-				$this->load_templates($page,$data);
-				}
-			else{
-				$this->notAuthorized();
-			}
+		if($this->session_check()==true) {
+			$page='admin-pages/password-reset';
+			$this->load_templates($page,$data);
+		}else{
+			$this->notAuthorized();
+		}
 	}
+
 	public function profile(){
 	   if($this->session_check()==true) {
 		$this->load->model('admin_model');
