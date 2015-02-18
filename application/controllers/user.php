@@ -39,7 +39,15 @@ class User extends CI_Controller {
 		} else {
 			return false;
 		}
-	}  
+	} 
+	
+	public function v_owner_session_check() {
+		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==VEHICLE_OWNER)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	public function index(){
 		$param1=$this->uri->segment(3);
 		$param2=$this->uri->segment(4);
