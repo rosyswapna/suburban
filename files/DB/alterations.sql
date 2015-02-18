@@ -1,13 +1,14 @@
 
-_____________________need to update in suburban,standard and arc______________________________________
+----------------need to update in suburban,standard and arc--------------
 
-ALTER TABLE `vehicles`  ADD `vehicle_percentage` INT(11) NOT NULL AFTER `tax_renewal_date`,  ADD `driver_percentage` INT(11) NOT NULL AFTER `vehicle_percentage`
+--table vehicles--
+ALTER TABLE `vehicles`  ADD `vehicle_percentage` INT(11) NOT NULL AFTER `tax_renewal_date`,  ADD `driver_percentage` INT(11) NOT NULL AFTER `vehicle_percentage`;
 
-
+--trip expense--
 ALTER TABLE `trip_vouchers`  ADD `trip_expense` TEXT NOT NULL AFTER `vehicle_trip_amount`;
 
 
-
+--supplier group table
 CREATE TABLE IF NOT EXISTS `supplier_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
@@ -23,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `supplier_groups` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
+--supplier group id in vehicles
 ALTER TABLE `vehicles`  ADD `supplier_group_id` INT(11) NOT NULL AFTER `vehicle_owner_id`;
 
 
