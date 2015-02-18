@@ -49,7 +49,7 @@ class admin_model extends CI_Model {
     }
 
         
-    function  insertOrg($name,$fname,$lname,$addr,$uname,$pwd,$mail,$phn,$sms,$sys_mail ) {
+    function insertOrg($name,$fname,$lname,$addr,$uname,$pwd,$mail,$phn,$sms,$sys_mail ) {
 	$data=array('name'=>$name,'address'=>$addr,'status_id'=>'1','sms_gateway_url'=>$sms,'system_email'=>$sys_mail);
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert('organisations',$data);
@@ -108,6 +108,21 @@ class admin_model extends CI_Model {
 	// fetch organisation details by name ,then by that id  fetch organisation admin details
 	function checkOrg($name){
 		$query=$this->db->get_where('organisations',array('name'=>$name));
+		if($query->num_rows()>0){
+		$org_res=$query->row_array(); 
+		$id=$org_res['id'];
+		
+		$qry=$this->db->get_where('users',array('organisation_id'=>$id,'user_type_id'=>ORGANISATION_ADMINISTRATOR)); //echo $this->db->last_query();exit;
+		$user_res=$qry->row_array();
+		$data=array('org_res'=>$org_res,'user_res'=>$user_res);
+		return $data;
+		}
+		else 
+		return false;
+		}
+
+	function checkOrgWithId($id){
+		$query=$this->db->get_where('organisations',array('id'=>$id));
 		if($query->num_rows()>0){
 		$org_res=$query->row_array(); 
 		$id=$org_res['id'];

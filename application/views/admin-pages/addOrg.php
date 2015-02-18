@@ -8,7 +8,7 @@
 		$url='admin/organization/new';
 		$page_cap='Add Organization';
 		}else{ 
-		$url='admin/organization/'.$name;
+		$url='admin/organization/'.$org_id;
 		$page_cap='Update Organization';
 		}?>
 <div class="new-org-body">
