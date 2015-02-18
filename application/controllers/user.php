@@ -690,7 +690,7 @@ class User extends CI_Controller {
 	elseif($trip_id>0){
 		
 		$conditon = array('id'=>$trip_id,'organisation_id'=>$this->session->userdata('organisation_id'));
-		$data=$this->trip_booking_model->getDetails($conditon);
+		$data=$this->trip_booking_model->getDetails($conditon); 
 		$data=$data[0];
 		if($data->trip_status_id==TRIP_STATUS_PENDING || ($data->trip_status_id==TRIP_STATUS_CONFIRMED && $this->customer_session_check() != true )){
 		

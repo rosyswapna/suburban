@@ -7,6 +7,7 @@ class Trip_booking extends CI_Controller {
 		$this->load->model("tarrif_model");
 		$this->load->model("user_model");
 		$this->load->model("driver_model");
+		$this->load->model("vehicle_model");
 		$this->load->model("customers_model");
 		$this->load->helper('my_helper');
 		no_cache();
@@ -276,8 +277,8 @@ class Trip_booking extends CI_Controller {
 				//$data['seating_capacity']			=	$this->input->post('seating_capacity');
 				//$data['language']				=	$this->input->post('language');
 				$data['tariff']					=	$this->input->post('tariff');
-				$data['available_vehicle']			=	$this->input->post('available_vehicle');
-				$data['available_driver']			=	$this->input->post('driver_list');
+				//$data['available_vehicle']			=	$this->input->post('available_vehicle');
+				//$data['available_driver']			=	$this->input->post('driver_list');
 				$data['customer_type']				=	$this->input->post('customer_type');
 				if($data['trip_id']==''){
 					if(isset($_REQUEST['recurrent_yes'])){
@@ -353,8 +354,26 @@ class Trip_booking extends CI_Controller {
 						$data['recurrent_alternatives'] = '';
 
 					}
-
+			
+			//-------------------get vehicle -----------------------------
+			$data['available_vehicle'] = $this->input->post('available_vehicle');
+			$data['available_driver'] = $this->input->post('driver_list');
+			if($this->input->post('available_vehicle') > 0 || $this->input->post('available_vehicle') == gINVALID){
+				$new_vehicle = '';
+			}else{ 
+				 $new_vehicle = $this->input->post('available_vehicle');
+			}
+			
+			
+			//------------------get driver---------------------------------
+			if($this->input->post('driver_list') > 0 || $this->input->post('driver_list') == gINVALID){
+				$new_driver = '';
+			}else{
+				$new_driver = $this->input->post('driver_list');
 				
+			}
+			
+			//-------------------------------------------------
 			if($this->form_validation->run()==False || $trip_whom == false){
 				
 				$this->mysession->set('post',$data);
@@ -380,6 +399,36 @@ class Trip_booking extends CI_Controller {
 				}else{
 					$data['guest_id']=gINVALID;
 				}
+				
+			
+			if($new_vehicle != ''){
+				$vehicle = $this->vehicle_model->addVehicleFromTripBooking($new_vehicle);
+			}elseif($data['available_vehicle'] > 0){
+				$vehicle = $data['available_vehicle'];
+			}else{
+				$vehicle =-1;
+			}	
+			
+
+			if($new_driver != ''){
+					$driverdata['organisation_id']=$this->session->userdata('organisation_id');
+					$driverdata['user_id']=$this->session->userdata('id'); 
+					$driverdata['name']=$new_driver; 
+					$driver = $this->driver_model->addDriverdetails($driverdata);
+				}else if($data['available_driver'] > 0){
+					$driver = $data['available_driver'];
+				}else{
+					$driver = -1;
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				/*if($data['available_vehicle']>0 && $data['available_driver']>0){
 
 					
@@ -390,9 +439,9 @@ class Trip_booking extends CI_Controller {
 					$trip_status=TRIP_STATUS_PENDING;
 				}*/
 
-			if($data['available_vehicle']>0){
+			if($vehicle>0){
 
-					$data['driver_id'] = $this->trip_booking_model->getDriver($data['available_vehicle']);
+					$data['driver_id'] = $this->trip_booking_model->getDriver($vehicle);
 					$trip_status=TRIP_STATUS_CONFIRMED;
 					
 
@@ -450,9 +499,9 @@ class Trip_booking extends CI_Controller {
 			$dbdata['driver_language_id']			=$data['language'];
 			$dbdata['trip_model_id']				=$data['trip_model'];
 			$dbdata['tariff_id']					=$data['tariff'];
-			$dbdata['vehicle_id']					=$data['available_vehicle'];
+			$dbdata['vehicle_id']					=$vehicle;
 			
-			$dbdata['driver_id']					=$data['driver_id'];
+			$dbdata['driver_id']					=$driver;
 			$dbdata['remarks']						=$data['remarks'];
 			$dbdata['organisation_id']				=$this->session->userdata('organisation_id');
 			$dbdata['user_id']						=$this->session->userdata('id');
@@ -493,6 +542,8 @@ class Trip_booking extends CI_Controller {
 				redirect(base_url().'organization/front-desk/trip-booking');
 
 				}else{ 
+				
+				
 				$res = $this->trip_booking_model->bookTrip($dbdata,$estimate);
 				if($res!=false && $res>0){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Booked Succesfully..!!'));

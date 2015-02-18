@@ -499,7 +499,13 @@ $available_vehicles='';*/
 						echo $this->form_functions->populate_dropdown('tariff',$tariffs,$tariff,$class,$id,$msg="Tariffs");
 						
 						$id="available_vehicle";
-						echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles,$available_vehicle,$class,$id,$msg="Available Vehicles");
+						//echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles,$available_vehicle,$class,$id,$msg="Available Vehicles");
+						if($available_vehicle==gINVALID)
+						{	
+						$available_vehicle='';	
+						}
+						echo $this->form_functions->populate_editable_dropdown('available_vehicle', $available_vehicles,$class,'vehicles',array(),"Vehicle",$available_vehicle,$id);
+						
 						echo br(2);
 						?>
 						<div class="hide-me vehicle-tarif-checker" tariff_id="<?php echo $tariff;?>" available_vehicle_id="<?php echo $available_vehicle;?>"></div>
@@ -577,7 +583,12 @@ $available_vehicles='';*/
 						 if($booking_by == 'customer') { ?>
 						<div class ="hide-me"> <?php echo form_input(array('name'=>'driver_list','value'=>'-1'));?></div>
 						<?php } else{
-						echo $this->form_functions->populate_dropdown('driver_list',$driver_availability,$available_driver,$class,$id='',$msg="Drivers");
+						//echo $this->form_functions->populate_dropdown('driver_list',$driver_availability,$available_driver,$class,$id='',$msg="Drivers");
+						if($available_driver==gINVALID)
+						{	
+						$available_driver='';	
+						}
+						echo $this->form_functions->populate_editable_dropdown('driver_list', $driver_availability,$class,'drivers',array(),"Driver",$available_driver);
 						}
 						echo br(2);
 						 ?>

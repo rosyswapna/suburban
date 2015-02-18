@@ -30,18 +30,46 @@ foreach ($options as $key => $val)
 		return $form;
 }
 
-function populate_editable_dropdown($name = '', $options = array(),$class='',$tbl=''){
+function populate_editable_dropdown($name = '', $options = array(),$class='',$tbl='',$attr=array(),$msg='',$selected ='',$id=''){
 $CI = & get_instance();
+$attr_str='';
+	foreach($attr as $k=>$v){
+		$attr_str.= ' '.$k.'="'.$v.'"';
+	}
+	
+	if($id==''){
+	$id="lstDropDown_A";
+	}
+	
+	$form = '<select'.$attr_str.' name='.$name.' id="'.$id.'" class="'.$class.'" onKeyDown="fnKeyDownHandler_A(this, event);" onKeyUp="fnKeyUpHandler_A(this, event); return false;" onKeyPress = "return fnKeyPressHandler_A(this, event);"  onChange="fnChangeHandler_A(this);" onFocus="fnFocusHandler_A(this);" tblname="'.$tbl.'">';
 
-$form = '<select name='.$name.' id="lstDropDown_A" class="'.$class.'" onKeyDown="fnKeyDownHandler_A(this, event);" onKeyUp="fnKeyUpHandler_A(this, event); return false;" onKeyPress = "return fnKeyPressHandler_A(this, event);"  onChange="fnChangeHandler_A(this);" onFocus="fnFocusHandler_A(this);" tblname="'.$tbl.'">';
-$form.='<option selected="selected"></option></br>';
-if(!empty($options)){
-foreach ($options as $key => $val)
+		
+	if($selected==''){
+		if($msg != ''){
+
+			$form.='<option selected="selected" value="">--Select '.$msg.'--</option></br>';
+			
+		}else{
+			$form.='<option selected="selected"></option></br>';
+		}
+	}else{
+		$form.='<option value=" ">New '.$msg.'</option></br>';
+	}
+	
+	
+	if(!empty($options)){
+	foreach ($options as $key => $val)
 		{
 			$key = (string) $key;
+			
+			if($key==$selected){
+				$sel=' selected="selected"';
+			}else{
+				$sel='';
+			}
 
 			
-					$form .= '<option value="'.$key.'">'.(string) $val."</option>\n";
+			$form .= '<option value="'.$key.'"'.$sel.'>'.(string) $val."</option>\n";
 					
 		}
 		}

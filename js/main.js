@@ -509,6 +509,20 @@ available_vehicle_id=$('.vehicle-tarif-checker').attr('available_vehicle_id');
 GenerateVehiclesAndTarif(tarif_id='',available_vehicle_id='');
 }
 
+}else if($('#vehicle-ac-type').val()==-1 && $('#vehicle-model').val()==-1 && $('.vehicle-tarif-checker').attr('available_vehicle_id')>0){
+	available_vehicle_id=$('.vehicle-tarif-checker').attr('available_vehicle_id');
+
+	//$('#available_vehicle').append($("<option value='"+available_vehicle_id+"'></option>").text('test'));
+	$.post(base_url+"/trip-booking/getVehicle",
+			  {
+				id:available_vehicle_id
+			  },function(data1){data1=jQuery.parseJSON(data1); 
+				var selected="selected=selected"; 
+				var reg_num=data1.data[0].registration_number;
+				
+				selected_option="<option value='"+data1.data[0].id+"' vehicle_model_id='"+data1.data[0].vehicle_model_id+"'  vehicle_make_id='"+data1.data[0].vehicle_make_id+"' "+selected+">"+reg_num.substr(reg_num.length - 4)+"</option>";
+				$('#available_vehicle').append(selected_option);
+				});
 }
 
 }
@@ -2051,7 +2065,13 @@ $('#customer-list').css('display','none');
 			//$('#customer').val('');	
 });
 
+//reset vehicle ac and model values
+$("#available_vehicle").on('keyup',function(){
 
+$("#vehicle-model").val(-1);
+$("#vehicle-ac-type").val(-1);
+	
+});
 
  });
 
