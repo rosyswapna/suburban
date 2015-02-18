@@ -111,7 +111,7 @@ public function __construct()
 	public function redirect_to_profile() {
 	$this->load->model('organization_model');
 	if(isset($_REQUEST['org-profile-update'])){
-			$data['name'] = str_replace(' ','',($this->input->post('name')));
+			$data['name'] = $this->input->post('name');
 			$data['uname'] = trim($this->input->post('uname'));
 			$data['hname']  = trim($this->input->post('hname'));
 		    $data['fname'] = $this->input->post('fname');

@@ -66,7 +66,7 @@
 							<span class="label label-danger"> <?php echo $status[$row['status_id']];?></span>
 						<?php } ?>
 						</td>	
-						<td><?php echo anchor(base_url().'admin/organization/'.$row['name'],'Edit','class="btn btn-primary"').nbs(3).anchor(base_url().'admin/organization/'.$row['name'].'/password-reset','Change Password','class="btn btn-primary"');?>
+						<td><?php echo anchor(base_url().'admin/organization/'.$row['id'],'Edit','class="btn btn-primary"').nbs(3).anchor(base_url().'admin/organization/'.$row['id'].'/password-reset','Change Password','class="btn btn-primary"');?>
 					<?php echo ($row['fa_account'])?"":nbs(3).anchor(base_url().'account/add_accounts/'.$row['id'],'Add Accounts','class="btn btn-primary"');?>
 						</td>
 					</tr>
