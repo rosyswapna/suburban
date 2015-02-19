@@ -28,7 +28,7 @@ TRUNCATE `1_cust_branch`;
 TRUNCATE `customers`;
 ---------------------------
 
---Truncate dummy customers
+--Truncate dummy suppliers
 
 TRUNCATE `1_suppliers`;
 
@@ -39,7 +39,7 @@ TRUNCATE `vehicle_devices`;
 TRUNCATE `vehicle_owners`;
 ------------------------------
 
---Truncate taxi test data
+--Truncate taxi test trip data
 TRUNCATE TABLE `trips`;
 TRUNCATE TABLE `trip_vouchers`;
 
