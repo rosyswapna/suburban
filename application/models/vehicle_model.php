@@ -1,5 +1,26 @@
 <?php
 class Vehicle_model extends CI_Model {
+
+
+	public function getVehiclePercentages($regNo = null)
+	{
+
+		if($regNo != null){
+			$qry='SELECT v.registration_number,dp.value as driver_percentage,vp.value as vehicle_percentage
+FROM vehicles v
+LEFT JOIN driver_payment_percentages dp ON dp.id=v.driver_percentage
+LEFT JOIN vehicle_payment_percentages vp ON vp.id=v.vehicle_percentage
+WHERE v.registration_number = '.$this->db->escape($regNo);
+
+			$result=$this->db->query($qry);
+			$result=$result->result_array();
+			if(count($result)>0)
+				return $result;	
+		}
+		return false;
+	}
+
+
 public function insertVehicle($data,$driver_data,$device_data){
 $qry=$this->db->set('created', 'NOW()', FALSE);
 $qry=$this->db->insert('vehicles',$data);

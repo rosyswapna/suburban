@@ -1,5 +1,5 @@
 
-----------------need to update in suburban,standard and arc--------------
+----------------need to update in standard and arc--------------
 
 --table vehicles--
 ALTER TABLE `vehicles`  ADD `vehicle_percentage` INT(11) NOT NULL AFTER `tax_renewal_date`,  ADD `driver_percentage` INT(11) NOT NULL AFTER `vehicle_percentage`;

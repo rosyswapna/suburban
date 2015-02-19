@@ -724,16 +724,19 @@ class Trip_booking extends CI_Controller {
 	}	
 	public function getVehicleDriverPercentages(){
 
-	if(isset($_REQUEST['VehicleDriverPercentages'])){
+		if(isset($_REQUEST['VehicleDriverPercentages'])){
+			$VehicleRegNo = '';
+			if(isset($_REQUEST['VehicleRegNo'])){
+				$VehicleRegNo = $_REQUEST['VehicleRegNo'];
+			}
+			$result = $this->vehicle_model->getVehiclePercentages($VehicleRegNo);
 	
-	$driverpercentage=$this->trip_booking_model->getdriverPercentages();
-	$vehiclepercentage=$this->trip_booking_model->getvehiclePercentages();
-	$percentage['driver']=$driverpercentage[0]['name'];
-	$percentage['vehicle']=$vehiclepercentage[0]['name'];
-	echo json_encode($percentage);
-	}else{
-		echo 'false';
-	}
+			$percentage['driver']=($result[0]['driver_percentage'] != null)?$result[0]['driver_percentage']:0;
+			$percentage['vehicle']=($result[0]['vehicle_percentage'] != null)?$result[0]['vehicle_percentage']:0;
+			echo json_encode($percentage);
+		}else{
+			echo 'false';
+		}
 
 	}
 
