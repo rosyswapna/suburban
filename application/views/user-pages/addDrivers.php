@@ -561,6 +561,8 @@ $this->mysession->delete('post');
 	</table><br/>
 			
 		<?php  echo form_open(base_url()."account/driver_trip_save"); ?>
+		
+		
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr style="background:#CCC">
@@ -572,21 +574,19 @@ $this->mysession->delete('post');
 						<th>Over Time</th>
 						<th>Trip Amount</th>
 						<th>Trip %</th>
-						<th>Toll</th>
 						<th>Halt</th>
 						<th>Bata</th>
-						<th>Parking</th>
-						<th>Tax</th>
-						<th>Fuel</th>
+					
+						<?php foreach ($expense as $exp):?>
+						<th><?php echo $exp->description;?></th>
+						<?php endforeach;?>
+						
 					</tr>
 					<?php // print_r($trips[0]);exit;
 						$repeated_dates=array();					
 						$tot_nod=$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_over_time=$tot_night_halt=$tot_extra=$tot_fuel_extra=$tot_trip_amount= $tth=$ttp=$tto=$dbh=$dbp=$dbo=$i=0;
 					if(isset($trips) && $trips!=false){
-					
-					
-					
-						
+
 						//for trip data
 						for($trip_index=0;$trip_index<count($trips);$trip_index++){
 						$tot_km=$trips[$trip_index]['end_km_reading']-$trips[$trip_index]['start_km_reading'];
@@ -613,6 +613,7 @@ $this->mysession->delete('post');
 							$day=$diff->d;
 						}*/
 					 
+					
 						
 						if(!in_array($trips[$trip_index]['pick_up_date'],$repeated_dates)){
 						$repeated_dates[$i]=$trips[$trip_index]['pick_up_date'];
@@ -674,13 +675,26 @@ $this->mysession->delete('post');
 							?></td>
 							<td><?php  echo number_format($trips[$trip_index]['driver_trip_amount'],2); ?></td>
 							<td><?php  echo number_format($trips[$trip_index]['driver_payment_amount'],2); ?></td>
-							<td><?php  echo number_format($trips[$trip_index]['toll_fees'],2); ?></td>
+							
 							<td><?php  echo number_format($trips[$trip_index]['night_halt_charges'],2);?></td>
 							<td><?php  echo number_format($trips[$trip_index]['driver_bata'],2); ?></td>
-							<td><?php  echo number_format($trips[$trip_index]['parking_fees'],2); ?></td>
+						
+					<?php	 //--------unserailize trip expense---
+					 
+					 $trips[$trip_index]['trip_expense']=unserialize($trips[$trip_index]['trip_expense']);
+							foreach ($expense as $exp):
+							
+							?>
+							<td><?php echo number_format($trips[$trip_index]['trip_expense'][$exp->value],2); ?></td>
+							
+							<?php 
+							
+							endforeach;?>
+							
+							<!--<td><?php  echo number_format($trips[$trip_index]['parking_fees'],2); ?></td>
 							<td><?php  echo number_format($trips[$trip_index]['state_tax'],2); ?></td>
 							<td><?php  echo number_format($trips[$trip_index]['fuel_extra_charges'],2); ?></td>
-												
+							<td><?php  echo number_format($trips[$trip_index]['toll_fees'],2); ?></td>-->					
 						</tr>
 						<?php } 
 							}				
@@ -712,12 +726,19 @@ $this->mysession->delete('post');
 					echo number_format($sal,2);
 					?> </td><td></td><td><?php echo number_format($sal,2);?></td></tr>
 					
-					<tr><td>Total Toll</td><td></td><td></td><td><?php  echo  number_format($tot_toll,2); ?></td></tr>
+					
 					<tr><td>Total Halt</td><td></td><td></td><td><?php echo  number_format($tot_night_halt,2);?></td></tr>
 					<tr><td>Total Bata</td><td></td><td></td><td><?php echo  number_format($dbo,2);?></td></tr>
-					<tr><td>Total Parking</td><td></td><td></td><td><?php echo  number_format($tot_parking,2); ?></td></tr>
+					
+					<?php foreach ($expense as $exp):?>
+						<tr><td><?php echo $exp->description;?></td><td></td><td></td><td><?php echo  number_format(0.00,2); ?></td></tr>
+					<?php endforeach;?>
+					
+					
+					<!--<tr><td>Total Parking</td><td></td><td></td><td><?php echo  number_format($tot_parking,2); ?></td></tr>
 					<tr><td>Total Tax</td><td></td><td></td><td><?php echo  number_format($tot_state_tax,2); ?></td></tr>
 					<tr><td>Total Fuel</td><td></td><td></td><td><?php echo  number_format($tot_fuel_extra,2); ?></td></tr>
+					<tr><td>Total Toll</td><td></td><td></td><td><?php  echo  number_format($tot_toll,2); ?></td></tr>-->
 					<tr style="background:#CCC"><td>Total</td><td></td><td></td><td><?php $total=$tto+$dbo+$tot_toll+$tot_night_halt+$sal+$tot_parking+$tot_state_tax+$tot_fuel_extra;
 								echo  number_format($total,2);
 

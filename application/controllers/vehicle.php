@@ -721,12 +721,18 @@ $err=True;
 			$hpass=$this->input->post('h_pass');
 			$hidden_user=$this->input->post('h_user');
 			//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
-			$this->form_validation->set_rules('owner_name','Owner Name ','trim|required|xss_clean');
+			
 			 $this->form_validation->set_rules('address','Address','trim|xss_clean');
 			 $this->form_validation->set_rules('dob','Date of Birth','trim|xss_clean');
 			// if($hphone==$data['mobile']){
-			 $this->form_validation->set_rules('mobile','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
-			/* }
+			if($supplier_group_id>0){
+				$this->form_validation->set_rules('mobile','Agency ContactInfo ','trim|xss_clean|regex_match[/^[0-9]{10}$/]');
+				$this->form_validation->set_rules('owner_name','Owner Name ','trim|xss_clean');
+			}
+			else{
+				$this->form_validation->set_rules('mobile','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
+				$this->form_validation->set_rules('owner_name','Owner Name ','trim|required|xss_clean');
+			}/* }
 			 else{
 			 $this->form_validation->set_rules('mobile','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[vehicle_owners.mobile]');
 			 }*/

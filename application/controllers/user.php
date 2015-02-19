@@ -1586,6 +1586,8 @@ public function profile() {
 					$active_tab = 't_tab';//trip tab
 				} 
 				$data['trips']=$this->trip_booking_model->getDriverVouchers($param2,$fdate,$todate); 
+				
+				
 				//$this->mysession->set('trips',$data['trips']);
 			} 
 			$data['tabs'] = $this->set_up_driver_tabs($active_tab,$param2);
@@ -1597,7 +1599,13 @@ public function profile() {
 			$data['fdate'] = $fdate;
 			$data['todate'] = $todate;
 			$data['driver_tab']='active';
-			//print_r($data['trips']);exit;
+			
+		//-----------get trip expense type array----------------------
+			$data['expense']=$this->trip_booking_model->getTripExpenses();
+			
+			
+		//------------------------------------------------------------
+			
 			$data['title']='Driver Profile| '.PRODUCT_NAME;
 			$page='user-pages/addDrivers';
 			$data['d_id']=$param2;
@@ -2102,7 +2110,7 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 	$data['owner_details']=$details;
 	}
 	$data['page_links']=$p_res['page_links'];
-	$tbl_arry=array('vehicle_models','vehicle_types','vehicle_owners','vehicle_makes','vehicle_ownership_types');
+	$tbl_arry=array('vehicle_models','vehicle_types','vehicle_owners','vehicle_makes','vehicle_ownership_types','supplier_groups');
 	$count=count($tbl_arry);
 	for ($i=0;$i<$count;$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
