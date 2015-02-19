@@ -53,6 +53,10 @@ class User extends CI_Controller {
 		$param2=$this->uri->segment(4);
 		$param3=$this->uri->segment(5);
 		$param4=$this->uri->segment(6);
+
+		//unset search session condition before navigation
+		$this->mysession->delete('condition');
+
         if($this->session_check()==true) {
 		if($param1==''){
 			$data['title']="Home | ".PRODUCT_NAME;    
@@ -906,7 +910,8 @@ class User extends CI_Controller {
 		{
 			//pagination first page link setup
 			if($param2=='1'){ $param2='0'; }
-			if($param2==''){ $param2='0';$this->mysession->delete('condition'); }
+			if($param2==''){ $this->mysession->delete('condition');$param2='0'; }
+			
 			
 			$tbl	= "trips";$like_arry = $where_arry = array();
 			$baseurl = base_url().'organization/front-desk/trips/';
@@ -1165,7 +1170,7 @@ public function	Customers($param2){
 			if(is_null($this->mysession->get('condition'))){
 			$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
 			}
-						
+					
 			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
 			if($param2==''){
 				$this->mysession->delete('condition');
