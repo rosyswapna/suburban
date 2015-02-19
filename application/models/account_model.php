@@ -109,7 +109,7 @@ class account_model extends CI_Model {
 					);
 				if(isset($cnc_cust['address']))
 					$data['address'] = $cnc_cust['address'];
-				//print_r($data);exit;
+				
 				$this->db->insert($fa_customer_table,$data);
 		
 				//insert branch

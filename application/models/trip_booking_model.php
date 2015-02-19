@@ -3,14 +3,15 @@ class Trip_booking_model extends CI_Model {
 	
 	function getDriver($vehicle_id){
 
-	$this->db->from('vehicle_drivers');
-	$condition=array('vehicle_id'=>$vehicle_id,'organisation_id'=>$this->session->userdata('organisation_id'),'to_date'=>'9999-12-30');
-    $this->db->where($condition);
+		$this->db->from('vehicle_drivers');
+		$condition=array('vehicle_id'=>$vehicle_id,'organisation_id'=>$this->session->userdata('organisation_id'),'to_date'=>'9999-12-30');
+		$this->db->where($condition);
 	
-    $results = $this->db->get()->result();
-	if(count($results)>0){
-	return $results[0]->driver_id;
-	}
+		$results = $this->db->get()->result();
+		if(count($results)>0){
+			return $results[0]->driver_id;
+		}
+		return gINVALID;
 	}
 	function getTripBokkingDate($id){
 
@@ -132,7 +133,7 @@ class Trip_booking_model extends CI_Model {
 		return $percentages;
 	}
 
-	function  bookTrip($data,$estimate) {// print_r($data);exit;
+	function  bookTrip($data,$estimate) { //print_r($data);exit;
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert('trips',$data);
 	if($this->db->insert_id()>0){

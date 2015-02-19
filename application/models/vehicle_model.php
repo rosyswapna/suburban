@@ -1,5 +1,26 @@
 <?php
 class Vehicle_model extends CI_Model {
+
+
+	public function getVehiclePercentages($regNo = null)
+	{
+
+		if($regNo != null){
+			$qry='SELECT v.registration_number,dp.value as driver_percentage,vp.value as vehicle_percentage
+FROM vehicles v
+LEFT JOIN driver_payment_percentages dp ON dp.id=v.driver_percentage
+LEFT JOIN vehicle_payment_percentages vp ON vp.id=v.vehicle_percentage
+WHERE v.registration_number = '.$this->db->escape($regNo);
+
+			$result=$this->db->query($qry);
+			$result=$result->result_array();
+			if(count($result)>0)
+				return $result;	
+		}
+		return false;
+	}
+
+
 public function insertVehicle($data,$driver_data,$device_data){
 $qry=$this->db->set('created', 'NOW()', FALSE);
 $qry=$this->db->insert('vehicles',$data);
@@ -16,22 +37,20 @@ if($qry>0){
 
 
 }
+	//add new vehicle from trip booiking
+	public function addVehicleFromTripBooking($value = null){
 
-public function addVehicleFromTripBooking($value = ''){
-
-		$data['registration_number'] = $value;
-		$data['organisation_id']=$this->session->userdata('organisation_id');
-		$data['user_id']=$this->session->userdata('id');
-		$this->db->set('created', 'NOW()', FALSE);
-		$this->db->insert('vehicles',$data);
-		$id = mysql_insert_id();
-		if($id > 0){
-			return $id;
-		}else{
-			return -1;
+		if($value !=null){
+			$data['registration_number'] = $value;
+			$data['organisation_id']=$this->session->userdata('organisation_id');
+			$data['user_id']=$this->session->userdata('id');
+			$this->db->set('created', 'NOW()', FALSE);
+			$this->db->insert('vehicles',$data);
+			return mysql_insert_id();
 		}
-
+		return -1;
 	}
+
 
 public function getVehicles(){ 
 	$qry='SELECT V.registration_number,V.id,V.vehicle_model_id,V.vehicle_make_id,VD.from_date,VD.to_date,VD.driver_id,VD.vehicle_id FROM vehicles AS V LEFT JOIN vehicle_drivers AS VD ON  V.id =VD.vehicle_id AND V.organisation_id = '.$this->session->userdata('organisation_id').' WHERE VD.organisation_id = '.$this->session->userdata('organisation_id').' AND VD.to_date="9999-12-30"';

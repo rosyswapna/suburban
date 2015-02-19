@@ -138,11 +138,11 @@ $('.voucher').on('click',function(){
 
 				id='#trip-tariff';
 				generateTariffs(vehicle_model_id,vehicle_ac_type_id,tarrif_id,id,customer_id,newvoucher='yes');
-			
+				var vehicle_no = $('.vehicleno').val();
 				$.post(base_url+"/trip-booking/getVehicleDriverPercentages",
 				  	{
-					VehicleDriverPercentages:'VehicleDriverPercentages'
-					
+					VehicleDriverPercentages:'VehicleDriverPercentages',
+					VehicleRegNo:vehicle_no
 			
 					},function(data){
 						data=jQuery.parseJSON(data);

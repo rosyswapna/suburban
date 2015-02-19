@@ -356,24 +356,34 @@ class Trip_booking extends CI_Controller {
 					}
 			
 			//-------------------get vehicle -----------------------------
-			$data['available_vehicle'] = $this->input->post('available_vehicle');
-			$data['available_driver'] = $this->input->post('driver_list');
-			if($this->input->post('available_vehicle') > 0 || $this->input->post('available_vehicle') == gINVALID){
-				$new_vehicle = '';
-			}else{ 
-				 $new_vehicle = $this->input->post('available_vehicle');
-			}
-			
-			
-			//------------------get driver---------------------------------
-			if($this->input->post('driver_list') > 0 || $this->input->post('driver_list') == gINVALID){
-				$new_driver = '';
+
+			if(is_numeric($this->input->post('available_vehicle')) && $this->input->post('available_vehicle') > 0){
+				$data['vehicle_id'] = $this->input->post('available_vehicle');
+			}elseif($this->input->post('available_vehicle') == '' || $this->input->post('available_vehicle') == gINVALID){
+				$data['vehicle_id'] = gINVALID;
 			}else{
-				$new_driver = $this->input->post('driver_list');
-				
+				 $data['vehicle_id'] = $this->vehicle_model->addVehicleFromTripBooking($this->input->post('available_vehicle'));
 			}
+
+			//----------------------get driver--------------------------------------------
 			
+			if(is_numeric($this->input->post('driver_list')) && $this->input->post('driver_list') > 0){
+
+				$data['driver_id'] = $this->input->post('driver_list');
+
+			}else if($this->input->post('driver_list') == '' || $this->input->post('driver_list') == gINVALID){
+				$data['driver_id'] = gINVALID;
+			}else{ 
+				 $data['driver_id'] = $this->driver_model->addDriverFromTripBooking($this->input->post('driver_list'));
+			}
+
+			//---------------if driver not selected get driver from vehicle if selected------------
+			if($data['driver_id'] == gINVALID && $data['vehicle_id']  > 0){
+				
+				$data['driver_id'] = $this->trip_booking_model->getDriver($data['vehicle_id']);
+			}
 			//-------------------------------------------------
+
 			if($this->form_validation->run()==False || $trip_whom == false){
 				
 				$this->mysession->set('post',$data);
@@ -401,61 +411,13 @@ class Trip_booking extends CI_Controller {
 				}
 				
 			
-			if($new_vehicle != ''){
-				$vehicle = $this->vehicle_model->addVehicleFromTripBooking($new_vehicle);
-			}elseif($data['available_vehicle'] > 0){
-				$vehicle = $data['available_vehicle'];
-			}else{
-				$vehicle =-1;
-			}	
-			
-
-			if($new_driver != ''){
-					$driverdata['organisation_id']=$this->session->userdata('organisation_id');
-					$driverdata['user_id']=$this->session->userdata('id'); 
-					$driverdata['name']=$new_driver; 
-					$driver = $this->driver_model->addDriverdetails($driverdata);
-				}else if($data['available_driver'] > 0){
-					$driver = $data['available_driver'];
-				}else{
-					$driver = -1;
-				}
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				/*if($data['available_vehicle']>0 && $data['available_driver']>0){
-
-					
+				if($data['vehicle_id']>0 && $data['driver_id']>0){
 					$trip_status=TRIP_STATUS_CONFIRMED;
-
 				}else{
-					
-					$trip_status=TRIP_STATUS_PENDING;
-				}*/
-
-			if($vehicle>0){
-
-					$data['driver_id'] = $this->trip_booking_model->getDriver($vehicle);
-					$trip_status=TRIP_STATUS_CONFIRMED;
-					
-
-				}else{
-					$data['driver_id'] = gINVALID;
 					$trip_status=TRIP_STATUS_PENDING;
 				}
-			//** assign new driver to vehicle
-			if($this->input->post('driver_list')>gINVALID)	
-			{
-				$data['driver_id'] =$this->input->post('driver_list');
-			}
-			
-			
+
+	
 			$dbdata['customer_id']					=$this->session->userdata('customer_id');
 			$dbdata['guest_id']						=$data['guest_id'];
 			$guest['name']					=$this->input->post('guestname');
@@ -499,9 +461,9 @@ class Trip_booking extends CI_Controller {
 			$dbdata['driver_language_id']			=$data['language'];
 			$dbdata['trip_model_id']				=$data['trip_model'];
 			$dbdata['tariff_id']					=$data['tariff'];
-			$dbdata['vehicle_id']					=$vehicle;
+			$dbdata['vehicle_id']					=$data['vehicle_id'];
 			
-			$dbdata['driver_id']					=$driver;
+			$dbdata['driver_id']					=$data['driver_id'];
 			$dbdata['remarks']						=$data['remarks'];
 			$dbdata['organisation_id']				=$this->session->userdata('organisation_id');
 			$dbdata['user_id']						=$this->session->userdata('id');
@@ -724,16 +686,19 @@ class Trip_booking extends CI_Controller {
 	}	
 	public function getVehicleDriverPercentages(){
 
-	if(isset($_REQUEST['VehicleDriverPercentages'])){
+		if(isset($_REQUEST['VehicleDriverPercentages'])){
+			$VehicleRegNo = '';
+			if(isset($_REQUEST['VehicleRegNo'])){
+				$VehicleRegNo = $_REQUEST['VehicleRegNo'];
+			}
+			$result = $this->vehicle_model->getVehiclePercentages($VehicleRegNo);
 	
-	$driverpercentage=$this->trip_booking_model->getdriverPercentages();
-	$vehiclepercentage=$this->trip_booking_model->getvehiclePercentages();
-	$percentage['driver']=$driverpercentage[0]['name'];
-	$percentage['vehicle']=$vehiclepercentage[0]['name'];
-	echo json_encode($percentage);
-	}else{
-		echo 'false';
-	}
+			$percentage['driver']=($result[0]['driver_percentage'] != null)?$result[0]['driver_percentage']:0;
+			$percentage['vehicle']=($result[0]['vehicle_percentage'] != null)?$result[0]['vehicle_percentage']:0;
+			echo json_encode($percentage);
+		}else{
+			echo 'false';
+		}
 
 	}
 
