@@ -917,7 +917,7 @@ getDistance();
 			var cityLng = place.geometry.location.lng();
 			$('#pickupcitylat').attr('value',cityLat);
 			$('#pickupcitylng').attr('value',cityLng);
-			$("#pickupcity").attr('value',place.formatted_address);
+			$("#pickupcity").attr('value',place.name);
 			getDistance();
 		}); 
 		google.maps.event.addListener(autocompletedrop, 'place_changed', function() {
@@ -926,7 +926,7 @@ getDistance();
 			var cityLng = place.geometry.location.lng();
 			$('#dropdownlocationlat').attr('value',cityLat);
 			$('#dropdownlocationlng').attr('value',cityLng);
-			$("#dropdownlocation").attr('value',place.formatted_address);
+			$("#dropdownlocation").attr('value',place.name);
 			getDistance();
 		}); 
 		google.maps.event.addListener(autocompletevia, 'place_changed', function() {
@@ -935,7 +935,7 @@ getDistance();
 			var cityLng = place.geometry.location.lng();
 			$('#viacitylat').attr('value',cityLat);
 			$('#viacitylng').attr('value',cityLng);
-			$("#viacity").attr('value',place.formatted_address);
+			$("#viacity").attr('value',place.name);
 			getDistance();
 		}); 
 		 
