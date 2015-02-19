@@ -670,8 +670,8 @@ class User extends CI_Controller {
 		$return_data['tariff']			=$data['tariff'];
 		$return_data['tariffs']			='';
 		$return_data['available_vehicles']	='';
-		$return_data['available_driver']	=$data['available_driver'];
-		$return_data['available_vehicle']	=$data['available_vehicle'];
+		$return_data['available_driver']	=$data['driver_id'];
+		$return_data['available_vehicle']	=$data['vehicle_id'];
 		
 	     if($data['recurrent_yes']==TRUE){
 		if($data['recurrent_continues']==TRUE){

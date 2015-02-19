@@ -37,22 +37,20 @@ if($qry>0){
 
 
 }
+	//add new vehicle from trip booiking
+	public function addVehicleFromTripBooking($value = null){
 
-public function addVehicleFromTripBooking($value = ''){
-
-		$data['registration_number'] = $value;
-		$data['organisation_id']=$this->session->userdata('organisation_id');
-		$data['user_id']=$this->session->userdata('id');
-		$this->db->set('created', 'NOW()', FALSE);
-		$this->db->insert('vehicles',$data);
-		$id = mysql_insert_id();
-		if($id > 0){
-			return $id;
-		}else{
-			return -1;
+		if($value !=null){
+			$data['registration_number'] = $value;
+			$data['organisation_id']=$this->session->userdata('organisation_id');
+			$data['user_id']=$this->session->userdata('id');
+			$this->db->set('created', 'NOW()', FALSE);
+			$this->db->insert('vehicles',$data);
+			return mysql_insert_id();
 		}
-
+		return -1;
 	}
+
 
 public function getVehicles(){ 
 	$qry='SELECT V.registration_number,V.id,V.vehicle_model_id,V.vehicle_make_id,VD.from_date,VD.to_date,VD.driver_id,VD.vehicle_id FROM vehicles AS V LEFT JOIN vehicle_drivers AS VD ON  V.id =VD.vehicle_id AND V.organisation_id = '.$this->session->userdata('organisation_id').' WHERE VD.organisation_id = '.$this->session->userdata('organisation_id').' AND VD.to_date="9999-12-30"';

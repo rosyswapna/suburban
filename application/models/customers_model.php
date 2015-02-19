@@ -90,10 +90,18 @@ class Customers_model extends CI_Model {
 		$data['user_id']=$this->session->userdata('id');
 	
 		if($data['name']!=''){
-			$condition['mobile']=$data['mobile'];
-			$condition['organisation_id']=$this->session->userdata('organisation_id');
-			$res=$this->getCustomerDetails($condition);
-			if(count($res)==0){
+			$newGuest = true;
+			if($data['mobile'] != null){
+				$condition['mobile']=$data['mobile'];
+				$res=$this->getCustomerDetails($condition);
+				if(count($res) >0){
+					$newGuest = false;
+					return $res[0]['id'];
+				}
+					
+			}
+			
+			if($newGuest){
 				$this->db->set('created', 'NOW()', FALSE);
 				$this->db->insert('customers',$data);
 				$insert_id=$this->db->insert_id();
@@ -101,12 +109,10 @@ class Customers_model extends CI_Model {
 				if($insert_id > 0){
 
 					return $insert_id;
-				}else{
-					return false;
 				}
-			}else{
-				return $res[0]['id'];
 			}
+
+			return false;
 	
 		}
 	

@@ -53,7 +53,7 @@ $attr_str='';
 			$form.='<option selected="selected"></option></br>';
 		}
 	}else{
-		$form.='<option value=" ">New '.$msg.'</option></br>';
+		$form.='<option value="">New '.$msg.'</option></br>';
 	}
 	
 	

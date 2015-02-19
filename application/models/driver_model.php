@@ -18,10 +18,24 @@ class Driver_model extends CI_Model {
 		}
 			
 		
-	}else{
-		return false;
+		}else{
+			return false;
+		}
 	}
-}
+
+	//add new vehicle from trip booiking
+	public function addDriverFromTripBooking($value = null){
+
+		if($value !=null){
+			$data['name'] = $value;
+			$data['organisation_id']=$this->session->userdata('organisation_id');
+			$data['user_id']=$this->session->userdata('id');
+			$this->db->set('created', 'NOW()', FALSE);
+			$this->db->insert('drivers',$data);
+			return mysql_insert_id();
+		}
+		return -1;
+	}
 	
 	
 	
