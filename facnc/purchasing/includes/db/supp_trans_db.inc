@@ -209,11 +209,15 @@ function get_sql_for_supplier_inquiry($filter, $after_date, $to_date, $supplier_
    		$sql2 .= " AND trans.supplier_id = ".db_escape($supplier_id);
 	}else{
 		if($supp_type!=''){
-			$sql .= " AND supplier.supp_ref LIKE '".$supp_type."%'";
-			$sql2 .= " AND supplier.supp_ref LIKE '".$supp_type."%'";
+			if($supp_type == CNC_VEHICLE_OWNER){
+				$sqlSpType .= " AND (supplier.supp_ref LIKE '".CNC_VEHICLE_OWNER."%' OR supplier.supp_ref LIKE '".CNC_SUPPLIER_GROUP."%')";
+				
+			}else{
+				$sqlSpType .= " AND supplier.supp_ref LIKE '".$supp_type."%'";
+			}
+			$sql .= $sqlSpType;
+			$sql2 .= $sqlSpType;
 		}
-			
-		
 	}
 	
 	if (($filter == '6')) 

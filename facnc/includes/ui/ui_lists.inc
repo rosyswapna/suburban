@@ -601,7 +601,7 @@ function owner_list($name, $selected_id=null, $spec_option=false, $submit_on_cha
 {
 	global $all_items;
 
-	$sql = "SELECT supplier_id, supp_name, curr_code, inactive FROM ".TB_PREF."suppliers WHERE supp_ref LIKE 'VW%'";
+	$sql = "SELECT supplier_id, supp_name, curr_code, inactive FROM ".TB_PREF."suppliers WHERE supp_ref LIKE 'VW%' OR supp_ref LIKE 'SG%'";
 
 	$mode = get_company_pref('no_owner_list');
 

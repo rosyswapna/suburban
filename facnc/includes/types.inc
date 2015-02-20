@@ -260,6 +260,8 @@ define('SECURITY_ROLE_SYSADM',2);//system administrator
 
 define('CNC_DRIVER','DR');
 define('CNC_VEHICLE_OWNER','VW');
+define('CNC_SUPPLIER_GROUP','SG');
+
 define('CNC_CUSTOMER','C');
 define('CNC_CUSTOMER_GROUP','CG');
 
