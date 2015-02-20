@@ -104,7 +104,9 @@
 						if( !isset($vehicle_makes[$vehicles[$det['id']]['make_id']]) || $vehicle_makes[$vehicles[$det['id']]['make_id']]==''){ echo '';}else{echo $vehicle_makes[$vehicles[$det['id']]['make_id']].br();}?></td>
 						<td><?php  if( !isset($owners[$det['id']]['name']) || $owners[$det['id']]['name']==''){ echo '';}else{echo $owners[$det['id']]['name'].br();}?>
 						<?php if( !isset($owners[$det['id']]['mobile']) || $owners[$det['id']]['mobile']==''){ echo '';}else{echo $owners[$det['id']]['mobile'].br();}?>
-						<?php if( !isset($owners[$det['id']]['address']) || $owners[$det['id']]['address']==''){ echo '';}else{echo $owners[$det['id']]['address'].br();}?></td>
+						<?php if( !isset($owners[$det['id']]['address']) || $owners[$det['id']]['address']==''){ echo '';}else{echo $owners[$det['id']]['address'].br();}
+						if( !isset($supplier_groups[$vehicles[$det['id']]['supplier_group_id']]) || $supplier_groups[$vehicles[$det['id']]['supplier_group_id']]==''){ echo '';}else{echo $supplier_groups[$vehicles[$det['id']]['supplier_group_id']].br();}
+						?></td>
 						<td><?php if(!isset($drivers[$det['id']]['driver_name']) || $drivers[$det['id']]['driver_name']==''){ echo '';}else{echo $drivers[$det['id']]['driver_name'].br();}
 						if(!isset($drivers[$det['id']]['mobile']) || $drivers[$det['id']]['mobile']==''){ echo '';}else{echo $drivers[$det['id']]['mobile'].br();}
 						if(!isset($drivers[$det['id']]['from_date']) || $drivers[$det['id']]['from_date']==''){ echo '';}else{echo $drivers[$det['id']]['from_date']; } ?></td>
