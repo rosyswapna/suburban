@@ -190,18 +190,21 @@ return true;
 	
 
 	//----------insert owner--------------------------------------------
-	public function insertOwner($data,$login,$supplier_group_id){
+	public function mapDetails($v_owner){
 		
-		$login_id = $this->getLoginId($data,$login);
+		/*$login_id = $this->getLoginId($data,$login);
 		$data['login_id'] = $login_id;
 		$qry=$this->db->set('created', 'NOW()', FALSE);
 		$v_id=$this->mysession->get('vehicle_id');
 		$qry=$this->db->set('vehicle_id', $v_id);
-		$qry=$this->db->insert('vehicle_owners',$data);
-
-		if($o_id = $this->db->insert_id()){
-			$map_qry=$this->db->set('vehicle_owner_id', $o_id);
-			$map_qry=$this->db->set('supplier_group_id', $supplier_group_id);
+		$qry=$this->db->insert('vehicle_owners',$data);*/
+	if(!empty($v_owner)){
+		if($v_owner['vehicle_owner_id']){ 
+			$map_qry=$this->db->set('vehicle_owner_id', $v_owner['vehicle_owner_id']);
+			}
+		if($v_owner['supplier_group_id']){ 
+			$map_qry=$this->db->set('supplier_group_id', $v_owner['supplier_group_id']);
+			}
 			$v_id=$this->mysession->get('vehicle_id');
 			$map_qry=$this->db->where('id',$v_id);
 			//newly added-to be organisation based
@@ -209,10 +212,25 @@ return true;
 			$map_qry=$this->db->where('organisation_id', $org_id );
 			//---
 			$map_qry=$this->db->update('vehicles');
-			return $o_id;
+			return true;
 		}else{
 			return false;
 		}
+	}
+	public function insertOwner($data,$login){
+		$login_id = $this->getLoginId($data,$login);
+		$data['login_id'] = $login_id;
+		$qry=$this->db->set('created', 'NOW()', FALSE);
+		$v_id=$this->mysession->get('vehicle_id');
+		$qry=$this->db->set('vehicle_id', $v_id);
+		$qry=$this->db->insert('vehicle_owners',$data);
+		$o_id=$this->db->insert_id();
+		   if($o_id>0){
+		   return $o_id;
+		   }
+		   else{
+		   return false;
+		   }
 	}
 	//------------------------------------------------------------------
 
