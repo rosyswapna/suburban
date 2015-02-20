@@ -28,4 +28,15 @@ CREATE TABLE IF NOT EXISTS `supplier_groups` (
 ALTER TABLE `vehicles`  ADD `supplier_group_id` INT(11) NOT NULL AFTER `vehicle_owner_id`;
 
 
+--Company setting for accounts need following changes for company id '1'--
+--table prefix change with company id--
+--For creating a new company , do not update the followings--
+INSERT INTO `1_chart_master` (`account_code`, `account_code2`, `account_name`, `account_type`, `inactive`) VALUES
+('2040', '', 'Driver Bata', '4', 0),('2041', '', 'Night Halt', '4', 0);
+INSERT INTO `1_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
+('default_driver_bata_act', 'glsetup.items', 'varchar', 15, '2040'),('default_night_halt_act', 'glsetup.items', 'varchar', 15, '2041');
+
+
+
+
 
