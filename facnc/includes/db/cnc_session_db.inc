@@ -219,20 +219,28 @@ function get_driver_vouchers_with_invoice($inv_no){
 
 //get invoiced trip vouchers by vehicle owner
 function get_vehicle_vouchers_with_invoice($inv_no){
-	$sql = "SELECT voucher.*,vh.vehicle_owner_id,owner.name as owner_name
+	$sql = "SELECT voucher.*,vh.vehicle_owner_id,owner.name as owner_name,vh.supplier_group_id,sg.name as group_name
 		FROM trip_vouchers voucher
 		LEFT JOIN trips tr ON tr.id = voucher.trip_id
 		LEFT JOIN vehicles vh ON vh.id = tr.vehicle_id
 		LEFT JOIN vehicle_owners owner ON owner.id = vh.vehicle_owner_id
+		LEFT JOIN supplier_groups sg ON sg.id = vh.supplier_group_id
 		WHERE voucher.id IN(SELECT trip_voucher FROM ".TB_PREF."debtor_trans_details WHERE debtor_trans_no =".db_escape($inv_no)." AND debtor_trans_type = ".ST_SALESINVOICE.")";
-	
+
+
+
 	
 	$result = db_query($sql, "could not get vouchers");
 	$data = array();
 	while($row = db_fetch_assoc($result)){
-		if($row['vehicle_owner_id'] > 0)
-			$data[$row['vehicle_owner_id']][] = $row;	
+
+		if($row['supplier_group_id'] > 0)
+			$data['SG'.$row['supplier_group_id']][] = $row;
+		elseif($row['vehicle_owner_id'] > 0)
+			$data['VW'.$row['vehicle_owner_id']][] = $row;
+			
 	}
+	
 
 	return $data;
 }

@@ -13,7 +13,7 @@ include_once($path_to_root . "/includes/db/cnc_session_db.inc");
 
 set_page_security( @$_SESSION['PO']->trans_type,
 	array(ST_SUPPINVOICE => 'SA_DRIVERINVOICE'),
-	array(	'DriverInvoice' => 'SA_VEHICLEINVOICE',
+	array(	'VehicleInvoice' => 'SA_VEHICLEINVOICE',
 		'AddedVPI' => 'SA_VEHICLEINVOICE')
 );
 
@@ -91,7 +91,7 @@ if (isset($_POST['Commit']))
 		//-----------------process each driver's invoice looping through vouchers-------
 		foreach($_SESSION['vouchers'] as $owner => $vouchers){
 
-			$supplier_id = get_cnc_supplier_id("VW".$owner);
+			$supplier_id = get_cnc_supplier_id($owner);
 			create_new_po(ST_SUPPINVOICE, 0);
 			copy_from_cart();
 			$_SESSION['PO']->voucher = $vouchers;
@@ -196,22 +196,29 @@ display_heading(_("Vehicle Trip Details"));
 
 		$total = 0;
 		$k = 0;
-	   	foreach ($vouchers as $driver => $voucher_list)
+	   	foreach ($vouchers as $owner => $voucher_list)
 	   	{
+			//echo "<pre>";print_r($voucher_list);echo "</pre>";exit;
 			$trip_ids = array();
-			$driver_name = (isset($voucher_list[0]))?$voucher_list[0]['owner_name']:"";
-			$line_total = 0;
-			$no_of_days = 0;
+			$owner_name = "";
+			if((isset($voucher_list[0]))){
+				if($voucher_list[0]['supplier_group_id'] > 0)
+					$owner_name = $voucher_list[0]['group_name'];
+				else
+					$owner_name = $voucher_list[0]['owner_name'];
+			}
+			
+			$line_total = 0;$no_of_days = 0;
 			foreach($voucher_list as $voucher){
 				$trip_ids[] = $voucher['trip_id'];
 				$no_of_days += $voucher['no_of_days'];
-				$line_total = $voucher['vehicle_payment_amount'];
+				$line_total += $voucher['vehicle_payment_amount'];
 			}
 			
 	    		$line_total =	round($line_total,  user_price_dec());
 	    	
 	    		alt_table_row_color($k);
-				label_cell($driver_name);
+				label_cell($owner_name);
 				label_cell(implode(',',$trip_ids));
 				
 				label_cell($no_of_days);
