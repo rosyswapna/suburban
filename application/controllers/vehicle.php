@@ -808,16 +808,24 @@ $err=True;
 				}
 				 
 				if($owner_id==gINVALID ){ 
+					
 		
 					$id=$this->mysession->get('vehicle_id');
-					$res=$this->vehicle_model->insertOwner($data,$login,$supplier_group_id);
-
+				if($data['name']!=''&& $data['mobile']!=''){
+					$v_owner['vehicle_owner_id']=$this->vehicle_model->insertOwner($data,$login);
+					if($v_owner['vehicle_owner_id']){
+					//vehicle owner enter as supplier in fa 
+						$this->load->model('account_model');
+						$this->account_model->add_fa_supplier($v_owner['vehicle_owner_id'],"VW");
+						}
+				}
+				if($supplier_group_id>0){
+					$v_owner['supplier_group_id']=$supplier_group_id;
+				}
+				
+				$res=$this->vehicle_model->mapDetails($v_owner);
 					if($res) {
 	
-						//vehicle owner enter as supplier in fa 
-						$this->load->model('account_model');
-						$this->account_model->add_fa_supplier($res,"VW");
-
 						$this->mysession->set('owner_Success',' Owner Details Added Succesfully..!');
 						$this->mysession->set('owner_Error','');
 		
