@@ -1717,11 +1717,9 @@ public function profile() {
 			//echo "<pre>";print_r($totalTable);echo "</pre>";exit;
 			
 		}else{
-			$tripsTable['theader'] = array();
-			$totalTable['theader'] = array();
-			$tripsTable['tdata'] = array();
-			$totalTable['tdata'] = array();
-			$totalTable['tfooter'] = array();
+			$tripsTable = false;
+			$totalTable = false;
+			
 		}
 		return array($tripsTable,$totalTable);
 	}
