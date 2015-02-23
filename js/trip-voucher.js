@@ -1,5 +1,8 @@
 $(document).ready(function(){
+	
 
+	var ATTACHED_VEHICLE=3;
+	
  var base_url=window.location.origin;
 
 $('.complete-trip').click(function(){
@@ -43,6 +46,7 @@ $('.voucher').on('click',function(){
 	$('#voucher-hide').css('display','none');
 	
 	
+	
 	$.post(base_url+"/trip-booking/getTripExpenses",
 	{
 		ajax:'YES'
@@ -83,7 +87,7 @@ $('.voucher').on('click',function(){
 	var model=$(this).attr('model');
 	var vehicle_no=$(this).attr('vehicle_no');
 	var description=$(this).attr('description');
-
+	var ownership=$(this).attr('ownership');
 
 	if(vehicle_ac_type_id==-1){
 		vehicle_ac_type_id=1;
@@ -119,8 +123,15 @@ $('.voucher').on('click',function(){
 				$('.company').val(company_name);
 				$('.model').val(model);
 				$('.vehicleno').val(vehicle_no);
-
-
+				$('.ownership').val(ownership);
+	//function to hide vehicle payment percentages
+	 
+	if($(".ownership").val()!=ATTACHED_VEHICLE){ 
+		$(".vehicle-payment").css('display','none'); 
+	}
+	else{	
+		$(".vehicle-payment").css('display','block');
+	}
 
 	$.post(base_url+"/trip-booking/getVouchers",
 		  {
@@ -278,7 +289,8 @@ $('.voucher').on('click',function(){
 						//click here
 						$('.totdriveramount-radio-container1 > .iradio_minimal > .iCheck-helper').trigger('click');
 						
-				}	
+				}
+				
 				if(data[0].vehicle_km_hr=='H'){
 						$('.totalvehiclekmamount').attr('amount-class-to-be-selected','totalvehiclehramount');
 						//click here
@@ -1330,22 +1342,30 @@ $('.trip-voucher-save').on('click',function(){
 	data['basevehiclekmamount']=vehiclebasekmamount=$('.basevehiclekmamount').val();
 	data['adtvehiclekmrate']=vehicleadtkmrate=$('.adtvehiclekmrate').val();
 	
+	if($(".ownership").val()!=ATTACHED_VEHICLE){
+	vehiclepaymentamount= 0;
+	vehiclepaymentpercentage=0;
+	totalvehicletripamount=0;
+	vehiclebase_km_hr='';
+	}else{
 
-	if($('.totalvehiclekmamount').attr('amount-class-to-be-selected')=='totalvehiclehramount'){
+	  if($('.totalvehiclekmamount').attr('amount-class-to-be-selected')=='totalvehiclehramount'){ 
 		var vehiclebase_km_hr='H'; 
-		data['vehiclepaymenthramount']=vehiclepaymentamount= $('.vehiclepaymenthramount').val();
-		data['vehiclehrpaymentpercentage']=vehiclepaymentpercentage=$('.vehiclehrpaymentpercentage').val();
-		data['totalvehiclehramount']=totalvehicletripamount=$('.totalvehiclehramount').val();
-		data['vehiclepaymentkmamount']= 'NO_VALUE';
-		data['vehiclekmpaymentpercentage']='NO_VALUE';
+			data['vehiclepaymenthramount']=vehiclepaymentamount= $('.vehiclepaymenthramount').val();
+			data['vehiclehrpaymentpercentage']=vehiclepaymentpercentage=$('.vehiclehrpaymentpercentage').val();
+			data['totalvehiclehramount']=totalvehicletripamount=$('.totalvehiclehramount').val();
+			data['vehiclepaymentkmamount']= 'NO_VALUE';
+			data['vehiclekmpaymentpercentage']='NO_VALUE';
 		
-	}else if($('.totalvehiclekmamount').attr('amount-class-to-be-selected')=='totalvehiclekmamount'){
+	  }else if($('.totalvehiclekmamount').attr('amount-class-to-be-selected')=='totalvehiclekmamount'){
 		var vehiclebase_km_hr='K'; 
-		data['vehiclepaymentkmamount']=vehiclepaymentamount= $('.vehiclepaymentkmamount').val();
-		data['vehiclekmpaymentpercentage']=vehiclepaymentpercentage=$('.vehiclekmpaymentpercentage').val();
-		data['totalvehiclekmamount']=totalvehicletripamount=$('.totalvehiclekmamount').val();
-		data['vehiclepaymenthramount']='NO_VALUE';
-		data['vehiclehrpaymentpercentage']='NO_VALUE';
+			data['vehiclepaymentkmamount']=vehiclepaymentamount= $('.vehiclepaymentkmamount').val();
+			data['vehiclekmpaymentpercentage']=vehiclepaymentpercentage=$('.vehiclekmpaymentpercentage').val();
+			data['totalvehiclekmamount']=totalvehicletripamount=$('.totalvehiclekmamount').val();
+			data['vehiclepaymenthramount']='NO_VALUE';
+			data['vehiclehrpaymentpercentage']='NO_VALUE';
+		
+	  }
 	}	
    
 
@@ -1941,6 +1961,9 @@ $('.'+whom+'paymenthramount').val(hrcommsn);
 }
 
 }
+
+
+
 
 });
 
