@@ -579,10 +579,46 @@ $this->mysession->delete('post');
 		<?php }?>
 
 		</tbody>
-		</table>
+	</table>
+
+	<?php if($TotalTable){?>
+	<table class="table table-hover table-bordered">
+		<tbody>
+
+		<?php if(isset($TotalTable['theader'])){?>
+		<tr style="background:#CCC">
+			<?php foreach($TotalTable['theader'] as $thead){?>
+			<?=$thead;?>			
+			<?php }?>
+		</tr>
+		<?php }?>
+
+
+		<?php foreach($TotalTable['tdata'] as $tr){?>
+		<tr>
+			<?php foreach($tr as $i=>$td){?>
+			<td><?php echo ($i=='label')?$td:number_format($td,2);?></td>			
+			<?php }?>
+		</tr>
+		<?php }?>
+
+		<?php if(isset($TotalTable['tfooter'])){?>
+		<tr style="background:#CCC">
+			<?php foreach($TotalTable['tfooter'] as $td){?>
+			<td><?php echo $td;?></td>			
+			<?php }?>
+		</tr>
+		<?php }?>
+
+
+		</tbody>
+	</table>
+	<?php }?>
 	
 
 	<?php 
+	echo form_hidden('driver_id',$driver_id);
+	echo form_hidden('amount',0);
 	//echo form_submit("save_trip_account","Process Trips","class='btn btn-primary'");
 	echo form_close();
 	?>

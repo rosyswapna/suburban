@@ -1591,9 +1591,11 @@ public function profile() {
 				
 				//echo "<pre>";print_r($trips);echo "</pre>";exit;
 				list($data['TripTableData'], $data['TotalTable']) = $this->DriverTripsTable($trips);
-				//echo "<pre>";print_r($data['TripTableData']);echo "</pre>";exit;
+
 				
+				//echo "<pre>";print_r($data['TotalTable']['tdata']);echo "</pre>";exit;
 				
+			
 				//$this->mysession->set('trips',$data['trips']);
 			} 
 			$data['tabs'] = $this->set_up_driver_tabs($active_tab,$param2);
@@ -1632,10 +1634,10 @@ public function profile() {
 		$tripsTable = $totalTable = array();
 
 		//trips table column header
-		$theader = array("Trip ID","Date","Days","Total Km","Total Hrs","Over Time","Trip Amount","Trip %","Halt","Bata");
+		$tripsTable['theader'] = array("Trip ID","Date","Days","Total Km","Total Hrs","Over Time","Trip Amount","Trip %","Halt","Bata");
 			
 		//total table column header
-		$total_theader = array(
+		$totalTable['theader'] = array(
 				'<th style="width:70%;">Particulars</th>',
 				'<th style="width:10%;">Tariff</th>',
 				'<th style="width:10%;">Credit</th>',
@@ -1645,25 +1647,13 @@ public function profile() {
 		$Particulars[1]= array("label"=>"Salary","tariff"=>0,"credit"=>0,"outstanding"=>0);
 		$Particulars[2]= array("label"=>"Total Halt","tariff"=>0,"credit"=>0,"outstanding"=>0);
 		$Particulars[3]= array("label"=>"Total Bata","tariff"=>0,"credit"=>0,"outstanding"=>0);
-		
-	
-		//Trip Expense Fields
-		foreach($expenses as $expense){
-			array_push($theader,$expense->description);
-			$Particulars[]= array("label"=>"Total ".$expense->description,"tariff"=>0,"credit"=>0,"outstanding"=>0);
-			
-		}
-		$Particulars[]= array("label"=>"Total","tariff"=>0,"credit"=>0,"outstanding"=>0);
 
-		$tripsTable['theader'] = $theader;
-		$totalTable['theader'] = $total_theader;
-
+		$Total = array('trf'=>0,'cr'=>0,'ots'=>0);
 		
-		//echo "<pre>";print_r($Particulars);echo "</pre>";exit;
 		if($trips){
 			$tdata = array();$i=0;
 			$TotalExpense = array();
-			$TotalHalt = $TotalBata = $TotalTripsPercentage = $Total = 0;
+			$TotalHalt = $TotalBata = $TotalTripsPercentage =  0;
 			foreach($trips as $trip){
 				//echo "<pre>";print_r($trip);echo "</pre>";exit;
 				$trip_km=$trip['end_km_reading']-$trip['start_km_reading'];
@@ -1692,35 +1682,46 @@ public function profile() {
 					array_push($tdata[$i],number_format($expAmt,2));
 
 					//total expense
-					if(isset($TotalExpense[$expense->value]))
-						$TotalExpense[$expense->value]	+= $expAmt;
+					if(isset($TotalExpense['ots'][$expense->value]))
+						$TotalExpense['ots'][$expense->value]	+= $expAmt;
 					else
-						$TotalExpense[$expense->value]	= $expAmt;
+						$TotalExpense['ots'][$expense->value]	= $expAmt;
 				}
 				$Particulars[0]['outstanding'] += $trip['driver_payment_amount'];
 				$Particulars[2]['outstanding'] += $trip['night_halt_charges'];
 				$Particulars[3]['outstanding'] += $trip['driver_bata'];
-				$Total += $trip['total_trip_amount'];
+				$Total['ots'] += $trip['driver_payment_amount']+$trip['night_halt_charges']+$trip['driver_bata'];
+				
 				$i++;//next td values
-			}
+			}//trips loop ends 
 
-			//build total td data
-			$last = count($Particulars)+1;
-			foreach($Particulars as $j=>$Particular){
-				
-				if($j > 3 && $j < $last){
-					foreach($expenses as $expense){ 
-						$totalExpAmt = $TotalExpense[$expense->value];
-						$total_tdata[$j] = array($Particular['label'],$Particular['tariff'],$Particular['credit'],$totalExpAmt);
-						
-					}
-				}
-				
-			}
-			//echo "<pre>";print_r($total_tdata);echo "</pre>";exit;
 			$tripsTable['tdata'] = $tdata;
+
+			foreach($expenses as $expense){
+				//trip table headers for expense
+				array_push($tripsTable['theader'] ,$expense->description);
+
+				//build total Trip Expense Fields
+				$TotalExAmt =(array_key_exists($expense->value,$TotalExpense['ots']))?
+					 $TotalExpense['ots'][$expense->value]:0;
+				$Total['ots'] += $TotalExAmt;
+				
+				$Particulars[]= array("label"=>"Total ".$expense->description,"tariff"=>0,"credit"=>0,"outstanding"=>$TotalExAmt);
+		
+			}
+			
+			//total table footer
+			$totalTable['tfooter']= array("label"=>"Total","tariff"=>number_format(0,2),"credit"=>number_format(0,2),"outstanding"=>number_format($Total['ots'],2));
+			$totalTable['tdata'] = $Particulars;
+			
+			//echo "<pre>";print_r($totalTable);echo "</pre>";exit;
+			
 		}else{
+			$tripsTable['theader'] = array();
+			$totalTable['theader'] = array();
 			$tripsTable['tdata'] = array();
+			$totalTable['tdata'] = array();
+			$totalTable['tfooter'] = array();
 		}
 		return array($tripsTable,$totalTable);
 	}
