@@ -232,10 +232,10 @@ echo form_close();?></td>
 			}
 			
 		}else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_COMPLETED && in_array('new_voucher',$trip_action_allowed)){ 
-			echo "<a href=".base_url().'trip/view/'.$trips[$trip_index]['trip_id']." class= ' fa fa-print' target='_blank' title='Print'></a>".nbs(5)."<span title='Voucher' class=' sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' new_voucher = 1 company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' customer_id='".$trips[$trip_index]['customer_id']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' payment_type_id='".$trips[$trip_index]['payment_type_id']."' ></span>"; 
+			echo "<a href=".base_url().'trip/view/'.$trips[$trip_index]['trip_id']." class= ' fa fa-print' target='_blank' title='Print'></a>".nbs(5)."<span title='Voucher' class=' sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' new_voucher = 1 company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' customer_id='".$trips[$trip_index]['customer_id']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' payment_type_id='".$trips[$trip_index]['payment_type_id']."' ownership='".$trips[$trip_index]['vehicle_ownership_types_id']."' ></span>"; 
 			
 		}else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_BILLED && in_array('edit_voucher',$trip_action_allowed)){
-			echo "<span title='Voucher' class='sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' new_voucher = 0 vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' customer_id='".$trips[$trip_index]['customer_id']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ></span>"; 
+			echo "<span title='Voucher' class='sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' new_voucher = 0 vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' customer_id='".$trips[$trip_index]['customer_id']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ownership='".$trips[$trip_index]['vehicle_ownership_types_id']."' ></span>"; 
 			} ?>
 			<?php }//action buttons?>
 			</td>
@@ -341,9 +341,9 @@ echo form_close();?></td>
 			
 			
 			}else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_COMPLETED && in_array('new_voucher',$trip_action_allowed)){ 
-			echo "<a href=".base_url().'trip/view/'.$trips[$trip_index]['trip_id']." class= ' fa fa-print' target='_blank' title='Print'></a>".nbs(5)."<span title='Voucher' class=' sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' new_voucher = 1 company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' customer_id='".$trips[$trip_index]['customer_id']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ></span>"; 
+			echo "<a href=".base_url().'trip/view/'.$trips[$trip_index]['trip_id']." class= ' fa fa-print' target='_blank' title='Print'></a>".nbs(5)."<span title='Voucher' class=' sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' new_voucher = 1 company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' customer_id='".$trips[$trip_index]['customer_id']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ownership='".$trips[$trip_index]['vehicle_ownership_types_id']."' ></span>"; 
 			}else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_BILLED && in_array('edit_voucher',$trip_action_allowed)){
-			echo "<span title='Voucher' class='sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' new_voucher = 0 vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' customer_id='".$trips[$trip_index]['customer_id']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ></span>"; 
+			echo "<span title='Voucher' class='sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' new_voucher = 0 vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' customer_id='".$trips[$trip_index]['customer_id']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' ownership='".$trips[$trip_index]['vehicle_ownership_types_id']."' ></span>"; 
 			} ?>
 					<?php }//action buttons?>
 			</td>
@@ -384,6 +384,8 @@ echo form_close();?></td>
 
 				<div class="row-source-full-100-percent-width-with-margin-8">
 					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
+					
+					<div class="hide-me" ><?php echo form_input(array('name'=>'ownership','class'=>'ownership'));?></div>
 				
 						<div class=" form-group margin-bottom-0-px">
 						   <?php echo form_label('Voucher Number','voucherno'); ?>
@@ -396,11 +398,11 @@ echo form_close();?></td>
 							$class="form-control";
 							$msg="Payment Type";
 							$name="payment";
-							if($payment_id!=null){
-						echo $this->form_functions->populate_dropdown($name,$payment_type,$payment_id,$class,$id='payment',$msg);
+						if($payment_id!=null){
+							echo $this->form_functions->populate_dropdown($name,$payment_type,$payment_id,$class,$id='payment',$msg);
 						}
 						else{
-						echo $this->form_functions->populate_dropdown($name,$payment_type,$payment_id='',$class,$id='payment',$msg);
+							echo $this->form_functions->populate_dropdown($name,$payment_type,$payment_id='',$class,$id='payment',$msg);
 						}?>		
 						</div>
 					</div>
@@ -857,7 +859,7 @@ echo form_close();?></td>
 
 
 			<!----------------Vehicle payment block start-------------------------->
-				<fieldset class="body-border">
+				<fieldset class="body-border vehicle-payment">
    			 		<legend class="body-head">Vehicle Payment</legend>
 						<div class="row-source-full-100-percent-width-with-margin-8">
 					<!-- col 1 -->
