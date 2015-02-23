@@ -33,6 +33,7 @@ header("Pragma: public");
 					    <th style="width:11%">Driver</th>
 						<th style="width:11%">Driver Contact</th>
 					    <th style="width:11%">Status</th>
+					    <th>Remarks</th>
 					    
 					</tr>
 				
@@ -103,7 +104,8 @@ header("Pragma: public");
 					    <td>
 							<span class="label --><?php echo $status_class[$trips[$trip_index]['trip_status_id']]; ?>"><?php echo $trip_statuses[$trips[$trip_index]['trip_status_id']];?></span>
 						
-						</td>	
+						</td>
+						<td><?php echo $trips[$trip_index]['remarks'];?></td>	
 						
 						
 					
