@@ -813,24 +813,24 @@ echo form_close();?></td>
 					<div class="div-with-5-percent-width-with-margin-10">
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label(nbs(5).'%'.nbs(2),'commperclabel'); ?>
-							<?php echo form_input(array('name'=>'driverkmpaymentpercentage','class'=>'form-control driverkmpaymentpercentage padding-2px-0-0-10-px voucher-text-box','placeholder'=>'','tabindex'=>"15",'readonly'=>'true')); 
-							?>
+							<?php //echo form_input(array('name'=>'driverkmpaymentpercentage','class'=>'form-control driverkmpaymentpercentage padding-2px-0-0-10-px voucher-text-box','placeholder'=>'','tabindex'=>"15",'readonly'=>'true')); 
+							/*$class="form-control driverkmpaymentpercentage padding-2px-0-0-10-px voucher-text-box";
+							$msg="Driver";
+							$name="driverkmpaymentpercentage";
+						
+							echo $this->form_functions->populate_dropdown($name,$driver_payment_percentages,$driver_percent_id='',$class,$id='driver_percent',$msg);
+							
+							*/?>
 						</div>
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label(nbs(5).'%'.nbs(2),'commperclabel'); ?>
 							<?php //echo form_input(array('name'=>'driverhrpaymentpercentage','class'=>'form-control driverhrpaymentpercentage padding-2px-0-0-10-px voucher-text-box','placeholder'=>'','tabindex'=>"15",'readonly'=>'true')); 
-							$class="form-control driverkmpaymentpercentage padding-2px-0-0-10-px voucher-text-box";
+							$class="form-control driverhrpaymentpercentage padding-2px-0-0-10-px voucher-text-box";
 							$msg="Driver";
-							$name="driverkmpaymentpercentage";
-							$disabled='';
-							$attr=array('tabindex'=>"15");
-						//if($payment_id!=null){
-							echo $this->form_functions->populate_dropdown($name,$driver_payment_percentages,$driver_percent_id='',$class,$id='driver_percent',$msg,$disabled,$attr);
-						/*}
-						else{
-							echo $this->form_functions->populate_dropdown($name,$payment_type,$payment_id='',$class,$id='payment',$msg);
-						}*/
-							
+							$name="driverhrpaymentpercentage";
+						
+				
+							echo $this->form_functions->populate_dropdown($name,$driver_payment_percentages,$driver_percent_id='',$class,$id='driver_percent',$msg);
 							?>
 						</div>
 						

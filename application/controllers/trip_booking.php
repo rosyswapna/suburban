@@ -377,8 +377,9 @@ class Trip_booking extends CI_Controller {
 					 $err=False;
 					 $this->mysession->set('Err_V_Ac','Choose AC Type');
 				}
-				
+				if($data['vehicle_model'] !=-1  && $data['vehicle_ac_type']!=-1){
 				$data['vehicle_id'] = $this->vehicle_model->addVehicleFromTripBooking($v_details);
+				}
 			}
 
 			//----------------------get driver--------------------------------------------
