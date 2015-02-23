@@ -40,9 +40,10 @@ if($qry>0){
 	//add new vehicle from trip booiking
 	public function addVehicleFromTripBooking($value = null){
 
-		if($value['registration_number'] !=null){
+		if($value !=null){
 			
-			
+			$value['organisation_id']=$this->session->userdata('organisation_id');
+			$value['user_id']=$this->session->userdata('id');
 			$this->db->set('created', 'NOW()', FALSE);
 			$this->db->insert('vehicles',$value);
 			return mysql_insert_id();

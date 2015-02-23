@@ -222,7 +222,7 @@ class Trip_booking extends CI_Controller {
 				//$data['vehicle_make']			=	$this->input->post('vehicle_make');
 				$data['vehicle_model']			=	$this->input->post('vehicle_model');
 				$data['remarks']			=	$this->input->post('remarks');
-				
+				$data['advanced_vehicle']='';
 				if(isset($_REQUEST['beacon_light'])){
 					$data['beacon_light']=TRUE;
 					$data['advanced_vehicle']=TRUE;
@@ -354,7 +354,7 @@ class Trip_booking extends CI_Controller {
 						$data['recurrent_alternatives'] = '';
 
 					}
-			
+			$err=True;
 			//-------------------get vehicle -----------------------------
 
 			if(is_numeric($this->input->post('available_vehicle')) && $this->input->post('available_vehicle') > 0){
@@ -365,9 +365,20 @@ class Trip_booking extends CI_Controller {
 				$v_details['vehicle_model_id']=$data['vehicle_model'];
 				$v_details['vehicle_ac_type_id']=$data['vehicle_ac_type'];
 				$v_details['registration_number']=$this->input->post('available_vehicle');
-				$v_details['organisation_id']=$this->session->userdata('organisation_id');
-				$v_details['user_id']=$this->session->userdata('id');
-				 $data['vehicle_id'] = $this->vehicle_model->addVehicleFromTripBooking($v_details);
+				
+				$this->form_validation->set_rules('available_vehicle','Registration Number','trim|required|xss_clean|regex_match[/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/]');
+				if($data['vehicle_model'] ==-1){
+					 $data['vehicle_model'] ='';
+					 $err=False;
+					 $this->mysession->set('Err_Vmodel','Choose Model Type');
+				}
+				if($data['vehicle_ac_type'] ==-1){
+					 $data['vehicle_ac_type'] ='';
+					 $err=False;
+					 $this->mysession->set('Err_V_Ac','Choose AC Type');
+				}
+				
+				$data['vehicle_id'] = $this->vehicle_model->addVehicleFromTripBooking($v_details);
 			}
 
 			//----------------------get driver--------------------------------------------
@@ -388,8 +399,11 @@ class Trip_booking extends CI_Controller {
 				$data['driver_id'] = $this->trip_booking_model->getDriver($data['vehicle_id']);
 			}
 			//-------------------------------------------------
-
-			if($this->form_validation->run()==False || $trip_whom == false){
+				
+			
+	
+			
+			if($this->form_validation->run()==False || $trip_whom == false || $err==False){
 				
 				$this->mysession->set('post',$data);
 				redirect(base_url().'organization/front-desk/trip-booking/'.$data['trip_id']);

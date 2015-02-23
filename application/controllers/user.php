@@ -606,9 +606,9 @@ class User extends CI_Controller {
 		$return_data['recurrent_continues']	=$data['recurrent_continues'];
 		$return_data['recurrent_alternatives']	=$data['recurrent_alternatives'];
 		$return_data['advanced']		=$data['advanced'];
-	     if($data['advanced_vehicle']){
+	     
 		$return_data['advanced_vehicle']	=$data['advanced_vehicle'];
-		}
+		
 		$return_data['customer_group']		=$data['customer_group'];
 	     if(isset($data['guest_id'])){
 		$return_data['guest_id']		=$data['guest_id'];

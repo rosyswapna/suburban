@@ -479,15 +479,30 @@ $available_vehicles='';*/
 						<?php /* $class="form-control row-source-50-percent-width-with-margin-8";
 							  $id='vehicle-type';
 						echo $this->form_functions->populate_dropdown('vehicle_type',$vehicle_types,$vehicle_type,$class,$id,$msg="Type");*/
-								$class="form-control row-source-50-percent-width-with-margin-8";
+								$class="form-control row-source-50-percent-width-with-margin-8 mandatory";
 							  $id='vehicle-model';
 						echo $this->form_functions->populate_dropdown('vehicle_model',$vehicle_models,$vehicle_model_id,$class,$id,$msg="Vehicle Models");
-								$class="form-control row-source-50-percent-width-with-margin-8";	
-								$id='vehicle-ac-type';
-						echo $this->form_functions->populate_dropdown('vehicle_ac_type',$vehicle_ac_types,$vehicle_ac_type,$class,$id,$msg="AC/Non AC");
-						/*echo $this->form_functions->form_error_session('vehicle_type', '<p class="text-red">', '</p>')*/ echo $this->form_functions->form_error_session('vehicle_model', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('vehicle_ac_types', '<p class="text-red">', '</p>');						
-						echo br(2);
-						 ?>
+								$class="form-control row-source-50-percent-width-with-margin-8 mandatory";	
+								$id='vehicle-ac-type';?>
+					
+								
+						<?php echo $this->form_functions->populate_dropdown('vehicle_ac_type',$vehicle_ac_types,$vehicle_ac_type,$class,$id,$msg="AC/Non AC");
+						/*echo $this->form_functions->form_error_session('vehicle_type', '<p class="text-red">', '</p>')*/ 
+						//echo $this->form_functions->form_error_session('vehicle_model', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('vehicle_ac_type', '<p class="text-red">', '</p>');	?>					
+					<span class="text-red"><?php
+						if($this->mysession->get('Err_V_Ac') != ''){
+							echo $this->mysession->get('Err_V_Ac');
+							$this->mysession->delete('Err_V_Ac');
+						} 
+						echo nbs(7);
+						if($this->mysession->get('Err_Vmodel') != ''){
+							echo $this->mysession->get('Err_Vmodel');
+							$this->mysession->delete('Err_Vmodel');
+						 }
+					?></span>
+					
+					 
+					
 						</div>
 
 						<?php if($booking_by == 'customer') { ?>
@@ -505,7 +520,7 @@ $available_vehicles='';*/
 						$available_vehicle='';	
 						}
 						echo $this->form_functions->populate_editable_dropdown('available_vehicle', $available_vehicles,$class,'vehicles',array(),"Vehicle",$available_vehicle,$id);
-						
+						echo $this->form_functions->form_error_session('available_vehicle', '<p class="text-red">', '</p>');
 						echo br(2);
 						?>
 						<div class="hide-me vehicle-tarif-checker" tariff_id="<?php echo $tariff;?>" available_vehicle_id="<?php echo $available_vehicle;?>"></div>
