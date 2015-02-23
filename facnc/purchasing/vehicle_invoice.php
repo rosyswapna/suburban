@@ -23,7 +23,10 @@ if ($use_popup_windows)
 if ($use_date_picker)
 	$js .= get_js_date_picker();
 
-$_SESSION['page_title'] = _($help_context = "Vehicle Invoice");
+if (isset($_GET['ProcessComplete']))
+	$_SESSION['page_title'] = _($help_context = "Trip Invoice");	
+else
+	$_SESSION['page_title'] = _($help_context = "Vehicle Invoice");
 
 page($_SESSION['page_title'], false, false, "", $js);
 

@@ -1559,18 +1559,20 @@ public function profile() {
 	public function ShowDriverProfile($param1,$param2){ 
 		if($this->session_check()==true || $this->driver_session_check()==true) { 
 			$data['mode']=$param2;
+			$DriverSalary = 0;
 			if($param2!=null&& $param2!=gINVALID){
 				$org_id=$this->session->userdata('organisation_id');
 				$arry=array('id'=>$param2,'organisation_id'=>$org_id);
 				//$data['result']=$this->user_model->getDriverDetails($arry);
 				$data['result']=$this->user_model->getDriverUser($param2); 
 				//echo "<pre>";print_r($data['result']);echo "</pre>";exit;
+				$DriverSalary = @$data['result']['salary'];
 			}   
 
 			$tdate=date('Y-m-d');
-				$date=explode("-",$tdate);
-				$fdate=$date[0].'-'.$date[1].'-01';
-				$todate=$date[0].'-'.$date[1].'-31';
+			$date=explode("-",$tdate);
+			$fdate=$date[0].'-'.$date[1].'-01';
+			$todate=$date[0].'-'.$date[1].'-31';
 			//trip details
 			$active_tab = 'd_tab';//default profile tab
 			if($param2!=''){
@@ -1590,7 +1592,7 @@ public function profile() {
 				$trips = $this->trip_booking_model->getDriverVouchers($param2,$fdate,$todate);
 				
 				//echo "<pre>";print_r($trips);echo "</pre>";exit;
-				list($data['TripTableData'], $data['TotalTable']) = $this->DriverTripsTable($trips);
+				list($data['TripTableData'], $data['TotalTable']) = $this->DriverTripsTable($trips,$DriverSalary);
 
 				
 				//echo "<pre>";print_r($data['TotalTable']['tdata']);echo "</pre>";exit;
@@ -1644,11 +1646,11 @@ public function profile() {
 				'<th style="width:10%;">Outstanding</th>');
 		//total table row header
 		$Particulars[0]= array("label"=>"Total Trips %","tariff"=>0,"credit"=>0,"outstanding"=>0);
-		$Particulars[1]= array("label"=>"Salary","tariff"=>0,"credit"=>0,"outstanding"=>0);
+		$Particulars[1]= array("label"=>"Salary","tariff"=>0,"credit"=>0,"outstanding"=>$Salary);
 		$Particulars[2]= array("label"=>"Total Halt","tariff"=>0,"credit"=>0,"outstanding"=>0);
 		$Particulars[3]= array("label"=>"Total Bata","tariff"=>0,"credit"=>0,"outstanding"=>0);
 
-		$Total = array('trf'=>0,'cr'=>0,'ots'=>0);
+		$Total = array('trf'=>0,'cr'=>0,'ots'=>$Salary);
 		
 		if($trips){
 			$tdata = array();$i=0;
@@ -1717,11 +1719,9 @@ public function profile() {
 			//echo "<pre>";print_r($totalTable);echo "</pre>";exit;
 			
 		}else{
-			$tripsTable['theader'] = array();
-			$totalTable['theader'] = array();
-			$tripsTable['tdata'] = array();
-			$totalTable['tdata'] = array();
-			$totalTable['tfooter'] = array();
+			$tripsTable = false;
+			$totalTable = false;
+			
 		}
 		return array($tripsTable,$totalTable);
 	}

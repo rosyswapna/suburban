@@ -558,8 +558,13 @@ $this->mysession->delete('post');
 		<td><?php echo form_submit("date_search","Search","class='btn btn-primary'");
 					echo form_close();?></td>
 	</table><br/>
+
+
+	<?php if($TripTableData){?>
+		
 			
 	<?php  echo form_open(base_url()."account/driver_trip_save"); ?>
+
 	<table class="table table-hover table-bordered">
 		<tbody>
 		<?php if(isset($TripTableData['theader'])){?>
@@ -614,6 +619,12 @@ $this->mysession->delete('post');
 		</tbody>
 	</table>
 	<?php }?>
+
+	<?php }else{?><!--Trip table condition-->
+	<div class="msg"> No Data
+	</div>
+	<?php }?>
+	
 	
 
 	<?php 
