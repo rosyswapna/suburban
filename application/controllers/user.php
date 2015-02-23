@@ -1360,20 +1360,17 @@ public function profile() {
 	}
 	public function ShowDriverView($param2) {
 		if($this->session_check()==true) {
-				$data['select']=$this->select_Box_Values();
-				
-				
+			$data['select']=$this->select_Box_Values();
+
 			//trip details
-		
 			if($param2!=''){
-			
-			$data['trips']=$this->trip_booking_model->getDriverVouchers($param2);
+				$data['trips']=$this->trip_booking_model->getDriverVouchers($param2);
 			}
 			
 			
-				$data['title']="Driver Details | ".PRODUCT_NAME;  
-				$page='user-pages/addDrivers';
-				 $this->load_templates($page,$data);
+			$data['title']="Driver Details | ".PRODUCT_NAME;  
+			$page='user-pages/addDrivers';
+			$this->load_templates($page,$data);
 		}else{
 			$this->notAuthorized();
 		}
@@ -1590,9 +1587,15 @@ public function profile() {
 					$data['trip_tab']='active';
 					$active_tab = 't_tab';//trip tab
 				} 
-				$data['trips']=$this->trip_booking_model->getDriverVouchers($param2,$fdate,$todate); 
+				$trips = $this->trip_booking_model->getDriverVouchers($param2,$fdate,$todate);
 				
+				//echo "<pre>";print_r($trips);echo "</pre>";exit;
+				list($data['TripTableData'], $data['TotalTable']) = $this->DriverTripsTable($trips);
+
 				
+				//echo "<pre>";print_r($data['TotalTable']['tdata']);echo "</pre>";exit;
+				
+			
 				//$this->mysession->set('trips',$data['trips']);
 			} 
 			$data['tabs'] = $this->set_up_driver_tabs($active_tab,$param2);
@@ -1606,7 +1609,7 @@ public function profile() {
 			$data['driver_tab']='active';
 			
 		//-----------get trip expense type array----------------------
-			$data['expense']=$this->trip_booking_model->getTripExpenses();
+			
 			
 			
 		//------------------------------------------------------------
@@ -1621,6 +1624,109 @@ public function profile() {
 			$this->notAuthorized();
 		}
 	}
+
+
+	//driver tab table generation
+	function DriverTripsTable($trips = array(),$Salary=0)
+	{
+		$expenses=$this->trip_booking_model->getTripExpenses(); 
+
+		$tripsTable = $totalTable = array();
+
+		//trips table column header
+		$tripsTable['theader'] = array("Trip ID","Date","Days","Total Km","Total Hrs","Over Time","Trip Amount","Trip %","Halt","Bata");
+			
+		//total table column header
+		$totalTable['theader'] = array(
+				'<th style="width:70%;">Particulars</th>',
+				'<th style="width:10%;">Tariff</th>',
+				'<th style="width:10%;">Credit</th>',
+				'<th style="width:10%;">Outstanding</th>');
+		//total table row header
+		$Particulars[0]= array("label"=>"Total Trips %","tariff"=>0,"credit"=>0,"outstanding"=>0);
+		$Particulars[1]= array("label"=>"Salary","tariff"=>0,"credit"=>0,"outstanding"=>0);
+		$Particulars[2]= array("label"=>"Total Halt","tariff"=>0,"credit"=>0,"outstanding"=>0);
+		$Particulars[3]= array("label"=>"Total Bata","tariff"=>0,"credit"=>0,"outstanding"=>0);
+
+		$Total = array('trf'=>0,'cr'=>0,'ots'=>0);
+		
+		if($trips){
+			$tdata = array();$i=0;
+			$TotalExpense = array();
+			$TotalHalt = $TotalBata = $TotalTripsPercentage =  0;
+			foreach($trips as $trip){
+				//echo "<pre>";print_r($trip);echo "</pre>";exit;
+				$trip_km=$trip['end_km_reading']-$trip['start_km_reading'];
+				$trip_hrs = 0;
+				$no_of_days=$trip['no_of_days'];
+
+				$date1 = date_create($trip['pick_up_date'].' '.$trip['pick_up_time']);
+				$date2 = date_create($trip['drop_date'].' '.$trip['drop_time']);
+
+				$diff= date_diff($date1, $date2);
+				$trip_hrs = $diff->h;
+	
+				if($trip_hrs > 10) 
+					$over_time = $trip_hrs % 10;
+				else 
+					$over_time = 0;
+
+			
+				$tdata[$i] = array($trip['trip_id'],$trip['pick_up_date'],$trip['no_of_days'],$trip_km,$trip_hrs,$over_time,number_format($trip['driver_trip_amount'],2),number_format($trip['driver_payment_amount'],2),number_format($trip['night_halt_charges'],2),number_format($trip['driver_bata'],2)
+					);
+
+				$expenseValue = unserialize($trip['trip_expense']);
+			
+				foreach($expenses as $expense){
+					$expAmt = (isset($expenseValue[$expense->value]) && $expenseValue[$expense->value] != null)?$expenseValue[$expense->value]:0;
+					array_push($tdata[$i],number_format($expAmt,2));
+
+					//total expense
+					if(isset($TotalExpense['ots'][$expense->value]))
+						$TotalExpense['ots'][$expense->value]	+= $expAmt;
+					else
+						$TotalExpense['ots'][$expense->value]	= $expAmt;
+				}
+				$Particulars[0]['outstanding'] += $trip['driver_payment_amount'];
+				$Particulars[2]['outstanding'] += $trip['night_halt_charges'];
+				$Particulars[3]['outstanding'] += $trip['driver_bata'];
+				$Total['ots'] += $trip['driver_payment_amount']+$trip['night_halt_charges']+$trip['driver_bata'];
+				
+				$i++;//next td values
+			}//trips loop ends 
+
+			$tripsTable['tdata'] = $tdata;
+
+			foreach($expenses as $expense){
+				//trip table headers for expense
+				array_push($tripsTable['theader'] ,$expense->description);
+
+				//build total Trip Expense Fields
+				$TotalExAmt =(array_key_exists($expense->value,$TotalExpense['ots']))?
+					 $TotalExpense['ots'][$expense->value]:0;
+				$Total['ots'] += $TotalExAmt;
+				
+				$Particulars[]= array("label"=>"Total ".$expense->description,"tariff"=>0,"credit"=>0,"outstanding"=>$TotalExAmt);
+		
+			}
+			
+			//total table footer
+			$totalTable['tfooter']= array("label"=>"Total","tariff"=>number_format(0,2),"credit"=>number_format(0,2),"outstanding"=>number_format($Total['ots'],2));
+			$totalTable['tdata'] = $Particulars;
+			
+			//echo "<pre>";print_r($totalTable);echo "</pre>";exit;
+			
+		}else{
+			$tripsTable['theader'] = array();
+			$totalTable['theader'] = array();
+			$tripsTable['tdata'] = array();
+			$totalTable['tdata'] = array();
+			$totalTable['tfooter'] = array();
+		}
+		return array($tripsTable,$totalTable);
+	}
+	//------------------------------------------------------------------------------------------
+
 
 	/*driver page tab setting ,
 	1.first parameter is tab identifier you want set active tab, default profile
