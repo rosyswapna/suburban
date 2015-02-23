@@ -362,7 +362,12 @@ class Trip_booking extends CI_Controller {
 			}elseif($this->input->post('available_vehicle') == '' || $this->input->post('available_vehicle') == gINVALID){
 				$data['vehicle_id'] = gINVALID;
 			}else{
-				 $data['vehicle_id'] = $this->vehicle_model->addVehicleFromTripBooking($this->input->post('available_vehicle'));
+				$v_details['vehicle_model_id']=$data['vehicle_model'];
+				$v_details['vehicle_ac_type_id']=$data['vehicle_ac_type'];
+				$v_details['registration_number']=$this->input->post('available_vehicle');
+				$v_details['organisation_id']=$this->session->userdata('organisation_id');
+				$v_details['user_id']=$this->session->userdata('id');
+				 $data['vehicle_id'] = $this->vehicle_model->addVehicleFromTripBooking($v_details);
 			}
 
 			//----------------------get driver--------------------------------------------

@@ -1,8 +1,14 @@
 <?php 
 class Form_functions{
-function populate_dropdown($name = '', $options = array(), $selected = array(),$class='',$id='',$msg='select',$disabled=''){
+function populate_dropdown($name = '', $options = array(), $selected = array(),$class='',$id='',$msg='select',$disabled='',$attr=array()){
 $CI = & get_instance();
-$form = '<select name="'.$name.'" class="'.$class.'" id="'.$id.'" '.$disabled.'/>';
+$attr_str='';
+	foreach($attr as $k=>$v){
+		$attr_str.= ' '.$k.'="'.$v.'"';
+	}
+	
+
+$form = '<select '.$attr_str.' name="'.$name.'" class="'.$class.'" id="'.$id.'" '.$disabled.'/>';
 if($selected==''){
 $form.='<option value="-1" selected="selected" >--'.$msg.'--</option></br>';
 }

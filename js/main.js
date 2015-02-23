@@ -2066,12 +2066,12 @@ $('#customer-list').css('display','none');
 });
 
 //reset vehicle ac and model values
-$("#available_vehicle").on('keyup',function(){
+//$("#available_vehicle").on('keyup',function(){
 
-$("#vehicle-model").val(-1);
-$("#vehicle-ac-type").val(-1);
+//$("#vehicle-model").val(-1);
+//$("#vehicle-ac-type").val(-1);
 	
-});
+//});
 
  });
 
