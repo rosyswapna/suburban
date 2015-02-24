@@ -37,6 +37,10 @@ INSERT INTO `1_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
 ('default_driver_bata_act', 'glsetup.items', 'varchar', 15, '2040'),('default_night_halt_act', 'glsetup.items', 'varchar', 15, '2041');
 
 
+INSERT INTO `1_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
+('invoice_template', 'setup.company', 'int', 11, '107');
+
+
 
 
 

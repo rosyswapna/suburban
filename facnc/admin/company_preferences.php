@@ -110,7 +110,7 @@ if (isset($_POST['update']) && $_POST['update'] != "")
 				'no_item_list' => 0, 'no_customer_list' => 0, 
 				'no_supplier_list' =>0, 'base_sales', 
 				'time_zone' => 0, 'add_pct', 'round_to', 'login_tout', 'auto_curr_reval',
-				'bcc_email','default_payment_terms'))
+				'bcc_email','default_payment_terms','invoice_template'))
 		);
 
 		$_SESSION['wa_current_user']->timeout = $_POST['login_tout'];
@@ -160,6 +160,7 @@ $_POST['default_payment_terms']  = $myrow["default_payment_terms"];
 $_POST['f_year']  = $myrow["f_year"];
 $_POST['time_zone']  = $myrow["time_zone"];
 $_POST['version_id']  = $myrow["version_id"];
+$_POST['invoice_template'] = $myrow["invoice_template"];
 $_POST['add_pct'] = $myrow['add_pct'];
 $_POST['login_tout'] = $myrow['login_tout'];
 if ($_POST['add_pct'] == -1)
@@ -215,6 +216,7 @@ check_row(_("Time Zone on Reports"), 'time_zone', $_POST['time_zone']);
 //text_row_ex(_("Login Timeout:"), 'login_tout', 10, 10, '', null, null, _('seconds'));
 text_row_ex(_("Login Timeout:"), 'login_tout', 10, 10, 'Session timeout', null, null, _('seconds'),true);
 label_row(_("Version Id"), $_POST['version_id']);
+invoice_template_list_row(_("Invoice Template"),'invoice_template',$_POST['invoice_template']);
 
 end_outer_table(1);
 
