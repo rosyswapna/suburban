@@ -37,7 +37,6 @@ class Vehicle extends CI_Controller {
 			if(isset($_REQUEST['owner-submit'])){
 				$this->owner_validation();
 				}
-			
 			if(isset($param1)&& $param1!='getDescription') {
 				
 				if(isset($_REQUEST['add'])){
@@ -883,5 +882,7 @@ $err=True;
 			$this->notAuthorized();
 		}
 	}
+	
+	
 
 }

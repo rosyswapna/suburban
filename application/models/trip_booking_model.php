@@ -82,7 +82,6 @@ class Trip_booking_model extends CI_Model {
 		//newly added-to be organisation based
 		$org_id=$this->session->userdata('organisation_id');
 		$this->db->where( 'organisation_id', $org_id );
-		//---
     		$results = $this->db->get()->result();
 		if(count($results)>0){//print_r($results);
 			return $results;
