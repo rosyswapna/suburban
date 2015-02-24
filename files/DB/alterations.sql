@@ -40,6 +40,8 @@ INSERT INTO `1_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
 INSERT INTO `1_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
 ('invoice_template', 'setup.company', 'int', 11, '107');
 
+TRUNCATE TABLE `trip_expense_type`;
+
 
 
 

@@ -233,6 +233,7 @@ define('PTT_FOLLOWING', 4);
 //invoice template ids
 define('DEFAULT_INV',107);
 define('MODEL1_INV',711);
+define('MODEL2_INV',712);
 
 include_once($path_to_root . '/includes/sysnames.inc');
 

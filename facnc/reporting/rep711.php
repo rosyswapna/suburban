@@ -13,7 +13,7 @@ $page_security = $_POST['PARAM_0'] == $_POST['PARAM_1'] ?
 	'SA_SALESTRANSVIEW' : 'SA_SALESBULKREP';
 // ----------------------------------------------------------------
 // $ Revision:	2.0 $
-// Creator:	Joe Hunt
+// Creator:	Swapna
 // date_:	2005-05-19
 // Title:	Print Invoices
 // ----------------------------------------------------------------

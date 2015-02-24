@@ -192,7 +192,8 @@ $tmonths = array("", _("Jan"),_("Feb"),_("Mar"),_("Apr"),_("May"),_("Jun"),_("Ju
 
 $invoice_templates = array(
 	DEFAULT_INV => _("Default"),
-	MODEL1_INV => _("Model1")	
+	MODEL1_INV => _("Invoice Template 1"),
+	MODEL2_INV => _("Invoice Template 2")	
 );
 
 ?>
