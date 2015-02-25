@@ -367,17 +367,17 @@ class Trip_booking extends CI_Controller {
 				$v_details['registration_number']=$this->input->post('available_vehicle');
 				
 				$this->form_validation->set_rules('available_vehicle','Registration Number','trim|required|xss_clean|regex_match[/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/]');
-				if($data['vehicle_model'] ==-1){
+				if($data['vehicle_model'] ==gINVALID){
 					 $data['vehicle_model'] ='';
 					 $err=False;
 					 $this->mysession->set('Err_Vmodel','Choose Model Type');
 				}
-				if($data['vehicle_ac_type'] ==-1){
+				if($data['vehicle_ac_type'] ==gINVALID){
 					 $data['vehicle_ac_type'] ='';
 					 $err=False;
 					 $this->mysession->set('Err_V_Ac','Choose AC Type');
 				}
-				if($data['vehicle_model'] !=-1  && $data['vehicle_ac_type']!=-1){
+				if($data['vehicle_model'] !=gINVALID  && $data['vehicle_ac_type']!=gINVALID){
 				$data['vehicle_id'] = $this->vehicle_model->addVehicleFromTripBooking($v_details);
 				}
 			}

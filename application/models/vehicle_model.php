@@ -6,11 +6,8 @@ class Vehicle_model extends CI_Model {
 	{
 
 		if($regNo != null){
-			$qry='SELECT v.registration_number,dp.value as driver_percentage,vp.value as vehicle_percentage
-FROM vehicles v
-LEFT JOIN driver_payment_percentages dp ON dp.id=v.driver_percentage
-LEFT JOIN vehicle_payment_percentages vp ON vp.id=v.vehicle_percentage
-WHERE v.registration_number = '.$this->db->escape($regNo);
+			$qry='SELECT v.registration_number,v.driver_percentage ,v.vehicle_percentage 
+FROM vehicles v WHERE v.registration_number = '.$this->db->escape($regNo);
 
 			$result=$this->db->query($qry);
 			$result=$result->result_array();
@@ -21,22 +18,22 @@ WHERE v.registration_number = '.$this->db->escape($regNo);
 	}
 
 
-public function insertVehicle($data,$driver_data,$device_data){
-$qry=$this->db->set('created', 'NOW()', FALSE);
-$qry=$this->db->insert('vehicles',$data);
-$v_id=mysql_insert_id();
-if($qry>0){
-	
-	$this->mysession->set('vehicle_id',$v_id);
-	return true;
-	}
-	else
-	{
-	$this->mysession->set('date_err','Invalid Date');
-	}
+	public function insertVehicle($data,$driver_data,$device_data){
+	$qry=$this->db->set('created', 'NOW()', FALSE);
+	$qry=$this->db->insert('vehicles',$data);
+	$v_id=mysql_insert_id();
+	if($qry>0){
+		
+		$this->mysession->set('vehicle_id',$v_id);
+		return true;
+		}
+		else
+		{
+		$this->mysession->set('date_err','Invalid Date');
+		}
 
 
-}
+	}
 	//add new vehicle from trip booiking
 	public function addVehicleFromTripBooking($value = null){
 
@@ -394,4 +391,5 @@ return true;
 	return false;
 	}
 	}
+
 }?>

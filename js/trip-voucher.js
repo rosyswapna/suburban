@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	
 
-	var ATTACHED_VEHICLE=3;
+ var ATTACHED_VEHICLE=3;
 	
  var base_url=window.location.origin;
 
@@ -89,6 +89,7 @@ $('.voucher').on('click',function(){
 	var description=$(this).attr('description');
 	var ownership=$(this).attr('ownership');
 
+	
 	if(vehicle_ac_type_id==-1){
 		vehicle_ac_type_id=1;
 	}
@@ -148,6 +149,8 @@ $('.voucher').on('click',function(){
 				$('.description').val(description);
 
 				id='#trip-tariff';
+				
+				
 				generateTariffs(vehicle_model_id,vehicle_ac_type_id,tarrif_id,id,customer_id,newvoucher='yes');
 				var vehicle_no = $('.vehicleno').val();
 				$.post(base_url+"/trip-booking/getVehicleDriverPercentages",
@@ -158,8 +161,11 @@ $('.voucher').on('click',function(){
 					},function(data){
 						data=jQuery.parseJSON(data);
 						if(data!='false'){
-							if(data.driver!='false'){
-								$('.driverhrpaymentpercentage,.driverkmpaymentpercentage').val(data.driver);
+							if(data.driver!='false'){//alert(data.driver);return false;
+								//$('.driverhrpaymentpercentage,.driverkmpaymentpercentage').val(data.driver);
+								$(".driverkmpaymentpercentage").val(data.driver);
+								
+								$(".driverhrpaymentpercentage").val(data.driver);
 							}
 							if(data.vehicle!='false'){
 								$('.vehiclehrpaymentpercentage,.vehiclekmpaymentpercentage').val(data.vehicle);
@@ -236,7 +242,7 @@ $('.voucher').on('click',function(){
 					 $('.driverhrpaymentpercentage').trigger('click');
 
 					$('.basevehiclekm').val(data[0].vehicle_base_kilometers);
-				    $('.basevehiclekmamount').val(data[0].vehicle_base_kilometer_amount);
+				       $('.basevehiclekmamount').val(data[0].vehicle_base_kilometer_amount);
 					$('.adtvehiclekmrate').val(data[0].vehicle_additional_kilometer_rate);
 				
 					
@@ -269,7 +275,7 @@ $('.voucher').on('click',function(){
 				setTimeout(function(){ 
 				//click here
 				 $('.endkm').trigger('click');
-				 $('.tripendingtime').trigger('click');
+				 $('.tripendingtime').trigger('click'); 
 				if(data[0].base_km_hr=='H'){
 						$('.totalamount').attr('amount-class-to-be-selected','totalhramount');
 						//click here
@@ -1322,7 +1328,7 @@ $('.trip-voucher-save').on('click',function(){
 	data['adtdriverkmrate']=driveradtkmrate=$('.adtdriverkmrate').val();
 	
 
-	if($('.totaldriverkmamount').attr('amount-class-to-be-selected')=='totaldriverhramount'){
+	if($('.totaldriverkmamount').attr('amount-class-to-be-selected')=='totaldriverhramount'){ 
 		var driverbase_km_hr='H';
 		 data['driverpaymenthramount']=driverpaymentamount= $('.driverpaymenthramount').val();
 		 data['driverhrpaymentpercentage']=driverpaymentpercentage=$('.driverhrpaymentpercentage').val();
@@ -1927,17 +1933,21 @@ $('.basevehiclehrs,.basevehiclehrsamount,.adtvehiclehrrate').on('blur  click  ke
 
 });
 
-$('.driverkmpaymentpercentage,.driverhrpaymentpercentage').on('blur  click',function(){
-	
+$('.driverkmpaymentpercentage,.driverhrpaymentpercentage').on('blur change',function(){
+	var id=$(this).val();
+	$(".driverkmpaymentpercentage").val(id);
+	$(".driverhrpaymentpercentage").val(id);
 	calculatePaymentAmount('driver');
 
 });
 
-$('.vehiclekmpaymentpercentage,.vehiclehrpaymentpercentage').on('blur  click',function(){
+$('.vehiclekmpaymentpercentage,.vehiclehrpaymentpercentage').on('blur change',function(){
 	
 	calculatePaymentAmount('vehicle');
 
 });
+
+
 
 
 function calculatePaymentAmount(whom){
@@ -1945,12 +1955,18 @@ function calculatePaymentAmount(whom){
 totkmamount=$('.total'+whom+'kmamount').val();
 tothramount=$('.total'+whom+'hramount').val();
 noofdays=$('.daysno').val();
-
-kmpaymentpercentage=$('.'+whom+'kmpaymentpercentage').val();
-hrpaymentpercentage=$('.'+whom+'hrpaymentpercentage').val();
+if($('.'+whom+'kmpaymentpercentage option:selected').val()==-1){
+kmpaymentpercentage=0;
+}else{
+kmpaymentpercentage=Number($('.'+whom+'kmpaymentpercentage option:selected').text());
+}
+if($('.'+whom+'hrpaymentpercentage option:selected').val()==-1){
+hrpaymentpercentage=0;
+}else{
+hrpaymentpercentage=Number($('.'+whom+'hrpaymentpercentage option:selected').text());
+}
 
 if(totkmamount!='' && (tothramount!='' || Number(noofdays)>1) && kmpaymentpercentage!='' && hrpaymentpercentage!=''){
-
 
 kmcommsn=(Number(totkmamount)*(Number(kmpaymentpercentage)/100)).toFixed(2);
 hrcommsn=(Number(tothramount)*(Number(hrpaymentpercentage)/100)).toFixed(2);
@@ -1958,9 +1974,13 @@ hrcommsn=(Number(tothramount)*(Number(hrpaymentpercentage)/100)).toFixed(2);
 $('.'+whom+'paymentkmamount').val(kmcommsn);
 $('.'+whom+'paymenthramount').val(hrcommsn);
 
+}else{
+$('.'+whom+'paymentkmamount').val(0);
+$('.'+whom+'paymenthramount').val(0);
 }
 
 }
+
 
 
 
