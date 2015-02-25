@@ -1658,7 +1658,9 @@ INSERT INTO `0_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
 ('grn_clearing_act', 'glsetup.purchase', 'varchar', 15, '1550'),
 ('bcc_email', 'setup.company', 'varchar', 100, ''),
 ('default_payment_terms', 'setup.company', 'int', 11, '4'),
-('invoice_template', 'setup.company', 'int', 11, '107');
+('invoice_template', 'setup.company', 'int', 11, '107'),
+('tax_no', 'setup.company', 'varchar', 25, ''),
+('pan_no', 'setup.company', 'varchar', 25, '');
 
 -- --------------------------------------------------------
 

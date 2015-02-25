@@ -98,22 +98,25 @@ $this->Font();
 $this->NewLine();
 $this->TextWrap($this->cols[0], $this->row,$this->cols[1], _("To,"),'center');
 $this->NewLine();
-$this->TextWrap($this->cols[1], $this->row,$this->cols[6], _("Ernst & Young LLP"),'left');
+$this->TextWrap($this->cols[1], $this->row,$this->cols[6], $Addr1['name'],'left');
+$this->NewLine();
+$this->TextWrap($this->cols[1], $this->row,$this->cols[6], $Addr1['address'],'left');
 
 //header
-$this->row = $hline2- 180;
+//$this->row = $hline2- 180;
+$this->NewLine(4);
 $data_col = $this->cols[2]-140;
 $this->TextWrap($this->cols[1], $this->row,$this->cols[1], _("Invoice No."),'left');
-$this->TextWrap($data_col, $this->row,$this->cols[1], _("Invoice No."),'left');
+$this->TextWrap($data_col, $this->row,$this->cols[1],$this->formData['trans_no'],'left');
 $this->NewLine(1.3);
 $this->TextWrap($this->cols[1], $this->row,$this->cols[1], _("Invoice Date"),'left');
-$this->TextWrap($data_col, $this->row,$this->cols[1], _("Invoice date."),'left');
+$this->TextWrap($data_col, $this->row,$this->cols[1], $this->formData['tran_date'],'left');
 $this->NewLine(1.3);
 $this->TextWrap($this->cols[1], $this->row,$this->cols[1], _("Tenure Period"),'left');
-$this->TextWrap($data_col, $this->row,$this->cols[1], _("Tenure Period"),'left');
+$this->TextWrap($data_col, $this->row,$this->cols[2],$this->formData['trip_period'],'left');//static
 $this->NewLine(1.3);
 $this->TextWrap($this->cols[1], $this->row,$this->cols[1], _("Nature of Service"),'left');
-$this->TextWrap($data_col, $this->row,$this->cols[1], _("Nature of Service"),'left');
+$this->TextWrap($data_col, $this->row,$this->cols[1], _("Guest Transportation"),'left');//static
 
 
 
@@ -134,25 +137,24 @@ $this->Font('bold');
 
 $this->row = $hline6+5 ;
 $this->TextWrap($this->cols[0], $this->row,$this->cols[4], _("Round Off"),'left');
-$this->TextCol(5, 6,  _("0.00"), -2);
+
 //$this->TextWrap($this->cols[5], $this->row,$this->cols[5], _("0.00"),'left');
 
 $this->row = $hline7+5 ;
 $this->TextWrap($this->cols[0], $this->row,$this->cols[4], _("Grand Total"),'left');
-$this->TextCol(5, 6,  _("0.00"), -2);
 
-$this->row = $hline8+5 ;
-$this->TextWrap($this->cols[0], $this->row,$this->cols[5], _("Rupees EightyOne Thousand Nine Hundred and Twelve Only"),'center');
+
+
 
 //TAX NO AND PAN NO
 $tax_pan_data_col = $tax_n_pan_col+2;
 $this->row = $hline10+5 ;
 $this->TextWrap($this->cols[0], $this->row,$tax_n_pan_col, _("SERVICE TAX NO."),'left');
-$this->TextWrap($tax_pan_data_col, $this->row,$this->cols[3], _("XXXXXXXXX"),'left');
+$this->TextWrap($tax_pan_data_col, $this->row,$this->cols[3], $this->company['tax_no'],'left');
 
 $this->row = $hline12+5 ;
 $this->TextWrap($this->cols[0], $this->row,$tax_n_pan_col, _("PAN NO."),'left');
-$this->TextWrap($tax_pan_data_col, $this->row,$this->cols[3], _("XXXXXXXXX"),'left');
+$this->TextWrap($tax_pan_data_col, $this->row,$this->cols[3], $this->company['pan_no'],'left');
 $this->Font();
 
 
@@ -169,6 +171,16 @@ if ($this->company['coy_logo'] != '' && file_exists($logo))
 }
 $this->NewLine(7);
 $this->TextWrap($tax_n_pan_col, $this->row, $right,  _("Authorised Signatory"),'center');
+
+//table content row
+$temp = $hline4 - $this->lineHeight - 2;
+
+//totals cell
+$totals_row =  $hline5 - $this->lineHeight - 2;
+
+//price in words cell
+$words_row =  $hline8 - $this->lineHeight - 2;
+
 
 //-----------------------------------------------------------------------------
 
