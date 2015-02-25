@@ -1007,13 +1007,15 @@ function price_in_words_custom($number)
 		    $rupe .= " ".$tens[$Dn]; 
 		    if ($n) 
 			$rupe .= "-" . $ones[$n]; 
-		} 
+		}
 	} 
 	if(!empty($paise)){
 		if(!empty($rupe))
 			$res .= "Rupees ".$rupe." and ".$paise;
 		else
 			$res .= $paise;
+	}else if(!empty($rupe)){
+		$res .= $rupe;
 	}
 		
 	

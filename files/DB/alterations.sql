@@ -41,6 +41,12 @@ INSERT INTO `1_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
 ('invoice_template', 'setup.company', 'int', 11, '107');
 
 TRUNCATE TABLE `trip_expense_type`;
+TRUNCATE TABLE `driver_payment_percentages`;
+TRUNCATE TABLE `vehicle_payment_percentages`;
+
+INSERT INTO `1_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
+('tax_no', 'setup.company', 'varchar', 25, ''),
+('pan_no', 'setup.company', 'varchar', 25, '');
 
 
 
