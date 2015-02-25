@@ -509,16 +509,17 @@ $available_vehicles='';*/
 						<div class ="hide-me"> <?php echo form_input(array('id'=>'tarrif','value'=>'-1'));?></div>
 						<?php } else{?>
 						<div class="form-group">
-						<?php $class="form-control row-source-50-percent-width-with-margin-8";
+						<?php $class="form-control row-source-50-percent-width-with-margin-8 ";
 						$id="tarrif"; 
 						echo $this->form_functions->populate_dropdown('tariff',$tariffs,$tariff,$class,$id,$msg="Tariffs");
-						
+						$class="form-control row-source-50-percent-width-with-margin-8 vehicle-list";
 						$id="available_vehicle";
 						//echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles,$available_vehicle,$class,$id,$msg="Available Vehicles");
 						if($available_vehicle==gINVALID)
 						{	
 						$available_vehicle='';	
 						}
+						
 						echo $this->form_functions->populate_editable_dropdown('available_vehicle', $available_vehicles,$class,'vehicles',array(),"Vehicle",$available_vehicle,$id);
 						echo $this->form_functions->form_error_session('available_vehicle', '<p class="text-red">', '</p>');
 						echo br(2);
@@ -591,7 +592,7 @@ $available_vehicles='';*/
 				    </div>
 				    
 				    <div class="form-group vehicle-advanced">
-						<?php $class="form-control row-source-50-percent-width-with-margin-8";
+						<?php $class="form-control row-source-50-percent-width-with-margin-8 driver-list";
 						echo $this->form_functions->populate_dropdown('seating_capacity',$vehicle_seating_capacity,$seating_capacity,$class,$id='',$msg="Seats");
 						echo $this->form_functions->populate_dropdown('language',$languages,$language,$class,$id='',$msg="Languages");
 						echo $this->form_functions->form_error_session('vehicle_seating_capacity', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('language', '<p class="text-red">', '</p>');

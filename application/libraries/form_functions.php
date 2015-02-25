@@ -46,14 +46,14 @@ $attr_str='';
 
 		
 	if($selected==''){
-		if($msg != ''){
+		if($msg != ''){ 
 
 			$form.='<option selected="selected" value="">--Select '.$msg.'--</option></br>';
 			
 		}else{
 			$form.='<option selected="selected"></option></br>';
 		}
-	}else{
+	}else{  
 		$form.='<option value="">New '.$msg.'</option></br>';
 	}
 	
