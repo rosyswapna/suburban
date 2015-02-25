@@ -1477,7 +1477,7 @@ function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehic
 		  },function(data){
 			
 			$('#available_vehicle option').remove();
-			$('#available_vehicle').append($("<option value='-1'></option>").text('--Select Vehicle--'));
+			$('#available_vehicle').append($("<option value='' selected='selected'></option>").text('--Select Vehicle--'));
 			
 			if(Trim(available_vehicle_id)!='' && Trim(available_vehicle_id)!=-1 ){
 			$.post(base_url+"/trip-booking/getVehicle",
@@ -2053,13 +2053,15 @@ $('#customer-list').css('display','none');
 			//$('#customer').val('');	
 });
 
-//reset vehicle ac and model values
-//$("#available_vehicle").on('keyup',function(){
-
-//$("#vehicle-model").val(-1);
-//$("#vehicle-ac-type").val(-1);
+//remove -1 during  new vehicle and driver entry
+$('.driver-list').on('keydown',function(){
 	
-//});
+	$(".driver-list option[text='']").attr('selected', true);
+});
+$('.vehicle-list').on('keydown',function(){
+	
+	$(".vehicle-list option[text='']").attr('selected', true);
+});
 
  });
 
