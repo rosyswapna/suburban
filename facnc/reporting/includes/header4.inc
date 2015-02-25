@@ -20,6 +20,8 @@
 	$this->title - report title
 	$this->formData - some other info
 ***/
+		$this->headers = array(_('Sl.No.'),	_('Indent No.'), _('Date'),	_('Vehicle No.'),
+		_('User Name'), _('Particulars'), _('Amount'));
 
 		$this->row = $this->pageHeight - $this->topMargin;
 
@@ -175,7 +177,7 @@
 		$this->Line($tb_line3);
 		$this->LineTo($this->leftMargin, $tb_line1 ,$this->leftMargin, $tb_line3);
 		$col = $this->leftMargin;
-		for ($i = 1; $i < 7; $i++)
+		for ($i = 1; $i < count($this->headers); $i++)
 		{
 			$this->LineTo($this->cols[$i], $tb_line1,$this->cols[$i], $tb_line3);
 		}

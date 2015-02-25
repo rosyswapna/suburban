@@ -228,6 +228,13 @@ define('PTT_CASH', 2);
 define('PTT_DAYS', 3);
 define('PTT_FOLLOWING', 4);
 
+//----------------------------------------------------------------------------------
+
+//invoice template ids
+define('DEFAULT_INV',107);
+define('MODEL1_INV',711);
+define('MODEL2_INV',712);
+
 include_once($path_to_root . '/includes/sysnames.inc');
 
 //---------------------------------------------------------------------------------
@@ -281,6 +288,9 @@ define('VEHICLE_COMMISSION', 103);
 //tax groups
 define('TAX_GROUP_IN', 1);
 define('TAX_GROUP_EX', 2);
+
+
+
 
 
 

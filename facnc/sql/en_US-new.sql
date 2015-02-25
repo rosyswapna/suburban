@@ -1657,7 +1657,8 @@ INSERT INTO `0_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
 ('auto_curr_reval', 'setup.company', 'smallint', 6, '1'),
 ('grn_clearing_act', 'glsetup.purchase', 'varchar', 15, '1550'),
 ('bcc_email', 'setup.company', 'varchar', 100, ''),
-('default_payment_terms', 'setup.company', 'int', 11, '4');
+('default_payment_terms', 'setup.company', 'int', 11, '4'),
+('invoice_template', 'setup.company', 'int', 11, '107');
 
 -- --------------------------------------------------------
 

@@ -2548,6 +2548,18 @@ function payment_type_list_row($label, $name, $selected_id=null, $submit_on_chan
 	echo "</td></tr>\n";
 }
 
+function invoice_template_list_row($label, $name, $selected_id=null, $submit_on_change=false)
+{
+	global $invoice_templates;
+	
+	echo "<tr><td class='label'>$label</td><td>";
+	echo array_selector($name, $selected_id, $invoice_templates, 
+		array( 
+			'select_submit'=> $submit_on_change
+		) );
+	echo "</td></tr>\n";
+}
+
 function coa_list_row($label, $name, $value=null)
 {
 	global $path_to_root, $installed_extensions;

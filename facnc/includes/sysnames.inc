@@ -188,4 +188,12 @@ $pterm_types = array(
 // This month array is for use with the last 3 dateformats. 
 $tmonths = array("", _("Jan"),_("Feb"),_("Mar"),_("Apr"),_("May"),_("Jun"),_("Jul"),_("Aug"),_("Sep"),_("Oct"),_("Nov"),_("Dec"));
 
+//----------------------------------------------------------------------------------
+
+$invoice_templates = array(
+	DEFAULT_INV => _("Default"),
+	MODEL1_INV => _("Invoice Template 1"),
+	MODEL2_INV => _("Invoice Template 2")	
+);
+
 ?>
