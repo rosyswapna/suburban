@@ -40,6 +40,11 @@ define('GA_EXPNS',12);
 
 //___________________fa constants______________________________
 
+//tour quotation templates
+define('QUOTATION1','tour_quotation1');
+
+$quotations = array(QUOTATION1 => 'Simple Quotation');
+
 //payment types
 define('CASH',1);
 define('CREDIT',2);

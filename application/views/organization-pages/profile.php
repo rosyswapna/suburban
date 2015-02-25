@@ -44,6 +44,12 @@
 			<?php if(isset($org_id) && isset($user_id)) {  echo form_hidden('hphone',$hphone); } ?>
 		<?php echo form_error('phn', '<p class="text-red">', '</p>'); ?>
         </div>
+	<div class="form-group">
+		   <?php echo form_label('Quotation Template');?>
+           <?php echo $this->form_functions->populate_dropdown('quotation_template',$quotations,$quotation_template,'form-control','quotation_template'); ?>
+	   <?php echo form_error('quotation_template', '<p class="text-red">', '</p>'); ?>
+        </div>
+
 	
 		<div class="form-group">
 		<?php if(isset($org_id) && isset($user_id)) {  echo form_hidden('user_id',$user_id).form_hidden('org_id',$org_id); } ?>

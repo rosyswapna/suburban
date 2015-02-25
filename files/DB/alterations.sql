@@ -55,6 +55,12 @@ INSERT INTO `1_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
 ('pan_no', 'setup.company', 'varchar', 25, '');
 
 
+--****need to be updated********
+24/02/2015
+
+ALTER TABLE `organisations`  ADD `quotation_template` VARCHAR(25) NOT NULL;
+
+
 
 
 

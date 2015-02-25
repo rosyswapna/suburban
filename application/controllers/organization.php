@@ -109,8 +109,11 @@ public function __construct()
 		
     }
 	public function redirect_to_profile() {
+		global $quotations;
+		$data['quotations'] = $quotations;
 	$this->load->model('organization_model');
 	if(isset($_REQUEST['org-profile-update'])){
+
 			$data['name'] = $this->input->post('name');
 			$data['uname'] = trim($this->input->post('uname'));
 			$data['hname']  = trim($this->input->post('hname'));
@@ -123,6 +126,7 @@ public function __construct()
 			$data['hphone']  = $this->input->post('hphone');
 			$data['user_id'] = $this->input->post('user_id');
 			$data['org_id'] = $this->input->post('org_id');
+			$data['quotation_template'] = $this->input->post('quotation_template');
 			
 		if($data['name'] == $data['hname']){
 			$this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean');
@@ -174,6 +178,8 @@ public function __construct()
 		$data['phn']=$user_res['phone'];
 		$data['hphone']=$user_res['phone'];
 		$data['status']=$user_res['user_status_id'];
+		$data['quotation_template'] = ($org_res['quotation_template'])?$org_res['quotation_template']:QUOTATION1;
+		
 		$this->profile($data);
 	}
 	
