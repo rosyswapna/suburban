@@ -1632,6 +1632,8 @@ public function profile() {
 			$this->notAuthorized();
 		}
 	}
+	
+	
 
 
 	//driver tab table generation
@@ -1975,7 +1977,11 @@ public function profile() {
 					$data['trip_tab']='active';
 				}
 				$data['ve_id']=$vid; 
-				$data['trips']=$this->trip_booking_model->getVehicleVouchers($vid,$fdate,$todate); 
+				//$data['trips']=$this->trip_booking_model->getVehicleVouchers($vid,$fdate,$todate); 
+				$trips=$this->trip_booking_model->getVehicleVouchers($vid,$fdate,$todate); 
+				//array values for Vehicle Trip tab
+				list($data['TripTableData'], $data['TotalTable']) = $this->VehicleTripsTable($trips);
+				
 				//----------------------
 				$data['record_values']=$this->user_model->getRecordsById($tbl,$vid); 
 				$data['driver']=$data['record_values']['driver'];
@@ -2038,7 +2044,111 @@ public function profile() {
 			$this->notAuthorized();
 		}
 	}
+	
+	//vehicle tab table generation
+	function VehicleTripsTable($trips = array())
+	{
+		$expenses=$this->trip_booking_model->getTripExpenses(); 
 
+		$tripsTable = $totalTable = array();
+
+		//trips table column header
+		$tripsTable['theader'] = array("Trip Id","Date","Days","Total Km","Trip Amount","Trip %");
+			
+		//total table column header
+		$totalTable['theader'] = array(
+				'<th style="width:70%;">Particulars</th>',
+				'<th style="width:10%;">Tariff</th>',
+				'<th style="width:10%;">Credit</th>',
+				'<th style="width:10%;">Outstanding</th>');
+		//total table row header
+		$Particulars[0]= array("label"=>"Total Trip Amount","tariff"=>0,"credit"=>0,"outstanding"=>0);
+		$Particulars[1]= array("label"=>"Less Cash Trip/Advance Amount","tariff"=>0,"credit"=>0,"outstanding"=>0);
+		$Particulars[2]= array("label"=>"Total Trip Percentage","tariff"=>0,"credit"=>0,"outstanding"=>0);
+		$Particulars[3]= array("label"=>"Less Cash Trip Percentage","tariff"=>0,"credit"=>0,"outstanding"=>0);
+		$Particulars[4]= array("label"=>"Balance Due","tariff"=>0,"credit"=>0,"outstanding"=>0);
+		$Particulars[5]= array("label"=>"TDS 1 %","tariff"=>0,"credit"=>0,"outstanding"=>0);
+		
+		$Total = array('trf'=>0,'cr'=>0,'ots'=>0);
+		
+		if($trips){ 
+			$tdata = array();$i=0;
+			$TotalExpense = array();
+			$TotalHalt = $TotalBata = $TotalTripAmount = $full_tot_km= $tot_tax= $tot_vehicle_payment_amount=$tot_vehicle_trip_amount=0;
+			foreach($trips as $trip){
+				//echo "<pre>";print_r($trip);echo "</pre>";exit;
+				$trip_km=$trip['end_km_reading']-$trip['start_km_reading'];
+				$full_tot_km=$full_tot_km+$trip_km;
+				$tot_tax=$tot_tax+$trip['state_tax'];
+				$tot_vehicle_payment_amount=$tot_vehicle_payment_amount+$trip['vehicle_payment_amount'];
+				$tot_vehicle_trip_amount=$tot_vehicle_trip_amount+$trip['vehicle_trip_amount'];
+				
+				$date1 = date_create($trip['pick_up_date'].' '.$trip['pick_up_time']);
+				$date2 = date_create($trip['drop_date'].' '.$trip['drop_time']);
+
+				$diff= date_diff($date1, $date2);
+				$no_of_days=$diff->d;
+				if($no_of_days==0){
+					$no_of_days='1 Day';
+							
+				}else{
+					$no_of_days.=' Days';
+							
+				}
+
+				$tdata[$i] = array($trip['id'],$trip['pick_up_date'],$no_of_days,$trip_km,number_format($trip['vehicle_trip_amount'],2),number_format($trip['vehicle_payment_amount'],2)
+					);
+
+				$expenseValue = unserialize($trip['trip_expense']);
+			
+				foreach($expenses as $expense){
+					$expAmt = (isset($expenseValue[$expense->value]) && $expenseValue[$expense->value] != null)?$expenseValue[$expense->value]:0;
+					array_push($tdata[$i],number_format($expAmt,2));
+
+					//total expense
+					if(isset($TotalExpense['ots'][$expense->value]))
+						$TotalExpense['ots'][$expense->value]	+= $expAmt;
+					else
+						$TotalExpense['ots'][$expense->value]	= $expAmt;
+				}
+				$Particulars[0]['outstanding'] += $trip['vehicle_trip_amount'];
+				$Particulars[2]['outstanding'] += $trip['vehicle_payment_amount'];
+				
+				$Total['ots'] += $trip['vehicle_trip_amount']+$trip['vehicle_payment_amount'];
+				
+				$i++;//next td values
+			}//trips loop ends 
+			
+			
+			$tripsTable['tdata'] = $tdata;
+
+			foreach($expenses as $expense){
+				//trip table headers for expense
+				array_push($tripsTable['theader'] ,$expense->description);
+
+				//build total Trip Expense Fields
+				$TotalExAmt =(array_key_exists($expense->value,$TotalExpense['ots']))?
+					 $TotalExpense['ots'][$expense->value]:0;
+				$Total['ots'] += $TotalExAmt;
+				
+				$Particulars[]= array("label"=>"Less ".$expense->description,"tariff"=>0,"credit"=>0,"outstanding"=>$TotalExAmt);
+		
+			}
+			
+			//total table footer
+			$totalTable['tfooter']= array("label"=>"Total","tariff"=>number_format(0,2),"credit"=>number_format(0,2),"outstanding"=>number_format($Total['ots'],2));
+			$totalTable['tdata'] = $Particulars;
+			
+			//echo "<pre>";print_r($totalTable);echo "</pre>";exit;
+			
+		}else{
+			$tripsTable = false;
+			$totalTable = false;
+			
+		}
+		return array($tripsTable,$totalTable);
+	}
+	
 	public function select_Vehicle_Values(){
 		$tbl_arry=array(
 			'vehicle_models','drivers','devices',

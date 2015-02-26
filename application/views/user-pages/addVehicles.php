@@ -1003,112 +1003,84 @@ if($this->mysession->get('owner_post_all')!=null ){
 	<td><?php echo form_input(array('name'=>'to_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'To Date','value'=>'')); ?></td>
 	<td><?php echo form_submit("vdate_search","Search","class='btn btn-primary'");
 				echo form_close();?></td>
-	</table>			<table class="table table-hover table-bordered">
-				<tbody>
-					<tr style="background:#CCC">
-						<th>Trip Id</th>
-						<th>Date</th>
-						<th>Days</th>
-						<th>Total KM</th>
-						<th>Trip Amount</th>
-						<th>Trip %</th>
-						<th>Toll</th>
-						<th>Parking</th>
-						<th>State Tax</th>
-					    
-					</tr>
-					<?php	
-						$full_tot_km=$total_trip_amount=$tot_hrs=$tot_vehicle_payment_amount=$tot_extra=$tot_vehicle_trip_amount=$tot_toll=$tot_parking=$tot_tax=0;
-					if(isset($trips) && $trips!=false){ 
-						for($trip_index=0;$trip_index<count($trips);$trip_index++){
-						$tot_km=$trips[$trip_index]['end_km_reading']-$trips[$trip_index]['start_km_reading'];
-						
-						$full_tot_km=$full_tot_km+$tot_km;
-						$total_trip_amount=$total_trip_amount+$trips[$trip_index]['total_trip_amount'];
-						$tot_toll=$tot_toll+$trips[$trip_index]['toll_fees'];
-						$tot_parking=$tot_parking+$trips[$trip_index]['parking_fees'];
-						$tot_tax=$tot_tax+$trips[$trip_index]['state_tax'];
-						$tot_vehicle_payment_amount=$tot_vehicle_payment_amount+$trips[$trip_index]['vehicle_payment_amount'];
-						$extra=$trips[$trip_index]['parking_fees']+$trips[$trip_index]['toll_fees']+$trips[$trip_index]['state_tax']+$trips[$trip_index]['night_halt_charges']+$trips[$trip_index]['fuel_extra_charges'];
-						$tot_extra=$tot_extra+$extra;
-						$date1 = date_create($trips[$trip_index]['pick_up_date'].' '.$trips[$trip_index]['pick_up_time']);
-						$date2 = date_create($trips[$trip_index]['drop_date'].' '.$trips[$trip_index]['drop_time']);
-						
-						$diff= date_diff($date1, $date2);
-						$no_of_days=$diff->d;
-						if($no_of_days==0){
-							$no_of_days='1 Day';
-							
-						}else{
-							$no_of_days.=' Days';
-							
-						}
-						
-						$tot_vehicle_trip_amount=$tot_vehicle_trip_amount+$trips[$trip_index]['vehicle_trip_amount'];
-						
-						?>
-						<tr>
-							<td><?php echo $trips[$trip_index]['id'];  ?></td>
-							<td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
-							<td><?php echo $no_of_days; ?></td>
-							<td><?php  
-							echo $tot_km;
-									
-							 ?></td>
-							
-							<td><?php 
-							echo number_format($trips[$trip_index]['vehicle_trip_amount'],2);
-							?></td>
-						<td><?php 
-							echo number_format($trips[$trip_index]['vehicle_payment_amount'],2);
-							?></td>
-							<td><?php echo $trips[$trip_index]['toll_fees'];  ?></td>
-							<td><?php echo $trips[$trip_index]['parking_fees']; ?></td>
-							<td><?php echo $trips[$trip_index]['state_tax']; ?></td>
-						</tr>
-						<?php } 
-						}					
-					?>
-					<tr style="background:#CCC">
-					<td>Total</td>
-					<td></td>
-					<td></td>
-					<td><?php echo $full_tot_km;?></td>
-					<td><?php echo number_format($tot_vehicle_trip_amount,2);?></td>
-					<td><?php echo number_format($tot_vehicle_payment_amount,2);?></td>
-					<td><?php number_format($tot_toll,2); ?></td>
-					<td><?php echo number_format($tot_parking,2);?></td>
-					<td><?php echo number_format($tot_tax,2);?></td>
-					</tr>
-					<?php //endforeach;
-					//}
-					?>
-				</tbody>
-			</table><?php //echo $page_links;?>
-			<?php if(!empty($trips)){?>
-			<table class="table table-hover table-bordered">
-				<tbody>
-				
-					<tr style="background:#CCC">
-						<th style="width:70%;">Particulars</th>
-						<th style="width:10%;">Tariff</th>
-						<th style="width:10%;">Credit</th>
-						<th style="width:10%;">Outstanding</th>
-					    
-					</tr>
-					<tr><td>Total Trip Amount</td><td></td><td><?php ?></td><td><?php echo number_format($tot_vehicle_trip_amount,2);?></td></tr>
-					<tr><td>Less Cash Trip/Advance Amount</td><td></td><td><?php ?></td><td><?php ?></td></tr>
-					<tr><td>Toatal Trip Percentage</td><td></td><td><?php ?></td><td><?php echo number_format($tot_vehicle_payment_amount,2); ?></td></tr>
-					<tr><td>Less Cash Trip Percentage</td><td></td><td><?php ?></td><td><?php ?></td></tr>
-					<tr><td>Less Parking</td><td></td><td><?php echo number_format($tot_parking,2); ?></td><td></td></tr>
-					<tr><td>Less Toll</td><td></td><td><?php echo number_format($tot_toll,2);?></td><td></td></tr>
-					<tr><td>Less Stae Tax</td><td></td><td><?php echo number_format($tot_tax,2); ?></td><td></td></tr>
-					<tr><td>Balance Due</td><td></td><td><?php $bal_cr=$tot_parking+$tot_toll+$tot_tax; echo number_format($bal_cr,2);?></td><td><?php echo number_format($tot_vehicle_payment_amount,2)?></td></tr>
-					<tr><td>TDS 1 %</td><td></td><td><?php $tds=$bal_cr*(1/100); echo $tds;?></td><td></td></tr>
-					
-				</tbody>
-			</table>
-			<?php  }?>
+	</table><br/>			
+
+	
+	<?php if($TripTableData){?>
+		
+			
+	<?php  echo form_open(base_url()."account/driver_trip_save"); ?>
+
+	<table class="table table-hover table-bordered">
+		<tbody>
+		<?php if(isset($TripTableData['theader'])){?>
+		<tr style="background:#CCC">
+			<?php foreach($TripTableData['theader'] as $thead){?>
+			<th><?=$thead;?></th>			
+			<?php }?>
+		</tr>
+		<?php }?>
+
+		<?php foreach($TripTableData['tdata'] as $tr){?>
+		<tr>
+			<?php foreach($tr as $td){?>
+			<td><?=$td;?></td>			
+			<?php }?>
+		</tr>
+		<?php }?>
+		
+		<?php if(isset($TripTableData['tfooter'])){?>
+		<tr style="background:#CCC">
+			<?php foreach($TripTableData['tfooter'] as $td){?>
+			<td><?php echo $td;?></td>			
+			<?php }?>
+		</tr>
+		<?php }?>
+
+		</tbody>
+	</table>
+
+	<?php if($TotalTable){?>
+	<table class="table table-hover table-bordered">
+		<tbody>
+
+		<?php if(isset($TotalTable['theader'])){?>
+		<tr style="background:#CCC">
+			<?php foreach($TotalTable['theader'] as $thead){?>
+			<?=$thead;?>			
+			<?php }?>
+		</tr>
+		<?php }?>
+
+
+		<?php foreach($TotalTable['tdata'] as $tr){?>
+		<tr>
+			<?php foreach($tr as $i=>$td){?>
+			<td><?php echo ($i=='label')?$td:number_format($td,2);?></td>			
+			<?php }?>
+		</tr>
+		<?php }?>
+
+		<?php if(isset($TotalTable['tfooter'])){?>
+		<tr style="background:#CCC">
+			<?php foreach($TotalTable['tfooter'] as $td){?>
+			<td><?php echo $td;?></td>			
+			<?php }?>
+		</tr>
+		<?php }?>
+
+
+		</tbody>
+	</table>
+	<?php }?>
+
+	<?php }else{?><!--Trip table condition-->
+	<div class="msg"> No Data
+	</div>
+	<?php }?>
+	
+	
+			
 			
 		</div>
 </div>
