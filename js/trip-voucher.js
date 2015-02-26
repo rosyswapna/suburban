@@ -504,7 +504,7 @@ $('.startkm').on('click keyup  blur',function(e) {
 }*/
 
 //calculate total hrs readming
-$('.tripendingtime').on('click blur',function(e) {
+$('.tripendingtime,#trip-tariff').on('click blur',function(e) {
 	var start = $('.tripstartingtime').val();
 	var end = $('.tripendingtime').val();
 	var fromdate=formatDate_Y_m_d($('#startdt').val()); 
