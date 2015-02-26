@@ -789,24 +789,28 @@ class Trip_booking extends CI_Controller {
 			}
 		}
 	}
+
+	//get Available vehicles for trip booking
 	public function getAvailableVehicles(){
-	if($_REQUEST['vehicle_ac_type'] &&  $_REQUEST['vehicle_model'] && $_REQUEST['pickupdatetime'] && $_REQUEST['dropdatetime']){
-	$data['vehicle_ac_type']=$_REQUEST['vehicle_ac_type'];
-	$data['vehicle_model']=$_REQUEST['vehicle_model'];
-	$data['pickupdatetime']=$_REQUEST['pickupdatetime'];
-	$data['dropdatetime']=$_REQUEST['dropdatetime'];
-	$data['organisation_id']=$this->session->userdata('organisation_id');
+		if($_REQUEST['vehicle_ac_type'] &&  $_REQUEST['vehicle_model'] && $_REQUEST['pickupdatetime'] && $_REQUEST['dropdatetime']){
+			$data['vehicle_ac_type']=$_REQUEST['vehicle_ac_type'];
+			$data['vehicle_model']=$_REQUEST['vehicle_model'];
+			$data['pickupdatetime']=$_REQUEST['pickupdatetime'];
+			$data['dropdatetime']=$_REQUEST['dropdatetime'];
+			$data['organisation_id']=$this->session->userdata('organisation_id');
+			$data['trip_vehicle']=$_REQUEST['available_vehicle_id'];
 	
-	$res['data']=$this->trip_booking_model->selectAvailableVehicles($data);
-	if($res['data']==false){
-	echo 'false';
-	}else{
-	echo json_encode($res);
-	}
+			$res['data']=$this->trip_booking_model->selectAvailableVehicles($data);
+			if($res['data']==false){
+				echo 'false';
+			}else{
+				echo json_encode($res);
+			}
+
+		}
 
 	}
 
-	}
 	public function getVehicle(){
 		if(isset($_REQUEST['id'])){
 			$res['data']=$this->trip_booking_model->getVehicle($_REQUEST['id']);

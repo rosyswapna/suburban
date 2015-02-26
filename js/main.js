@@ -1463,6 +1463,7 @@ function generateTariffs(vehicle_ac_type,vehicle_model,tarif_id=''){
 }	
 */
 
+/*
 function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id=''){
 	//alert(vehicle_type);alert(vehicle_ac_type);alert(pickupdatetime);alert(dropdatetime);
 	var available_vehicle_id=available_vehicle_id;
@@ -1529,7 +1530,45 @@ function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehic
 			$('.display-me').css('display','none');
 		   });
 
+}*/
+
+function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id=''){
+	
+alert(available_vehicle_id);
+	 $.post(base_url+"/trip-booking/getAvailableVehicles",
+		  {
+			vehicle_type:vehicle_type,
+			vehicle_make:vehicle_make,
+			vehicle_model:vehicle_model,
+			vehicle_ac_type:vehicle_ac_type,
+			pickupdatetime:pickupdatetime,
+			dropdatetime:dropdatetime,
+			available_vehicle_id:available_vehicle_id
+	},function(data){ 
+			
+
+		$('#available_vehicle option').remove();
+		$('#available_vehicle').append($("<option value=''></option>").text('--Select Vehicle--'));
+		
+		if(data!='false'){ 
+			data=jQuery.parseJSON(data);
+			for(var i=0;i<data.data.length;i++){
+
+			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"'></option>").text(data.data[i].registration_number));
+				
+			}
+	
+		}else{	
+			alert('No Available Vehicles');		
+		}
+
+		$('#available_vehicle').val(available_vehicle_id);
+
+		$('.display-me').css('display','none');
+	   });
+
 }
+
 function generateTariffs(vehicle_model,vehicle_ac_type,tarif_id='',id){
 	var tarif_id=tarif_id;
 	 $.post(base_url+"/tarrif/tariffSelecter",
