@@ -2013,9 +2013,9 @@ CREATE TABLE IF NOT EXISTS `bank_account_types` (
 --
 
 INSERT INTO `bank_account_types` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Current', 'Current', NULL, 1, 5, '2014-09-09 06:32:49', '0000-00-00 00:00:00'),
-(2, 'Savings', 'Savings', NULL, 1, 5, '2014-09-09 06:33:07', '0000-00-00 00:00:00'),
-(3, 'NRI', 'NRI', NULL, 1, 5, '2014-09-09 06:33:16', '0000-00-00 00:00:00');
+(1, 'Current', 'Current', NULL, 1, 0, '2014-09-09 06:32:49', '0000-00-00 00:00:00'),
+(2, 'Savings', 'Savings', NULL, 1, 0, '2014-09-09 06:33:07', '0000-00-00 00:00:00'),
+(3, 'NRI', 'NRI', NULL, 1, 0, '2014-09-09 06:33:16', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2040,10 +2040,10 @@ CREATE TABLE IF NOT EXISTS `booking_sources` (
 --
 
 INSERT INTO `booking_sources` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Call', 'Call', NULL, 1, 5, '2014-09-09 06:39:01', '0000-00-00 00:00:00'),
-(2, 'References', 'References', NULL, 1, 5, '2014-09-09 06:39:19', '0000-00-00 00:00:00'),
-(3, 'JustDial', 'JustDial', NULL, 1, 5, '2014-09-09 06:39:35', '0000-00-00 00:00:00'),
-(4, 'App', 'App', NULL, 1, 5, '2014-09-09 06:39:47', '2014-09-09 06:39:54');
+(1, 'Call', 'Call', NULL, 1, 0, '2014-09-09 06:39:01', '0000-00-00 00:00:00'),
+(2, 'References', 'References', NULL, 1, 0, '2014-09-09 06:39:19', '0000-00-00 00:00:00'),
+(3, 'JustDial', 'JustDial', NULL, 1, 0, '2014-09-09 06:39:35', '0000-00-00 00:00:00'),
+(4, 'App', 'App', NULL, 1, 0, '2014-09-09 06:39:47', '2014-09-09 06:39:54');
 
 -- --------------------------------------------------------
 
@@ -2145,8 +2145,8 @@ CREATE TABLE IF NOT EXISTS `customer_registration_types` (
 --
 
 INSERT INTO `customer_registration_types` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'PhoneCall', 'PhoneCall', NULL, 1, 5, '2014-09-09 06:31:26', '0000-00-00 00:00:00'),
-(2, 'App', 'App', NULL, 1, 5, '2014-09-09 06:31:40', '0000-00-00 00:00:00');
+(1, 'PhoneCall', 'PhoneCall', NULL, 1, 0, '2014-09-09 06:31:26', '0000-00-00 00:00:00'),
+(2, 'App', 'App', NULL, 1, 0, '2014-09-09 06:31:40', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2175,9 +2175,9 @@ CREATE TABLE IF NOT EXISTS `customer_types` (
 --
 
 INSERT INTO `customer_types` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'WalkIn', 'WalkIn', NULL, 1, 5, '2014-09-09 06:29:57', '0000-00-00 00:00:00'),
-(2, 'Cash', 'Cash', NULL, 1, 5, '2014-09-09 06:30:16', '0000-00-00 00:00:00'),
-(3, 'Credit', 'Credit', NULL, 1, 5, '2014-09-09 06:30:27', '0000-00-00 00:00:00');
+(1, 'WalkIn', 'WalkIn', NULL, 1, 0, '2014-09-09 06:29:57', '0000-00-00 00:00:00'),
+(2, 'Cash', 'Cash', NULL, 1, 0, '2014-09-09 06:30:16', '0000-00-00 00:00:00'),
+(3, 'Credit', 'Credit', NULL, 1, 0, '2014-09-09 06:30:27', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2292,7 +2292,7 @@ CREATE TABLE IF NOT EXISTS `driver_payment_percentages` (
   KEY `id` (`id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -2317,9 +2317,9 @@ CREATE TABLE IF NOT EXISTS `driver_type` (
 --
 
 INSERT INTO `driver_type` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Contract', 'Contract', NULL, 1, 5, '2014-09-09 06:28:26', '0000-00-00 00:00:00'),
-(2, 'Permanent', 'Permanent', NULL, 1, 5, '2014-09-09 06:28:41', '0000-00-00 00:00:00'),
-(3, 'PartTime', 'PartTime', NULL, 1, 5, '2014-09-09 06:29:00', '0000-00-00 00:00:00');
+(1, 'Contract', 'Contract', NULL, 1, 0, '2014-09-09 06:28:26', '0000-00-00 00:00:00'),
+(2, 'Permanent', 'Permanent', NULL, 1, 0, '2014-09-09 06:28:41', '0000-00-00 00:00:00'),
+(3, 'PartTime', 'PartTime', NULL, 1, 0, '2014-09-09 06:29:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2347,8 +2347,8 @@ CREATE TABLE IF NOT EXISTS `id_proof_types` (
 --
 
 INSERT INTO `id_proof_types` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'DrivinggLicense', 'DrivingLicense', NULL, 1, 5, '2014-09-09 06:33:50', '0000-00-00 00:00:00'),
-(2, 'VotersID', 'VotersID', NULL, 1, 5, '2014-09-09 06:34:04', '0000-00-00 00:00:00');
+(1, 'DrivinggLicense', 'DrivingLicense', NULL, 1, 0, '2014-09-09 06:33:50', '0000-00-00 00:00:00'),
+(2, 'VotersID', 'VotersID', NULL, 1, 0, '2014-09-09 06:34:04', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2376,9 +2376,9 @@ CREATE TABLE IF NOT EXISTS `languages` (
 --
 
 INSERT INTO `languages` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'English', 'English', NULL, 1, 5, '2014-09-09 06:27:15', '0000-00-00 00:00:00'),
-(2, 'Malayalam', 'Malayalam', NULL, 1, 5, '2014-09-09 06:27:25', '0000-00-00 00:00:00'),
-(3, 'Hindi', 'Hindi', NULL, 1, 5, '2014-09-09 06:27:37', '0000-00-00 00:00:00');
+(1, 'English', 'English', NULL, 1, 0, '2014-09-09 06:27:15', '0000-00-00 00:00:00'),
+(2, 'Malayalam', 'Malayalam', NULL, 1, 0, '2014-09-09 06:27:25', '0000-00-00 00:00:00'),
+(3, 'Hindi', 'Hindi', NULL, 1, 0, '2014-09-09 06:27:37', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2406,9 +2406,9 @@ CREATE TABLE IF NOT EXISTS `language_proficiency` (
 --
 
 INSERT INTO `language_proficiency` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Read', 'Read', NULL, 1, 5, '2014-09-09 06:27:49', '0000-00-00 00:00:00'),
-(2, 'Write', 'Write', NULL, 1, 5, '2014-09-09 06:27:59', '0000-00-00 00:00:00'),
-(3, 'Speak', 'Speak', NULL, 1, 5, '2014-09-09 06:28:09', '0000-00-00 00:00:00');
+(1, 'Read', 'Read', NULL, 1, 0, '2014-09-09 06:27:49', '0000-00-00 00:00:00'),
+(2, 'Write', 'Write', NULL, 1, 0, '2014-09-09 06:27:59', '0000-00-00 00:00:00'),
+(3, 'Speak', 'Speak', NULL, 1, 0, '2014-09-09 06:28:09', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2436,9 +2436,9 @@ CREATE TABLE IF NOT EXISTS `marital_statuses` (
 --
 
 INSERT INTO `marital_statuses` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Married', 'Married', NULL, 1, 5, '2014-09-09 06:31:59', '0000-00-00 00:00:00'),
-(2, 'Single', 'Single', NULL, 1, 5, '2014-09-09 06:32:10', '0000-00-00 00:00:00'),
-(3, 'Divorcee', 'Divorcee', NULL, 1, 5, '2014-09-09 06:32:33', '0000-00-00 00:00:00');
+(1, 'Married', 'Married', NULL, 1, 0, '2014-09-09 06:31:59', '0000-00-00 00:00:00'),
+(2, 'Single', 'Single', NULL, 1, 0, '2014-09-09 06:32:10', '0000-00-00 00:00:00'),
+(3, 'Divorcee', 'Divorcee', NULL, 1, 0, '2014-09-09 06:32:33', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2462,7 +2462,7 @@ CREATE TABLE IF NOT EXISTS `organisations` (
   KEY `status_id` (`status_id`),
   KEY `id` (`id`),
   KEY `status_id_2` (`status_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -2490,8 +2490,8 @@ CREATE TABLE IF NOT EXISTS `payment_type` (
 --
 
 INSERT INTO `payment_type` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Cash', 'Cash', NULL, 1, 5, '2014-09-09 06:29:13', '0000-00-00 00:00:00'),
-(2, 'Credit', 'Credit', NULL, 1, 5, '2014-09-09 06:29:34', '0000-00-00 00:00:00');
+(1, 'Cash', 'Cash', NULL, 1, 0, '2014-09-09 06:29:13', '0000-00-00 00:00:00'),
+(2, 'Credit', 'Credit', NULL, 1, 0, '2014-09-09 06:29:34', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2529,7 +2529,7 @@ CREATE TABLE IF NOT EXISTS `service` (
   `organisation_id` int(11) NOT NULL,
   `vehicle_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -2572,7 +2572,7 @@ CREATE TABLE IF NOT EXISTS `supplier_groups` (
   KEY `id` (`id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -2757,8 +2757,7 @@ CREATE TABLE IF NOT EXISTS `trip_expense_type` (
   KEY `id` (`id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -2786,11 +2785,11 @@ CREATE TABLE IF NOT EXISTS `trip_models` (
 --
 
 INSERT INTO `trip_models` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Local', 'Local', NULL, 1, 5, '2014-09-09 06:34:18', '0000-00-00 00:00:00'),
-(2, 'OutStations', 'OutStations', NULL, 1, 5, '2014-09-09 06:34:32', '0000-00-00 00:00:00'),
-(3, 'RentACar', 'RentACar', NULL, 1, 5, '2014-09-09 06:34:56', '0000-00-00 00:00:00'),
-(4, 'TALCTaxi', 'TALCTaxi', NULL, 1, 5, '2014-09-09 06:35:27', '0000-00-00 00:00:00'),
-(5, 'AirportPickup', 'AirportPickup', NULL, 1, 5, '2014-09-09 06:35:57', '0000-00-00 00:00:00');
+(1, 'Local', 'Local', NULL, 1, 0, '2014-09-09 06:34:18', '0000-00-00 00:00:00'),
+(2, 'OutStations', 'OutStations', NULL, 1, 0, '2014-09-09 06:34:32', '0000-00-00 00:00:00'),
+(3, 'RentACar', 'RentACar', NULL, 1, 0, '2014-09-09 06:34:56', '0000-00-00 00:00:00'),
+(4, 'TALCTaxi', 'TALCTaxi', NULL, 1, 0, '2014-09-09 06:35:27', '0000-00-00 00:00:00'),
+(5, 'AirportPickup', 'AirportPickup', NULL, 1, 0, '2014-09-09 06:35:57', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2818,14 +2817,14 @@ CREATE TABLE IF NOT EXISTS `trip_statuses` (
 --
 
 INSERT INTO `trip_statuses` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Pending', 'Pending', NULL, 1, 5, '2014-09-09 06:36:20', '2014-09-09 06:36:31'),
-(2, 'Confirmed', 'Confirmed', NULL, 1, 5, '2014-09-09 06:36:51', '0000-00-00 00:00:00'),
-(3, 'Canceled', 'Canceled', NULL, 1, 5, '2014-09-09 06:37:07', '0000-00-00 00:00:00'),
-(4, 'CustomerCanceled', 'CustomerCanceled', NULL, 1, 5, '2014-09-09 06:37:25', '0000-00-00 00:00:00'),
-(5, 'OnTrip', 'OnTrip', NULL, 1, 5, '2014-09-09 06:37:43', '0000-00-00 00:00:00'),
-(6, 'TripCompleted', 'TripCompleted', NULL, 1, 5, '2014-09-09 06:37:59', '0000-00-00 00:00:00'),
-(7, 'TripPayed', 'TripPayed', NULL, 1, 5, '2014-09-09 06:38:17', '2014-09-09 06:38:39'),
-(8, 'BillGenerated', 'BillGenerated', NULL, 1, 5, '2014-09-29 07:37:59', '0000-00-00 00:00:00');
+(1, 'Pending', 'Pending', NULL, 1, 0, '2014-09-09 06:36:20', '2014-09-09 06:36:31'),
+(2, 'Confirmed', 'Confirmed', NULL, 1, 0, '2014-09-09 06:36:51', '0000-00-00 00:00:00'),
+(3, 'Canceled', 'Canceled', NULL, 1, 0, '2014-09-09 06:37:07', '0000-00-00 00:00:00'),
+(4, 'CustomerCanceled', 'CustomerCanceled', NULL, 1, 0, '2014-09-09 06:37:25', '0000-00-00 00:00:00'),
+(5, 'OnTrip', 'OnTrip', NULL, 1, 0, '2014-09-09 06:37:43', '0000-00-00 00:00:00'),
+(6, 'TripCompleted', 'TripCompleted', NULL, 1, 0, '2014-09-09 06:37:59', '0000-00-00 00:00:00'),
+(7, 'TripPayed', 'TripPayed', NULL, 1, 0, '2014-09-09 06:38:17', '2014-09-09 06:38:39'),
+(8, 'BillGenerated', 'BillGenerated', NULL, 1, 0, '2014-09-29 07:37:59', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2920,7 +2919,7 @@ CREATE TABLE IF NOT EXISTS `trip_vouchers` (
   KEY `trip_id` (`trip_id`,`organisation_id`,`driver_id`,`user_id`),
   KEY `delivery_no` (`delivery_no`,`invoice_no`),
   KEY `tariff_id` (`tariff_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -3082,7 +3081,7 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
   KEY `vehicle_model_id` (`vehicle_model_id`),
   KEY `driver_percentage` (`driver_percentage`),
   KEY `vehicle_percentage` (`vehicle_percentage`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -3134,8 +3133,8 @@ CREATE TABLE IF NOT EXISTS `vehicle_ac_types` (
 --
 
 INSERT INTO `vehicle_ac_types` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'AC', 'AC', NULL, 1, 5, '2014-09-09 06:21:20', '0000-00-00 00:00:00'),
-(2, 'NonAC', 'NonAc', NULL, 1, 5, '2014-09-09 06:21:32', '0000-00-00 00:00:00');
+(1, 'AC', 'AC', NULL, 1, 0, '2014-09-09 06:21:20', '0000-00-00 00:00:00'),
+(2, 'NonAC', 'NonAc', NULL, 1, 0, '2014-09-09 06:21:32', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -3163,8 +3162,8 @@ CREATE TABLE IF NOT EXISTS `vehicle_beacon_light_options` (
 --
 
 INSERT INTO `vehicle_beacon_light_options` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Red', 'Red', NULL, 1, 5, '2014-09-09 06:23:08', '0000-00-00 00:00:00'),
-(2, 'Blue', 'Blue', NULL, 1, 5, '2014-09-09 06:23:16', '0000-00-00 00:00:00');
+(1, 'Red', 'Red', NULL, 1, 0, '2014-09-09 06:23:08', '0000-00-00 00:00:00'),
+(2, 'Blue', 'Blue', NULL, 1, 0, '2014-09-09 06:23:16', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -3241,8 +3240,8 @@ CREATE TABLE IF NOT EXISTS `vehicle_driver_bata_percentages` (
 --
 
 INSERT INTO `vehicle_driver_bata_percentages` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, '17percent', '17percent', NULL, 1, 5, '2014-09-09 06:24:25', '0000-00-00 00:00:00'),
-(2, '20percent', '20percent', NULL, 1, 5, '2014-09-09 06:24:39', '0000-00-00 00:00:00');
+(1, '17percent', '17percent', NULL, 1, 0, '2014-09-09 06:24:25', '0000-00-00 00:00:00'),
+(2, '20percent', '20percent', NULL, 1, 0, '2014-09-09 06:24:39', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -3270,9 +3269,9 @@ CREATE TABLE IF NOT EXISTS `vehicle_fuel_types` (
 --
 
 INSERT INTO `vehicle_fuel_types` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Petrol', 'Petrol', NULL, 1, 5, '2014-09-09 06:21:47', '0000-00-00 00:00:00'),
-(2, 'Diesel', 'Diesel', NULL, 1, 5, '2014-09-09 06:21:59', '0000-00-00 00:00:00'),
-(3, 'CNG', 'CNG', NULL, 1, 5, '2014-09-09 06:22:08', '0000-00-00 00:00:00');
+(1, 'Petrol', 'Petrol', NULL, 1, 0, '2014-09-09 06:21:47', '0000-00-00 00:00:00'),
+(2, 'Diesel', 'Diesel', NULL, 1, 0, '2014-09-09 06:21:59', '0000-00-00 00:00:00'),
+(3, 'CNG', 'CNG', NULL, 1, 0, '2014-09-09 06:22:08', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -3351,10 +3350,10 @@ CREATE TABLE IF NOT EXISTS `vehicle_makes` (
 --
 
 INSERT INTO `vehicle_makes` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'TATAindica', 'TATA', NULL, 1, 5, '2014-09-09 06:23:33', '2014-09-25 06:05:48'),
-(2, 'Toyota', 'Toyota', NULL, 1, 5, '2014-09-09 06:23:45', '0000-00-00 00:00:00'),
-(3, 'Fiat', 'Fiat', NULL, 1, 5, '2014-09-09 06:23:56', '0000-00-00 00:00:00'),
-(4, 'tatasumo', 'tatasumo', NULL, 1, 5, '2014-09-25 06:06:55', '0000-00-00 00:00:00');
+(1, 'TATAindica', 'TATA', NULL, 1, 0, '2014-09-09 06:23:33', '2014-09-25 06:05:48'),
+(2, 'Toyota', 'Toyota', NULL, 1, 0, '2014-09-09 06:23:45', '0000-00-00 00:00:00'),
+(3, 'Fiat', 'Fiat', NULL, 1, 0, '2014-09-09 06:23:56', '0000-00-00 00:00:00'),
+(4, 'tatasumo', 'tatasumo', NULL, 1, 0, '2014-09-25 06:06:55', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -3375,25 +3374,23 @@ CREATE TABLE IF NOT EXISTS `vehicle_models` (
   KEY `id` (`id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `vehicle_models`
 --
 
 INSERT INTO `vehicle_models` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Indica', 'Indica', NULL, 1, 4, '2015-01-21 06:31:12', '2015-01-21 06:34:43'),
-(2, 'Indigo', 'Indigo', NULL, 1, 4, '2015-01-21 06:36:22', '0000-00-00 00:00:00'),
-(3, 'Verito', 'Verito', NULL, 1, 4, '2015-01-21 06:37:21', '0000-00-00 00:00:00'),
-(4, 'Xylo', 'Xylo', NULL, 1, 4, '2015-01-21 06:37:37', '0000-00-00 00:00:00'),
-(5, 'Innova', 'Innova', NULL, 1, 4, '2015-01-21 06:37:55', '0000-00-00 00:00:00'),
-(6, 'Liva', 'Etios Liva', NULL, 1, 19, '2015-01-31 07:30:18', '0000-00-00 00:00:00'),
-(7, 'Logan', 'Logan', NULL, 1, 19, '2015-01-31 07:32:13', '0000-00-00 00:00:00'),
-(8, 'Ertiga', 'Ertiga', NULL, 1, 19, '2015-01-31 07:34:01', '2015-01-31 07:34:36'),
-(9, 'Swift', 'Swift', NULL, 1, 6, '2015-01-31 09:38:38', '0000-00-00 00:00:00'),
-(10, 'Dezire', 'Dezire', NULL, 1, 6, '2015-01-31 09:38:51', '0000-00-00 00:00:00');
+(1, 'Indica', 'Indica', NULL, 1, 0, '2015-01-21 06:31:12', '2015-01-21 06:34:43'),
+(2, 'Indigo', 'Indigo', NULL, 1, 0, '2015-01-21 06:36:22', '0000-00-00 00:00:00'),
+(3, 'Verito', 'Verito', NULL, 1, 0, '2015-01-21 06:37:21', '0000-00-00 00:00:00'),
+(4, 'Xylo', 'Xylo', NULL, 1, 0, '2015-01-21 06:37:37', '0000-00-00 00:00:00'),
+(5, 'Innova', 'Innova', NULL, 1, 0, '2015-01-21 06:37:55', '0000-00-00 00:00:00'),
+(6, 'Liva', 'Etios Liva', NULL, 1, 0, '2015-01-31 07:30:18', '0000-00-00 00:00:00'),
+(7, 'Logan', 'Logan', NULL, 1, 0, '2015-01-31 07:32:13', '0000-00-00 00:00:00'),
+(8, 'Ertiga', 'Ertiga', NULL, 1, 0, '2015-01-31 07:34:01', '2015-01-31 07:34:36'),
+(9, 'Swift', 'Swift', NULL, 1, 0, '2015-01-31 09:38:38', '0000-00-00 00:00:00'),
+(10, 'Dezire', 'Dezire', NULL, 1, 0, '2015-01-31 09:38:51', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -3447,9 +3444,9 @@ CREATE TABLE IF NOT EXISTS `vehicle_ownership_types` (
 --
 
 INSERT INTO `vehicle_ownership_types` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Owned', 'Owned', NULL, 1, 5, '2014-09-09 06:19:29', '0000-00-00 00:00:00'),
-(2, 'Rented', 'Rented', NULL, 1, 5, '2014-09-09 06:19:45', '0000-00-00 00:00:00'),
-(3, 'Attached', 'Attached', NULL, 1, 5, '2014-09-09 06:20:04', '0000-00-00 00:00:00');
+(1, 'Owned', 'Owned', NULL, 1, 0, '2014-09-09 06:19:29', '0000-00-00 00:00:00'),
+(2, 'Rented', 'Rented', NULL, 1, 0, '2014-09-09 06:19:45', '0000-00-00 00:00:00'),
+(3, 'Attached', 'Attached', NULL, 1, 0, '2014-09-09 06:20:04', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -3470,10 +3467,9 @@ CREATE TABLE IF NOT EXISTS `vehicle_payment_percentages` (
   KEY `id` (`id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
-
 
 --
 -- Table structure for table `vehicle_permit_types`
@@ -3499,8 +3495,8 @@ CREATE TABLE IF NOT EXISTS `vehicle_permit_types` (
 --
 
 INSERT INTO `vehicle_permit_types` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'AllKerala', 'AllKerala', NULL, 1, 5, '2014-09-09 06:26:11', '0000-00-00 00:00:00'),
-(2, 'AllIndia', 'AllIndia', NULL, 1, 5, '2014-09-09 06:26:25', '0000-00-00 00:00:00');
+(1, 'AllKerala', 'AllKerala', NULL, 1, 0, '2014-09-09 06:26:11', '0000-00-00 00:00:00'),
+(2, 'AllIndia', 'AllIndia', NULL, 1, 0, '2014-09-09 06:26:25', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -3528,9 +3524,9 @@ CREATE TABLE IF NOT EXISTS `vehicle_seating_capacity` (
 --
 
 INSERT INTO `vehicle_seating_capacity` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, '4seated', '4seated', NULL, 1, 5, '2014-09-09 06:22:33', '0000-00-00 00:00:00'),
-(2, '5seated', '5seated', NULL, 1, 5, '2014-09-09 06:22:44', '0000-00-00 00:00:00'),
-(3, '6seated', '6seated', NULL, 1, 5, '2014-09-09 06:22:55', '0000-00-00 00:00:00');
+(1, '4seated', '4seated', NULL, 1, 0, '2014-09-09 06:22:33', '0000-00-00 00:00:00'),
+(2, '5seated', '5seated', NULL, 1, 0, '2014-09-09 06:22:44', '0000-00-00 00:00:00'),
+(3, '6seated', '6seated', NULL, 1, 0, '2014-09-09 06:22:55', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -3558,10 +3554,10 @@ CREATE TABLE IF NOT EXISTS `vehicle_types` (
 --
 
 INSERT INTO `vehicle_types` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Sedan', 'Sedan', NULL, 1, 5, '2014-09-09 06:20:26', '0000-00-00 00:00:00'),
-(2, 'Hatchback', 'Hatchback', NULL, 1, 5, '2014-09-09 06:20:43', '0000-00-00 00:00:00'),
-(3, 'SUV', 'SUV', NULL, 1, 5, '2014-09-09 06:20:55', '0000-00-00 00:00:00'),
-(4, 'Traveler', 'Traveler', NULL, 1, 5, '2014-09-09 06:21:06', '0000-00-00 00:00:00');
+(1, 'Sedan', 'Sedan', NULL, 1, 0, '2014-09-09 06:20:26', '0000-00-00 00:00:00'),
+(2, 'Hatchback', 'Hatchback', NULL, 1, 0, '2014-09-09 06:20:43', '0000-00-00 00:00:00'),
+(3, 'SUV', 'SUV', NULL, 1, 0, '2014-09-09 06:20:55', '0000-00-00 00:00:00'),
+(4, 'Traveler', 'Traveler', NULL, 1, 0, '2014-09-09 06:21:06', '0000-00-00 00:00:00');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
