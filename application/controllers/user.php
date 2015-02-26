@@ -1990,6 +1990,7 @@ public function profile() {
 				$insurance_id=$data['vehicle']['vehicles_insurance_id'];
 				$loan_id=$data['vehicle']['vehicle_loan_id'];
 				$owner_id=$data['vehicle']['vehicle_owner_id'];
+				$data['supplier_group']=$data['vehicle']['supplier_group_id'];
 				if($insurance_id!=gINVALID && $insurance_id!=0){
 					$data['get_insurance']=$this->user_model->getInsurance($insurance_id);
 
