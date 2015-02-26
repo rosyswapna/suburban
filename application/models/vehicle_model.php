@@ -196,10 +196,10 @@ return true;
 		$qry=$this->db->set('vehicle_id', $v_id);
 		$qry=$this->db->insert('vehicle_owners',$data);*/
 	if(!empty($v_owner)){
-		if($v_owner['vehicle_owner_id']){ 
+		if(isset($v_owner['vehicle_owner_id'])){ 
 			$map_qry=$this->db->set('vehicle_owner_id', $v_owner['vehicle_owner_id']);
 			}
-		if($v_owner['supplier_group_id']){ 
+		if(isset($v_owner['supplier_group_id'])){ 
 			$map_qry=$this->db->set('supplier_group_id', $v_owner['supplier_group_id']);
 			}
 			$v_id=$this->mysession->get('vehicle_id');
