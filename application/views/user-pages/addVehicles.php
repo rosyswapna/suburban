@@ -849,6 +849,7 @@ if($this->mysession->get('loan_post_all')!=null ){
 			$own_dob='';
 			$own_user='';
 			$own_pas='';
+			
 if($this->mysession->get('owner_post_all')!=null ){
 		$data=$this->mysession->get('owner_post_all');
 			$owner_id=$this->mysession->get('owner_id');
@@ -872,7 +873,7 @@ if($this->mysession->get('owner_post_all')!=null ){
 			$own_user=$get_owner['username'];
 			$own_pas=$get_owner['password'];
 			$h_pass=$get_owner['password'];
-			$supplier_group=$get_owner['supplier_group_id'];
+			
 	
 	}
 
