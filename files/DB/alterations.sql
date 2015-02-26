@@ -36,23 +36,24 @@ INSERT INTO `1_chart_master` (`account_code`, `account_code2`, `account_name`, `
 INSERT INTO `1_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
 ('default_driver_bata_act', 'glsetup.items', 'varchar', 15, '2040'),('default_night_halt_act', 'glsetup.items', 'varchar', 15, '2041');
 
-*****need to be updated********
-24/02/2015
-
-
-ALTER TABLE `trip_vouchers` CHANGE `driver_payment_percentage` `driver_payment_percentage` INT(11) NOT NULL;
-ALTER TABLE `trip_vouchers` CHANGE `vehicle_payment_percentage` `vehicle_payment_percentage` INT(11) NOT NULL;
-
 INSERT INTO `1_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
 ('invoice_template', 'setup.company', 'int', 11, '107');
 
-TRUNCATE TABLE `trip_expense_type`;
-TRUNCATE TABLE `driver_payment_percentages`;
-TRUNCATE TABLE `vehicle_payment_percentages`;
+
 
 INSERT INTO `1_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
 ('tax_no', 'setup.company', 'varchar', 25, ''),
 ('pan_no', 'setup.company', 'varchar', 25, '');
+
+
+
+
+--****need to be updated********
+ALTER TABLE `trip_vouchers` CHANGE `driver_payment_percentage` `driver_payment_percentage` INT(11) NOT NULL;
+ALTER TABLE `trip_vouchers` CHANGE `vehicle_payment_percentage` `vehicle_payment_percentage` INT(11) NOT NULL;
+24/02/2015
+
+ALTER TABLE `organisations`  ADD `quotation_template` VARCHAR(25) NOT NULL;
 
 
 

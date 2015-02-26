@@ -2456,12 +2456,13 @@ CREATE TABLE IF NOT EXISTS `organisations` (
   `fa_account` tinyint(4) NOT NULL DEFAULT '0' COMMENT '1 for fa_account created else 0',
   `sms_gateway_url` text COLLATE utf8_unicode_ci NOT NULL,
   `system_email` text COLLATE utf8_unicode_ci NOT NULL,
+  `quotation_template` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `status_id` (`status_id`),
   KEY `id` (`id`),
   KEY `status_id_2` (`status_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -2903,8 +2904,8 @@ CREATE TABLE IF NOT EXISTS `trip_vouchers` (
   `vehicle_base_hours` double NOT NULL,
   `vehicle_base_hours_amount` double NOT NULL,
   `vehicle_additional_hour_rate` double NOT NULL,
-  `driver_payment_percentage` double NOT NULL,
-  `vehicle_payment_percentage` double NOT NULL,
+  `driver_payment_percentage` int(11) NOT NULL,
+  `vehicle_payment_percentage` int(11) NOT NULL,
   `driver_payment_amount` double NOT NULL,
   `vehicle_payment_amount` double NOT NULL,
   `remarks` text NOT NULL,
@@ -2919,7 +2920,7 @@ CREATE TABLE IF NOT EXISTS `trip_vouchers` (
   KEY `trip_id` (`trip_id`,`organisation_id`,`driver_id`,`user_id`),
   KEY `delivery_no` (`delivery_no`,`invoice_no`),
   KEY `tariff_id` (`tariff_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 

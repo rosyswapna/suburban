@@ -141,7 +141,7 @@ class Organization_model extends CI_Model {
 
 	}
 	function update($data){
-		$orgdbdata = array('name'=>$data['name'],'address'=>$data['addr'],'updated'=>NOW());
+		$orgdbdata = array('name'=>$data['name'],'address'=>$data['addr'],'updated'=>NOW(),'quotation_template'=>$data['quotation_template']);
 		$userdbdata = array('first_name'=>$data['fname'],'last_name'=>$data['lname'],'address'=>$data['addr'],'email'=>$data['mail'],'phone'=>$data['phn']);
 		$this->db->where('id',$data['user_id'] );
 		//newly added-to be organisation based
@@ -234,6 +234,21 @@ class Organization_model extends CI_Model {
 			return true;
 			}
 
+	}
+	
+	function getOrgQuotationTemplate(){
+
+		$this->db->select('quotation_template');
+		$this->db->from('organisations');
+		$this->db->where('id',$this->session->userdata('organisation_id'));
+		$query=$this->db->get();
+		if($query->num_rows()>0){
+			$org=$query->row(); 
+			return ($org->quotation_template)?$org->quotation_template:QUOTATION1;
+		}else{
+			return false;
+		}
+	
 	}
 }
 	
