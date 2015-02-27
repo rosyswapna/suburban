@@ -59,9 +59,9 @@ if (!isset($path_to_root) || isset($_GET['path_to_root']) || isset($_POST['path_
 		ini_set("log_errors", "On");
 	}		
 	// Main Title
-	$app_title = "Taxi";
+	$app_title = "Suburban";
 
-	$cnc_url = "http://taxi.local/";
+	$cnc_url = "http://suburban.local/";
 
 	// Build for development purposes
 	$build_version 	= date("d.m.Y", filemtime("$path_to_root/CHANGELOG.txt"));
