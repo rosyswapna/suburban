@@ -521,7 +521,13 @@ $available_vehicles='';*/
 						}
 						
 						echo $this->form_functions->populate_editable_dropdown('available_vehicle', $available_vehicles,$class,'vehicles',array(),"Vehicle",$available_vehicle,$id);
-						echo $this->form_functions->form_error_session('available_vehicle', '<p class="text-red">', '</p>');
+						echo nbs(35);?><span class="text-red"><?php
+						if($this->mysession->get('Err_reg_num') != ''){
+							echo $this->mysession->get('Err_reg_num');
+							$this->mysession->delete('Err_reg_num');
+						} 
+						
+					?></span><?php
 						echo br(2);
 						?>
 						<div class="hide-me vehicle-tarif-checker" tariff_id="<?php echo $tariff;?>" available_vehicle_id="<?php echo $available_vehicle;?>"></div>

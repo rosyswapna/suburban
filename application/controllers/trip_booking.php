@@ -356,7 +356,7 @@ class Trip_booking extends CI_Controller {
 					}
 			$err=True;
 			//-------------------get vehicle -----------------------------
-
+				
 			if(is_numeric($this->input->post('available_vehicle')) && $this->input->post('available_vehicle') > 0){
 				$data['vehicle_id'] = $this->input->post('available_vehicle');
 			}elseif($this->input->post('available_vehicle') == '' || $this->input->post('available_vehicle') == gINVALID){
@@ -365,8 +365,13 @@ class Trip_booking extends CI_Controller {
 				$v_details['vehicle_model_id']=$data['vehicle_model'];
 				$v_details['vehicle_ac_type_id']=$data['vehicle_ac_type'];
 				$v_details['registration_number']=$this->input->post('available_vehicle');
-				
-				$this->form_validation->set_rules('available_vehicle','Registration Number','trim|required|xss_clean|regex_match[/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/]');
+				$exp_match=True;
+				if ( !preg_match('/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/', $this->input->post('available_vehicle')) ){
+				$exp_match=False;
+				$err=False;
+				$this->mysession->set('Err_reg_num','Invalid Registration Number');
+				}
+				//$this->form_validation->set_rules('available_vehicle','Registration Number','trim|required|xss_clean|regex_match[/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/]');
 				if($data['vehicle_model'] ==gINVALID){
 					 $data['vehicle_model'] ='';
 					 $err=False;
@@ -377,8 +382,10 @@ class Trip_booking extends CI_Controller {
 					 $err=False;
 					 $this->mysession->set('Err_V_Ac','Choose AC Type');
 				}
-				if($data['vehicle_model'] !=gINVALID  && $data['vehicle_ac_type']!=gINVALID){
+				if($data['vehicle_model'] !=gINVALID  && $data['vehicle_ac_type']!=gINVALID && $exp_match==True){
 				$data['vehicle_id'] = $this->vehicle_model->addVehicleFromTripBooking($v_details);
+				}else{
+				$data['vehicle_id']='';
 				}
 			}
 
@@ -405,7 +412,7 @@ class Trip_booking extends CI_Controller {
 	
 			
 			if($this->form_validation->run()==False || $trip_whom == false || $err==False){
-				
+				//echo "<pre>";print_r($data);echo "</pre>";exit;
 				$this->mysession->set('post',$data);
 				redirect(base_url().'organization/front-desk/trip-booking/'.$data['trip_id']);
 			}else{
