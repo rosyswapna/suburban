@@ -1534,7 +1534,7 @@ function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehic
 
 function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id=''){
 	
-alert(available_vehicle_id);
+
 	 $.post(base_url+"/trip-booking/getAvailableVehicles",
 		  {
 			vehicle_type:vehicle_type,

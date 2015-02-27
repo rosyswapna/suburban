@@ -381,17 +381,20 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 			//$onTripVehicleQry .= " AND T.vehicle_id <>".$this->db->escape($data['trip_vehicle']);
 		//}
 		
-		$qry = "(SELECT V1.id as vehicle_id, SUBSTR(V1.registration_number, -4)as registration_number,V1.vehicle_model_id,V1.vehicle_make_id 
+		$qry = "SELECT V1.id as vehicle_id, SUBSTR(V1.registration_number, -4)as registration_number,V1.vehicle_model_id,V1.vehicle_make_id 
 		FROM vehicles V1 
 		WHERE V1.vehicle_model_id =".$this->db->escape($data['vehicle_model'])." 
 			AND V1.vehicle_ac_type_id =".$this->db->escape($data['vehicle_ac_type'])." 
 			AND V1.organisation_id = ".$this->db->escape($data['organisation_id'])."
-			AND V1.id NOT IN (".$onTripVehicleQry."))";
+			AND V1.id NOT IN (".$onTripVehicleQry.")";
 
 		
-		$qry1 = "UNION (SELECT id as vehicle_id, SUBSTR(registration_number, -4)as registration_number,vehicle_model_id,vehicle_make_id FROM vehicles
-		WHERE id = ".$this->db->escape($data['trip_vehicle']).")";
-			//echo $qry;exit;
+		$qry1 = " UNION SELECT id as vehicle_id, SUBSTR(registration_number, -4)as registration_number,vehicle_model_id,vehicle_make_id FROM vehicles
+		WHERE id = ".$this->db->escape($data['trip_vehicle'])."";
+
+		$qry.= $qry1;
+		//echo $qry;exit;
+			
 		
 
 		$result=$this->db->query($qry);
