@@ -29,6 +29,9 @@ class Trip_booking extends CI_Controller {
 			else if($param2=='getAvailableVehicles') {
 		
 				$this->getAvailableVehicles();
+			}else if($param2=='getCustomers') {
+		
+				$this->getCustomers();
 			
 			}else if($param2=='getVehicleDriverPercentages') {
 		
@@ -817,6 +820,28 @@ class Trip_booking extends CI_Controller {
 		}
 
 	}*/
+
+	//get customers for autofill by ajax call
+	public function getCustomers()
+	{
+		$term = $_REQUEST['term'];
+		$customers = $this->customers_model->getArrayByName($term);
+		$retArray = array();
+		$jsondata ='';
+		if($customers){
+			foreach($customers as $customer){
+				$retArray[] = array(
+						'id'=>$customer['id'],
+						'name'=>$customer['name'],
+						'email'=>$customer['email'],
+						'mobile'=>$customer['mobile']);
+			}
+			echo json_encode($retArray);
+		}else{
+			echo 'false';
+		}
+			
+	}
 
 	public function getVehicle(){
 		if(isset($_REQUEST['id'])){

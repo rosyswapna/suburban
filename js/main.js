@@ -662,33 +662,10 @@ $('#reccurent_alternatives_droptimepicker'+count).datetimepicker({datepicker:fal
 $('.add-reccurent-dates').attr('count',Number(count)+1);
 });
 
-//for checking user in db
-$('#email,#mobile').on('keyup click',function(){
-var email=$('#email').val();
-var mobile=$('#mobile').val();
-	if(Trim(email)=="" && Trim(mobile)==""){
-		$('.add-customer').hide();
-	}
-    if(Trim(email)==""){
-        
-    }else{
-	    
-	    pattern = /^[a-zA-Z0-9]\w+(\.)?\w+@\w+\.\w{2,5}(\.\w{2,5})?$/;
-	    result = pattern.test(email);
-	    if( result== false) {
-	     email='';
-	    }
-	}
- 
-    if(Trim(mobile)==""){
-       
-    }else{
-   var regEx = /^(\+91|\+91|0)?\d{10}$/;
-   
-	if (!mobile.match(regEx)) {
- 		 mobile='';
-     }
-	}
+
+//set customer for trip booking
+function set_customer(email,mobile)
+{
 	if(Trim(mobile)!="" || Trim(email)!=""){
 	$.post(base_url+'/customers/customer-check',{
 	email:email,
@@ -719,6 +696,36 @@ var mobile=$('#mobile').val();
 	}
 	});
 	}
+}
+
+//for checking user in db
+$('#email,#mobile').on('keyup click',function(){
+var email=$('#email').val();
+var mobile=$('#mobile').val();
+	if(Trim(email)=="" && Trim(mobile)==""){
+		$('.add-customer').hide();
+	}
+    if(Trim(email)==""){
+        
+    }else{
+	    
+	    pattern = /^[a-zA-Z0-9]\w+(\.)?\w+@\w+\.\w{2,5}(\.\w{2,5})?$/;
+	    result = pattern.test(email);
+	    if( result== false) {
+	     email='';
+	    }
+	}
+ 
+    if(Trim(mobile)==""){
+       
+    }else{
+   var regEx = /^(\+91|\+91|0)?\d{10}$/;
+   
+	if (!mobile.match(regEx)) {
+ 		 mobile='';
+     }
+	}
+	set_customer(email,mobile);
 	});
 //guest passengerchecking in db
 
@@ -1931,6 +1938,54 @@ $('.vehicle-list').on('keydown',function(){
 	
 	$(".vehicle-list option[text='']").attr('selected', true);
 });
+
+
+//-----------------trip booking--------------------
+$('.trips-booking-div #customer').keyup(function(){
+
+	var term = $(this).val();
+
+	var li_list = '';
+		$.post(base_url+"/trip-booking/getCustomers",{term:term},
+		function(data){
+			if(data!='false'){ 
+				data=jQuery.parseJSON(data);
+			
+				for(var i=0;i<data.length;i++){
+				
+		li_list = li_list+'<li><a class="drop-down-customers" customer-name="'+data[i].name+'" customer-id="'+data[i].id+'" customer-mobile="'+data[i].mobile+'" customer-email="'+data[i].email+'">'+data[i].name+'</a></li>';
+				}
+				
+				$('.autofill-customer').html(li_list);
+				$('.autofill-customer').css('display','block');//show list
+			
+			}else{
+				$('.autofill-customer').css('display','none');//hide list
+			}
+			
+		});
+		
+
+});
+
+$('.drop-down-customers').live('click',function(e){
+
+	var name=$(this).attr('customer-name');
+	var id=$(this).attr('customer-id');
+	var mobile=$(this).attr('customer-mobile');
+	var email=$(this).attr('customer-email');
+	$(this).parent().parent().css('display','none');//hide list
+	$('#customer').val(name);
+	$('#mobile').val(mobile);
+	$('#email').val(email);
+	set_customer(email,mobile);
+
+});
+
+	
+
+
+
 
  });
 
