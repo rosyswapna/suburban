@@ -530,7 +530,7 @@ $('.tripendingtime,#trip-tariff').on('click blur',function(e) {
 			setKM_Tariff();
 			setCustomKM_Tariff('driver');
 			setCustomKM_Tariff('vehicle');
-			disablehrfields();
+			//disablehrfields();
 			//clearkmfields();
 			//clearhrfields();
 		}
@@ -572,7 +572,7 @@ $('.tripstartingtime').on('blur click',function(e) {
 	setKM_Tariff();
 	setCustomKM_Tariff('driver');
 	setCustomKM_Tariff('vehicle');
-	disablehrfields();
+	//disablehrfields();
 	//clearkmfields();
 	//clearhrfields();
 	}
@@ -610,7 +610,7 @@ $('.enddt').on('blur click',function(e) {
 	setKM_Tariff();
 	setCustomKM_Tariff('driver');
 	setCustomKM_Tariff('vehicle');
-	disablehrfields();
+	//disablehrfields();
 	//clearkmfields();
 	//clearhrfields();
 	}
