@@ -203,7 +203,7 @@ $('.voucher').on('click',function(){
 				//set_tarif_row_with_daysno(data[0].no_of_days);
 
 				$('.voucherno').val(data[0].voucher_no);
-				$('.voucherno').attr('readonly','true');
+				//$('.voucherno').attr('readonly','true');
 
 				$('.startdt').val(formatDate_d_m_Y(data[0].trip_start_date));
 				$('.enddt').val(formatDate_d_m_Y(data[0].trip_end_date));
@@ -1687,7 +1687,7 @@ function setBataandHalt(){
 		//}
 	}else{
 		$('.nighthalt').val('');
-		$('.nighthalt').attr('disabled',true);
+		//$('.nighthalt').attr('disabled',true);
 	}
 	
 
