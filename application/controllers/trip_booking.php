@@ -29,6 +29,9 @@ class Trip_booking extends CI_Controller {
 			else if($param2=='getAvailableVehicles') {
 		
 				$this->getAvailableVehicles();
+			}else if($param2=='getCustomers') {
+		
+				$this->getCustomers();
 			
 			}else if($param2=='getVehicleDriverPercentages') {
 		
@@ -114,7 +117,7 @@ class Trip_booking extends CI_Controller {
 	
 	public function bookTrip() {
 			
-			if(isset($_REQUEST['book_trip'])){
+		if(isset($_REQUEST['book_trip'])){
 
 				$my_customer = $this->session->userdata('customer_id');
 				
@@ -162,6 +165,7 @@ class Trip_booking extends CI_Controller {
 				$this->form_validation->set_rules('customer','Customer name','trim|xss_clean');
 				$this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email|');
 				$this->form_validation->set_rules('mobile','Mobile','trim|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
+				$this->form_validation->set_rules('advance_amount','Advance Amount','trim|numeric|xss_clean');
 				$this->form_validation->set_rules('booking_source','Booking source','trim|xss_clean');
 				$this->form_validation->set_rules('source','Source','trim|xss_clean');
 				//$this->form_validation->set_rules('trip_model','Trip models','trim|required|xss_clean');
@@ -222,6 +226,7 @@ class Trip_booking extends CI_Controller {
 				//$data['vehicle_make']			=	$this->input->post('vehicle_make');
 				$data['vehicle_model']			=	$this->input->post('vehicle_model');
 				$data['remarks']			=	$this->input->post('remarks');
+				$data['advance_amount']			=	$this->input->post('advance_amount');
 				$data['advanced_vehicle']='';
 				if(isset($_REQUEST['beacon_light'])){
 					$data['beacon_light']=TRUE;
@@ -491,9 +496,10 @@ class Trip_booking extends CI_Controller {
 			$dbdata['vehicle_id']					=$data['vehicle_id'];
 			
 			$dbdata['driver_id']					=$data['driver_id'];
-			$dbdata['remarks']						=$data['remarks'];
+			$dbdata['remarks']					=$data['remarks'];
+			$dbdata['advance_amount']				= $data['advance_amount'];
 			$dbdata['organisation_id']				=$this->session->userdata('organisation_id');
-			$dbdata['user_id']						=$this->session->userdata('id');
+			$dbdata['user_id']					=$this->session->userdata('id');
 			$estimate['time_of_journey']			=$this->input->post('time_journey');
 			$estimate['distance']			=$this->input->post('est_distance');
 			$estimate['min_charge']			=$this->input->post('charge');
@@ -513,8 +519,12 @@ class Trip_booking extends CI_Controller {
 			$this->session->set_userdata('customer_name','');
 			$this->session->set_userdata('customer_email','');
 			$this->session->set_userdata('customer_mobile','');
-			
-				if(isset($data['trip_id']) && $data['trip_id']>0){ 
+
+			if($dbdata['advance_amount'] > 0){
+					$make_payment = true;
+			}
+			$success = true;
+			if(isset($data['trip_id']) && $data['trip_id']>0){ 
 				$res = $this->trip_booking_model->updateTrip($dbdata,$data['trip_id'],$estimate,$guest);
 				if($res==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Updated Succesfully..!!'));
@@ -526,11 +536,22 @@ class Trip_booking extends CI_Controller {
 				}else{
 					$this->session->set_userdata(array('dbError'=>'Trip Updated unsuccesfully..!!'));
 					$this->session->set_userdata(array('dbSuccess'=>''));
+					$success = false;
 				}
 				
-				redirect(base_url().'organization/front-desk/trip-booking');
+				if($make_payment && $success){
+					$this->session->set_userdata(array('dbError'=>''));
+					$this->session->set_userdata(array('dbSuccess'=>''));
+					redirect(base_url().'account/front_desk/CustomerTripAdvance/'.$data['trip_id']);
+				}else{
+					redirect(base_url().'organization/front-desk/trip-booking');
+				}
+					
 
-				}else{ 
+			}else{ 
+				
+				//echo "<pre>";print_r($dbdata);echo "</pre>";exit;
+
 				
 				
 				$res = $this->trip_booking_model->bookTrip($dbdata,$estimate);
@@ -541,6 +562,9 @@ class Trip_booking extends CI_Controller {
 						//$this->SendTripConfirmation($res,$dbdata,$customer);
 						$this->SendTripConfirmation($res);
 					}
+
+					if($make_payment)
+						redirect(base_url().'account/front_desk/CustomerTripAdvance/'.$res);
 				
 				}else{
 					$this->session->set_userdata(array('dbError'=>'Trip Booked unsuccesfully..!!'));
@@ -574,16 +598,20 @@ class Trip_booking extends CI_Controller {
 							$dbdata['driver_id']					=gINVALID;
 							$dbdata['trip_status_id']				=TRIP_STATUS_PENDING;
 							if($dbdata['pick_up_date']!='' && $dbdata['pick_up_time']!='' && $dbdata['drop_date']!='' &&  $dbdata['drop_time']!=''){	 
-							$res = $this->trip_booking_model->bookTrip($dbdata);
-									if($res==true){
-										$this->session->set_userdata(array('dbSuccess'=>'Trips Booked Succesfully..!!'));
-										$this->session->set_userdata(array('dbError'=>''));
-									}
+								$res = $this->trip_booking_model->bookTrip($dbdata);
+								if($res==true){
+									$this->session->set_userdata(array('dbSuccess'=>'Trips Booked Succesfully..!!'));
+									$this->session->set_userdata(array('dbError'=>''));
+								}
 							}
 						}
 					}
 				}
-				 redirect(base_url().'organization/front-desk/trip-booking');
+
+				
+				redirect(base_url().'organization/front-desk/trip-booking');
+				
+				
 			}
 		}
 		}else if(isset($_REQUEST['cancel_trip'])){
@@ -619,6 +647,8 @@ class Trip_booking extends CI_Controller {
 			}
 		} 
 	}
+	//----------------trip booking function ends-----------------
+	
 	public function tripVoucher()
 	{
 		
@@ -817,6 +847,28 @@ class Trip_booking extends CI_Controller {
 		}
 
 	}*/
+
+	//get customers for autofill by ajax call
+	public function getCustomers()
+	{
+		$term = $_REQUEST['term'];
+		$customers = $this->customers_model->getArrayByName($term);
+		$retArray = array();
+		$jsondata ='';
+		if($customers){
+			foreach($customers as $customer){
+				$retArray[] = array(
+						'id'=>$customer['id'],
+						'name'=>$customer['name'],
+						'email'=>$customer['email'],
+						'mobile'=>$customer['mobile']);
+			}
+			echo json_encode($retArray);
+		}else{
+			echo 'false';
+		}
+			
+	}
 
 	public function getVehicle(){
 		if(isset($_REQUEST['id'])){

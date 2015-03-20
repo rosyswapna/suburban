@@ -419,6 +419,9 @@ width:100%;
 .width-80-percent{
 width:80%;
 }
+.width-40-percent{
+width:40%;
+}
 .margin-15{
 margin:15px;
 }
@@ -435,10 +438,37 @@ margin-top:5px;
 margin: -6px 0px 0px 10px !important;
 
 }
-.drop-down-places{
+.drop-down-places,.drop-down-customers{
 
 z-index:2400;
 }
+
+.autofill{
+	color: #F4543C;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	position: absolute; 
+	background:#fff;
+	width:300px;
+	margin-top:-30px;
+	
+}
+
+.autofill li{
+	cursor: default;
+	padding: 0px 4px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	line-height: 30px;
+	text-align: left;
+	border-top: 1px solid #E6E6E6;
+	
+}
+.autofill li a{
+	font-size: 14px;
+}
+
 #divGeneral{
 padding:105px 0 110px 80px;
 

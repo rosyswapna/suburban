@@ -203,7 +203,7 @@ $('.voucher').on('click',function(){
 				//set_tarif_row_with_daysno(data[0].no_of_days);
 
 				$('.voucherno').val(data[0].voucher_no);
-				$('.voucherno').attr('readonly','true');
+				//$('.voucherno').attr('readonly','true');
 
 				$('.startdt').val(formatDate_d_m_Y(data[0].trip_start_date));
 				$('.enddt').val(formatDate_d_m_Y(data[0].trip_end_date));
@@ -530,7 +530,7 @@ $('.tripendingtime,#trip-tariff').on('click blur',function(e) {
 			setKM_Tariff();
 			setCustomKM_Tariff('driver');
 			setCustomKM_Tariff('vehicle');
-			disablehrfields();
+			//disablehrfields();
 			//clearkmfields();
 			//clearhrfields();
 		}
@@ -572,7 +572,7 @@ $('.tripstartingtime').on('blur click',function(e) {
 	setKM_Tariff();
 	setCustomKM_Tariff('driver');
 	setCustomKM_Tariff('vehicle');
-	disablehrfields();
+	//disablehrfields();
 	//clearkmfields();
 	//clearhrfields();
 	}
@@ -610,7 +610,7 @@ $('.enddt').on('blur click',function(e) {
 	setKM_Tariff();
 	setCustomKM_Tariff('driver');
 	setCustomKM_Tariff('vehicle');
-	disablehrfields();
+	//disablehrfields();
 	//clearkmfields();
 	//clearhrfields();
 	}
@@ -1687,7 +1687,7 @@ function setBataandHalt(){
 		//}
 	}else{
 		$('.nighthalt').val('');
-		$('.nighthalt').attr('disabled',true);
+		//$('.nighthalt').attr('disabled',true);
 	}
 	
 

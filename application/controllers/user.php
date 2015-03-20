@@ -55,7 +55,8 @@ class User extends CI_Controller {
 		$param4=$this->uri->segment(6);
 
 		//unset search session condition before navigation
-		$this->mysession->delete('condition');
+		/*if($param1 != 'trips')
+			$this->mysession->delete('condition');*/
 
         if($this->session_check()==true) {
 		if($param1==''){
@@ -535,6 +536,7 @@ class User extends CI_Controller {
 	$return_data['guestemail']			=	'';
 	$return_data['guestmobile']		=	'';
 	$return_data['remarks']			=	'';
+	$return_data['advance_amount'] 		= '';
 
 	$return_data['trip_model']			=	'';		
 	$return_data['no_of_passengers']	=	'';
@@ -599,6 +601,7 @@ class User extends CI_Controller {
 	
 	
 	
+	
 	//-----------------------------------------
 	if($this->mysession->get('post')!=NULL){ //echo "<pre>";print_r($this->mysession->get('post'));echo "</pre>";exit;
 		$data=$this->mysession->get('post');
@@ -659,6 +662,8 @@ class User extends CI_Controller {
 		$return_data['vehicle_model_id']		=$data['vehicle_model'];
 		
 		$return_data['remarks']			=$data['remarks'];
+		$return_data['advance_amount'] 		= $data['advance_amount'];
+
 		$return_data['recurrent_yes']		=$data['recurrent_yes'];
 		$return_data['beacon_light']		=$data['beacon_light'];
 		$return_data['beacon_light_radio']	=$data['beacon_light_radio'];
@@ -675,6 +680,8 @@ class User extends CI_Controller {
 		$return_data['available_vehicles']	='';
 		$return_data['available_driver']	=$data['driver_id'];
 		$return_data['available_vehicle']	=$data['vehicle_id'];
+
+		
 		
 	     if($data['recurrent_yes']==TRUE){
 		if($data['recurrent_continues']==TRUE){
@@ -780,6 +787,7 @@ class User extends CI_Controller {
 				$return_data['vehicle_make']				=	$data->vehicle_make_id;
 				$return_data['vehicle_model_id']				=	$data->vehicle_model_id;
 				$return_data['remarks']				=	$data->remarks;
+				$return_data['advance_amount'] 			=	$data->advance_amount;
 				$return_data['recurrent_yes']				= 	'';
 				//$data1['seating_capacity']		=	$result->vehicle_seating_capacity_id;
 				//$data1['language']				=	$result->driver_language_id;
@@ -787,6 +795,9 @@ class User extends CI_Controller {
 				$return_data['available_vehicle']		=	$data->vehicle_id;
 				$return_data['available_vehicles']='';
 				$return_data['tariffs']='';
+
+				
+
 				if($return_data['available_vehicle']>0){
 					$driver_id = $this->trip_booking_model->getDriver($return_data['available_vehicle']);
 				}else{
@@ -911,11 +922,13 @@ class User extends CI_Controller {
 	public function Trips($param2){
 		if($this->session_check()==true|| $this->customer_session_check()==true || $this->driver_session_check()==true) 
 		{
+		
 			//pagination first page link setup
 			if($param2=='1'){ $param2='0'; }
-			if($param2==''){ $this->mysession->delete('condition');$param2='0'; }
+			if($param2==''){$param2='0'; }
 			
-			
+					
+	
 			$tbl	= "trips";$like_arry = $where_arry = array();
 			$baseurl = base_url().'organization/front-desk/trips/';
 			$per_page = 30;
@@ -942,29 +955,43 @@ class User extends CI_Controller {
 				$where_arry['driver_id']=$_REQUEST['drivers'];
 				$where_arry['trip_status_id']=$_REQUEST['trip_status_id'];
 				$where_arry['customer_group_id']=$_REQUEST['cgroups'];
-				$like_arry['customer_name']=$_REQUEST['customer'];	
+				$like_arry['customer_name']=$_REQUEST['customer'];
+				$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry,"trips"=>true));				
 			}
 
-			$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));	
-
 			//get session condition
+			$condition = false;
 			if($this->mysession->get('condition')!=''){
 
 				$condition=$this->mysession->get('condition');//print_r($condition);exit;
-				$data['trip_pick_date']=$condition['where']['trip_pick_date'];
-				$data['trip_drop_date']=$condition['where']['trip_drop_date'];
-				$data['vehicle_id']=$condition['where']['vehicle_id'];
-				$data['driver_id']=$condition['where']['driver_id'];
-				$data['trip_status_id']=$condition['where']['trip_status_id'];
-				$data['customer_group_id']=$condition['where']['customer_group_id'];
-				$data['customer_name']=$condition['like']['customer_name'];
-			}else{
-				$condition = false;
+				if(!isset($condition['trips'])){
+					$this->mysession->delete('condition');
+					//default conditions
+					
+					$condition['where']['trip_pick_date']='';
+					$condition['where']['trip_drop_date']='';
+					$condition['where']['vehicle_id']='';
+					$condition['where']['driver_id']='';
+					$condition['where']['trip_status_id']='';
+					$condition['where']['customer_group_id']='';
+					$condition['like']['customer_name']='';
+					
+				}else{
+					$data['trip_pick_date']=$condition['where']['trip_pick_date'];
+					$data['trip_drop_date']=$condition['where']['trip_drop_date'];
+					$data['vehicle_id']=$condition['where']['vehicle_id'];
+					$data['driver_id']=$condition['where']['driver_id'];
+					$data['trip_status_id']=$condition['where']['trip_status_id'];
+					$data['customer_group_id']=$condition['where']['customer_group_id'];
+					$data['customer_name']=$condition['like']['customer_name'];
+				}
+				
 			}
 
 			//get sql for trips and make paginated data
 			$tripsQRY = $this->trip_model->get_sql_for_trips($condition);
 			$paginations=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$tripsQRY);
+			if($param2=='')$this->mysession->delete('condition');
 			
 			
 			$tbl_arry=array('trip_statuses','customer_groups','payment_type','driver_payment_percentages','vehicle_payment_percentages');
@@ -1117,16 +1144,14 @@ class User extends CI_Controller {
 		}
 	}
 
-public function	Customers($param2){
-			if($this->session_check()==true) {
-				if($this->mysession->get('condition')!=null){
-						$condition=$this->mysession->get('condition');
-						if(isset($condition['like']['name']) || isset($condition['like']['mobile'])|| isset($condition['where']['customer_type_id']) || isset($condition['where']['customer_group_id'])){
-						}
-						else{
-						$this->mysession->delete('condition');
-						}
-						}
+	public function	Customers($param2){
+		if($this->session_check()==true) {
+			if($this->mysession->get('condition')!=null){
+				$condition=$this->mysession->get('condition');
+				if(!isset($condition['customers'])){
+					$this->mysession->delete('condition');
+				}
+			}
 			$tbl_arry=array('customer_types','customer_groups');
 	
 			for ($i=0;$i<count($tbl_arry);$i++){
@@ -1171,7 +1196,7 @@ public function	Customers($param2){
 				$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
 			}
 			if(is_null($this->mysession->get('condition'))){
-			$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
+			$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry,'customers'=>true));
 			}
 					
 			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
