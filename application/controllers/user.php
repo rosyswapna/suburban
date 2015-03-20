@@ -535,6 +535,7 @@ class User extends CI_Controller {
 	$return_data['guestemail']			=	'';
 	$return_data['guestmobile']		=	'';
 	$return_data['remarks']			=	'';
+	$return_data['advance_amount'] 		= '';
 
 	$return_data['trip_model']			=	'';		
 	$return_data['no_of_passengers']	=	'';
@@ -599,6 +600,7 @@ class User extends CI_Controller {
 	
 	
 	
+	
 	//-----------------------------------------
 	if($this->mysession->get('post')!=NULL){ //echo "<pre>";print_r($this->mysession->get('post'));echo "</pre>";exit;
 		$data=$this->mysession->get('post');
@@ -659,6 +661,8 @@ class User extends CI_Controller {
 		$return_data['vehicle_model_id']		=$data['vehicle_model'];
 		
 		$return_data['remarks']			=$data['remarks'];
+		$return_data['advance_amount'] 		= $data['advance_amount'];
+
 		$return_data['recurrent_yes']		=$data['recurrent_yes'];
 		$return_data['beacon_light']		=$data['beacon_light'];
 		$return_data['beacon_light_radio']	=$data['beacon_light_radio'];
@@ -675,6 +679,8 @@ class User extends CI_Controller {
 		$return_data['available_vehicles']	='';
 		$return_data['available_driver']	=$data['driver_id'];
 		$return_data['available_vehicle']	=$data['vehicle_id'];
+
+		
 		
 	     if($data['recurrent_yes']==TRUE){
 		if($data['recurrent_continues']==TRUE){
@@ -780,6 +786,7 @@ class User extends CI_Controller {
 				$return_data['vehicle_make']				=	$data->vehicle_make_id;
 				$return_data['vehicle_model_id']				=	$data->vehicle_model_id;
 				$return_data['remarks']				=	$data->remarks;
+				$return_data['advance_amount'] 			=	$data->advance_amount;
 				$return_data['recurrent_yes']				= 	'';
 				//$data1['seating_capacity']		=	$result->vehicle_seating_capacity_id;
 				//$data1['language']				=	$result->driver_language_id;
@@ -787,6 +794,9 @@ class User extends CI_Controller {
 				$return_data['available_vehicle']		=	$data->vehicle_id;
 				$return_data['available_vehicles']='';
 				$return_data['tariffs']='';
+
+				
+
 				if($return_data['available_vehicle']>0){
 					$driver_id = $this->trip_booking_model->getDriver($return_data['available_vehicle']);
 				}else{

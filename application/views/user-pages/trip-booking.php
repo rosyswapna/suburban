@@ -639,17 +639,31 @@
 				</div>
 				<div class="booking-source">
 					<fieldset class="body-border">
-					<legend class="body-head font-size-18-px">Remarks</legend>
-					<?php	$data = array(
-						  'name'        => 'remarks',
-						  'id'          => 'txt_area',
-						  'value'       => $remarks,
-						  'rows'        => '2',
-						  'cols'        => '10',
-						  'style'       => 'width:100%',
-						);
+					<legend class="body-head font-size-18-px">Other Information</legend>
 
-  					echo form_textarea($data);?>
+					<div class="form-group">
+						<?php	$data = array(
+							  'name'        => 'remarks',
+							  'id'          => 'txt_area',
+							  'value'       => $remarks,
+							  'rows'        => '2',
+							  'cols'        => '10',
+							  'style'       => 'width:100%',
+							);
+						echo form_label('Remarks','remarks');
+	  					echo form_textarea($data);?>
+					</div>
+
+					<div class="form-group width-40-percent">
+						<?php	$data = array(
+							  'name'        => 'advance_amount',
+							  'id'          => 'advance_amount',
+							  'value'       => $advance_amount,
+							  'class'=>'form-control'
+							);
+						echo form_label('Advance Amount','advance_amount');
+	  					echo form_input($data);?>
+					</div>
 					</fieldset>
 				</div>
 
@@ -685,8 +699,11 @@
 								echo form_input(array('name'=>'guest_id','value'=>$guest_id));
 							?>
 								</div>
+				
 				</div>
 			
+			</div>
+			<div class="row-source-full-100-percent-width-with-margin-8">
 			</div>
 		</fieldset>
 		 <?php echo form_close(); ?>

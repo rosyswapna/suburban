@@ -165,6 +165,7 @@ class Trip_booking extends CI_Controller {
 				$this->form_validation->set_rules('customer','Customer name','trim|xss_clean');
 				$this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email|');
 				$this->form_validation->set_rules('mobile','Mobile','trim|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
+				$this->form_validation->set_rules('advance_amount','Advance Amount','trim|numeric|xss_clean');
 				$this->form_validation->set_rules('booking_source','Booking source','trim|xss_clean');
 				$this->form_validation->set_rules('source','Source','trim|xss_clean');
 				//$this->form_validation->set_rules('trip_model','Trip models','trim|required|xss_clean');
@@ -225,6 +226,7 @@ class Trip_booking extends CI_Controller {
 				//$data['vehicle_make']			=	$this->input->post('vehicle_make');
 				$data['vehicle_model']			=	$this->input->post('vehicle_model');
 				$data['remarks']			=	$this->input->post('remarks');
+				$data['advance_amount']			=	$this->input->post('advance_amount');
 				$data['advanced_vehicle']='';
 				if(isset($_REQUEST['beacon_light'])){
 					$data['beacon_light']=TRUE;
@@ -494,9 +496,10 @@ class Trip_booking extends CI_Controller {
 			$dbdata['vehicle_id']					=$data['vehicle_id'];
 			
 			$dbdata['driver_id']					=$data['driver_id'];
-			$dbdata['remarks']						=$data['remarks'];
+			$dbdata['remarks']					=$data['remarks'];
+			$dbdata['advance_amount']				= $data['advance_amount'];
 			$dbdata['organisation_id']				=$this->session->userdata('organisation_id');
-			$dbdata['user_id']						=$this->session->userdata('id');
+			$dbdata['user_id']					=$this->session->userdata('id');
 			$estimate['time_of_journey']			=$this->input->post('time_journey');
 			$estimate['distance']			=$this->input->post('est_distance');
 			$estimate['min_charge']			=$this->input->post('charge');
@@ -535,6 +538,7 @@ class Trip_booking extends CI_Controller {
 
 				}else{ 
 				
+				//echo "<pre>";print_r($dbdata);echo "</pre>";exit;
 				
 				$res = $this->trip_booking_model->bookTrip($dbdata,$estimate);
 				if($res!=false && $res>0){
