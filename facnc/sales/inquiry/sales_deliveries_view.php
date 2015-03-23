@@ -217,6 +217,7 @@ $cols = array(
 		'branch_code' => 'skip',
 		_("Company"), 
 		_("Customer") => array('ord'=>''), 
+		_("Guest") => array('ord'=>''),
 		_("Trip Id"),
 		_("Voucher"), 
 		_("Trip Date"), 
