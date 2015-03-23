@@ -53,18 +53,18 @@ header("Pragma: public");
 					    <th style="width:11%">Vehicle Fuel type</th>
 					    <th style="width:11%">Vehicle Seating Capacity</th>
 					    <th style="width:11%">Vehicle Beacon Light Option</th>
-					     <th>Vehicle Make</th>
-					     <th>Vehicle Model</th>
-					     <th>Driver Language</th>
-					     <th>Placard</th>
-					     <th>Uniform</th>
-					     <th>Trip Model</th>
-					    <!-- <th>Tariff</th>
-					     <th>Payment Type</th>
-					     <th>Advance Amount</th>
-					     <th>Driver Bata</th>
-					     <th>Total Amount</th>-->
-					     <th>Remarks</th>
+					     <th style="width:11%">Vehicle Make</th>
+					     <th style="width:11%">Vehicle Model</th>
+					     <th style="width:11%">Driver Language</th>
+					     <th style="width:11%">Placard</th>
+					     <th style="width:11%">Uniform</th>
+					     <th style="width:11%">Trip Model</th>
+					     <th style="width:11%">Tariff</th>
+					     <th style="width:11%">Payment Type</th>
+					     <th style="width:11%">Advance Amount</th>
+					     <th style="width:11%">Driver Bata</th>
+					     <th style="width:11%">Total Amount</th>
+					     <th style="width:11%">Remarks</th>
 					    
 					</tr>
 				
@@ -175,13 +175,11 @@ header("Pragma: public");
 					    }?></td>
 					
 						
-						<!--<td><?php echo $trips[$trip_index]['via_lng'];?></td>
-						<td><?php echo $trips[$trip_index]['via_lng'];?></td>
-						<td><?php echo $trips[$trip_index]['via_lng'];?></td>
-						<td><?php echo $trips[$trip_index]['via_lng'];?></td>
-						<td><?php echo $trips[$trip_index]['via_lng'];?></td>-->
-
-						
+						<td><?php echo $trips[$trip_index]['title'];?></td>
+						<td><?php echo $trips[$trip_index]['name'];?></td>
+						<td><?php echo $trips[$trip_index]['advance_amount'];?></td>
+						<td><?php echo $trips[$trip_index]['driver_batta'];?></td>
+						<td><?php echo $trips[$trip_index]['total_amount'];?></td>
 						<td><?php echo $trips[$trip_index]['remarks'];?></td>	
 						
 						
