@@ -1009,8 +1009,8 @@ class User extends CI_Controller {
 			$this->load->model('account_model');
 			$data['taxes']=$this->account_model->getTaxArray();
 			//print_r($data['taxes']);exit;
-
-			$data['vehicles']=$this->trip_booking_model->getVehiclesArray();
+		
+			$data['vehicles']=$this->trip_booking_model->getVehiclesArray($condion='');
 			$data['drivers']=$this->driver_model->getDriversArray();  
 			
 			
