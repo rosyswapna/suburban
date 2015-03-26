@@ -487,7 +487,7 @@ start_form();
 
 	if ($new){
 		if(isset($_GET['CustomerTripAdvance']))
-			submit_center('AddPaymentItem', _("Confirm"), true, '');
+			submit_center('AddPaymentItem', _("Confirm"), true, '', 'default');
 		else
 			submit_center('AddPaymentItem', _("Add Payment"), true, '', 'default');
 	}else{

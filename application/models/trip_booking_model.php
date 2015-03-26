@@ -90,6 +90,48 @@ class Trip_booking_model extends CI_Model {
 		}
 	}
 
+	function checkVoucherNo($voucher_no){
+		$this->db->from('trip_vouchers');
+    		$this->db->where('voucher_no',$voucher_no);
+    		$qry = $this->db->get();
+		return ($qry->num_rows() == 1)?true:false;
+	}
+
+	function getTripVoucher($trip_id){
+
+		$retArray = array('trip'=>false,'voucher'=>false);
+
+		$org_id=$this->session->userdata('organisation_id');	
+
+		$this->db->select('ORG.name as company_name ,VO.name as ownership,T.customer_id,T.customer_group_id,T.remarks,T.vehicle_model_id,T.vehicle_ac_type_id,T.driver_id,T.vehicle_id,T.guest_id,V.vehicle_ownership_types_id,T.tariff_id,T.trip_status_id,T.id as trip_id,T.booking_date,T.drop_date,T.drop_time,T.pick_up_date,T.pick_up_time,VM.name as model,V.registration_number,T.pick_up_city,T.pick_up_area,G.name as guest_name,G.mobile as guest_info,T.drop_city,T.drop_area,C.name as customer_name,C.mobile as customer_mobile,CG.name as customer_group,D.name as driver,D.mobile as driver_info,D.driver_status_id');
+		$this->db->from('trips T');
+		$this->db->join('vehicle_models VM','VM.id=T.vehicle_model_id','left');
+		$this->db->join('vehicles V','V.id=T.vehicle_id','left');
+		$this->db->join('customers G','G.id=T.guest_id','left');
+		$this->db->join('customers C','C.id=T.customer_id','left');
+		$this->db->join('customer_groups CG','CG.id=T.customer_group_id','left');
+		$this->db->join('drivers D','D.id=T.driver_id','left');
+		$this->db->join('vehicle_ownership_types VO','V.vehicle_ownership_types_id=VO.id','left');
+		$this->db->join('organisations ORG','ORG.id = T.organisation_id','left');
+    		$this->db->where(array('T.organisation_id'=>$org_id,'T.id'=>$trip_id));
+    		$trip = $this->db->get();
+		if($trip->num_rows() == 1){
+			$retArray['trip'] = $trip->row();
+		}
+
+		$this->db->from('trip_vouchers');
+    		$this->db->where('trip_id',$trip_id);
+		//newly added-to be organisation based
+		$org_id=$this->session->userdata('organisation_id');
+		$this->db->where( 'organisation_id', $org_id );
+    		$voucher = $this->db->get();
+		if($voucher->num_rows() > 0){
+			$retArray['voucher'] = $voucher->row();
+		}
+
+		return $retArray;
+	}
+
 
 	function getdriverPercentages(){
 		$qry='SELECT name from driver_payment_percentages where organisation_id = '.$this->session->userdata('organisation_id').' order by id DESC limit 1';
@@ -337,6 +379,58 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 
 	}
 
+	/* INTELLIGENCE PORTION
+	function selectAvailableVehicles($data){
+
+		$onTripVehicleQry = "SELECT T.vehicle_id FROM trips T 
+		WHERE T.organisation_id = ".$this->db->escape($data['organisation_id'])." 
+		AND (".$this->db->escape($data['pickupdatetime'])." BETWEEN CONCAT(T.pick_up_date, ' ', T.pick_up_time) AND CONCAT(T.drop_date, ' ', T.drop_time))
+		OR (".$this->db->escape($data['dropdatetime'])." BETWEEN CONCAT(T.pick_up_date, ' ', T.pick_up_time) AND CONCAT(T.drop_date, ' ', T.drop_time))";
+
+		//exclude selected trip vehicle
+		//if(isset($data['trip_vehicle']) && $data['trip_vehicle'] > 0){
+			//$onTripVehicleQry .= " AND T.vehicle_id <>".$this->db->escape($data['trip_vehicle']);
+		//}
+		
+		$qry = "SELECT V1.id as vehicle_id, SUBSTR(V1.registration_number, -4)as registration_number,V1.vehicle_model_id,V1.vehicle_make_id 
+		FROM vehicles V1 
+		WHERE V1.vehicle_model_id =".$this->db->escape($data['vehicle_model'])." 
+			AND V1.vehicle_ac_type_id =".$this->db->escape($data['vehicle_ac_type'])." 
+			AND V1.organisation_id = ".$this->db->escape($data['organisation_id'])."
+			AND V1.id NOT IN (".$onTripVehicleQry.")";
+
+		
+		$qry1 = " UNION SELECT id as vehicle_id, SUBSTR(registration_number, -4)as registration_number,vehicle_model_id,vehicle_make_id FROM vehicles
+		WHERE id = ".$this->db->escape($data['trip_vehicle'])."";
+
+		$qry.= $qry1;
+		//echo $qry;exit;
+			
+		
+
+		$result=$this->db->query($qry);
+		$result=$result->result_array();
+		if(count($result)>0){
+			return $result;
+		}else{
+			return false;
+		}
+
+	}*/
+
+
+
+	/*function selectAvailableVehicles($data){
+	$qry='SELECT V.id as vehicle_id, V.registration_number,V.vehicle_model_id,V.vehicle_make_id FROM vehicles AS V LEFT JOIN trips T ON  V.id =T.vehicle_id AND T.organisation_id = '.$data['organisation_id'].' WHERE V.vehicle_model_id = '.$data['vehicle_model'].' AND V.vehicle_ac_type_id ='.$data['vehicle_ac_type'].' AND V.organisation_id = '.$data['organisation_id'].' AND ((T.pick_up_date IS NULL AND pick_up_time IS NULL AND T.drop_date IS NULL AND drop_time IS NULL ) OR ((CONCAT(T.pick_up_date," ", T.pick_up_time) NOT BETWEEN "'.$data['pickupdatetime'].'" AND "'.$data['dropdatetime'].'") AND (CONCAT( T.drop_date," ", T.drop_time ) NOT BETWEEN "'.$data['pickupdatetime'].'" AND "'.$data['dropdatetime'].'")))';
+	$result=$this->db->query($qry);
+	$result=$result->result_array();
+	if(count($result)>0){
+	return $result;
+	}else{
+	return false;
+	}
+
+	}*/
 
 	function getVehiclesArray($condion='',$trim=False){
 	$this->db->from('vehicles');
@@ -366,10 +460,10 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 	}
 
 	function getTodaysTripsDriversDetails(){
-/*$qry='SELECT T.id,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.pick_up_city,T.drop_city,D.id,D.name,D.mobile FROM trips AS T LEFT JOIN drivers AS D ON  T.driver_id =D.id AND T.organisation_id = '.$this->session->userdata('organisation_id').' WHERE D.organisation_id = '.$this->session->userdata('organisation_id').' AND (T.pick_up_date="'.date('Y-m-d').'" OR T.drop_date="'.date('Y-m-d').'") OR ((T.pick_up_date < "'.date('Y-m-d').'" AND T.drop_date > "'.date('Y-m-d').'"))  union SELECT (CASE WHEN T.id!="" THEN "" ELSE "" END),(CASE WHEN T.pick_up_date!="" THEN "" ELSE "" END),(CASE WHEN T.pick_up_time!="" THEN "" ELSE "" END),(CASE WHEN T.drop_date!="" THEN "" ELSE "" END),(CASE WHEN T.drop_time!="" THEN "" ELSE "" END),(CASE WHEN T.pick_up_city!="" THEN "" ELSE "" END),(CASE WHEN T.drop_city!="" THEN "" ELSE "" END),D.id,D.name,D.mobile FROM trips AS T LEFT JOIN drivers AS D ON  D.id > 1 WHERE D.organisation_id = '.$this->session->userdata('organisation_id').' AND D.id NOT IN(select driver_id from trips WHERE  trip_status_id='.TRIP_STATUS_CONFIRMED.' AND organisation_id = '.$this->session->userdata('organisation_id').'  AND (T.pick_up_date="'.date('Y-m-d').'" OR T.drop_date="'.date('Y-m-d').'") OR ((T.pick_up_date < "'.date('Y-m-d').'" AND T.drop_date > "'.date('Y-m-d').'"))) AND T.trip_status_id='.TRIP_STATUS_CONFIRMED.'';*/
+/*
+$qry='SELECT T.id,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.pick_up_city,T.drop_city,D.id,D.name,D.mobile FROM trips AS T LEFT JOIN drivers AS D ON  T.driver_id =D.id AND T.organisation_id = '.$this->session->userdata('organisation_id').' WHERE D.organisation_id = '.$this->session->userdata('organisation_id').' AND (T.pick_up_date="'.date('Y-m-d').'" OR T.drop_date="'.date('Y-m-d').'") OR ((T.pick_up_date < "'.date('Y-m-d').'" AND T.drop_date > "'.date('Y-m-d').'"))  union SELECT (CASE WHEN T.id!="" THEN "" ELSE "" END),(CASE WHEN T.pick_up_date!="" THEN "" ELSE "" END),(CASE WHEN T.pick_up_time!="" THEN "" ELSE "" END),(CASE WHEN T.drop_date!="" THEN "" ELSE "" END),(CASE WHEN T.drop_time!="" THEN "" ELSE "" END),(CASE WHEN T.pick_up_city!="" THEN "" ELSE "" END),(CASE WHEN T.drop_city!="" THEN "" ELSE "" END),D.id,D.name,D.mobile FROM trips AS T LEFT JOIN drivers AS D ON  D.id > 1 WHERE D.organisation_id = '.$this->session->userdata('organisation_id').' AND D.id NOT IN(select driver_id from trips WHERE  trip_status_id='.TRIP_STATUS_CONFIRMED.' AND organisation_id = '.$this->session->userdata('organisation_id').'  AND (T.pick_up_date="'.date('Y-m-d').'" OR T.drop_date="'.date('Y-m-d').'") OR ((T.pick_up_date < "'.date('Y-m-d').'" AND T.drop_date > "'.date('Y-m-d').'"))) AND T.trip_status_id='.TRIP_STATUS_CONFIRMED.'';*/
 
-
-	$qry='SELECT T.id,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.pick_up_city,T.drop_city,D.id as driver_id,D.name FROM trips AS T
+	$qry = 'SELECT T.id,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.pick_up_city,T.drop_city,D.id as driver_id,D.name FROM trips AS T
 LEFT JOIN drivers AS D ON  T.driver_id = D.id
 AND T.organisation_id = '.$this->session->userdata('organisation_id').'
 WHERE D.organisation_id = '.$this->session->userdata('organisation_id').'

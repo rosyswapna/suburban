@@ -662,10 +662,33 @@ $('#reccurent_alternatives_droptimepicker'+count).datetimepicker({datepicker:fal
 $('.add-reccurent-dates').attr('count',Number(count)+1);
 });
 
-
-//set customer for trip booking
-function set_customer(email,mobile)
-{
+//for checking user in db
+$('#email,#mobile').on('keyup click',function(){
+var email=$('#email').val();
+var mobile=$('#mobile').val();
+	if(Trim(email)=="" && Trim(mobile)==""){
+		$('.add-customer').hide();
+	}
+    if(Trim(email)==""){
+        
+    }else{
+	    
+	    pattern = /^[a-zA-Z0-9]\w+(\.)?\w+@\w+\.\w{2,5}(\.\w{2,5})?$/;
+	    result = pattern.test(email);
+	    if( result== false) {
+	     email='';
+	    }
+	}
+ 
+    if(Trim(mobile)==""){
+       
+    }else{
+   var regEx = /^(\+91|\+91|0)?\d{10}$/;
+   
+	if (!mobile.match(regEx)) {
+ 		 mobile='';
+     }
+	}
 	if(Trim(mobile)!="" || Trim(email)!=""){
 	$.post(base_url+'/customers/customer-check',{
 	email:email,
@@ -696,36 +719,6 @@ function set_customer(email,mobile)
 	}
 	});
 	}
-}
-
-//for checking user in db
-$('#email,#mobile').on('keyup click',function(){
-var email=$('#email').val();
-var mobile=$('#mobile').val();
-	if(Trim(email)=="" && Trim(mobile)==""){
-		$('.add-customer').hide();
-	}
-    if(Trim(email)==""){
-        
-    }else{
-	    
-	    pattern = /^[a-zA-Z0-9]\w+(\.)?\w+@\w+\.\w{2,5}(\.\w{2,5})?$/;
-	    result = pattern.test(email);
-	    if( result== false) {
-	     email='';
-	    }
-	}
- 
-    if(Trim(mobile)==""){
-       
-    }else{
-   var regEx = /^(\+91|\+91|0)?\d{10}$/;
-   
-	if (!mobile.match(regEx)) {
- 		 mobile='';
-     }
-	}
-	set_customer(email,mobile);
 	});
 //guest passengerchecking in db
 
@@ -1368,7 +1361,8 @@ var pickupdatetime = pickupdate+' '+pickuptime+':00';
 var dropdatetime   = dropdate+' '+droptime+':00';
 $('.display-me').css('display','block');
 id="#tarrif";
-
+//INTELLIGENCE PORTION
+//generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id);
 generateTariffs(vehicle_model,vehicle_ac_type,tarif_id,id);
 
 }else if(vehicle_model!=-1 && vehicle_ac_type!=-1){
@@ -1381,8 +1375,43 @@ generateTariffs(vehicle_model,vehicle_ac_type,tarif_id,id);
 }
 
 
+/* INTELLIGENCE PORTION
+function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id=''){
+	
 
+	 $.post(base_url+"/trip-booking/getAvailableVehicles",
+		  {
+			vehicle_type:vehicle_type,
+			vehicle_make:vehicle_make,
+			vehicle_model:vehicle_model,
+			vehicle_ac_type:vehicle_ac_type,
+			pickupdatetime:pickupdatetime,
+			dropdatetime:dropdatetime,
+			available_vehicle_id:available_vehicle_id
+	},function(data){ 
+			
 
+		$('#available_vehicle option').remove();
+		$('#available_vehicle').append($("<option value=''></option>").text('--Select Vehicle--'));
+		
+		if(data!='false'){ 
+			data=jQuery.parseJSON(data);
+			for(var i=0;i<data.data.length;i++){
+
+			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"'></option>").text(data.data[i].registration_number));
+				
+			}
+	
+		}else{	
+			alert('No Available Vehicles');		
+		}
+
+		$('#available_vehicle').val(available_vehicle_id);
+
+		$('.display-me').css('display','none');
+	   });
+
+}*/
 
 function generateTariffs(vehicle_model,vehicle_ac_type,tarif_id='',id){
 	var tarif_id=tarif_id;
@@ -1561,7 +1590,9 @@ function diffDateTime(startDT, endDT){
   return oDiff;
 }
 
-$('#pickuptimepicker,#droptimepicker,#pickupdatepicker,#dropdatepicker').on('blur',function(){
+
+
+$('#pickuptimepicker,#droptimepicker,#pickupdatepicker,#dropdatepicker').on('blur',function(){ 
 var pickupdatepicker = $('#pickupdatepicker').val();
 var dropdatepicker = $('#dropdatepicker').val();
 var pickuptimepicker = $('#pickuptimepicker').val();
@@ -1981,11 +2012,6 @@ $('.drop-down-customers').live('click',function(e){
 	set_customer(email,mobile);
 
 });
-
-	
-
-
-
 
  });
 

@@ -29,13 +29,14 @@ class Trip_booking extends CI_Controller {
 			else if($param2=='getAvailableVehicles') {
 		
 				$this->getAvailableVehicles();
-			}else if($param2=='getCustomers') {
-		
-				$this->getCustomers();
 			
 			}else if($param2=='getVehicleDriverPercentages') {
 		
 				$this->getVehicleDriverPercentages();
+			
+			}else if($param2=='getCustomers') {
+		
+				$this->getCustomers();
 			
 			}else if($param2=='getPercentages') {
 		
@@ -56,9 +57,15 @@ class Trip_booking extends CI_Controller {
 			}else if($param2=='getVouchers') {
 		
 				$this->getVouchers();
+			}else if($param2=='getTripVoucher') {
+		
+				$this->getTripVoucher();
 			}else if($param2=='getTripExpenses') {
 		
 				$this->getTripExpenses();
+			}else if($param2=='check-voucher') {
+
+				$this->check_voucher_no();
 			}else{
 				$this->notFound();
 			}	
@@ -117,7 +124,7 @@ class Trip_booking extends CI_Controller {
 	
 	public function bookTrip() {
 			
-		if(isset($_REQUEST['book_trip'])){
+			if(isset($_REQUEST['book_trip'])){
 
 				$my_customer = $this->session->userdata('customer_id');
 				
@@ -378,12 +385,12 @@ class Trip_booking extends CI_Controller {
 				}
 				//$this->form_validation->set_rules('available_vehicle','Registration Number','trim|required|xss_clean|regex_match[/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/]');
 				if($data['vehicle_model'] ==gINVALID){
-					 
+					 $data['vehicle_model'] ='';
 					 $err=False;
 					 $this->mysession->set('Err_Vmodel','Choose Model Type');
 				}
 				if($data['vehicle_ac_type'] ==gINVALID){
-					 
+					 $data['vehicle_ac_type'] ='';
 					 $err=False;
 					 $this->mysession->set('Err_V_Ac','Choose AC Type');
 				}
@@ -425,7 +432,7 @@ class Trip_booking extends CI_Controller {
 				if(isset($_REQUEST['guest_id']) && $_REQUEST['guest_id']==gINVALID){
 				
 				$dbdata1=array('name'=>$data['guestname'],'email'=>$data['guestemail'],'mobile'=>$data['guestmobile'],'registration_type_id'=>$data['registration_type_id'],'address'=>'');
-				$data['guest_id']=$this->customers_model->addGuest($dbdata1,$login=true);
+				$data['guest_id']=$this->customers_model->addCustomer($dbdata1);
 				//------------fa module integration code starts here-----
 				//save customer in fa table
 
@@ -496,10 +503,10 @@ class Trip_booking extends CI_Controller {
 			$dbdata['vehicle_id']					=$data['vehicle_id'];
 			
 			$dbdata['driver_id']					=$data['driver_id'];
-			$dbdata['remarks']					=$data['remarks'];
+			$dbdata['remarks']						=$data['remarks'];
 			$dbdata['advance_amount']				= $data['advance_amount'];
 			$dbdata['organisation_id']				=$this->session->userdata('organisation_id');
-			$dbdata['user_id']					=$this->session->userdata('id');
+			$dbdata['user_id']						=$this->session->userdata('id');
 			$estimate['time_of_journey']			=$this->input->post('time_journey');
 			$estimate['distance']			=$this->input->post('est_distance');
 			$estimate['min_charge']			=$this->input->post('charge');
@@ -521,9 +528,10 @@ class Trip_booking extends CI_Controller {
 			$this->session->set_userdata('customer_mobile','');
 
 			if($dbdata['advance_amount'] > 0){
-					$make_payment = true;
+				$make_payment = true;
 			}
 			$success = true;
+			
 			if(isset($data['trip_id']) && $data['trip_id']>0){ 
 				$res = $this->trip_booking_model->updateTrip($dbdata,$data['trip_id'],$estimate,$guest);
 				if($res==true){
@@ -546,13 +554,8 @@ class Trip_booking extends CI_Controller {
 				}else{
 					redirect(base_url().'organization/front-desk/trip-booking');
 				}
-					
 
 			}else{ 
-				
-				//echo "<pre>";print_r($dbdata);echo "</pre>";exit;
-
-				
 				
 				$res = $this->trip_booking_model->bookTrip($dbdata,$estimate);
 				if($res!=false && $res>0){
@@ -562,7 +565,6 @@ class Trip_booking extends CI_Controller {
 						//$this->SendTripConfirmation($res,$dbdata,$customer);
 						$this->SendTripConfirmation($res);
 					}
-
 					if($make_payment)
 						redirect(base_url().'account/front_desk/CustomerTripAdvance/'.$res);
 				
@@ -598,20 +600,16 @@ class Trip_booking extends CI_Controller {
 							$dbdata['driver_id']					=gINVALID;
 							$dbdata['trip_status_id']				=TRIP_STATUS_PENDING;
 							if($dbdata['pick_up_date']!='' && $dbdata['pick_up_time']!='' && $dbdata['drop_date']!='' &&  $dbdata['drop_time']!=''){	 
-								$res = $this->trip_booking_model->bookTrip($dbdata);
-								if($res==true){
-									$this->session->set_userdata(array('dbSuccess'=>'Trips Booked Succesfully..!!'));
-									$this->session->set_userdata(array('dbError'=>''));
-								}
+							$res = $this->trip_booking_model->bookTrip($dbdata);
+									if($res==true){
+										$this->session->set_userdata(array('dbSuccess'=>'Trips Booked Succesfully..!!'));
+										$this->session->set_userdata(array('dbError'=>''));
+									}
 							}
 						}
 					}
 				}
-
-				
-				redirect(base_url().'organization/front-desk/trip-booking');
-				
-				
+				 redirect(base_url().'organization/front-desk/trip-booking');
 			}
 		}
 		}else if(isset($_REQUEST['cancel_trip'])){
@@ -647,13 +645,12 @@ class Trip_booking extends CI_Controller {
 			}
 		} 
 	}
-	//----------------trip booking function ends-----------------
-	
 	public function tripVoucher()
 	{
 		
 		if(isset($_REQUEST['start_km_reading']) && isset($_REQUEST['end_km_reading']) && isset($_REQUEST['trip_id'])){
- 
+
+			//echo "<pre>";print_r($_REQUEST);echo "</pre>";exit; 
 
 			$data["trip_id"]		= $_REQUEST["trip_id"];
 			$data["tariff_id"]		= $_REQUEST["tariff_id"];
@@ -702,16 +699,13 @@ class Trip_booking extends CI_Controller {
 			$data["total_trip_amount"]	= $_REQUEST["total_trip_amount"];
 			$data["trip_narration"]		= $_REQUEST["trip_narration"];
 			$data["payment_type_id"]	= $_REQUEST["payment_type_id"];
+			$data["tax_group_id"]		= $_REQUEST["tax_group"];
 
 			//trip expense
 			if(isset($_REQUEST['expense'])){
 			$data['trip_expense'] = count($_REQUEST['expense'])?serialize($_REQUEST['expense']) : '';
 			}
 
-			$this->mysession->delete('tax_group');
-			if($_REQUEST['tax_group']){
-				$this->mysession->set('tax_group',$_REQUEST['tax_group']);
-			}
 			
 			$voucher=$this->getVouchers($data['trip_id'],$ajax='NO');
 			$ret = array();
@@ -788,6 +782,23 @@ class Trip_booking extends CI_Controller {
 		}
 	}
 
+	public function check_voucher_no($ajax='NO')
+	{
+		if(isset($_REQUEST['ajax']))
+			$ajax=$_REQUEST['ajax'];
+		$voucher_no = @$_REQUEST['voucher_no'];
+			
+		$voucher = $this->trip_booking_model->checkVoucherNo($voucher_no);
+		if($ajax=='NO'){
+			return $voucher;
+		}else{
+			echo ($voucher)?'true':'false';
+				
+		}		
+	}
+
+	
+
 	public function getVouchers($trip_id='',$ajax='NO'){ 
 	if(isset($_REQUEST['trip_id']) && isset($_REQUEST['ajax'])){ 
 	$trip_id=$_REQUEST['trip_id'];
@@ -813,42 +824,8 @@ class Trip_booking extends CI_Controller {
 		}
 	}
 	}
-
-
-	public function getTarrif(){
-		if($_REQUEST['tarrif_id'] && $_REQUEST['ajax']){
-			$res=$this->tarrif_model->selectTariffDetails($_REQUEST['tarrif_id']);
-			if(count($res)>0){
-			header('Content-Type: application/json');
-			echo json_encode($res);
-			}else{
-			echo 'false';
-			}
-		}
-	}
-
-	//get Available vehicles for trip booking
-	/*public function getAvailableVehicles(){
-		if($_REQUEST['vehicle_ac_type'] &&  $_REQUEST['vehicle_model'] && $_REQUEST['pickupdatetime'] && $_REQUEST['dropdatetime']){
-			$data['vehicle_ac_type']=$_REQUEST['vehicle_ac_type'];
-			$data['vehicle_model']=$_REQUEST['vehicle_model'];
-			$data['pickupdatetime']=$_REQUEST['pickupdatetime'];
-			$data['dropdatetime']=$_REQUEST['dropdatetime'];
-			$data['organisation_id']=$this->session->userdata('organisation_id');
-			$data['trip_vehicle']=$_REQUEST['available_vehicle_id'];
 	
-			$res['data']=$this->trip_booking_model->selectAvailableVehicles($data);
-			if($res['data']==false){
-				echo 'false';
-			}else{
-				echo json_encode($res);
-			}
-
-		}
-
-	}*/
-
-	//get customers for autofill by ajax call
+	////get customers for autofill by ajax call
 	public function getCustomers()
 	{
 		$term = $_REQUEST['term'];
@@ -869,6 +846,60 @@ class Trip_booking extends CI_Controller {
 		}
 			
 	}
+	
+	
+	public function getTripVoucher($trip_id='',$ajax='NO'){ 
+		if(isset($_REQUEST['trip_id']) && isset($_REQUEST['ajax'])){ 
+			$trip_id=$_REQUEST['trip_id'];
+			$ajax=$_REQUEST['ajax'];
+		}
+		$Tripvoucher=$this->trip_booking_model->getTripVoucher($trip_id);
+		if($Tripvoucher){
+			if($Tripvoucher['voucher']){
+				$Tripvoucher['voucher']->trip_expense = unserialize($Tripvoucher['voucher']->trip_expense);
+			}			
+		}
+
+		if($ajax=='NO'){
+			return $Tripvoucher;
+		}else{
+			header('Content-Type: application/json'); 
+			echo json_encode($Tripvoucher);
+		}
+	}
+
+	public function getTarrif(){
+		if($_REQUEST['tarrif_id'] && $_REQUEST['ajax']){
+			$res=$this->tarrif_model->selectTariffDetails($_REQUEST['tarrif_id']);
+			if(count($res)>0){
+			header('Content-Type: application/json');
+			echo json_encode($res);
+			}else{
+			echo 'false';
+			}
+		}
+	}
+
+	//get Available vehicles for trip booking INTELLIGENCE PORTION
+	/*public function getAvailableVehicles(){
+		if($_REQUEST['vehicle_ac_type'] &&  $_REQUEST['vehicle_model'] && $_REQUEST['pickupdatetime'] && $_REQUEST['dropdatetime']){
+			$data['vehicle_ac_type']=$_REQUEST['vehicle_ac_type'];
+			$data['vehicle_model']=$_REQUEST['vehicle_model'];
+			$data['pickupdatetime']=$_REQUEST['pickupdatetime'];
+			$data['dropdatetime']=$_REQUEST['dropdatetime'];
+			$data['organisation_id']=$this->session->userdata('organisation_id');
+			$data['trip_vehicle']=$_REQUEST['available_vehicle_id'];
+	
+			$res['data']=$this->trip_booking_model->selectAvailableVehicles($data);
+			if($res['data']==false){
+				echo 'false';
+			}else{
+				echo json_encode($res);
+			}
+
+		}
+
+	}*/
 
 	public function getVehicle(){
 		if(isset($_REQUEST['id'])){
