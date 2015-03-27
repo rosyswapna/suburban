@@ -668,64 +668,38 @@ $('#reccurent_alternatives_droptimepicker'+count).datetimepicker({datepicker:fal
 $('.add-reccurent-dates').attr('count',Number(count)+1);
 });
 
-//for checking user in db
-$('#email,#mobile').on('keyup click',function(){
-var email=$('#email').val();
-var mobile=$('#mobile').val();
-	if(Trim(email)=="" && Trim(mobile)==""){
-		$('.add-customer').hide();
-	}
-    if(Trim(email)==""){
-        
-    }else{
-	    
-	    pattern = /^[a-zA-Z0-9]\w+(\.)?\w+@\w+\.\w{2,5}(\.\w{2,5})?$/;
-	    result = pattern.test(email);
-	    if( result== false) {
-	     email='';
-	    }
-	}
- 
-    if(Trim(mobile)==""){
-       
-    }else{
-   var regEx = /^(\+91|\+91|0)?\d{10}$/;
-   
-	if (!mobile.match(regEx)) {
- 		 mobile='';
-     }
-	}
-	if(Trim(mobile)!="" || Trim(email)!=""){
-	$.post(base_url+'/customers/customer-check',{
-	email:email,
-	mobile:mobile,
-	customer:'yes'
-	},function(data){
-	if(data!=false){
-		data=jQuery.parseJSON(data);
-		$('#customer').val(data[0].name);
-		$('#email').val(data[0].email);	
-		$('#mobile').val(data[0].mobile);
-		$(".passenger-basic-info > .form-group > label[for=name_error]").text('');
-		$(".passenger-basic-info > .form-group > label[for=email_error]").text('');
-		$(".passenger-basic-info > .form-group > label[for=mobile_error]").text('');
-		$('#customer-group').val('');
-		$('.new-customer').attr('value',false);
-		if(data[0].customer_group_id>0){
-			
-			$('#customer-group').val(data[0].customer_group_id);
-			
+	//for checking user in db
+	$('#email,#mobile').on('keyup click',function(){
+		var email=$('#email').val();
+		var mobile=$('#mobile').val();
+		if(Trim(email)=="" && Trim(mobile)==""){
+			$('.add-customer').hide();
+		}
+		if(Trim(email)==""){
+
+		}else{
+		    
+		    pattern = /^[a-zA-Z0-9]\w+(\.)?\w+@\w+\.\w{2,5}(\.\w{2,5})?$/;
+		    result = pattern.test(email);
+		    if( result== false) {
+		     email='';
+		    }
+		}
+
+		    if(Trim(mobile)==""){
+		       
+		    }else{
+		   	var regEx = /^(\+91|\+91|0)?\d{10}$/;
+		   
+				if (!mobile.match(regEx)) {
+		 		 mobile='';
+		    		}
 			}
-			
-		$('.clear-customer').show();
-		$('.add-customer').hide();
-      }else{
-		$('.clear-customer').hide();
-		$('.add-customer').show();
-	}
+		set_customer(email,mobile);
 	});
-	}
-	});
+	//-----------------------------------
+
+
 //guest passengerchecking in db
 
 	$('#guestemail,#guestmobile').on('keyup click',function(){
@@ -2018,6 +1992,44 @@ $('.drop-down-customers').live('click',function(e){
 	set_customer(email,mobile);
 
 });
+
+
+///////////FUNCTIONS////////////////
+//set customer for trip booking
+function set_customer(email,mobile)
+{
+	if(Trim(mobile)!="" || Trim(email)!=""){
+		$.post(base_url+'/customers/customer-check',{
+			email:email,
+			mobile:mobile,
+			customer:'yes'
+		},function(data){
+			if(data!=false){
+				data=jQuery.parseJSON(data);
+				$('input[name="customer_id"]').val(data[0].id);
+				$('#customer').val(data[0].name)
+				$('#email').val(data[0].email);	
+				$('#mobile').val(data[0].mobile);
+				$(".passenger-basic-info > .form-group > label[for=name_error]").text('');
+				$(".passenger-basic-info > .form-group > label[for=email_error]").text('');
+				$(".passenger-basic-info > .form-group > label[for=mobile_error]").text('');
+				$('#customer-group').val('');
+				$('.new-customer').attr('value',false);
+				if(data[0].customer_group_id>0){
+	
+					$('#customer-group').val(data[0].customer_group_id);
+	
+					}
+	
+				$('.clear-customer').show();
+				$('.add-customer').hide();
+			}else{
+				$('.clear-customer').hide();
+				$('.add-customer').show();
+			}
+		});
+	}
+}
 
  });
 
