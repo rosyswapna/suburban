@@ -30,13 +30,13 @@ class Trip_booking extends CI_Controller {
 		
 				$this->getAvailableVehicles();
 			
-			}else if($param2=='getVehicleDriverPercentages') {
-		
-				$this->getVehicleDriverPercentages();
-			
 			}else if($param2=='getCustomers') {
 		
 				$this->getCustomers();
+			
+			}else if($param2=='getVehicleDriverPercentages') {
+		
+				$this->getVehicleDriverPercentages();
 			
 			}else if($param2=='getPercentages') {
 		
@@ -385,12 +385,12 @@ class Trip_booking extends CI_Controller {
 				}
 				//$this->form_validation->set_rules('available_vehicle','Registration Number','trim|required|xss_clean|regex_match[/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/]');
 				if($data['vehicle_model'] ==gINVALID){
-					// $data['vehicle_model'] ='';
+					 $data['vehicle_model'] ='';
 					 $err=False;
 					 $this->mysession->set('Err_Vmodel','Choose Model Type');
 				}
 				if($data['vehicle_ac_type'] ==gINVALID){
-					 //$data['vehicle_ac_type'] ='';
+					 $data['vehicle_ac_type'] ='';
 					 $err=False;
 					 $this->mysession->set('Err_V_Ac','Choose AC Type');
 				}
@@ -825,29 +825,6 @@ class Trip_booking extends CI_Controller {
 	}
 	}
 	
-	////get customers for autofill by ajax call
-	public function getCustomers()
-	{
-		$term = $_REQUEST['term'];
-		$customers = $this->customers_model->getArrayByName($term);
-		$retArray = array();
-		$jsondata ='';
-		if($customers){
-			foreach($customers as $customer){
-				$retArray[] = array(
-						'id'=>$customer['id'],
-						'name'=>$customer['name'],
-						'email'=>$customer['email'],
-						'mobile'=>$customer['mobile']);
-			}
-			echo json_encode($retArray);
-		}else{
-			echo 'false';
-		}
-			
-	}
-	
-	
 	public function getTripVoucher($trip_id='',$ajax='NO'){ 
 		if(isset($_REQUEST['trip_id']) && isset($_REQUEST['ajax'])){ 
 			$trip_id=$_REQUEST['trip_id'];
@@ -900,6 +877,28 @@ class Trip_booking extends CI_Controller {
 		}
 
 	}*/
+	
+	////get customers for autofill by ajax call
+	public function getCustomers()
+	{
+		$term = $_REQUEST['term'];
+		$customers = $this->customers_model->getArrayByName($term);
+		$retArray = array();
+		$jsondata ='';
+		if($customers){
+			foreach($customers as $customer){
+				$retArray[] = array(
+						'id'=>$customer['id'],
+						'name'=>$customer['name'],
+						'email'=>$customer['email'],
+						'mobile'=>$customer['mobile']);
+			}
+			echo json_encode($retArray);
+		}else{
+			echo 'false';
+		}
+			
+	}
 
 	public function getVehicle(){
 		if(isset($_REQUEST['id'])){
