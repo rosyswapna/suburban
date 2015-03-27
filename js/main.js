@@ -67,80 +67,86 @@ google.setOnLoadCallback(drawChart);
 
 function drawChart() {
 	var setup_dashboard='setup_dashboard';
-  $.post(base_url+"/user/setup_dashboard",
-		  {
-			setup_dashboard:setup_dashboard
-			
-		  },function(data){
-		  data=jQuery.parseJSON(data);
-  var container = document.getElementById('front-desk-dashboard');
-  var chart = new google.visualization.Timeline(container);
-  var dataTable = new google.visualization.DataTable();
-  dataTable.addColumn({ type: 'string', id: 'Room' });
-  dataTable.addColumn({ type: 'string', id: 'Name' });
-  dataTable.addColumn({ type: 'date', id: 'Start' });
-  dataTable.addColumn({ type: 'date', id: 'End' });
+	$.post(base_url+"/user/setup_dashboard",
+	{
+		setup_dashboard:setup_dashboard
+	},function(data){
+		data=jQuery.parseJSON(data);
+  		var container = document.getElementById('front-desk-dashboard');
+  		var chart = new google.visualization.Timeline(container);
+  		var dataTable = new google.visualization.DataTable();
+  		dataTable.addColumn({ type: 'string', id: 'Room' });
+  		dataTable.addColumn({ type: 'string', id: 'Name' });
+  		dataTable.addColumn({ type: 'date', id: 'Start' });
+ 		dataTable.addColumn({ type: 'date', id: 'End' });
 	
-	var fullDate = new Date();
-	var month=fullDate.getMonth()+Number(1);
-	var day=fullDate.getDate();
-	var twoDigitMonth = ((month.toString().length) != 1)? (month) : ('0'+month);
-	var twoDigitDay = ((day.toString().length) != 1)? (day) : ('0'+day);
-  	var currentDate = fullDate.getFullYear() + "-"+twoDigitMonth +"-"+twoDigitDay;
+		var fullDate = new Date();
+		var month=fullDate.getMonth()+Number(1);
+		var day=fullDate.getDate();
+		var twoDigitMonth = ((month.toString().length) != 1)? (month) : ('0'+month);
+		var twoDigitDay = ((day.toString().length) != 1)? (day) : ('0'+day);
+  		var currentDate = fullDate.getFullYear() + "-"+twoDigitMonth +"-"+twoDigitDay;
 	
-	var P_time=[];
-	var D_time=[];
-	var json_obj=[];
-	json_obj.push([
-  	'All Drivers','Trips Time-Sheet of '+ data.organisation,new Date(0,0,0,0,0,0),new Date(0,0,0,24,0,0)
-	]);
-	
-	for(var i=0;i<data.graph.length;i++){
-		P_date=data.graph[i].pick_up_date.split('-');
-		D_date=data.graph[i].drop_date.split('-');
-		if(data.graph[i].pick_up_date==currentDate){
-			P_time=data.graph[i].pick_up_time.split(':');
-			
-		}else{
-			P_time[0]='00';
-			P_time[1]='00';
-		}
-		if(data.graph[i].drop_date==currentDate){
-			D_time=data.graph[i].drop_time.split(':');
-		}else{
-			D_time[0]='23';
-			D_time[1]='59';
-		}
-		var pickdate=new Date(0,0,0,P_time[0],P_time[1],00);
-		var dropdate=new Date(0,0,0,D_time[0],D_time[1],00);
-		if(data.graph[i].pick_up_city!='' && data.graph[i].drop_city!=''){
-			travel_city=data.graph[i].pick_up_city+' to '+data.graph[i].drop_city+',';
-			
-		}else{
-			travel_city='';
-			pickdate=new Date(0,0,0,00,00,00);
-			dropdate=new Date(0,0,0,00,00,00);
-		}
-		
-		/*json_obj.push([
-	  	data[i].name,travel_city+'Driver Mobile '+data[i].mobile,pickdate,dropdate
-		]);*/
+		var P_time=[];
+		var D_time=[];
+		var json_obj=[];
 		json_obj.push([
-	  	data.graph[i].name,travel_city,pickdate,dropdate
+  			'All Drivers','Trips Time-Sheet of '+ data.organisation,new Date(0,0,0,0,0,0),new Date(0,0,0,24,0,0)
 		]);
+	
+		for(var i=0;i<data.graph.length;i++){
+			if(data.graph[i].id == null){//driver have no trips today
+				travel_city='';
+				pickdate=new Date(0,0,0,00,00,00);
+				dropdate=new Date(0,0,0,00,00,00);
+			}else{
+				P_date=data.graph[i].pick_up_date.split('-');
+				D_date=data.graph[i].drop_date.split('-');
+				if(data.graph[i].pick_up_date==currentDate){
+					P_time=data.graph[i].pick_up_time.split(':');
+			
+				}else{
+					P_time[0]='00';
+					P_time[1]='00';
+				}
+				if(data.graph[i].drop_date==currentDate){
+					D_time=data.graph[i].drop_time.split(':');
+				}else{
+					D_time[0]='23';
+					D_time[1]='59';
+				}
+				var pickdate=new Date(0,0,0,P_time[0],P_time[1],00);
+				var dropdate=new Date(0,0,0,D_time[0],D_time[1],00);
+				if(data.graph[i].pick_up_city!='' && data.graph[i].drop_city!=''){
+					travel_city=data.graph[i].pick_up_city+' to '+data.graph[i].drop_city+',';
+			
+				}else{
+					travel_city='';
+					pickdate=new Date(0,0,0,00,00,00);
+					dropdate=new Date(0,0,0,00,00,00);
+				}
 		
-	}
+				/*json_obj.push([
+			  	data[i].name,travel_city+'Driver Mobile '+data[i].mobile,pickdate,dropdate
+				]);*/
+				
+			}
+			json_obj.push([
+	  			data.graph[i].name,travel_city,pickdate,dropdate
+			]);
+		
+		}
 	
-  dataTable.addRows(json_obj);
+  		dataTable.addRows(json_obj);
   
-  var options = {
-    timeline: { colorByRowLabel: true },
-    backgroundColor: '#fff'
-  };
+  		var options = {
+    			timeline: { colorByRowLabel: true },
+    			backgroundColor: '#fff'
+  			};
 
-  chart.draw(dataTable, options);
+  		chart.draw(dataTable, options);
 	
- });
+ 	});
 }
 
 
