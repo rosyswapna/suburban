@@ -157,7 +157,7 @@ header("Pragma: public");
 					    }?></td>
 						<td><?php if($trips[$trip_index]['vehicle_seating_capacity_id']==gINVALID || $trips[$trip_index]['vehicle_seating_capacity_id']==0){echo '';}else{ echo $vehicle_seating_capacity[$trips[$trip_index]['vehicle_seating_capacity_id']].br();
 					    }?></td>
-						<td><?phpif($trips[$trip_index]['vehicle_beacon_light_option_id']==gINVALID || $trips[$trip_index]['vehicle_beacon_light_option_id']==0){echo '';}else{ echo $vehicle_beacon_light_options[$trips[$trip_index]['vehicle_beacon_light_option_id']].br();
+						<td><?php if($trips[$trip_index]['vehicle_beacon_light_option_id']==gINVALID || $trips[$trip_index]['vehicle_beacon_light_option_id']==0){echo '';}else{ echo $vehicle_beacon_light_options[$trips[$trip_index]['vehicle_beacon_light_option_id']].br();
 					    }?></td>
 						<td><?php if($trips[$trip_index]['vehicle_make_id']==gINVALID || $trips[$trip_index]['vehicle_make_id']==0){echo '';}else{ echo $vehicle_makes[$trips[$trip_index]['vehicle_make_id']].br();
 					    }?></td>
