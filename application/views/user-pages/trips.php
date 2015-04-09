@@ -59,66 +59,64 @@ $tariffs='';
 <div class="page-outer">    
 	<fieldset class="body-border">
 		<legend class="body-head">Trips</legend>
-	<div >
-			
-			<?php echo form_open(base_url()."organization/front-desk/trips"); ?>
-			<div class="scroll-container">
+	<div>
+		<div class="scroll-container">
 			<div class="scroll">
-			<div class="scroll-item"><?php 
-			$class =  'id form-control'.@$input_class['id'];
-			echo form_input(array('name'=>'trip_id','class'=>$class ,'placeholder'=>'Trip Id','value'=>$trip_id,'id'=>'trip_id')); ?></div>
-			<div class="scroll-item">
-			<?php 
-			$class = 'pickupdatepicker initialize-date-picker form-control'.$input_class['trip_pick_date'];
-			echo form_input(array('name'=>'trip_pick_date','class'=>$class ,'placeholder'=>'Pick up Date','value'=>$trip_pick_date)); ?>
+			<?php echo form_open(base_url()."organization/front-desk/trips"); ?>
+			<table class="table list-trip-table no-border">
+				<tbody>
+					<tr>
+						<!---->
+					    <td><div class="scroll-item"><?php 
+						$class =  'id form-control'.@$input_class['id'];
+						echo form_input(array('name'=>'trip_id','class'=>$class ,'placeholder'=>'Trip Id','value'=>$trip_id,'id'=>'trip_id')); ?></div></td>
+					    
+					    <td><div class="scroll-item">
+						<?php 
+						$class = 'pickupdatepicker initialize-date-picker form-control'.$input_class['trip_pick_date'];
+						echo form_input(array('name'=>'trip_pick_date','class'=>$class ,'placeholder'=>'Pick up Date','value'=>$trip_pick_date)); ?></div></td>
+					    <td><div class="scroll-item">
+					    <table><tr><td>
+						<div class="form-group continous-container">
+						<?php 
+						echo form_checkbox(array('name'=>'nt_continous','class'=>'avoid-continous flat-red','checked'=>$nt_continous));
+						?></div></td>
+						<td style="width:40%;" >Avoid Continous</td></tr>
+						
+					   </table>
+						</div></td>
+					    
+					    <td><div class="scroll-item"><?php  
+						$class = 'dropdatepicker initialize-date-picker form-control'.$input_class['trip_drop_date'];
+						echo form_input(array('name'=>'trip_drop_date','class'=>'dropdatepicker initialize-date-picker form-control' ,'placeholder'=>'Drop Date','value'=>$trip_drop_date)); ?></div></td>
+						 <td><div class="scroll-item"><?php 
+						$class="form-control".$input_class['vehicles'];$id='vehicles';
+						echo $this->form_functions->populate_dropdown('vehicles',$vehicles,$vehicle_id,$class,$id,$msg="Vehicle");?></div></td>
+						 <td><div class="scroll-item"><?php 
+						$class="form-control".$input_class['drivers'];$id='drivers';
+						echo $this->form_functions->populate_dropdown('drivers',$drivers,$driver_id,$class,$id,$msg="Driver");?></div></td>
+						<td><div class="scroll-item"><?php 
+						$class="form-control".$input_class['trip_status_id']; $id='trip-status';
+						echo $this->form_functions->populate_dropdown('trip_status_id',$trip_statuses,$trip_status_id,$class,$id,$msg="Trip Status");?></div></td>
+					     <td><div class="scroll-item"><?php $class="form-control".$input_class['cgroups']; $id='cgroups';
+						echo $this->form_functions->populate_dropdown('cgroups',$customer_groups,$customer_group_id,$class,$id,$msg="Company");?></div></td>
+						<td><div class="scroll-item"><?php 
+						$class =  'customer form-control'.$input_class['customer'];
+						echo form_input(array('name'=>'customer','class'=>$class ,'placeholder'=>'Name','value'=>$customer_name,'id'=>'c_name')); ?></div></td>
+						
+						</tr>
+				</tbody>
+			</table>
 			</div>
-			<div class="scroll-item"><table><tr><td>
-			<div class="form-group continous-container">
-			<?php 
-			echo form_checkbox(array('name'=>'nt_continous','class'=>'avoid-continous flat-red','checked'=>$nt_continous));
-			?></div></td>
-			<td style="width:40%;" >Avoid Continous</td></tr></table>
-			
 			</div>
-			<div class="scroll-item">
-			<?php  
-			$class = 'dropdatepicker initialize-date-picker form-control'.$input_class['trip_drop_date'];
-			echo form_input(array('name'=>'trip_drop_date','class'=>'dropdatepicker initialize-date-picker form-control' ,'placeholder'=>'Drop Date','value'=>$trip_drop_date)); ?>
-			</div>
-			<div class="scroll-item">
-			<?php 
-			$class="form-control".$input_class['vehicles'];$id='vehicles';
-			echo $this->form_functions->populate_dropdown('vehicles',$vehicles,$vehicle_id,$class,$id,$msg="Vehicle");?>
-			</div>
-			<div class="scroll-item">
-			<?php 
-			$class="form-control".$input_class['drivers'];$id='drivers';
-			echo $this->form_functions->populate_dropdown('drivers',$drivers,$driver_id,$class,$id,$msg="Driver");?>
-			</div>
-			<div class="scroll-item">
-			<?php 
-			$class="form-control".$input_class['trip_status_id']; $id='trip-status';
-			echo $this->form_functions->populate_dropdown('trip_status_id',$trip_statuses,$trip_status_id,$class,$id,$msg="Trip Status");?>
-			</div>
-			<div class="scroll-item">
-			<?php $class="form-control".$input_class['cgroups']; $id='cgroups';
-			echo $this->form_functions->populate_dropdown('cgroups',$customer_groups,$customer_group_id,$class,$id,$msg="Company");?>
-			</div>
-			<div class="scroll-item">
-			<?php 
-			$class =  'customer form-control'.$input_class['customer'];
-			echo form_input(array('name'=>'customer','class'=>$class ,'placeholder'=>'Name','value'=>$customer_name,'id'=>'c_name')); ?>
-			</div>
-			</div>
-			</div>
-			<div class="search-print">
+						
+					<div class="search-print">
 				<?php echo form_submit("trip_search","Search","class='btn btn-primary'"); ?>
 				<?php
 				if((!$this->session->userdata('driver'))&&(!$this->session->userdata('customer'))){					
 				echo form_button('print-trip','Print',"class='btn btn-primary print-trip'");
 				} ?>
-			</div>
-			
+			</div><?php echo form_close();?>
 		</div>
 	
 	<div class="msg"> <?php 
