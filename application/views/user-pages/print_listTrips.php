@@ -90,7 +90,7 @@ header("Pragma: public");
 						<td><?php echo $trips[$trip_index]['id'];?></td>
 						<td><?php echo $trips[$trip_index]['booking_date'];?></td>
 						<td><?php echo $trips[$trip_index]['booking_time'];?></td>
-						<td><?php echo $booking_sources[$trips[$trip_index]['booking_source_id']];?></td>
+						<td><?php if($trips[$trip_index]['booking_source_id']==gINVALID || $trips[$trip_index]['booking_source_id']==0){echo '';}else{echo $booking_sources[$trips[$trip_index]['booking_source_id']];}?></td>
 					   <!-- <td><?php echo $customers[$trips[$trip_index]['customer_id']].br();
 						if($trips[$trip_index]['customer_group_id']==gINVALID || $trips[$trip_index]['customer_group_id']==0){echo '';}else{ echo $customer_groups[$trips[$trip_index]['customer_group_id']];}?></td>-->
 					    <td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>

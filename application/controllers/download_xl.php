@@ -264,20 +264,25 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 		}
 		}
 			
-			if((isset($_REQUEST['pickupdate']) || isset($_REQUEST['dropdate']) || isset($_REQUEST['vehicles'])|| isset($_REQUEST['drivers'])|| isset($_REQUEST['trip_status']) || isset($_REQUEST['cgroups']) || isset($_REQUEST['c_name']))){
-				$qry='SELECT *,V.registration_number,G.name as guest_name,G.mobile as guest_info,C.name as customer_name,C.mobile as customer_mobile,CG.name as customer_group,D.name as driver,D.mobile as driver_info,TM.title,P.name FROM trips T 
+			if((isset($_REQUEST['pickupdate']) || isset($_REQUEST['dropdate']) || isset($_REQUEST['vehicles'])|| isset($_REQUEST['drivers'])|| isset($_REQUEST['trip_status']) || isset($_REQUEST['cgroups']) || isset($_REQUEST['c_name']) || isset($_REQUEST['trip_id']))){
+				$qry='SELECT T.*,T.id as trip_id,V.vehicle_ownership_types_id,V.registration_number,G.name as guest_name,G.mobile as guest_info,C.name as customer_name,C.mobile as customer_mobile,CG.name as customer_group,D.name as driver,D.mobile as driver_info,TM.title,P.name FROM trips T 
 				LEFT JOIN vehicles V ON V.id=T.vehicle_id 
 				LEFT JOIN customers G ON G.id=T.guest_id 
 				LEFT JOIN customers C ON C.id=T.customer_id 
 				LEFT JOIN customer_groups CG ON CG.id=T.customer_group_id 
 				LEFT JOIN drivers D ON D.id=T.driver_id
+				LEFT JOIN vehicle_ownership_types VO ON VO.id= V.vehicle_ownership_types_id
 				LEFT JOIN tariff_masters TM ON TM.id=T.tariff_id 
 				LEFT JOIN payment_type P ON P.id=T.tariff_id where T.organisation_id='.$this->session->userdata('organisation_id');
 				
+			//$qry='SELECT TV.payment_type_id as payment_type_id,ORG.name as company_name ,VO.name as ownership,T.id,T.customer_id,T.customer_group_id,T.remarks,T.vehicle_model_id,T.vehicle_ac_type_id,T.driver_id,T.vehicle_id,T.guest_id,V.vehicle_ownership_types_id,T.tariff_id,T.trip_status_id,T.id as trip_id,T.booking_date,T.drop_date,T.drop_time,T.pick_up_date,T.pick_up_time,VM.name as model,V.registration_number,T.pick_up_city,T.pick_up_area,G.name as guest_name,G.mobile as guest_info,T.drop_city,T.drop_area,C.name as customer_name,C.mobile as customer_mobile,CG.name as customer_group,D.name as driver,D.mobile as driver_info, D.driver_status_id FROM trips T LEFT JOIN vehicle_models VM ON VM.id=T.vehicle_model_id LEFT JOIN vehicles V ON V.id=T.vehicle_id LEFT JOIN customers G ON G.id=T.guest_id LEFT JOIN customers C ON C.id=T.customer_id LEFT JOIN customer_groups CG ON CG.id=T.customer_group_id LEFT JOIN drivers D ON D.id=T.driver_id LEFT JOIN vehicle_ownership_types VO ON V.vehicle_ownership_types_id=VO.id  LEFT JOIN trip_vouchers TV ON TV.trip_id=T.id LEFT JOIN organisations ORG ON ORG.id = T.organisation_id where T.organisation_id='.$this->session->userdata('organisation_id');
 				if(isset($_REQUEST['pickupdate']) && isset($_REQUEST['dropdate'])){
 					
 					//new $qry.=' AND T.pick_up_date BETWEEN "'.$_REQUEST['pickupdate'].'" AND "'.$_REQUEST['dropdate'].'" AND T.drop_date BETWEEN "'.$_REQUEST['pickupdate'].'" AND "'.$_REQUEST['dropdate'].'"';		
 					$qry.=' AND (T.drop_date BETWEEN "'.$_REQUEST['pickupdate'].'" AND "'.$_REQUEST['dropdate'].'")';
+				}else if(isset($_REQUEST['pickupdate']) && isset($_REQUEST['continous']) && $_REQUEST['continous']=='true'){
+				
+				$qry.=' AND T.pick_up_date ="'.$_REQUEST['pickupdate'].'"';
 				}else if(isset($_REQUEST['pickupdate'])){
 				
 				//$qry.=' AND T.pick_up_date ="'.$_REQUEST['pickupdate'].'"';
@@ -301,6 +306,12 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 				if(isset($_REQUEST['trip_status']) && $_REQUEST['trip_status']!=gINVALID){
 					
 					$qry.=' AND T.trip_status_id ="'.$_REQUEST['trip_status'].'"';
+				
+					
+				}
+				if(isset($_REQUEST['trip_id']) && $_REQUEST['trip_id']!=gINVALID){
+					
+					$qry.=' AND T.id ="'.$_REQUEST['trip_id'].'"';
 				
 					
 				}

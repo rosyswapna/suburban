@@ -158,15 +158,25 @@ var dropdatepicker=$('.dropdatepicker').val();
 var vehicles=$('#vehicles').val();
 var drivers=$('#drivers').val();
 var trip_status=$('#trip-status').val();
+var trip_id=$('#trip_id').val(); 
+if($('.avoid-continous').val()=='true')
+var continous=$('.avoid-continous').val();
 var url=base_url+'/organization/front-desk/download_xl/trips?';
 
-if(pickupdatepicker!='' || dropdatepicker!='' || vehicles!='-1' || drivers!='-1' || trip_status!='-1' ){
+if(pickupdatepicker!='' || dropdatepicker!='' || vehicles!='-1' || drivers!='-1' || trip_status!='-1' || trip_id!='' ){
 if(pickupdatepicker!=''){
 url=url+'pickupdate='+pickupdatepicker;
 
 }
 if(dropdatepicker!=''){
 url=url+'&dropdate='+dropdatepicker;
+
+}
+if($('.avoid-continous').val()=='true'){
+url=url+'&continous='+continous;
+}
+if(trip_id!=''){
+url=url+'&trip_id='+trip_id;
 
 }
 if(vehicles!='-1'){
@@ -181,7 +191,6 @@ if(trip_status!='-1'){
 url=url+'&trip_status='+trip_status;
 
 }
-
 window.open(url, '_blank');
 }
 });
