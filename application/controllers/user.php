@@ -2247,6 +2247,7 @@ public function profile() {
 	$data['owner']='';
 	$data['v_model']='';
 	$data['ownership']='';
+	$data['supplier']='';
 	$data['status_id']='';
 	$condition='';
 	$per_page=10;
@@ -2294,10 +2295,16 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 	$qry.=' AND V.vehicle_owner_id ='.$_REQUEST['owner'];
 	$where_arry['vehicle_owner_id']=$_REQUEST['owner'];
 	}
+	
 	if($_REQUEST['ownership']>0){
 	$data['ownership']=$_REQUEST['ownership'];
 	$qry.=' AND V.vehicle_ownership_types_id ='.$_REQUEST['ownership'];
 	$where_arry['vehicle_ownership_types_id']=$_REQUEST['ownership'];
+	}
+	if($_REQUEST['supplier']>0){
+	$data['supplier']=$_REQUEST['supplier'];
+	$qry.=' AND V.supplier_group_id ='.$_REQUEST['supplier'];
+	$where_arry['supplier_group_id']=$_REQUEST['supplier'];
 	}
 	/*if($_REQUEST['v_type']>0){
 	$where_arry['vehicle_type_id']=$_REQUEST['v_type'];
@@ -2348,6 +2355,10 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 				if(isset($condition['where']['vehicle_ownership_types_id']) && $condition['where']['vehicle_ownership_types_id']!=-1 ){
 				$data['ownership']=$condition['where']['vehicle_ownership_types_id'];
 				$qry.=' AND V.vehicle_ownership_types_id ='.$condition['where']['vehicle_ownership_types_id'];
+				}
+				if(isset($condition['where']['supplier_group_id']) && $condition['where']['supplier_group_id']!=-1 ){
+				$data['supplier']=$condition['where']['supplier_group_id'];
+				$qry.=' AND V.supplier_group_id ='.$condition['where']['supplier_group_id'];
 				}
 				if(isset($condition['where']['vehicle_model_id'])&& $condition['where']['vehicle_model_id']!=-1 ){
 				$data['v_model']=$condition['where']['vehicle_model_id'];
