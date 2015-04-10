@@ -377,6 +377,7 @@ class Trip_booking extends CI_Controller {
 				$v_details['vehicle_model_id']=$data['vehicle_model'];
 				$v_details['vehicle_ac_type_id']=$data['vehicle_ac_type'];
 				$v_details['registration_number']=$this->input->post('available_vehicle');
+				$v_details['supplier_group_id']=$this->input->post('supplier_list');
 				$exp_match=True;
 				if ( !preg_match('/^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/', $this->input->post('available_vehicle')) ){
 				$exp_match=False;
