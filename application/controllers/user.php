@@ -976,6 +976,7 @@ class User extends CI_Controller {
 			$data['vehicles'] 	= $where_arry['vehicle_id'] 		= '';
 			$data['cgroups'] 	= $where_arry['customer_group_id'] 	= '';
 			$data['drivers']	= $where_arry['driver_id'] 		= '';
+			$data['supplier_groups']= $where_arry['supplier_group_id'] 	= '';
 			$data['customer']	= $like_arry['customer_name'] 		= '';
 			$data['trip_status_id']	= $where_arry['trip_status_id'] 	= '';
 			
@@ -993,6 +994,7 @@ class User extends CI_Controller {
 				$where_arry['driver_id']=$_REQUEST['drivers'];
 				$where_arry['trip_status_id']=$_REQUEST['trip_status_id'];
 				$where_arry['customer_group_id']=$_REQUEST['cgroups'];
+				$where_arry['supplier_group_id']=$_REQUEST['suppliers'];
 				$like_arry['customer_name']=$_REQUEST['customer'];
 				$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry,"trips"=>true));				
 			}
@@ -1013,6 +1015,7 @@ class User extends CI_Controller {
 					$condition['where']['driver_id']='';
 					$condition['where']['trip_status_id']='';
 					$condition['where']['customer_group_id']='';
+					$condition['where']['supplier_group_id']='';
 					$condition['like']['customer_name']='';
 					
 				}else{
@@ -1024,6 +1027,7 @@ class User extends CI_Controller {
 					$data['driver_id']=$condition['where']['driver_id'];
 					$data['trip_status_id']=$condition['where']['trip_status_id'];
 					$data['customer_group_id']=$condition['where']['customer_group_id'];
+					$data['supplier_group_id']=$condition['where']['supplier_group_id'];
 					$data['customer_name']=$condition['like']['customer_name'];
 				}
 				
